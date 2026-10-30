@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: Apache-2.0
+# Default configuration of sfs-dynamixel-x430 (Kconfig fragment).
+# Pass your own fragments with -DX430_CONF_FILES="configs/defconfig;my.conf".
+
+CONFIG_X430_MODEL_XM430_W350=y

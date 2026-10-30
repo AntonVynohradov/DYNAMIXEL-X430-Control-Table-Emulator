@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: Apache-2.0
+# XL430-W250 - differences from models/x430_family.yaml
+# Source: https://emanual.robotis.com/docs/en/dxl/x/xl430-w250/
+
+model: xl430_w250
+name: XL430-W250
+model_number: 1060
+family: x430
+variant: load
+operating_modes: [1, 3, 4, 16]
+axes: 1
+overrides:
+  Temperature Limit: {initial: 72}
+  Max Voltage Limit: {initial: 140, min: 60, max: 140}
+  Min Voltage Limit: {initial: 60, min: 60, max: 140}
+  Velocity Limit: {initial: 265}
+  Velocity I Gain: {initial: 1000}
+  Position D Gain: {initial: 4000}
+  Position P Gain: {initial: 640}

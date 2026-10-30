@@ -1,0 +1,171 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# sfs-dynamixel-x430: DYNAMIXEL X430 Control Table Emulator
+#
+# Kconfig symbols of the library. A project with its own Kconfig tree sources
+# this file:   rsource "<path to sfs-dynamixel-x430>/Kconfig.x430"
+# (generated model list: keep in sync with models/x430/*.yaml; the CMake
+# configure step fails if a selected model has no YAML file).
+
+menu "DYNAMIXEL X430 emulator"
+
+choice X430_MODEL
+	prompt "Emulated model"
+	default X430_MODEL_XM430_W350
+	help
+	  DYNAMIXEL model whose Control Table the devices expose. One model per
+	  build; every device of the build uses it. The Control Table is
+	  generated from models/x430/<model>.yaml.
+
+config X430_MODEL_XM430_W350
+	bool "XM430-W350 (Model Number 1020)"
+
+config X430_MODEL_XM430_W210
+	bool "XM430-W210 (Model Number 1030)"
+
+config X430_MODEL_XH430_W350
+	bool "XH430-W350 (Model Number 1000)"
+
+config X430_MODEL_XH430_W210
+	bool "XH430-W210 (Model Number 1010)"
+
+config X430_MODEL_XH430_V350
+	bool "XH430-V350 (Model Number 1040)"
+
+config X430_MODEL_XH430_V210
+	bool "XH430-V210 (Model Number 1050)"
+
+config X430_MODEL_XD430_T350
+	bool "XD430-T350 (Model Number 1001)"
+
+config X430_MODEL_XD430_T210
+	bool "XD430-T210 (Model Number 1011)"
+
+config X430_MODEL_XW430_T333
+	bool "XW430-T333 (Model Number 1270)"
+
+config X430_MODEL_XW430_T200
+	bool "XW430-T200 (Model Number 1280)"
+
+config X430_MODEL_XL430_W250
+	bool "XL430-W250 (Model Number 1060)"
+
+config X430_MODEL_2XL430_W250
+	bool "2XL430-W250 (Model Number 1090, dual axis)"
+
+config X430_MODEL_XC430_W150
+	bool "XC430-W150 (Model Number 1070)"
+
+config X430_MODEL_XC430_W240
+	bool "XC430-W240 (Model Number 1080)"
+
+config X430_MODEL_XC430_T150BB
+	bool "XC430-T150BB (Model Number 1070)"
+
+config X430_MODEL_XC430_T240BB
+	bool "XC430-T240BB (Model Number 1080)"
+
+config X430_MODEL_2XC430_W250
+	bool "2XC430-W250 (Model Number 1160, dual axis)"
+
+endchoice
+
+config X430_MODEL_NAME
+	string
+	default "xm430_w350" if X430_MODEL_XM430_W350
+	default "xm430_w210" if X430_MODEL_XM430_W210
+	default "xh430_w350" if X430_MODEL_XH430_W350
+	default "xh430_w210" if X430_MODEL_XH430_W210
+	default "xh430_v350" if X430_MODEL_XH430_V350
+	default "xh430_v210" if X430_MODEL_XH430_V210
+	default "xd430_t350" if X430_MODEL_XD430_T350
+	default "xd430_t210" if X430_MODEL_XD430_T210
+	default "xw430_t333" if X430_MODEL_XW430_T333
+	default "xw430_t200" if X430_MODEL_XW430_T200
+	default "xl430_w250" if X430_MODEL_XL430_W250
+	default "2xl430_w250" if X430_MODEL_2XL430_W250
+	default "xc430_w150" if X430_MODEL_XC430_W150
+	default "xc430_w240" if X430_MODEL_XC430_W240
+	default "xc430_t150bb" if X430_MODEL_XC430_T150BB
+	default "xc430_t240bb" if X430_MODEL_XC430_T240BB
+	default "2xc430_w250" if X430_MODEL_2XC430_W250
+	help
+	  Model key passed to tools/x430_gen_model.py (file name in models/x430).
+
+config X430_MODEL_NUMBER_OVERRIDE
+	int "Model Number override (0 = documented number)"
+	default 0
+	range 0 65535
+	help
+	  Model Number reported by PING and address 0 instead of the number of
+	  the ROBOTIS documentation. Use it when the host only knows another
+	  number, e.g. 1270 for an XW430-T200 with dynamixel_hardware_interface.
+
+config X430_FIRMWARE_VERSION
+	int "Firmware Version (address 6)"
+	default 52
+	range 1 255
+	help
+	  Firmware Version reported by PING and address 6, unless the device
+	  configuration sets its own. Some hosts select features by it.
+
+config X430_MAX_DEVICES
+	int "Devices per bus"
+	default 4
+	range 1 253
+	help
+	  Number of emulated DYNAMIXEL IDs one x430_bus can host. A dual-axis
+	  model (2XL430, 2XC430) needs two devices per actuator.
+
+config X430_REG_WRITE_SIZE
+	int "REG_WRITE buffer size (bytes)"
+	default 32
+	range 4 662
+	help
+	  Largest data block of a REG_WRITE instruction, per device.
+
+config X430_BAUD_RATE_CODE_MAX
+	int "Highest accepted Baud Rate code"
+	default 7
+	range 7 255
+	help
+	  The X430 Baud Rate register (8) defines codes 0..7. A larger value
+	  lets the application define its own codes and check them in the
+	  write hook.
+
+config X430_DXL2_MAX_PACKET_SIZE
+	int "DXL2-C maximum packet size (bytes)"
+	default 256
+	range 64 4096
+	help
+	  DXL2_MAX_PACKET_SIZE of the DXL2-C link. It limits the data of one
+	  READ and the size of a Fast Sync/Bulk Read answer (all devices in one
+	  packet: devices x (length + 4) + 10 bytes).
+
+menu "Protocol features"
+
+config X430_BULK
+	bool "BULK_READ and BULK_WRITE"
+	default y
+
+config X430_FAST_READ
+	bool "FAST_SYNC_READ and FAST_BULK_READ"
+	default y
+	help
+	  Used by default by ROS 2 dynamixel_hardware_interface (it falls back
+	  to SYNC_READ when the device does not answer).
+
+config X430_BACKUP
+	bool "Control Table BACKUP, Backup Ready, Startup RAM Restore"
+	default y
+
+endmenu
+
+config X430_SIMULATOR
+	bool "Simulator backend (x430_sim)"
+	default y
+	help
+	  Kinematic actuator model that drives the live registers without
+	  hardware: for tests, host simulation and system configuration.
+
+endmenu

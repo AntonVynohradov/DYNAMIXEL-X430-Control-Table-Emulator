@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: Apache-2.0
+# XH430-W210 - differences from models/x430_family.yaml
+# Source: https://emanual.robotis.com/docs/en/dxl/x/xh430-w210/
+
+model: xh430_w210
+name: XH430-W210
+model_number: 1010
+family: x430
+variant: current
+operating_modes: [0, 1, 3, 4, 5, 16]
+current_unit_ua: 2690
+axes: 1
+overrides:
+  Current Limit: {initial: 648, max: 648}
+  Velocity Limit: {initial: 210}
+  Position P Gain: {initial: 900}

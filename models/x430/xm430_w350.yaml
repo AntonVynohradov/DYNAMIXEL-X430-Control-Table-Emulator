@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: Apache-2.0
+# XM430-W350 - differences from models/x430_family.yaml
+# Source: https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/
+
+model: xm430_w350
+name: XM430-W350
+model_number: 1020
+family: x430
+variant: current
+operating_modes: [0, 1, 3, 4, 5, 16]
+current_unit_ua: 2690
+axes: 1

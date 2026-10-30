@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: Apache-2.0
+# XW430-T200 - differences from models/x430_family.yaml
+# Source: https://emanual.robotis.com/docs/en/dxl/x/xw430-t200/
+
+model: xw430_t200
+name: XW430-T200
+model_number: 1280
+family: x430
+variant: current
+operating_modes: [0, 1, 3, 4, 5, 16]
+current_unit_ua: 2690
+axes: 1
+remove: [LED]
+overrides:
+  Current Limit: {initial: 648, max: 648}
+  Velocity Limit: {initial: 235}
+  Position P Gain: {initial: 900}
+notes:
+  - "XW series has no LED (65)."
+  - "The e-Manual table shows 1,270 (same as XW430-T333); 1,280 is the number used by ROBOTIS tools for XW430-T200."
+  - "dynamixel_hardware_interface has no model file for 1280: override the model number (CONFIG_X430_MODEL_NUMBER_OVERRIDE=1270) or add a model file there."

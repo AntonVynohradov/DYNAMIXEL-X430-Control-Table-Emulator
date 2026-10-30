@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: Apache-2.0
+# 2XC430-W250 - differences from models/x430_family.yaml
+# Source: https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/
+
+model: 2xc430_w250
+name: 2XC430-W250
+model_number: 1160
+family: x430
+variant: load
+operating_modes: [1, 3, 4, 16]
+axes: 2
+overrides:
+  Max Voltage Limit: {min: 60}
+  Min Voltage Limit: {initial: 60, min: 60}
+  Velocity Limit: {initial: 275}
+  Position P Gain: {initial: 700}
+notes:
+  - "Dual axis: two devices (default IDs 1 and 2) on one bus."

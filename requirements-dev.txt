@@ -1,0 +1,4 @@
+-r requirements.txt
+# Coverage report and documentation
+gcovr>=7.0
+mkdocs-material>=9.5

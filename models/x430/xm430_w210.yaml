@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: Apache-2.0
+# XM430-W210 - differences from models/x430_family.yaml
+# Source: https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/
+
+model: xm430_w210
+name: XM430-W210
+model_number: 1030
+family: x430
+variant: current
+operating_modes: [0, 1, 3, 4, 5, 16]
+current_unit_ua: 2690
+axes: 1
+overrides:
+  Velocity Limit: {initial: 330}

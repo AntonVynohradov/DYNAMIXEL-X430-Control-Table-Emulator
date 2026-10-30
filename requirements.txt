@@ -1,0 +1,3 @@
+# Build-time Python packages (model table generator and Kconfig)
+pyyaml>=6.0
+kconfiglib>=14.1

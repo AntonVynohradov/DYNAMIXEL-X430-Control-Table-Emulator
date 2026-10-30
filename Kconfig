@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: Apache-2.0
+#
+# sfs-dynamixel-x430: top-level Kconfig for a standalone build of the library.
+# Run `cmake --build <build> --target menuconfig` (or guiconfig).
+
+mainmenu "sfs-dynamixel-x430 configuration"
+
+rsource "Kconfig.x430"

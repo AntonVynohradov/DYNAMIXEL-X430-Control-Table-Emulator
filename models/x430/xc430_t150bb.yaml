@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: Apache-2.0
+# XC430-T150BB - differences from models/x430_family.yaml
+# Source: https://emanual.robotis.com/docs/en/dxl/x/xc430-t150bb/
+
+model: xc430_t150bb
+name: XC430-T150BB
+model_number: 1070
+family: x430
+variant: load
+operating_modes: [1, 3, 4, 16]
+axes: 1
+overrides:
+  Moving Threshold: {initial: 20}
+  Max Voltage Limit: {min: 60}
+  Min Voltage Limit: {initial: 60, min: 60}
+  Velocity Limit: {initial: 460}
+  Position P Gain: {initial: 460}
+notes:
+  - "Shares model number 1070 with XC430-W150."

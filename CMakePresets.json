@@ -1,0 +1,37 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "default",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}"
+        },
+        {
+            "name": "X430[Debug]",
+            "inherits": "default",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+        },
+        {
+            "name": "X430[Release]",
+            "inherits": "default",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+        },
+        {
+            "name": "X430[UnitTests]",
+            "inherits": "default",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "X430_UNIT_TESTS": "ON" }
+        },
+        {
+            "name": "X430[Examples]",
+            "inherits": "default",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "X430_EXAMPLES": "ON" }
+        },
+        {
+            "name": "X430[NoKconfig]",
+            "inherits": "default",
+            "description": "Build without Kconfiglib; choose the model with -DX430_MODEL=<model>",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "X430_KCONFIG": "OFF", "X430_MODEL": "xm430_w350" }
+        }
+    ]
+}
