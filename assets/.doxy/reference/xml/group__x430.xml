@@ -1,0 +1,1512 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="group__x430" kind="group">
+    <compoundname>x430</compoundname>
+    <title>DYNAMIXEL X430 Control Table Emulator API</title>
+    <innergroup refid="group__x430__config">Configuration</innergroup>
+    <innergroup refid="group__x430__defs">Definitions</innergroup>
+    <innergroup refid="group__x430__model">Model descriptor</innergroup>
+    <innergroup refid="group__x430__types">Types</innergroup>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="group__x430_1gab93d6742c0aad28b652eb4aaa5b11219" prot="public" static="no" extern="yes" mutable="no">
+        <type>const struct <ref refid="structx430__hooks" kindref="compound">x430_hooks</ref></type>
+        <definition>const struct x430_hooks x430_sim_hooks</definition>
+        <argsstring></argsstring>
+        <name>x430_sim_hooks</name>
+        <briefdescription>
+<para>Hooks implementing the simulated actuator: pass them with <ref refid="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" kindref="member">x430_device_config::user_data</ref> pointing at an initialized <ref refid="structx430__sim" kindref="compound">x430_sim</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>All members are NULL when <ref refid="group__x430__config_1ga2fad795e8d559947ef01969bcfcbe13c" kindref="member">X430_FEATURE_SIMULATOR</ref> is 0. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="110" column="30" bodyfile="src/x430_sim.c" bodystart="612" bodyend="618" declfile="x430.h" declline="110" declcolumn="30"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="group__x430_1ga818bc6a25d661e75c6700e7924feada3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_bus_init</definition>
+        <argsstring>(struct x430_bus *bus, const struct x430_bus_config *config)</argsstring>
+        <name>x430_bus_init</name>
+        <param>
+          <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <param>
+          <type>const struct <ref refid="structx430__bus__config" kindref="compound">x430_bus_config</ref> *</type>
+          <declname>config</declname>
+        </param>
+        <briefdescription>
+<para>Initialize a bus. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Calls no callback except <ref refid="structx430__port_1a3f4688d92be10563f0dfff0ad0497cad" kindref="member">x430_port::millis</ref>. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>config</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Configuration; copied (the port it points at is not). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus ready. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>NULL pointer or no writer. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="123" column="5" bodyfile="src/x430_bus.c" bodystart="838" bodyend="870" declfile="x430.h" declline="123" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga1895c0c496df5f7a87a5a09775c78fba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_bus_attach</definition>
+        <argsstring>(struct x430_bus *bus, struct x430_device *device)</argsstring>
+        <name>x430_bus_attach</name>
+        <param>
+          <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <briefdescription>
+<para>Attach an initialized device to an initialized bus. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Takes the bus lock. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device, not attached to any bus. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Attached. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>NULL pointer. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus or device not initialized, or the device is attached. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gafaa5ee5ef60b742e0065a573fa4e817b" kindref="member">X430_ERR_CONFIG</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus full (<ref refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" kindref="member">X430_MAX_DEVICES</ref>) or the ID is used on the bus. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="134" column="5" bodyfile="src/x430_bus.c" bodystart="872" bodyend="907" declfile="x430.h" declline="134" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gadc885585e82ec93ba1d024ef5cbf12ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_bus_receive</definition>
+        <argsstring>(struct x430_bus *bus, const uint8_t *data, size_t length)</argsstring>
+        <name>x430_bus_receive</name>
+        <param>
+          <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>size_t</type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+<para>Feed received bytes in any chunking; answers every complete instruction packet. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Takes the bus lock; runs the hooks. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Received bytes (may be NULL when <computeroutput>length</computeroutput> is 0). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>length</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number of bytes. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bytes processed. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>NULL bus, or NULL data with a non-zero length. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus not initialized. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga0ab01fabf30d5026cfe71b2a92200a9c" kindref="member">X430_ERR_HAL</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The writer failed for at least one status packet. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="147" column="5" bodyfile="src/x430_bus.c" bodystart="909" bodyend="931" declfile="x430.h" declline="147" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga5503808f804bb6271cd416f793968bbd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_bus_handle_packet</definition>
+        <argsstring>(struct x430_bus *bus, const struct dxl2_packet *packet)</argsstring>
+        <name>x430_bus_handle_packet</name>
+        <param>
+          <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <param>
+          <type>const struct dxl2_packet *</type>
+          <declname>packet</declname>
+        </param>
+        <briefdescription>
+<para>Handle one decoded instruction packet, for applications that run their own DXL2-C link. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Takes the bus lock; runs the hooks. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>packet</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Packet decoded by DXL2-C. Status packets are ignored. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL pointer), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (bus not initialized), <ref refid="group__x430__defs_1ga0ab01fabf30d5026cfe71b2a92200a9c" kindref="member">X430_ERR_HAL</ref> (the writer failed). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="157" column="5" bodyfile="src/x430_bus.c" bodystart="933" bodyend="955" declfile="x430.h" declline="157" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga61b01ca03462e144a91e766ba51bd108" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_bus_poll</definition>
+        <argsstring>(struct x430_bus *bus)</argsstring>
+        <name>x430_bus_poll</name>
+        <param>
+          <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <briefdescription>
+<para>Periodic service: Bus Watchdog of every device. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Call every few milliseconds (the watchdog unit is 20 ms). Takes the bus lock. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="165" column="5" bodyfile="src/x430_bus.c" bodystart="957" bodyend="975" declfile="x430.h" declline="165" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga09a4b2189e9671cd26e940e4e25e6192" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_bus_lock</definition>
+        <argsstring>(struct x430_bus *bus)</argsstring>
+        <name>x430_bus_lock</name>
+        <param>
+          <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <briefdescription>
+<para>Take the bus lock (<ref refid="structx430__port_1ab2e69d29d9139b33b94c19b85b2b2490" kindref="member">x430_port::lock</ref>; nothing without it). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Use it around the live register updates of the application. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="173" column="5" bodyfile="src/x430_bus.c" bodystart="977" bodyend="986" declfile="x430.h" declline="173" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gac5310cd2074b249861e901477cffefab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_bus_unlock</definition>
+        <argsstring>(struct x430_bus *bus)</argsstring>
+        <name>x430_bus_unlock</name>
+        <param>
+          <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <briefdescription>
+<para>Release the bus lock (<ref refid="structx430__port_1a971e0c3c5e0a518f8716e1842622c3ab" kindref="member">x430_port::unlock</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="180" column="5" bodyfile="src/x430_bus.c" bodystart="988" bodyend="997" declfile="x430.h" declline="180" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga6c9e8903722ebe552c74f43197769fde" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_bus_find</definition>
+        <argsstring>(const struct x430_bus *bus, uint8_t id, struct x430_device **device)</argsstring>
+        <name>x430_bus_find</name>
+        <param>
+          <type>const struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> **</type>
+          <declname>device</declname>
+        </param>
+        <briefdescription>
+<para>Attached device with the primary ID <computeroutput>id</computeroutput> (lock-free). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>bus</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>DYNAMIXEL ID. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Set to the device, or to NULL when no device has that ID. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Found. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>NULL pointer, or no attached device has the ID. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bus not initialized. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="191" column="5" bodyfile="src/x430_bus.c" bodystart="999" bodyend="1020" declfile="x430.h" declline="191" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga63afa6e92da99a8b5a7850091dee360e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_init</definition>
+        <argsstring>(struct x430_device *device, const struct x430_device_config *config)</argsstring>
+        <name>x430_device_init</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>const struct <ref refid="structx430__device__config" kindref="compound">x430_device_config</ref> *</type>
+          <declname>config</declname>
+        </param>
+        <briefdescription>
+<para>Initialize a device: factory values, stored EEPROM area (nvm_load), the RAM area and the Startup Configuration (which may call the write hook). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Initialize a device before <ref refid="group__x430_1ga1895c0c496df5f7a87a5a09775c78fba" kindref="member">x430_bus_attach()</ref>, never while a bus serves it: the content of the instance before the call is not trusted (it may be the garbage of a stack instance), so an attachment cannot be detected. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device, not attached to a bus. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>config</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Configuration; copied (the hooks it points at are not). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device ready. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>NULL pointer or ID above 252. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="208" column="5" bodyfile="src/x430_device.c" bodystart="768" bodyend="803" declfile="x430.h" declline="208" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gaea1c26465555bcd3d5b7fd49078d8440" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_get</definition>
+        <argsstring>(const struct x430_device *device, uint16_t address, int32_t *value)</argsstring>
+        <name>x430_device_get</name>
+        <param>
+          <type>const struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>address</declname>
+        </param>
+        <param>
+          <type>int32_t *</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Value of the register that starts at <computeroutput>address</computeroutput> (lock-free). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First address of a register. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Sign-extended value. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Value read. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>NULL pointer, or no register starts at <computeroutput>address</computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device not initialized. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="219" column="5" bodyfile="src/x430_device.c" bodystart="805" bodyend="823" declfile="x430.h" declline="219" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gaf7a2c5ffac2a155fd4c7afe4aa0cee8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_set</definition>
+        <argsstring>(struct x430_device *device, uint16_t address, int32_t value)</argsstring>
+        <name>x430_device_set</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>address</declname>
+        </param>
+        <param>
+          <type>int32_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Store a value into the register at <computeroutput>address</computeroutput>, ignoring access rights (lock-free). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>For live registers (Present Position, Moving, ...): no hook is called, no range is checked. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First address of a register. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Value; truncated to the register size. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Value stored. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>NULL pointer, or no register starts at <computeroutput>address</computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device not initialized. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="232" column="5" bodyfile="src/x430_device.c" bodystart="825" bodyend="841" declfile="x430.h" declline="232" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga723d7f0be186727e19a077e7f41718d8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_id</definition>
+        <argsstring>(const struct x430_device *device, uint8_t *id)</argsstring>
+        <name>x430_device_id</name>
+        <param>
+          <type>const struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+<para>Current ID (7) of the device (lock-free). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ID. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="240" column="5" bodyfile="src/x430_device.c" bodystart="843" bodyend="852" declfile="x430.h" declline="240" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga2da15cacd4c4b35fa33c58a656e4263c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_raise_hardware_error</definition>
+        <argsstring>(struct x430_device *device, uint8_t bits)</argsstring>
+        <name>x430_device_raise_hardware_error</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>bits</declname>
+        </param>
+        <briefdescription>
+<para>Report hardware errors (Hardware Error Status bits, lock-free). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The bits stay set until REBOOT. Bits enabled in Shutdown (63) switch the torque off (event <ref refid="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413ab9169bf2c3cdeb3fbc46aa66450c2ef4" kindref="member">X430_EVENT_TORQUE_SHUTDOWN</ref>) and keep it off until REBOOT. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>bits</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>::X430_HW_ERROR_* bits. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="250" column="5" bodyfile="src/x430_device.c" bodystart="854" bodyend="870" declfile="x430.h" declline="250" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga53155abcdf8945a8e2be12be44d8ae46" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_flush_events</definition>
+        <argsstring>(struct x430_device *device)</argsstring>
+        <name>x430_device_flush_events</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <briefdescription>
+<para>Deliver deferred events (<ref refid="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a0e97ccba6567db95216ee6a8257830e7" kindref="member">X430_EVENT_BAUD_RATE</ref>) after the status packet. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The bus calls it; call it after <ref refid="group__x430_1gafcdd49c16d5f66b8502aa07b061adf93" kindref="member">x430_device_write()</ref> of your own. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="258" column="5" bodyfile="src/x430_device.c" bodystart="872" bodyend="887" declfile="x430.h" declline="258" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga46054fa62816febc02449a2bf8452808" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_read</definition>
+        <argsstring>(struct x430_device *device, uint16_t address, uint16_t length, uint8_t *data, uint8_t *error)</argsstring>
+        <name>x430_device_read</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>address</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+<para>READ semantics: read hook, Indirect Data, Realtime Tick. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First address. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>length</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bytes to read. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Destination of <computeroutput>length</computeroutput> bytes. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Protocol result: DXL2_ERR_NONE, DXL2_ERR_DATA_LENGTH (length 0) or DXL2_ERR_ACCESS (beyond the table). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="274" column="5" bodyfile="src/x430_device.c" bodystart="893" bodyend="948" declfile="x430.h" declline="274" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gafcdd49c16d5f66b8502aa07b061adf93" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_write</definition>
+        <argsstring>(struct x430_device *device, uint16_t address, uint16_t length, const uint8_t *data, uint8_t options, uint8_t *error)</argsstring>
+        <name>x430_device_write</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>address</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>options</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+<para>WRITE semantics: checks every touched register, then calls the write hook and stores in address order; stores the EEPROM area when it changed. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First address. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>length</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bytes to write. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>length</computeroutput> bytes. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>options</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="group__x430__defs_1ga9cb49f55114934f5570fff0b6b8306c3" kindref="member">X430_WRITE_SECONDARY</ref>, <ref refid="group__x430__defs_1gaaf26749e0a579e382cb28088f386e976" kindref="member">X430_WRITE_VALIDATE_ONLY</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Protocol result: DXL2_ERR_NONE or the DXL2_ERR_* of the first failure. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="288" column="5" bodyfile="src/x430_device.c" bodystart="1056" bodyend="1066" declfile="x430.h" declline="288" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gaca0e3b2178ab20349a4187126b861bbf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_reg_write</definition>
+        <argsstring>(struct x430_device *device, uint16_t address, uint16_t length, const uint8_t *data, uint8_t options, uint8_t *error)</argsstring>
+        <name>x430_device_reg_write</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>address</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>options</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+<para>REG_WRITE: validate a write and register it for ACTION. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First address. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>length</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bytes, at most <ref refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" kindref="member">X430_REG_WRITE_SIZE</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>length</computeroutput> bytes. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>options</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="group__x430__defs_1ga9cb49f55114934f5570fff0b6b8306c3" kindref="member">X430_WRITE_SECONDARY</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Protocol result. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="301" column="5" bodyfile="src/x430_device.c" bodystart="1068" bodyend="1095" declfile="x430.h" declline="301" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gabddfe42e95e7d13d16b8d1e3c38f288d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_action</definition>
+        <argsstring>(struct x430_device *device, uint8_t *error)</argsstring>
+        <name>x430_device_action</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+<para>ACTION: execute the registered write. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Protocol result; DXL2_ERR_INSTRUCTION when nothing is registered. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="310" column="5" bodyfile="src/x430_device.c" bodystart="1097" bodyend="1116" declfile="x430.h" declline="310" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gad5ff40132c48f8da06ee7c1e71251450" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_reboot</definition>
+        <argsstring>(struct x430_device *device)</argsstring>
+        <name>x430_device_reboot</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <briefdescription>
+<para>REBOOT: RAM area reset, errors cleared, Startup Configuration applied, event <ref refid="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a003fc56429874057349639276807d70a" kindref="member">X430_EVENT_REBOOT</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="318" column="5" bodyfile="src/x430_device.c" bodystart="1118" bodyend="1128" declfile="x430.h" declline="318" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga14c199a31203ecb73ed1a0fcba0e59f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_factory_reset</definition>
+        <argsstring>(struct x430_device *device, uint8_t option, uint8_t *error)</argsstring>
+        <name>x430_device_factory_reset</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+<para>FACTORY_RESET, then like REBOOT; event <ref refid="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a6efdf3066c0358c0cf1b9f3fc620ec6b" kindref="member">X430_EVENT_FACTORY_RESET</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>option</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="group__x430__defs_1gaec84dd5b0ac4568c02a571a87e040d98" kindref="member">X430_FACTORY_RESET_ALL</ref>, <ref refid="group__x430__defs_1gaed491e44d90528b473cc4e3296178f32" kindref="member">X430_FACTORY_RESET_EXCEPT_ID</ref> or <ref refid="group__x430__defs_1gabf0d862822a70d40f550983fc849d256" kindref="member">X430_FACTORY_RESET_EXCEPT_ID_BAUD</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Protocol result; DXL2_ERR_DATA_RANGE for another option. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="328" column="5" bodyfile="src/x430_device.c" bodystart="1130" bodyend="1170" declfile="x430.h" declline="328" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gaaaaaf6e8d20efbf059d7a6d0b691f94c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_clear</definition>
+        <argsstring>(struct x430_device *device, uint8_t option, uint8_t *error)</argsstring>
+        <name>x430_device_clear</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+<para>CLEAR with option <ref refid="group__x430__defs_1ga8fb9e998934a6388e5afac853cb6fdf3" kindref="member">X430_CLEAR_MULTI_TURN</ref> (event <ref refid="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a05b062231373da8ca6a8653c39051544" kindref="member">X430_EVENT_CLEAR_MULTI_TURN</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>option</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="group__x430__defs_1ga8fb9e998934a6388e5afac853cb6fdf3" kindref="member">X430_CLEAR_MULTI_TURN</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Protocol result: DXL2_ERR_RESULT_FAIL while moving, DXL2_ERR_DATA_RANGE for another option. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="338" column="5" bodyfile="src/x430_device.c" bodystart="1172" bodyend="1206" declfile="x430.h" declline="338" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga183c66e278cc6246b8f22fca5651ded5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_device_backup</definition>
+        <argsstring>(struct x430_device *device, uint8_t option, uint8_t *error)</argsstring>
+        <name>x430_device_backup</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>option</declname>
+        </param>
+        <param>
+          <type>uint8_t *</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+<para>Control Table BACKUP: store, or restore with the torque off. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>option</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="group__x430__defs_1ga6546aed2c7c51f103cc564c3496a2079" kindref="member">X430_BACKUP_STORE</ref> or <ref refid="group__x430__defs_1gab97e3f42440ea384aba0e1d2566d9b7b" kindref="member">X430_BACKUP_RESTORE</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Protocol result. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (not initialized), <ref refid="group__x430__defs_1gaf20661745b939d1d2d99f3320ef112b2" kindref="member">X430_ERR_UNSUPPORTED</ref> (<ref refid="group__x430__config_1gaad138ea4f3dd8d6af92b9f92229c3643" kindref="member">X430_FEATURE_BACKUP</ref> is 0). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="348" column="5" bodyfile="src/x430_device.c" bodystart="1208" bodyend="1257" declfile="x430.h" declline="348" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1ga9e6f35869f8631cbb30b49b11e7107b2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_sim_init</definition>
+        <argsstring>(struct x430_sim *sim, struct x430_device *device, const struct x430_sim_config *config)</argsstring>
+        <name>x430_sim_init</name>
+        <param>
+          <type>struct <ref refid="structx430__sim" kindref="compound">x430_sim</ref> *</type>
+          <declname>sim</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>const struct <ref refid="structx430__sim__config" kindref="compound">x430_sim_config</ref> *</type>
+          <declname>config</declname>
+        </param>
+        <briefdescription>
+<para>Prepare a simulator for <computeroutput>device</computeroutput>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Call it before <ref refid="group__x430_1ga63afa6e92da99a8b5a7850091dee360e" kindref="member">x430_device_init()</ref> of a device whose hooks are <ref refid="group__x430_1gab93d6742c0aad28b652eb4aaa5b11219" kindref="member">x430_sim_hooks</ref> and whose user data is <computeroutput>sim</computeroutput>. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sim</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Simulator. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device it simulates (may be initialized later). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>config</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Configuration, NULL for the defaults. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL sim or device), <ref refid="group__x430__defs_1gaf20661745b939d1d2d99f3320ef112b2" kindref="member">X430_ERR_UNSUPPORTED</ref> (<ref refid="group__x430__config_1ga2fad795e8d559947ef01969bcfcbe13c" kindref="member">X430_FEATURE_SIMULATOR</ref> is 0). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="363" column="5" bodyfile="src/x430_sim.c" bodystart="620" bodyend="627" declfile="x430.h" declline="363" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="group__x430_1gae104b6d9abb4224fb7720860485169cc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int x430_sim_step</definition>
+        <argsstring>(struct x430_sim *sim, uint32_t elapsed_ms)</argsstring>
+        <name>x430_sim_step</name>
+        <param>
+          <type>struct <ref refid="structx430__sim" kindref="compound">x430_sim</ref> *</type>
+          <declname>sim</declname>
+        </param>
+        <param>
+          <type>uint32_t</type>
+          <declname>elapsed_ms</declname>
+        </param>
+        <briefdescription>
+<para>Advance the simulation by <computeroutput>elapsed_ms</computeroutput> one-millisecond steps and refresh the live registers. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Takes the bus lock of the device when it is attached. The time is proportional to <computeroutput>elapsed_ms:</computeroutput> call it periodically. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sim</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Simulator. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>elapsed_ms</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Time since the previous call [ms]. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername><ref refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kindref="member">X430_OK</ref></parametername>
+<parametername><ref refid="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" kindref="member">X430_ERR_PARAM</ref></parametername>
+</parameternamelist>
+<parameterdescription>
+<para>(NULL), <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> (simulator or device not initialized), <ref refid="group__x430__defs_1gaf20661745b939d1d2d99f3320ef112b2" kindref="member">X430_ERR_UNSUPPORTED</ref> (<ref refid="group__x430__config_1ga2fad795e8d559947ef01969bcfcbe13c" kindref="member">X430_FEATURE_SIMULATOR</ref> is 0). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="x430.h" line="375" column="5" bodyfile="src/x430_sim.c" bodystart="629" bodyend="634" declfile="x430.h" declline="375" declcolumn="5"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0: the firmware moves any motor, the host sees a genuine X430. </para>
+    </briefdescription>
+    <detaileddescription>
+<para><bold>Parts.</bold> A <emphasis>bus</emphasis> (<ref refid="structx430__bus" kindref="compound">x430_bus</ref>) decodes the instructions of one serial line with DXL2-C and answers for its <emphasis>devices</emphasis> (<ref refid="structx430__device" kindref="compound">x430_device</ref>). A device holds the Control Table of the model selected at build time and enforces the rules of the real actuator; the application connects it to its motor through <ref refid="structx430__hooks" kindref="compound">x430_hooks</ref>. The optional <emphasis>simulator</emphasis> (<ref refid="structx430__sim" kindref="compound">x430_sim</ref>) replaces the motor.</para>
+<para><bold>Execution model.</bold> Everything runs in one task context (an RX thread or the main loop), never in an interrupt: <ref refid="group__x430_1gadc885585e82ec93ba1d024ef5cbf12ae" kindref="member">x430_bus_receive()</ref> with the bytes from the UART, <ref refid="group__x430_1ga61b01ca03462e144a91e766ba51bd108" kindref="member">x430_bus_poll()</ref> every few milliseconds (Bus Watchdog), and the live register updates of the application between <ref refid="group__x430_1ga09a4b2189e9671cd26e940e4e25e6192" kindref="member">x430_bus_lock()</ref> and <ref refid="group__x430_1gac5310cd2074b249861e901477cffefab" kindref="member">x430_bus_unlock()</ref>. Hooks run inside <ref refid="group__x430_1gadc885585e82ec93ba1d024ef5cbf12ae" kindref="member">x430_bus_receive()</ref> with the bus lock held.</para>
+<para><bold>Platform access</bold> is done only through <ref refid="structx430__bus__config_1af4c6bbcdc66e922d7db43fb04c7c7ef3" kindref="member">x430_bus_config::write</ref> (the bytes of a status packet), the optional <ref refid="structx430__port" kindref="compound">x430_port</ref> (lock, millisecond clock, delay) and the hooks of each device.</para>
+<para><bold>Initialization.</bold> Every function except the three *_init() functions returns <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref> for an instance without a successful initialization and calls no hook. An initialization checks every argument before it changes the instance: a refused initialization leaves the instance as it was. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

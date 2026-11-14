@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 300" width="980" height="300" role="img" aria-label="How a WRITE is executed">
+<title>How a WRITE is executed</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5A6472"/></marker><marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F8B9A"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E07A00"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker></defs>
+<rect x="0" y="0" width="980" height="300" rx="12" fill="#FFFFFF"/>
+<rect x="20" y="60" width="140" height="100" rx="10" fill="#F2F5FA" stroke="#5A6472" stroke-width="1.5"/>
+<text x="90.0" y="91.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="14" font-weight="bold" fill="#5A6472" text-anchor="middle">1  Address</text>
+<text x="90.0" y="111.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">length 0: Data Length</text>
+<text x="90.0" y="128.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">beyond table: Access</text>
+<rect x="182" y="60" width="140" height="100" rx="10" fill="#F2F5FA" stroke="#5A6472" stroke-width="1.5"/>
+<text x="252.0" y="91.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="14" font-weight="bold" fill="#5A6472" text-anchor="middle">2  Indirect</text>
+<text x="252.0" y="111.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">Indirect Data resolved</text>
+<text x="252.0" y="128.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">to the real registers</text>
+<line x1="160" y1="110" x2="182" y2="110" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="344" y="60" width="140" height="100" rx="10" fill="#E6F4F5" stroke="#0F8B9A" stroke-width="1.5"/>
+<text x="414.0" y="91.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="14" font-weight="bold" fill="#0F8B9A" text-anchor="middle">3  Check all</text>
+<text x="414.0" y="111.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">access, EEPROM lock,</text>
+<text x="414.0" y="128.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">range, limits, watchdog</text>
+<line x1="322" y1="110" x2="344" y2="110" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="506" y="60" width="140" height="100" rx="10" fill="#EAF1FB" stroke="#1E5AA8" stroke-width="1.5"/>
+<text x="576.0" y="91.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E5AA8" text-anchor="middle">4  Hook + store</text>
+<text x="576.0" y="111.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">write hook per register</text>
+<text x="576.0" y="128.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">in address order</text>
+<line x1="484" y1="110" x2="506" y2="110" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="668" y="60" width="140" height="100" rx="10" fill="#FFF7EC" stroke="#E07A00" stroke-width="1.5"/>
+<text x="738.0" y="91.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="14" font-weight="bold" fill="#E07A00" text-anchor="middle">5  Persist</text>
+<text x="738.0" y="111.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">EEPROM changed:</text>
+<text x="738.0" y="128.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">nvm_store()</text>
+<line x1="646" y1="110" x2="668" y2="110" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<rect x="830" y="60" width="140" height="100" rx="10" fill="#EAF5EA" stroke="#2E7D32" stroke-width="1.5"/>
+<text x="900.0" y="91.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="14" font-weight="bold" fill="#2E7D32" text-anchor="middle">6  Follow-ups</text>
+<text x="900.0" y="111.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">Torque On by Goal;</text>
+<text x="900.0" y="128.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">Goal := Present</text>
+<line x1="808" y1="110" x2="830" y2="110" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="490" y="30" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="13" font-weight="normal" fill="#0B2545" text-anchor="middle">x430_device_write() — WRITE, SYNC_WRITE, BULK_WRITE, ACTION and Indirect Data take the same path</text>
+<text x="270" y="196" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#0F8B9A" text-anchor="middle">one failed check: nothing is stored,</text>
+<text x="270" y="212" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#0F8B9A" text-anchor="middle">the error goes into the status packet</text>
+<text x="600" y="196" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#1E5AA8" text-anchor="middle">a refusing hook stops the write at its register</text>
+<text x="490" y="260" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">REG_WRITE runs steps 1-3 only and keeps the data for ACTION.</text>
+</svg>

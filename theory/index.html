@@ -1,0 +1,2169 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0 in portable C11: the firmware drives any motor, the host sees a genuine X430. No heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+      
+      
+        <meta name="author" content="Anton Vynohradov">
+      
+      
+        <link rel="canonical" href="https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/theory/">
+      
+      
+        <link rel="prev" href="../configuration/">
+      
+      
+        <link rel="next" href="../integration/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/brand/systemfromscratch-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>X430 Emulation - DYNAMIXEL-X430-Control-Table-Emulator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#x430-emulation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="DYNAMIXEL-X430-Control-Table-Emulator" class="md-header__button md-logo" aria-label="DYNAMIXEL-X430-Control-Table-Emulator" data-md-component="logo">
+      
+  <img src="../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DYNAMIXEL-X430-Control-Table-Emulator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              X430 Emulation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <a href="../downloads/DYNAMIXEL-X430-Control-Table-Emulator_User_Manual.pdf" class="md-header__button md-icon" title="Download PDF user manual" aria-label="Download PDF user manual" download>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-9.5 8.5c0 .8-.7 1.5-1.5 1.5H7v2H5.5V9H8c.8 0 1.5.7 1.5 1.5zm5 2c0 .8-.7 1.5-1.5 1.5h-2.5V9H13c.8 0 1.5.7 1.5 1.5zm4-3H17v1h1.5V13H17v2h-1.5V9h3zm-6.5 0h1v3h-1zm-5 0h1v1H7z"/></svg>
+      </a>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  
+  Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  X430 Emulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../integration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Integration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../api/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../about/" class="md-tabs__link">
+          
+  
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="DYNAMIXEL-X430-Control-Table-Emulator" class="md-nav__button md-logo" aria-label="DYNAMIXEL-X430-Control-Table-Emulator" data-md-component="logo">
+      
+  <img src="../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
+
+    </a>
+    DYNAMIXEL-X430-Control-Table-Emulator
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How It Works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using the Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending the Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    X430 Emulation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    X430 Emulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-control-table-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Control Table model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addressing-and-status-packets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressing and status packets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indirect-address-and-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indirect Address and Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bus-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bus Watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLEAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group instructions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistent-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistent blocks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The simulator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The simulator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#position-modes-3-4-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Position modes (3, 4, 5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#velocity-pwm-and-current-modes-1-16-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Velocity, PWM and current modes (1, 16, 0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#live-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live registers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limits-of-the-emulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits of the emulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Doxygen
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Doxygen
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/modules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/annotated/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/macros/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MISRA C:2012
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Author & Company
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-control-table-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Control Table model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addressing-and-status-packets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addressing and status packets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indirect-address-and-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indirect Address and Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bus-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bus Watchdog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLEAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#group-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group instructions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistent-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persistent blocks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The simulator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The simulator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#position-modes-3-4-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Position modes (3, 4, 5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#velocity-pwm-and-current-modes-1-16-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Velocity, PWM and current modes (1, 16, 0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#live-registers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live registers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#measured" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measured
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limits-of-the-emulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits of the emulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="x430-emulation">X430 Emulation<a class="headerlink" href="#x430-emulation" title="Permanent link">&para;</a></h1>
+<p>This chapter describes what a host sees: the Control Table model, how each instruction is
+executed, the rules a real X430 enforces and how the library reproduces them, the format
+of the persistent blocks, and the kinematic model of the simulator with its equations.
+Every rule is taken from the code (<code>src/</code>) and checked by the unit tests in <code>tests/unit/</code>;
+the measured results come from <code>tests/unit/gtest_x430_sim.cpp</code> and from the DynamixelSDK
+check in <code>tests/sdk/</code>.</p>
+<h2 id="the-control-table-model">The Control Table model<a class="headerlink" href="#the-control-table-model" title="Permanent link">&para;</a></h2>
+<p><code>models/x430_family.yaml</code> holds the Control Table shared by the X430 family (662
+addresses, two Indirect Address blocks of 28 entries) with two variants:</p>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Models</th>
+<th>Current registers</th>
+<th>Operating modes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>current</code></td>
+<td>XM430, XH430, XD430, XW430</td>
+<td>Current Limit (38), Goal Current (102), Present Current (126)</td>
+<td>0, 1, 3, 4, 5, 16</td>
+</tr>
+<tr>
+<td><code>load</code></td>
+<td>XL430, XC430, 2XL430, 2XC430</td>
+<td>Present Load (126) only</td>
+<td>1, 3, 4, 16</td>
+</tr>
+</tbody>
+</table>
+<p><code>models/x430/&lt;model&gt;.yaml</code> lists what differs: Model Number, variant, removed registers
+(LED on the XW430) and initial values or ranges. <code>tools/x430_gen_model.py</code> merges both,
+validates the result (sizes, overlaps, EEPROM below address 64, a check for every writable
+register) and writes <code>x430_model_table.c</code> with the register list and an address map (one
+byte per address: register index + 1, 0 = reserved).</p>
+<p>Every register has a write check:</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Valid values</th>
+<th>Registers (examples)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>range</td>
+<td>min..max</td>
+<td>ID (0..252), Return Delay Time (0..254), limits</td>
+</tr>
+<tr>
+<td>mask</td>
+<td>only the bits of a mask</td>
+<td>Drive Mode (bits 0, 2, 3), Shutdown</td>
+</tr>
+<tr>
+<td>opmode</td>
+<td>an operating mode of the model</td>
+<td>Operating Mode (11)</td>
+</tr>
+<tr>
+<td>symmetric</td>
+<td>−limit..+limit, the limit is another register</td>
+<td>Goal PWM (±36), Goal Current (±38), Goal Velocity (±44)</td>
+</tr>
+<tr>
+<td>goal position</td>
+<td>Min..Max Position Limit (52, 48) in mode 3; ±1,048,575 in the other modes</td>
+<td>Goal Position (116)</td>
+</tr>
+<tr>
+<td>indirect</td>
+<td>RAM address 64..661</td>
+<td>Indirect Address 1–56</td>
+</tr>
+</tbody>
+</table>
+<p><code>tests/models</code> compares every model with a snapshot of the e-Manual control tables (size,
+access, area, initial value and range of every register). Differences are allowed only
+where the emulator deviates on purpose:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>e-Manual</th>
+<th>Emulator</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol Type (13)</td>
+<td>1–2</td>
+<td>2 only</td>
+<td>Only Protocol 2.0 is emulated</td>
+</tr>
+<tr>
+<td>Protocol Type initial on XW</td>
+<td>1</td>
+<td>2</td>
+<td>Same; the XW description names 2 as the default</td>
+</tr>
+<tr>
+<td>Secondary ID (12) range</td>
+<td>0–252</td>
+<td>0–255</td>
+<td>253–255 disable the function (as described)</td>
+</tr>
+<tr>
+<td>Bus Watchdog (98) range</td>
+<td>1–127</td>
+<td>0–127</td>
+<td>0 disables and clears the error (as described)</td>
+</tr>
+<tr>
+<td>XW430-T200 Model Number</td>
+<td>1,270</td>
+<td>1,280</td>
+<td>The table repeats the number of the XW430-T333; ROBOTIS tools use 1,280</td>
+</tr>
+<tr>
+<td>ID write that collides with another emulated device</td>
+<td>accepted</td>
+<td>Data Range Error</td>
+<td>Two local devices with one ID would answer together</td>
+</tr>
+<tr>
+<td>Partial write of a multi-byte register</td>
+<td>–</td>
+<td>bytes are merged</td>
+<td>Not specified; the whole new value is checked</td>
+</tr>
+</tbody>
+</table>
+<h2 id="addressing-and-status-packets">Addressing and status packets<a class="headerlink" href="#addressing-and-status-packets" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A packet to an ID is executed by the device with that <strong>ID</strong>; only it answers.</li>
+<li>Devices whose <strong>Secondary ID</strong> (12) equals the packet ID execute it silently; they refuse
+  EEPROM writes and FACTORY_RESET. Values 253–255 disable the Secondary ID.</li>
+<li><strong>Broadcast</strong> (0xFE): PING is answered by every device in ascending ID order; WRITE,
+  REG_WRITE, ACTION, REBOOT, CLEAR, BACKUP and FACTORY_RESET (not option 0xFF) are executed
+  silently; READ is ignored.</li>
+<li>Status packets of other devices on the line are ignored.</li>
+<li><strong>Status Return Level</strong> (68): 0 = PING only, 1 = PING and READ (also the group reads),
+  2 = all. The level written by an instruction already applies to its own answer.</li>
+<li><strong>Return Delay Time</strong> (9) × 2 µs is waited through <code>x430_port::delay_us</code> before each
+  answer.</li>
+<li>The <strong>alert bit</strong> (0x80) is set in the error byte of every status while Hardware Error
+  Status (70) is not 0.</li>
+<li>REBOOT and FACTORY_RESET answer first, then act. After an ID change the answer still
+  comes from the old ID.</li>
+</ul>
+<h2 id="writes">Writes<a class="headerlink" href="#writes" title="Permanent link">&para;</a></h2>
+<p><img alt="How a WRITE is executed" src="../assets/images/write-pipeline.svg" /></p>
+<ol>
+<li>A length of 0 is a Data Length Error; a range beyond the table an Access Error.</li>
+<li>Bytes written through Indirect Data are resolved to the addresses they point at.</li>
+<li>Every register the write touches is checked with its new value (the bytes of the write
+   merged into the current bytes). Errors: Access (read-only, EEPROM while the torque is
+   on, EEPROM through the Secondary ID), Data Range (value, limit registers, a goal while a
+   Bus Watchdog error is active), Result Fail (Torque Enable after a shutdown). If one check
+   fails, nothing is stored.</li>
+<li>In address order the write hook is called for each register; it may refuse, which stops
+   the write at that register. Accepted registers are stored.</li>
+<li>If an EEPROM register changed, the EEPROM area is stored through <code>nvm_store</code>; a failure
+   is reported as Result Fail.</li>
+<li>Drive Mode bit 3: a goal written with the torque off switches the torque on (through the
+   write hook). Torque Enable 0 → 1 copies Present Position into Goal Position.</li>
+</ol>
+<p>Reserved addresses read as 0 and ignore writes. REG_WRITE runs steps 1–3, keeps up to
+<code>X430_REG_WRITE_SIZE</code> bytes and sets Registered Instruction (69); ACTION runs the whole
+write. A Baud Rate change raises <code>X430_EVENT_BAUD_RATE</code> after the status packet, so the
+answer still leaves at the old rate.</p>
+<h2 id="indirect-address-and-data">Indirect Address and Data<a class="headerlink" href="#indirect-address-and-data" title="Permanent link">&para;</a></h2>
+<p>Indirect Address 1–28 (168–222) map Indirect Data 1–28 (224–251), and 29–56 (578–632) map
+634–661. An Indirect Data byte behaves like the byte it points at (size, range and access
+are those of the target register); a byte that points at Indirect Data itself is plain
+storage. ROS 2 <code>dynamixel_hardware_interface</code> uses this to read Present Position and
+Present Velocity with one Fast Sync Read; the DynamixelSDK check does the same.</p>
+<h2 id="lifecycle">Lifecycle<a class="headerlink" href="#lifecycle" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>EEPROM area (0–63)</th>
+<th>RAM area (64–661)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x430_device_init()</code></td>
+<td>Factory values, then the stored block</td>
+<td>Factory values, then the Startup Configuration</td>
+</tr>
+<tr>
+<td>REBOOT</td>
+<td>Kept</td>
+<td>Factory values, then the Startup Configuration; errors cleared</td>
+</tr>
+<tr>
+<td>FACTORY_RESET 0xFF / 0x01 / 0x02</td>
+<td>Factory values (keep the ID / keep ID and Baud Rate)</td>
+<td>As REBOOT</td>
+</tr>
+<tr>
+<td>BACKUP 0x01</td>
+<td>–</td>
+<td>Whole table stored, Backup Ready (147) = 1</td>
+</tr>
+<tr>
+<td>BACKUP 0x02 (torque off)</td>
+<td>Restored except ID, Baud Rate, Protocol Type</td>
+<td>Restored except Torque Enable, Bus Watchdog</td>
+</tr>
+</tbody>
+</table>
+<p>Startup Configuration (60): bit 1 restores the RAM area from a valid backup, bit 0
+switches the torque on (through the write hook). FACTORY_RESET 0xFF gives the device its
+factory ID from <code>x430_device_config::id</code> — or the model default 1 when that ID is used by
+another device of the bus.</p>
+<h3 id="bus-watchdog">Bus Watchdog<a class="headerlink" href="#bus-watchdog" title="Permanent link">&para;</a></h3>
+<p>With Torque Enable = 1 and Bus Watchdog (98) = 1..127, the device expects an instruction
+packet at least every <span class="arithmatex">\(T_{\mathrm{wd}} = 20\,\mathrm{ms} \times\)</span> Bus Watchdog. The time
+since the last instruction packet is compared in <code>x430_bus_poll()</code> and on the next packet;
+when it is exceeded, Bus Watchdog reads 0xFF (−1), the event <code>X430_EVENT_BUS_WATCHDOG</code>
+fires and the goal registers answer Data Range Error until Bus Watchdog is written again.
+The resolution is the period of <code>x430_bus_poll()</code>.</p>
+<h3 id="clear">CLEAR<a class="headerlink" href="#clear" title="Permanent link">&para;</a></h3>
+<p>Option 0x01 with the magic bytes <code>44 58 4C 22</code> clears the multi-turn information of Present
+Position. It is refused with Result Fail while Moving (122) is 1. The event hook does the
+work (the simulator moves its shaft); without an event hook the library wraps Present
+Position into 0..4095.</p>
+<h2 id="group-instructions">Group instructions<a class="headerlink" href="#group-instructions" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>SYNC_READ / BULK_READ:</strong> one status packet per hosted device, in the order of the
+  request; IDs that are not hosted are skipped.</li>
+<li><strong>FAST_SYNC_READ / FAST_BULK_READ:</strong> one status packet with ID 0xFE. Per device it
+  carries <code>[error, ID, data, CRC]</code>; each CRC covers the packet from the header up to that
+  point, and the last one is the packet CRC. The packet is not byte-stuffed, as
+  DynamixelSDK expects.</li>
+</ul>
+<p><img alt="Fast Sync Read status packet" src="../assets/images/fast-read.svg" /></p>
+<ul>
+<li><strong>SYNC_WRITE / BULK_WRITE:</strong> applied to the hosted IDs without status; a malformed
+  BULK_WRITE is ignored as a whole.</li>
+</ul>
+<p>A Fast read answers only for the IDs of this bus: keep all IDs of one ROS 2 hardware
+component on the same emulator bus.</p>
+<h2 id="persistent-blocks">Persistent blocks<a class="headerlink" href="#persistent-blocks" title="Permanent link">&para;</a></h2>
+<p>The library hands the application opaque blocks; their layout is fixed so that a block of
+another model or a damaged flash page is detected:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Offset</th>
+<th style="text-align: right;">Size</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td>Magic <code>X430</code></td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td>Model Number (little endian)</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+<td>Format version (1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
+<td>Slot: 0 EEPROM area, 1 backup</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2</td>
+<td>Payload size: 64 (EEPROM area) or 662 (whole table)</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">n</td>
+<td>Payload: the table bytes 0..n−1</td>
+</tr>
+<tr>
+<td style="text-align: right;">10 + n</td>
+<td style="text-align: right;">2</td>
+<td>CRC-16 of DYNAMIXEL Protocol 2.0 over bytes 0..9+n</td>
+</tr>
+</tbody>
+</table>
+<p>A block with any field that does not match is ignored: the device keeps its factory
+values. The EEPROM block is 76 bytes (<code>X430_NVM_EEPROM_SIZE</code>), the backup 674 bytes
+(<code>X430_NVM_BACKUP_SIZE</code>).</p>
+<h2 id="the-simulator">The simulator<a class="headerlink" href="#the-simulator" title="Permanent link">&para;</a></h2>
+<p>The simulator replaces the motor with a kinematic model that follows the X430 profiles. It
+works in integer units: the shaft position <span class="arithmatex">\(s\)</span> in 1/1000 pulse (4,096 pulses per turn) and
+the shaft velocity <span class="arithmatex">\(v\)</span> in 1/1000 pulse per second, advanced in steps of <span class="arithmatex">\(\Delta t\)</span> = 1 ms.
+The register units convert as</p>
+<div class="arithmatex">\[
+\begin{aligned}
+u_v &amp;= 0.229\,\tfrac{\mathrm{rev}}{\mathrm{min}} = 15{,}633\ \tfrac{\mathrm{mpulse}}{\mathrm{s}} \\
+u_a &amp;= 214.577\,\tfrac{\mathrm{rev}}{\mathrm{min}^2} = 244{,}140\ \tfrac{\mathrm{mpulse}}{\mathrm{s}^2}
+\end{aligned}
+\]</div>
+<h3 id="position-modes-3-4-5">Position modes (3, 4, 5)<a class="headerlink" href="#position-modes-3-4-5" title="Permanent link">&para;</a></h3>
+<p>With <span class="arithmatex">\(g\)</span> the Goal Position on the shaft (<span class="arithmatex">\((\text{Goal Position} - \text{Homing Offset})
+\times\)</span> direction <span class="arithmatex">\(\times 1000\)</span>), <span class="arithmatex">\(V\)</span> the profile speed (Profile Velocity <span class="arithmatex">\(\times u_v\)</span>, or
+Velocity Limit <span class="arithmatex">\(\times u_v\)</span> when Profile Velocity is 0) and <span class="arithmatex">\(A\)</span> = Profile Acceleration
+<span class="arithmatex">\(\times u_a\)</span>, each step <span class="arithmatex">\(k\)</span> computes</p>
+<div class="arithmatex">\[
+\begin{aligned}
+e_k &amp;= g - s_k, \qquad d_k = \lvert e_k \rvert \\
+r_k &amp;= \min\!\left(1000\, d_k,\ \sqrt{2 A \min(d_k, 10^9)},\ V\right) \\
+v_{k+1} &amp;= v_k + \operatorname{clamp}\!\left(\operatorname{sgn}(e_k)\, r_k - v_k,\ -\tfrac{A}{1000},\ \tfrac{A}{1000}\right) \\
+s_{k+1} &amp;= s_k + \left\lfloor v_{k+1} / 1000 \right\rceil_0
+\end{aligned}
+\]</div>
+<p>where <span class="arithmatex">\(1000\,d_k\)</span> is the speed that arrives within one step, the square root the fastest
+speed that can still brake to standstill at the goal, and <span class="arithmatex">\(\lfloor\cdot\rceil_0\)</span> a
+division truncated toward zero. With <span class="arithmatex">\(A = 0\)</span> the velocity jumps to its target. When the
+remaining distance is not larger than the step (or below half a pulse) the shaft is placed
+on the goal and <span class="arithmatex">\(v = 0\)</span>. The square root is an integer square root (at most 32 iterations).
+Drive Mode bit 2 (time-based profile) is treated like the velocity-based profile.</p>
+<p><img alt="Trapezoidal profile of the simulator" src="../assets/images/profile.svg" /></p>
+<p>The curve is computed by <code>tools/docs/diagrams.py</code> with the same integer arithmetic.</p>
+<h3 id="velocity-pwm-and-current-modes-1-16-0">Velocity, PWM and current modes (1, 16, 0)<a class="headerlink" href="#velocity-pwm-and-current-modes-1-16-0" title="Permanent link">&para;</a></h3>
+<p>The target velocity is Goal Velocity <span class="arithmatex">\(\times u_v\)</span> (mode 1), Goal PWM / PWM Limit <span class="arithmatex">\(\times\)</span>
+Velocity Limit <span class="arithmatex">\(\times u_v\)</span> (mode 16) or Goal Current / Current Limit <span class="arithmatex">\(\times\)</span> Velocity
+Limit <span class="arithmatex">\(\times u_v\)</span> (mode 0), limited to ±Velocity Limit <span class="arithmatex">\(\times u_v\)</span> and ramped with <span class="arithmatex">\(A\)</span> as
+above; the shaft advances by <span class="arithmatex">\(\lfloor v/1000 \rceil_0\)</span> per step. With the torque off the
+velocity is 0 and the shaft holds its position.</p>
+<h3 id="live-registers">Live registers<a class="headerlink" href="#live-registers" title="Permanent link">&para;</a></h3>
+<p>After the steps of <code>x430_sim_step()</code> the simulator writes</p>
+<table>
+<thead>
+<tr>
+<th>Register</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Present Position (132)</td>
+<td><span class="arithmatex">\(\mathrm{round}(s/1000) \times\)</span> direction + Homing Offset</td>
+</tr>
+<tr>
+<td>Present Velocity (128)</td>
+<td><span class="arithmatex">\(\mathrm{round}(v \times \text{direction} / u_v)\)</span></td>
+</tr>
+<tr>
+<td>Present Current / Load (126)</td>
+<td>Velocity change of the last step in <span class="arithmatex">\(u_v\)</span>, limited to Current Limit (or ±1000 for Present Load) — a rough stand-in for the effort</td>
+</tr>
+<tr>
+<td>Present PWM (124)</td>
+<td>Present Velocity / Velocity Limit <span class="arithmatex">\(\times\)</span> 885</td>
+</tr>
+<tr>
+<td>Moving (122), Moving Status (123)</td>
+<td>1 and Profile Ongoing while the shaft turns or a Goal Position move is not done; In-Position, profile type (step, rectangular, triangular, trapezoidal)</td>
+</tr>
+<tr>
+<td>Velocity / Position Trajectory (136 / 140)</td>
+<td>The target velocity; Goal Position in the position modes</td>
+</tr>
+<tr>
+<td>Present Input Voltage (144), Present Temperature (146)</td>
+<td>From <code>struct x430_sim_config</code></td>
+</tr>
+</tbody>
+</table>
+<p>Direction is −1 with Drive Mode bit 0 (reverse), +1 otherwise.</p>
+<h3 id="measured">Measured<a class="headerlink" href="#measured" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario (test)</th>
+<th style="text-align: right;">Simulator</th>
+<th style="text-align: right;">Closed form</th>
+<th style="text-align: right;">Difference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Move of 4,096 pulses, Profile Velocity 100, Profile Acceleration 20 (<code>TrapezoidalMoveTimeMatchesTheClosedForm</code>), <span class="arithmatex">\(T = d/v + v/a\)</span></td>
+<td style="text-align: right;">2,920 ms</td>
+<td style="text-align: right;">2,940.3 ms</td>
+<td style="text-align: right;">−0.69 %</td>
+</tr>
+<tr>
+<td>Velocity ramp 0 → 100, Profile Acceleration 5 (<code>VelocityRampTimeMatchesTheClosedForm</code>), <span class="arithmatex">\(t = v/a\)</span></td>
+<td style="text-align: right;">1,275 ms</td>
+<td style="text-align: right;">1,280.7 ms</td>
+<td style="text-align: right;">−0.45 %</td>
+</tr>
+</tbody>
+</table>
+<p>The peak Present Velocity of the move is exactly the Profile Velocity (100). The move ends
+slightly early because the last steps place the shaft on the goal as soon as it is closer
+than one step. The tests accept ±1 %.</p>
+<h2 id="limits-of-the-emulation">Limits of the emulation<a class="headerlink" href="#limits-of-the-emulation" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Motion, current control and PID gains belong to the motor: the library stores the gains
+  and limits, the application applies them.</li>
+<li>Present Input Voltage and Present Temperature are not compared with their limits by the
+  library: the application raises the hardware error.</li>
+<li>Only Protocol 2.0; Protocol Type accepts 2 only.</li>
+<li>One model per build; all devices of a build emulate the same model.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../configuration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuration">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Configuration
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../integration/" class="md-footer__link md-footer__link--next" aria-label="Next: Integration">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Integration
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Anton Vynohradov · <a href="https://systemfromscratch.com">SystemFromScratch®</a> · Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/AntonVynohradov" target="_blank" rel="noopener" title="Anton Vynohradov on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/in/vynohradov" target="_blank" rel="noopener" title="Anton Vynohradov on LinkedIn" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://orcid.org/0009-0005-6965-0911" target="_blank" rel="noopener" title="Anton Vynohradov on ORCID" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M294.7 188.2h-45.9V342h47.5c67.6 0 83.1-51.3 83.1-76.9 0-41.6-26.5-76.9-84.7-76.9M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496m-80.8 360.8h-29.8V161.3h29.8zM160.3 98.5a19.6 19.6 0 1 1 0 39.2 19.6 19.6 0 1 1 0-39.2M300 369h-81V161.3h80.6c76.7 0 110.4 54.8 110.4 103.9 0 53.3-41.7 103.9-110 103.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://systemfromscratch.com" target="_blank" rel="noopener" title="SystemFromScratch®" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2s.06-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.92 7.92 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8 8 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.7 15.7 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__align__device__ctx" kind="struct" language="C++" prot="public">
+    <compoundname>x430_align_device_ctx</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__align__device__ctx_1a43a2e3ecdb553618639c84c8cbe58b19" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char x430_align_device_ctx::c</definition>
+        <argsstring></argsstring>
+        <name>c</name>
+        <qualifiedname>x430_align_device_ctx::c</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_device.c" line="63" column="10" bodyfile="src/x430_device.c" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__align__device__ctx_1a093b3841eea5af7d77f726972433ac76" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structx430__device__ctx" kindref="compound">x430_device_ctx</ref></type>
+        <definition>struct x430_device_ctx x430_align_device_ctx::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <qualifiedname>x430_align_device_ctx::x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_device.c" line="64" column="26" bodyfile="src/x430_device.c" bodystart="64" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>x430_align_device_ctx</label>
+        <link refid="structx430__align__device__ctx"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>x</edgelabel>
+        </childnode>
+      </node>
+      <node id="6">
+        <label>x430_bus</label>
+        <link refid="structx430__bus"/>
+      </node>
+      <node id="5">
+        <label>x430_device</label>
+        <link refid="structx430__device"/>
+      </node>
+      <node id="3">
+        <label>x430_device_config</label>
+        <link refid="structx430__device__config"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>hooks</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>x430_device_ctx</label>
+        <link refid="structx430__device__ctx"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>config</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>bus</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>x430_hooks</label>
+        <link refid="structx430__hooks"/>
+        <childnode refid="5" relation="usage">
+          <edgelabel>event</edgelabel>
+          <edgelabel>nvm_load</edgelabel>
+          <edgelabel>nvm_store</edgelabel>
+          <edgelabel>read</edgelabel>
+          <edgelabel>write</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="src/x430_device.c" line="61" column="1" bodyfile="src/x430_device.c" bodystart="62" bodyend="65"/>
+    <listofallmembers>
+      <member refid="structx430__align__device__ctx_1a43a2e3ecdb553618639c84c8cbe58b19" prot="public" virt="non-virtual"><scope>x430_align_device_ctx</scope><name>c</name></member>
+      <member refid="structx430__align__device__ctx_1a093b3841eea5af7d77f726972433ac76" prot="public" virt="non-virtual"><scope>x430_align_device_ctx</scope><name>x</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

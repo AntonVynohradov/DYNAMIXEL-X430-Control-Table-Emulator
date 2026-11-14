@@ -1,0 +1,1266 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="group__x430__defs" kind="group">
+    <compoundname>x430_defs</compoundname>
+    <title>Definitions</title>
+    <sectiondef kind="user-defined">
+      <header>Events and persistent storage</header>
+      <memberdef kind="enum" id="group__x430__defs_1ga7d5a16437bb5db3b961b2419ebe8f413" prot="public" static="no" strong="no">
+        <type></type>
+        <name>x430_event</name>
+        <enumvalue id="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a003fc56429874057349639276807d70a" prot="public">
+          <name>X430_EVENT_REBOOT</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>REBOOT executed: RAM area reset, hardware errors cleared. </para>
+          </briefdescription>
+          <detaileddescription>
+<para>Reset the motor state. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a6efdf3066c0358c0cf1b9f3fc620ec6b" prot="public">
+          <name>X430_EVENT_FACTORY_RESET</name>
+          <briefdescription>
+<para>FACTORY_RESET executed: EEPROM back to factory values (then like REBOOT). </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a05b062231373da8ca6a8653c39051544" prot="public">
+          <name>X430_EVENT_CLEAR_MULTI_TURN</name>
+          <briefdescription>
+<para>CLEAR (multi-turn) requested while the device is not moving. </para>
+          </briefdescription>
+          <detaileddescription>
+<para>Return DXL2_ERR_NONE after bringing Present Position into one turn, or an error. Without an event hook the library wraps Present Position itself. </para>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413aecaee746c4367ac98fd72ba0c6d034ca" prot="public">
+          <name>X430_EVENT_BUS_WATCHDOG</name>
+          <briefdescription>
+<para>Bus Watchdog expired: stop the actuator (Bus Watchdog now reads -1). </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a0e97ccba6567db95216ee6a8257830e7" prot="public">
+          <name>X430_EVENT_BAUD_RATE</name>
+          <briefdescription>
+<para>Baud Rate (8) changed; delivered after the status packet was sent. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413ab9169bf2c3cdeb3fbc46aa66450c2ef4" prot="public">
+          <name>X430_EVENT_TORQUE_SHUTDOWN</name>
+          <briefdescription>
+<para>A hardware error listed in Shutdown (63) switched the torque off. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413ac3906beb49457e3086f0fa0883fbb8f2" prot="public">
+          <name>X430_EVENT_BACKUP_RESTORED</name>
+          <briefdescription>
+<para>BACKUP restore copied the backup into the Control Table. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Notifications from a device to the application (<ref refid="structx430__hooks_1aa88bdb1b64a0a2e289c6de118f3a0c79" kindref="member">x430_hooks::event</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="79" column="1" bodyfile="inc/x430_defs.h" bodystart="80" bodyend="99"/>
+      </memberdef>
+      <memberdef kind="enum" id="group__x430__defs_1gad147345a04699c34670eadb20e3b03e4" prot="public" static="no" strong="no">
+        <type></type>
+        <name>x430_nvm_slot</name>
+        <enumvalue id="group__x430__defs_1ggad147345a04699c34670eadb20e3b03e4a304f5a0400af9d64dcb097e7cfa90bb7" prot="public">
+          <name>X430_NVM_EEPROM</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>EEPROM area, <ref refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kindref="member">X430_NVM_EEPROM_SIZE</ref> bytes. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__defs_1ggad147345a04699c34670eadb20e3b03e4af90e62dbb0448641c7a1554ec0c1ed5e" prot="public">
+          <name>X430_NVM_BACKUP</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+<para>Control Table backup, <ref refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kindref="member">X430_NVM_BACKUP_SIZE</ref> bytes. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Persistent storage slots (<ref refid="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" kindref="member">x430_hooks::nvm_load</ref>, <ref refid="structx430__hooks_1a9fd99af3afec213a15c791489e535336" kindref="member">x430_hooks::nvm_store</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="102" column="1" bodyfile="inc/x430_defs.h" bodystart="103" bodyend="106"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gabd497cf3105b7e7a9b2a534eeaf415bb" prot="public" static="no">
+        <name>X430_NVM_HEADER_SIZE</name>
+        <initializer>10U</initializer>
+        <briefdescription>
+<para>Size of the persistent block header: magic, model, format, slot, payload size. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="109" column="9" bodyfile="inc/x430_defs.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Status codes (return values of every x430_* function)</header>
+      <memberdef kind="define" id="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" prot="public" static="no">
+        <name>X430_OK</name>
+        <initializer>0</initializer>
+        <briefdescription>
+<para>Success. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="51" column="9" bodyfile="inc/x430_defs.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gab9f7d4b30fe441354819c7c649f0faf2" prot="public" static="no">
+        <name>X430_ERR_PARAM</name>
+        <initializer>(-1)</initializer>
+        <briefdescription>
+<para>NULL pointer or a value outside its documented range. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="53" column="9" bodyfile="inc/x430_defs.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" prot="public" static="no">
+        <name>X430_ERR_STATE</name>
+        <initializer>(-2)</initializer>
+        <briefdescription>
+<para>Call not allowed in the current state (instance not initialized, device attached). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="55" column="9" bodyfile="inc/x430_defs.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gafaa5ee5ef60b742e0065a573fa4e817b" prot="public" static="no">
+        <name>X430_ERR_CONFIG</name>
+        <initializer>(-3)</initializer>
+        <briefdescription>
+<para>Values that are valid alone but not together (bus full, ID already used on the bus). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="57" column="9" bodyfile="inc/x430_defs.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga0ab01fabf30d5026cfe71b2a92200a9c" prot="public" static="no">
+        <name>X430_ERR_HAL</name>
+        <initializer>(-4)</initializer>
+        <briefdescription>
+<para>The byte writer of the bus (<ref refid="structx430__bus__config_1af4c6bbcdc66e922d7db43fb04c7c7ef3" kindref="member">x430_bus_config::write</ref>) returned an error. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="59" column="9" bodyfile="inc/x430_defs.h" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaf20661745b939d1d2d99f3320ef112b2" prot="public" static="no">
+        <name>X430_ERR_UNSUPPORTED</name>
+        <initializer>(-5)</initializer>
+        <briefdescription>
+<para>The function belongs to a feature that is not compiled in (X430_FEATURE_*). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="61" column="9" bodyfile="inc/x430_defs.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Options of x430_device_write() and x430_device_reg_write()</header>
+      <memberdef kind="define" id="group__x430__defs_1ga9cb49f55114934f5570fff0b6b8306c3" prot="public" static="no">
+        <name>X430_WRITE_SECONDARY</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+<para>Packet addressed by the Secondary ID: the EEPROM area is locked. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="69" column="9" bodyfile="inc/x430_defs.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaaf26749e0a579e382cb28088f386e976" prot="public" static="no">
+        <name>X430_WRITE_VALIDATE_ONLY</name>
+        <initializer>0x02U</initializer>
+        <briefdescription>
+<para>Validate only: change nothing and call no hook. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="71" column="9" bodyfile="inc/x430_defs.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Control Table: EEPROM area</header>
+      <memberdef kind="define" id="group__x430__defs_1ga388f8e80d2344b9321c5503ed8ee457f" prot="public" static="no">
+        <name>X430_ADDR_MODEL_NUMBER</name>
+        <initializer>0U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="116" column="9" bodyfile="inc/x430_defs.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga39ef728e23939420929381a94d2bf966" prot="public" static="no">
+        <name>X430_ADDR_MODEL_INFORMATION</name>
+        <initializer>2U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="117" column="9" bodyfile="inc/x430_defs.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gafa22da645305d6fd6a393cde126ffc65" prot="public" static="no">
+        <name>X430_ADDR_FIRMWARE_VERSION</name>
+        <initializer>6U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="118" column="9" bodyfile="inc/x430_defs.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gad62183d84eaee13c018289505cc01f41" prot="public" static="no">
+        <name>X430_ADDR_ID</name>
+        <initializer>7U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="119" column="9" bodyfile="inc/x430_defs.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga99658ed5fe9bce1eac85e74dc13af97b" prot="public" static="no">
+        <name>X430_ADDR_BAUD_RATE</name>
+        <initializer>8U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="120" column="9" bodyfile="inc/x430_defs.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga8edca3056919b503023c11b6576caf65" prot="public" static="no">
+        <name>X430_ADDR_RETURN_DELAY_TIME</name>
+        <initializer>9U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="121" column="9" bodyfile="inc/x430_defs.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gae256a0beab168d3f27fccd39c86aaeb2" prot="public" static="no">
+        <name>X430_ADDR_DRIVE_MODE</name>
+        <initializer>10U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="122" column="9" bodyfile="inc/x430_defs.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gad093c0be0155cf0b9488efb5db475d4c" prot="public" static="no">
+        <name>X430_ADDR_OPERATING_MODE</name>
+        <initializer>11U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="123" column="9" bodyfile="inc/x430_defs.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga3c8cc762ea3dd9b4c3cc946e745bbd05" prot="public" static="no">
+        <name>X430_ADDR_SECONDARY_ID</name>
+        <initializer>12U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="124" column="9" bodyfile="inc/x430_defs.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaa5e6a436cdc99f5f24831a5f677447cc" prot="public" static="no">
+        <name>X430_ADDR_PROTOCOL_TYPE</name>
+        <initializer>13U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="125" column="9" bodyfile="inc/x430_defs.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga077da9957a5d47c24be9150fbcb0b7e3" prot="public" static="no">
+        <name>X430_ADDR_HOMING_OFFSET</name>
+        <initializer>20U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="126" column="9" bodyfile="inc/x430_defs.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga0ed60c4a013685cdcd44ef458862a356" prot="public" static="no">
+        <name>X430_ADDR_MOVING_THRESHOLD</name>
+        <initializer>24U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="127" column="9" bodyfile="inc/x430_defs.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga8098fc5260f2bf7720ea9779101f3429" prot="public" static="no">
+        <name>X430_ADDR_TEMPERATURE_LIMIT</name>
+        <initializer>31U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="128" column="9" bodyfile="inc/x430_defs.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga0a3793ab9bab4a520cba46d8eafb8f24" prot="public" static="no">
+        <name>X430_ADDR_MAX_VOLTAGE_LIMIT</name>
+        <initializer>32U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="129" column="9" bodyfile="inc/x430_defs.h" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga7b8d16493e86ba2ecee379e7e201f08c" prot="public" static="no">
+        <name>X430_ADDR_MIN_VOLTAGE_LIMIT</name>
+        <initializer>34U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="130" column="9" bodyfile="inc/x430_defs.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga9bc6c6cfeb85beda37b1ca23d1bccb59" prot="public" static="no">
+        <name>X430_ADDR_PWM_LIMIT</name>
+        <initializer>36U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="131" column="9" bodyfile="inc/x430_defs.h" bodystart="131" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gadad6f3fe39660bdfb2d65a11e411e6d6" prot="public" static="no">
+        <name>X430_ADDR_CURRENT_LIMIT</name>
+        <initializer>38U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="132" column="9" bodyfile="inc/x430_defs.h" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaf34c79dde3ff5b1750bb5d193f88c0e4" prot="public" static="no">
+        <name>X430_ADDR_VELOCITY_LIMIT</name>
+        <initializer>44U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="133" column="9" bodyfile="inc/x430_defs.h" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gab493ee022ce92d01f563c89803022f0e" prot="public" static="no">
+        <name>X430_ADDR_MAX_POSITION_LIMIT</name>
+        <initializer>48U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="134" column="9" bodyfile="inc/x430_defs.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gafe5bbcdab539fb35759852b25a4f756d" prot="public" static="no">
+        <name>X430_ADDR_MIN_POSITION_LIMIT</name>
+        <initializer>52U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="135" column="9" bodyfile="inc/x430_defs.h" bodystart="135" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gadaa6051bef98a86d6627318a266d3577" prot="public" static="no">
+        <name>X430_ADDR_STARTUP_CONFIGURATION</name>
+        <initializer>60U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="136" column="9" bodyfile="inc/x430_defs.h" bodystart="136" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga6845b7004d43d7bedcfe038b583c653d" prot="public" static="no">
+        <name>X430_ADDR_SHUTDOWN</name>
+        <initializer>63U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="137" column="9" bodyfile="inc/x430_defs.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaab54a7d40320e028f2958ee828d7447b" prot="public" static="no">
+        <name>X430_RAM_START</name>
+        <initializer>64U</initializer>
+        <briefdescription>
+<para>First address of the RAM area; addresses below belong to the EEPROM area. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="140" column="9" bodyfile="inc/x430_defs.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Control Table: RAM area</header>
+      <memberdef kind="define" id="group__x430__defs_1gac855b491c2ecb8f7656396ad48d0311f" prot="public" static="no">
+        <name>X430_ADDR_TORQUE_ENABLE</name>
+        <initializer>64U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="147" column="9" bodyfile="inc/x430_defs.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga1f95b408cdc810ac747657fe2bdc3ab2" prot="public" static="no">
+        <name>X430_ADDR_LED</name>
+        <initializer>65U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="148" column="9" bodyfile="inc/x430_defs.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga4da24bd954939ecffd1885d392ed50a5" prot="public" static="no">
+        <name>X430_ADDR_STATUS_RETURN_LEVEL</name>
+        <initializer>68U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="149" column="9" bodyfile="inc/x430_defs.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaa3dc601811749765934f17f590e8425e" prot="public" static="no">
+        <name>X430_ADDR_REGISTERED_INSTRUCTION</name>
+        <initializer>69U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="150" column="9" bodyfile="inc/x430_defs.h" bodystart="150" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gabbf0c6927b78846659825c5e80cdde44" prot="public" static="no">
+        <name>X430_ADDR_HARDWARE_ERROR_STATUS</name>
+        <initializer>70U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="151" column="9" bodyfile="inc/x430_defs.h" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga94f3010d334db7edb1585374b854c929" prot="public" static="no">
+        <name>X430_ADDR_VELOCITY_I_GAIN</name>
+        <initializer>76U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="152" column="9" bodyfile="inc/x430_defs.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga7924a798404ec1d2af21f402e48852d7" prot="public" static="no">
+        <name>X430_ADDR_VELOCITY_P_GAIN</name>
+        <initializer>78U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="153" column="9" bodyfile="inc/x430_defs.h" bodystart="153" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gade8438c886a18998f36ccb38c3ccb25e" prot="public" static="no">
+        <name>X430_ADDR_POSITION_D_GAIN</name>
+        <initializer>80U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="154" column="9" bodyfile="inc/x430_defs.h" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga39c00f0f203adaecb8aa78c7cc6f4870" prot="public" static="no">
+        <name>X430_ADDR_POSITION_I_GAIN</name>
+        <initializer>82U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="155" column="9" bodyfile="inc/x430_defs.h" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga48e97944c4abc31b8485c4af68342ba2" prot="public" static="no">
+        <name>X430_ADDR_POSITION_P_GAIN</name>
+        <initializer>84U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="156" column="9" bodyfile="inc/x430_defs.h" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga1eda2889616702c968a761a5c12e3bca" prot="public" static="no">
+        <name>X430_ADDR_FEEDFORWARD_2ND_GAIN</name>
+        <initializer>88U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="157" column="9" bodyfile="inc/x430_defs.h" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gace386074aa77ca3c5c6de13618143e91" prot="public" static="no">
+        <name>X430_ADDR_FEEDFORWARD_1ST_GAIN</name>
+        <initializer>90U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="158" column="9" bodyfile="inc/x430_defs.h" bodystart="158" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga5216e257f732d19088ba26bd0c69fab6" prot="public" static="no">
+        <name>X430_ADDR_BUS_WATCHDOG</name>
+        <initializer>98U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="159" column="9" bodyfile="inc/x430_defs.h" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga6d369b6c78ae3716fbab8bd1c54416bc" prot="public" static="no">
+        <name>X430_ADDR_GOAL_PWM</name>
+        <initializer>100U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="160" column="9" bodyfile="inc/x430_defs.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaae2111e57753178ec1791bcf6cd805db" prot="public" static="no">
+        <name>X430_ADDR_GOAL_CURRENT</name>
+        <initializer>102U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="161" column="9" bodyfile="inc/x430_defs.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga4ad86ec5c3824655b317b9f045e1b6b5" prot="public" static="no">
+        <name>X430_ADDR_GOAL_VELOCITY</name>
+        <initializer>104U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="162" column="9" bodyfile="inc/x430_defs.h" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga45fd3633c9d7e4b80df8e8b552b0c09b" prot="public" static="no">
+        <name>X430_ADDR_PROFILE_ACCELERATION</name>
+        <initializer>108U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="163" column="9" bodyfile="inc/x430_defs.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga76d4162f18caba9bb11aca5e6bb349f0" prot="public" static="no">
+        <name>X430_ADDR_PROFILE_VELOCITY</name>
+        <initializer>112U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="164" column="9" bodyfile="inc/x430_defs.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga9966c79da3d2660d061df14ff0091b85" prot="public" static="no">
+        <name>X430_ADDR_GOAL_POSITION</name>
+        <initializer>116U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="165" column="9" bodyfile="inc/x430_defs.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga5dbd5b862cc0e97a32e51a9b46dc1ad0" prot="public" static="no">
+        <name>X430_ADDR_REALTIME_TICK</name>
+        <initializer>120U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="166" column="9" bodyfile="inc/x430_defs.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gae43811245f9c78eb62f21e35447a4f3e" prot="public" static="no">
+        <name>X430_ADDR_MOVING</name>
+        <initializer>122U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="167" column="9" bodyfile="inc/x430_defs.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga2301836a9b5e41350952c44c345921f1" prot="public" static="no">
+        <name>X430_ADDR_MOVING_STATUS</name>
+        <initializer>123U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="168" column="9" bodyfile="inc/x430_defs.h" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga11012af3190c3ec6f7ea508699410266" prot="public" static="no">
+        <name>X430_ADDR_PRESENT_PWM</name>
+        <initializer>124U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="169" column="9" bodyfile="inc/x430_defs.h" bodystart="169" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga7a3cdd82cb42c36f15ee0f509ebb469a" prot="public" static="no">
+        <name>X430_ADDR_PRESENT_CURRENT</name>
+        <initializer>126U</initializer>
+        <briefdescription>
+<para>Present Current (XM/XH/XD/XW) or Present Load (XL/XC), same address. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="171" column="9" bodyfile="inc/x430_defs.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gad1ac0b0b6a87ee9166da23e829cd07f2" prot="public" static="no">
+        <name>X430_ADDR_PRESENT_LOAD</name>
+        <initializer>126U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="172" column="9" bodyfile="inc/x430_defs.h" bodystart="172" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gabcd085045f35b214928a8b5441d4973c" prot="public" static="no">
+        <name>X430_ADDR_PRESENT_VELOCITY</name>
+        <initializer>128U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="173" column="9" bodyfile="inc/x430_defs.h" bodystart="173" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaea657547f9479d8b7ed195d06a902372" prot="public" static="no">
+        <name>X430_ADDR_PRESENT_POSITION</name>
+        <initializer>132U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="174" column="9" bodyfile="inc/x430_defs.h" bodystart="174" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga78dac4f2d8335ce808a4b709fa0c0ec1" prot="public" static="no">
+        <name>X430_ADDR_VELOCITY_TRAJECTORY</name>
+        <initializer>136U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="175" column="9" bodyfile="inc/x430_defs.h" bodystart="175" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga3d265a1ced706c84bb040f15c828a85a" prot="public" static="no">
+        <name>X430_ADDR_POSITION_TRAJECTORY</name>
+        <initializer>140U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="176" column="9" bodyfile="inc/x430_defs.h" bodystart="176" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaff6633be2983dc4b7d9363fd914aefbd" prot="public" static="no">
+        <name>X430_ADDR_PRESENT_INPUT_VOLTAGE</name>
+        <initializer>144U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="177" column="9" bodyfile="inc/x430_defs.h" bodystart="177" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga545fa9c70261bc915a8b73b93a129ff1" prot="public" static="no">
+        <name>X430_ADDR_PRESENT_TEMPERATURE</name>
+        <initializer>146U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="178" column="9" bodyfile="inc/x430_defs.h" bodystart="178" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga9c1431a51d4617e99ec477a06f45eda3" prot="public" static="no">
+        <name>X430_ADDR_BACKUP_READY</name>
+        <initializer>147U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="179" column="9" bodyfile="inc/x430_defs.h" bodystart="179" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Operating Mode (11) values</header>
+      <memberdef kind="define" id="group__x430__defs_1ga371fc2e68e84f4a76ef3f990e7efba89" prot="public" static="no">
+        <name>X430_MODE_CURRENT</name>
+        <initializer>0U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="186" column="9" bodyfile="inc/x430_defs.h" bodystart="186" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga1b9d660399d7d060c850bcf3e828022c" prot="public" static="no">
+        <name>X430_MODE_VELOCITY</name>
+        <initializer>1U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="187" column="9" bodyfile="inc/x430_defs.h" bodystart="187" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaddd48e129bc8fd46cc0dede30d828b1e" prot="public" static="no">
+        <name>X430_MODE_POSITION</name>
+        <initializer>3U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="188" column="9" bodyfile="inc/x430_defs.h" bodystart="188" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga4978a62daa614c4ba5d24f1e1030ad8e" prot="public" static="no">
+        <name>X430_MODE_EXTENDED_POSITION</name>
+        <initializer>4U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="189" column="9" bodyfile="inc/x430_defs.h" bodystart="189" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga5a9d2181a3b37b1408b11141ed29378b" prot="public" static="no">
+        <name>X430_MODE_CURRENT_BASED_POSITION</name>
+        <initializer>5U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="190" column="9" bodyfile="inc/x430_defs.h" bodystart="190" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gac03cc905276ca8f548fad53c28010cbd" prot="public" static="no">
+        <name>X430_MODE_PWM</name>
+        <initializer>16U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="191" column="9" bodyfile="inc/x430_defs.h" bodystart="191" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Drive Mode (10) bits</header>
+      <memberdef kind="define" id="group__x430__defs_1ga82fa13aa4363f5ea173162ace59c4f8a" prot="public" static="no">
+        <name>X430_DRIVE_MODE_REVERSE</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+<para>Reverse mode: positive goals turn clockwise. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="199" column="9" bodyfile="inc/x430_defs.h" bodystart="199" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga20c4c6c9e79b2142168b70b5b1d9939c" prot="public" static="no">
+        <name>X430_DRIVE_MODE_TIME_BASED</name>
+        <initializer>0x04U</initializer>
+        <briefdescription>
+<para>Time-based profile: Profile Velocity/Acceleration are times in ms. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="201" column="9" bodyfile="inc/x430_defs.h" bodystart="201" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gac4362c7ed821b5d1ddf0c62164c9c41c" prot="public" static="no">
+        <name>X430_DRIVE_MODE_TORQUE_ON_BY_GOAL</name>
+        <initializer>0x08U</initializer>
+        <briefdescription>
+<para>Torque On by Goal Update: writing a goal value enables torque. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="203" column="9" bodyfile="inc/x430_defs.h" bodystart="203" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Startup Configuration (60) bits</header>
+      <memberdef kind="define" id="group__x430__defs_1ga03d6a0c9ccd1ff5df5e2eb420263d70b" prot="public" static="no">
+        <name>X430_STARTUP_TORQUE_ON</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="210" column="9" bodyfile="inc/x430_defs.h" bodystart="210" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga5ad8add3ada79d8491562c967dbe5f37" prot="public" static="no">
+        <name>X430_STARTUP_RAM_RESTORE</name>
+        <initializer>0x02U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="211" column="9" bodyfile="inc/x430_defs.h" bodystart="211" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Hardware Error Status (70) and Shutdown (63) bits</header>
+      <memberdef kind="define" id="group__x430__defs_1ga1eb497ad4179c732f22b99e1441ecced" prot="public" static="no">
+        <name>X430_HW_ERROR_INPUT_VOLTAGE</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="218" column="9" bodyfile="inc/x430_defs.h" bodystart="218" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga1b94f9b996857dbbef558f318cea3a7c" prot="public" static="no">
+        <name>X430_HW_ERROR_OVERHEATING</name>
+        <initializer>0x04U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="219" column="9" bodyfile="inc/x430_defs.h" bodystart="219" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga94844cc561cc0715e79c5705e40e0e42" prot="public" static="no">
+        <name>X430_HW_ERROR_MOTOR_ENCODER</name>
+        <initializer>0x08U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="220" column="9" bodyfile="inc/x430_defs.h" bodystart="220" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga1b2896910084e9692dd972d831ee3a73" prot="public" static="no">
+        <name>X430_HW_ERROR_ELECTRICAL_SHOCK</name>
+        <initializer>0x10U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="221" column="9" bodyfile="inc/x430_defs.h" bodystart="221" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga1c9f2fec39f128e94a02796f456729a1" prot="public" static="no">
+        <name>X430_HW_ERROR_OVERLOAD</name>
+        <initializer>0x20U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="222" column="9" bodyfile="inc/x430_defs.h" bodystart="222" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Moving Status (123) bits</header>
+      <memberdef kind="define" id="group__x430__defs_1ga3676667ef2241031fe8209c8776209b7" prot="public" static="no">
+        <name>X430_MOVING_STATUS_IN_POSITION</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="229" column="9" bodyfile="inc/x430_defs.h" bodystart="229" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gac666e4ec0ce51bc75f5e2ecbb621e12d" prot="public" static="no">
+        <name>X430_MOVING_STATUS_PROFILE_ONGOING</name>
+        <initializer>0x02U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="230" column="9" bodyfile="inc/x430_defs.h" bodystart="230" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gafedb1866890282466633498aca8916d1" prot="public" static="no">
+        <name>X430_MOVING_STATUS_FOLLOWING_ERROR</name>
+        <initializer>0x08U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="231" column="9" bodyfile="inc/x430_defs.h" bodystart="231" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga22f02228e5ca0ec129c1adc135ee79c9" prot="public" static="no">
+        <name>X430_MOVING_STATUS_PROFILE_STEP</name>
+        <initializer>0x00U</initializer>
+        <briefdescription>
+<para>Velocity profile type, bits 4-5. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="233" column="9" bodyfile="inc/x430_defs.h" bodystart="233" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gabe5e058cec3a39e69c56be7c34ed7133" prot="public" static="no">
+        <name>X430_MOVING_STATUS_PROFILE_RECTANGULAR</name>
+        <initializer>0x10U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="234" column="9" bodyfile="inc/x430_defs.h" bodystart="234" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaf70ba1c875bfb67e82694fbf203fef44" prot="public" static="no">
+        <name>X430_MOVING_STATUS_PROFILE_TRIANGULAR</name>
+        <initializer>0x20U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="235" column="9" bodyfile="inc/x430_defs.h" bodystart="235" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gac4a32cae5041b422821c30e9cf6e42ef" prot="public" static="no">
+        <name>X430_MOVING_STATUS_PROFILE_TRAPEZOIDAL</name>
+        <initializer>0x30U</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="236" column="9" bodyfile="inc/x430_defs.h" bodystart="236" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Special register values</header>
+      <memberdef kind="define" id="group__x430__defs_1gad663df80b2477f8a8121ebfb6021fdd7" prot="public" static="no">
+        <name>X430_BUS_WATCHDOG_ERROR</name>
+        <initializer>0xFFU</initializer>
+        <briefdescription>
+<para>Bus Watchdog (98) value while a Bus Watchdog error is active (-1). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="244" column="9" bodyfile="inc/x430_defs.h" bodystart="244" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gab0cdafc9b8c0a353b362a212996382ea" prot="public" static="no">
+        <name>X430_BUS_WATCHDOG_UNIT_MS</name>
+        <initializer>20U</initializer>
+        <briefdescription>
+<para>Bus Watchdog (98) time unit in milliseconds. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="246" column="9" bodyfile="inc/x430_defs.h" bodystart="246" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga7fa3ca739f823c7fbb10c6368fc5ad31" prot="public" static="no">
+        <name>X430_SECONDARY_ID_DISABLED</name>
+        <initializer>253U</initializer>
+        <briefdescription>
+<para>Secondary ID (12) values from 253 disable the Secondary ID. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="248" column="9" bodyfile="inc/x430_defs.h" bodystart="248" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga06cf7cbfcb26e1cbe18707b61cffc0f0" prot="public" static="no">
+        <name>X430_EXTENDED_POSITION_LIMIT</name>
+        <initializer>1048575</initializer>
+        <briefdescription>
+<para>Goal Position range outside Position Control Mode. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="250" column="9" bodyfile="inc/x430_defs.h" bodystart="250" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga0fefc94b0d129b9494169ecd5a090b3f" prot="public" static="no">
+        <name>X430_REALTIME_TICK_PERIOD</name>
+        <initializer>32768U</initializer>
+        <briefdescription>
+<para>Realtime Tick (120) wraps at this value, in ms. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="252" column="9" bodyfile="inc/x430_defs.h" bodystart="252" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga7bcb4100ab96e0af31ed68ca1ee97d54" prot="public" static="no">
+        <name>X430_RETURN_DELAY_UNIT_US</name>
+        <initializer>2U</initializer>
+        <briefdescription>
+<para>Return Delay Time (9) unit in microseconds. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="254" column="9" bodyfile="inc/x430_defs.h" bodystart="254" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Instruction options</header>
+      <memberdef kind="define" id="group__x430__defs_1gaec84dd5b0ac4568c02a571a87e040d98" prot="public" static="no">
+        <name>X430_FACTORY_RESET_ALL</name>
+        <initializer>0xFFU</initializer>
+        <briefdescription>
+<para>FACTORY_RESET option: reset everything (refused on the broadcast ID). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="262" column="9" bodyfile="inc/x430_defs.h" bodystart="262" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gaed491e44d90528b473cc4e3296178f32" prot="public" static="no">
+        <name>X430_FACTORY_RESET_EXCEPT_ID</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+<para>FACTORY_RESET option: keep the ID. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="264" column="9" bodyfile="inc/x430_defs.h" bodystart="264" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gabf0d862822a70d40f550983fc849d256" prot="public" static="no">
+        <name>X430_FACTORY_RESET_EXCEPT_ID_BAUD</name>
+        <initializer>0x02U</initializer>
+        <briefdescription>
+<para>FACTORY_RESET option: keep the ID and the Baud Rate. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="266" column="9" bodyfile="inc/x430_defs.h" bodystart="266" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga8fb9e998934a6388e5afac853cb6fdf3" prot="public" static="no">
+        <name>X430_CLEAR_MULTI_TURN</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+<para>CLEAR option: clear the multi-turn information of Present Position. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="268" column="9" bodyfile="inc/x430_defs.h" bodystart="268" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1ga6546aed2c7c51f103cc564c3496a2079" prot="public" static="no">
+        <name>X430_BACKUP_STORE</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+<para>BACKUP option: store the Control Table. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="270" column="9" bodyfile="inc/x430_defs.h" bodystart="270" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__defs_1gab97e3f42440ea384aba0e1d2566d9b7b" prot="public" static="no">
+        <name>X430_BACKUP_RESTORE</name>
+        <initializer>0x02U</initializer>
+        <briefdescription>
+<para>BACKUP option: restore the Control Table. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_defs.h" line="272" column="9" bodyfile="inc/x430_defs.h" bodystart="272" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Status codes, options, events and the addresses, operating modes and bit fields of the X430 Control Table. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Control Table values come from the ROBOTIS e-Manual of the X430 models (<ulink url="https://emanual.robotis.com/docs/en/dxl/x/">https://emanual.robotis.com/docs/en/dxl/x/</ulink>). Which registers a model really has is decided by its generated table: XL/XC models have no Current Limit (38) and Goal Current (102) and report Present Load at 126; XW models have no LED (65). </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

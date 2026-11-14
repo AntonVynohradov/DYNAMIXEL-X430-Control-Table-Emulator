@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__sim__ctx" kind="struct" language="C++" prot="public">
+    <compoundname>x430_sim_ctx</compoundname>
+    <includes refid="x430__internal_8h" local="no">x430_internal.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__sim__ctx_1a71ed9e5dcdcc21b51cf0700609ddab53" prot="public" static="no" mutable="no">
+        <type>int64_t</type>
+        <definition>int64_t x430_sim_ctx::shaft_mpulse</definition>
+        <argsstring></argsstring>
+        <name>shaft_mpulse</name>
+        <qualifiedname>x430_sim_ctx::shaft_mpulse</qualifiedname>
+        <briefdescription>
+<para>Shaft position [1/1000 pulse]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="92" column="13" bodyfile="src/x430_internal.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__sim__ctx_1a50ff1e3d401a5b76ab8f95fcacec5924" prot="public" static="no" mutable="no">
+        <type>int64_t</type>
+        <definition>int64_t x430_sim_ctx::velocity_mpulse</definition>
+        <argsstring></argsstring>
+        <name>velocity_mpulse</name>
+        <qualifiedname>x430_sim_ctx::velocity_mpulse</qualifiedname>
+        <briefdescription>
+<para>Shaft velocity [1/1000 pulse per second]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="93" column="13" bodyfile="src/x430_internal.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+        <definition>struct x430_device* x430_sim_ctx::device</definition>
+        <argsstring></argsstring>
+        <name>device</name>
+        <qualifiedname>x430_sim_ctx::device</qualifiedname>
+        <briefdescription>
+<para>Simulated device. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="94" column="23" bodyfile="src/x430_internal.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__sim__ctx_1a00580b45f6c8c18a448c91041263e1c9" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structx430__sim__config" kindref="compound">x430_sim_config</ref></type>
+        <definition>struct x430_sim_config x430_sim_ctx::config</definition>
+        <argsstring></argsstring>
+        <name>config</name>
+        <qualifiedname>x430_sim_ctx::config</qualifiedname>
+        <briefdescription>
+<para>Copy of the configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="95" column="26" bodyfile="src/x430_internal.h" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__sim__ctx_1af976265a6014b06d4174cd5b8cfd6339" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t x430_sim_ctx::ready</definition>
+        <argsstring></argsstring>
+        <name>ready</name>
+        <qualifiedname>x430_sim_ctx::ready</qualifiedname>
+        <briefdescription>
+<para>X430_READY after <ref refid="group__x430_1ga9e6f35869f8631cbb30b49b11e7107b2" kindref="member">x430_sim_init()</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="96" column="14" bodyfile="src/x430_internal.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>State behind the opaque <ref refid="structx430__sim" kindref="compound">x430_sim</ref>. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Its layout may change in any release. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>x430_device</label>
+        <link refid="structx430__device"/>
+      </node>
+      <node id="3">
+        <label>x430_sim_config</label>
+        <link refid="structx430__sim__config"/>
+      </node>
+      <node id="1">
+        <label>x430_sim_ctx</label>
+        <link refid="structx430__sim__ctx"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>config</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="src/x430_internal.h" line="90" column="1" bodyfile="src/x430_internal.h" bodystart="91" bodyend="97"/>
+    <listofallmembers>
+      <member refid="structx430__sim__ctx_1a00580b45f6c8c18a448c91041263e1c9" prot="public" virt="non-virtual"><scope>x430_sim_ctx</scope><name>config</name></member>
+      <member refid="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" prot="public" virt="non-virtual"><scope>x430_sim_ctx</scope><name>device</name></member>
+      <member refid="structx430__sim__ctx_1af976265a6014b06d4174cd5b8cfd6339" prot="public" virt="non-virtual"><scope>x430_sim_ctx</scope><name>ready</name></member>
+      <member refid="structx430__sim__ctx_1a71ed9e5dcdcc21b51cf0700609ddab53" prot="public" virt="non-virtual"><scope>x430_sim_ctx</scope><name>shaft_mpulse</name></member>
+      <member refid="structx430__sim__ctx_1a50ff1e3d401a5b76ab8f95fcacec5924" prot="public" virt="non-virtual"><scope>x430_sim_ctx</scope><name>velocity_mpulse</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__device__ctx" kind="struct" language="C++" prot="public">
+    <compoundname>x430_device_ctx</compoundname>
+    <includes refid="x430__internal_8h" local="no">x430_internal.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__device__ctx_1ac07ff92399b724712fc11e63a1cc8364" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structx430__device__config" kindref="compound">x430_device_config</ref></type>
+        <definition>struct x430_device_config x430_device_ctx::config</definition>
+        <argsstring></argsstring>
+        <name>config</name>
+        <qualifiedname>x430_device_ctx::config</qualifiedname>
+        <briefdescription>
+<para>Copy of the configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="78" column="29" bodyfile="src/x430_internal.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__ctx_1ac22e7c3f465eb05e82f28e763bf501e5" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+        <definition>struct x430_bus* x430_device_ctx::bus</definition>
+        <argsstring></argsstring>
+        <name>bus</name>
+        <qualifiedname>x430_device_ctx::bus</qualifiedname>
+        <briefdescription>
+<para>Owning bus, NULL before attach. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="79" column="20" bodyfile="src/x430_internal.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__ctx_1ab9affdc2a23b39baeb484bfc92e41b82" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t x430_device_ctx::ready</definition>
+        <argsstring></argsstring>
+        <name>ready</name>
+        <qualifiedname>x430_device_ctx::ready</qualifiedname>
+        <briefdescription>
+<para>X430_READY after <ref refid="group__x430_1ga63afa6e92da99a8b5a7850091dee360e" kindref="member">x430_device_init()</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="80" column="14" bodyfile="src/x430_internal.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__ctx_1ae0ed1b5d1ba8061a21599d46fe075c27" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_device_ctx::reg_address</definition>
+        <argsstring></argsstring>
+        <name>reg_address</name>
+        <qualifiedname>x430_device_ctx::reg_address</qualifiedname>
+        <briefdescription>
+<para>REG_WRITE address. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="81" column="14" bodyfile="src/x430_internal.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__ctx_1ae0caafb85d52b6c7813049fbfc48c2a6" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_device_ctx::reg_length</definition>
+        <argsstring></argsstring>
+        <name>reg_length</name>
+        <qualifiedname>x430_device_ctx::reg_length</qualifiedname>
+        <briefdescription>
+<para>REG_WRITE length, 0 = none. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="82" column="14" bodyfile="src/x430_internal.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__ctx_1ad7deb45ce7e70d0f1ebfec880c503528" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool x430_device_ctx::baud_changed</definition>
+        <argsstring></argsstring>
+        <name>baud_changed</name>
+        <qualifiedname>x430_device_ctx::baud_changed</qualifiedname>
+        <briefdescription>
+<para>Deferred <ref refid="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a0e97ccba6567db95216ee6a8257830e7" kindref="member">X430_EVENT_BAUD_RATE</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="83" column="10" bodyfile="src/x430_internal.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__ctx_1ae6f58c2014442892fcd3412072209398" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_device_ctx::table[X430_TABLE_SIZE]</definition>
+        <argsstring>[X430_TABLE_SIZE]</argsstring>
+        <name>table</name>
+        <qualifiedname>x430_device_ctx::table</qualifiedname>
+        <briefdescription>
+<para>Control Table image, little endian. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="84" column="13" bodyfile="src/x430_internal.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__ctx_1a7b621a06b6cec711ed063f91a9c4e7a9" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_device_ctx::reg_data[X430_REG_WRITE_SIZE]</definition>
+        <argsstring>[X430_REG_WRITE_SIZE]</argsstring>
+        <name>reg_data</name>
+        <qualifiedname>x430_device_ctx::reg_data</qualifiedname>
+        <briefdescription>
+<para>REG_WRITE data. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="85" column="13" bodyfile="src/x430_internal.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__ctx_1a34677fb86c2a8bded50aeb34b341a36d" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_device_ctx::nvm[X430_NVM_BUFFER_SIZE]</definition>
+        <argsstring>[X430_NVM_BUFFER_SIZE]</argsstring>
+        <name>nvm</name>
+        <qualifiedname>x430_device_ctx::nvm</qualifiedname>
+        <briefdescription>
+<para>Persistent block buffer. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="86" column="13" bodyfile="src/x430_internal.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>State behind the opaque <ref refid="structx430__device" kindref="compound">x430_device</ref>. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Its layout may change in any release. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="5">
+        <label>x430_bus</label>
+        <link refid="structx430__bus"/>
+      </node>
+      <node id="4">
+        <label>x430_device</label>
+        <link refid="structx430__device"/>
+      </node>
+      <node id="2">
+        <label>x430_device_config</label>
+        <link refid="structx430__device__config"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>hooks</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>x430_device_ctx</label>
+        <link refid="structx430__device__ctx"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>config</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>bus</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>x430_hooks</label>
+        <link refid="structx430__hooks"/>
+        <childnode refid="4" relation="usage">
+          <edgelabel>event</edgelabel>
+          <edgelabel>nvm_load</edgelabel>
+          <edgelabel>nvm_store</edgelabel>
+          <edgelabel>read</edgelabel>
+          <edgelabel>write</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="src/x430_internal.h" line="76" column="1" bodyfile="src/x430_internal.h" bodystart="77" bodyend="87"/>
+    <listofallmembers>
+      <member refid="structx430__device__ctx_1ad7deb45ce7e70d0f1ebfec880c503528" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>baud_changed</name></member>
+      <member refid="structx430__device__ctx_1ac22e7c3f465eb05e82f28e763bf501e5" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>bus</name></member>
+      <member refid="structx430__device__ctx_1ac07ff92399b724712fc11e63a1cc8364" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>config</name></member>
+      <member refid="structx430__device__ctx_1a34677fb86c2a8bded50aeb34b341a36d" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>nvm</name></member>
+      <member refid="structx430__device__ctx_1ab9affdc2a23b39baeb484bfc92e41b82" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>ready</name></member>
+      <member refid="structx430__device__ctx_1ae0ed1b5d1ba8061a21599d46fe075c27" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>reg_address</name></member>
+      <member refid="structx430__device__ctx_1a7b621a06b6cec711ed063f91a9c4e7a9" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>reg_data</name></member>
+      <member refid="structx430__device__ctx_1ae0caafb85d52b6c7813049fbfc48c2a6" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>reg_length</name></member>
+      <member refid="structx430__device__ctx_1ae6f58c2014442892fcd3412072209398" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>table</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

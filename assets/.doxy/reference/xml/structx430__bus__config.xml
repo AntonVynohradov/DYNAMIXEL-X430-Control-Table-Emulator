@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__bus__config" kind="struct" language="C++" prot="public">
+    <compoundname>x430_bus_config</compoundname>
+    <includes refid="x430__types_8h" local="no">x430_types.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__bus__config_1af4c6bbcdc66e922d7db43fb04c7c7ef3" prot="public" static="no" mutable="no">
+        <type>dxl2_write_fn</type>
+        <definition>dxl2_write_fn x430_bus_config::write</definition>
+        <argsstring></argsstring>
+        <name>write</name>
+        <qualifiedname>x430_bus_config::write</qualifiedname>
+        <briefdescription>
+<para>Writes a complete packet to the line (required). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="197" column="19" bodyfile="inc/x430_types.h" bodystart="197" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__bus__config_1a2503c38ee63d95baf06e1cbeb8cc1ff7" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* x430_bus_config::write_context</definition>
+        <argsstring></argsstring>
+        <name>write_context</name>
+        <qualifiedname>x430_bus_config::write_context</qualifiedname>
+        <briefdescription>
+<para>Passed to write. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="198" column="10" bodyfile="inc/x430_types.h" bodystart="198" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__bus__config_1ac256cec19dffd340c12b3cedefd0b769" prot="public" static="no" mutable="no">
+        <type>const struct <ref refid="structx430__port" kindref="compound">x430_port</ref> *</type>
+        <definition>const struct x430_port* x430_bus_config::port</definition>
+        <argsstring></argsstring>
+        <name>port</name>
+        <qualifiedname>x430_bus_config::port</qualifiedname>
+        <briefdescription>
+<para>Platform services, NULL = none. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="199" column="27" bodyfile="inc/x430_types.h" bodystart="199" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Bus configuration, copied by <ref refid="group__x430_1ga818bc6a25d661e75c6700e7924feada3" kindref="member">x430_bus_init()</ref>. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>x430_bus_config</label>
+        <link refid="structx430__bus__config"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>port</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>x430_port</label>
+        <link refid="structx430__port"/>
+      </node>
+    </collaborationgraph>
+    <location file="inc/x430_types.h" line="195" column="1" bodyfile="inc/x430_types.h" bodystart="196" bodyend="200"/>
+    <listofallmembers>
+      <member refid="structx430__bus__config_1ac256cec19dffd340c12b3cedefd0b769" prot="public" virt="non-virtual"><scope>x430_bus_config</scope><name>port</name></member>
+      <member refid="structx430__bus__config_1af4c6bbcdc66e922d7db43fb04c7c7ef3" prot="public" virt="non-virtual"><scope>x430_bus_config</scope><name>write</name></member>
+      <member refid="structx430__bus__config_1a2503c38ee63d95baf06e1cbeb8cc1ff7" prot="public" virt="non-virtual"><scope>x430_bus_config</scope><name>write_context</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

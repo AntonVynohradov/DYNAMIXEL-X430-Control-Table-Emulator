@@ -1,0 +1,176 @@
+
+
+# File x430\_defs.h
+
+[**File List**](files.md) **>** [**inc**](dir_bfccd401955b95cf8c75461437045ac0.md) **>** [**x430\_defs.h**](x430__defs_8h.md)
+
+[Go to the documentation of this file](x430__defs_8h.md)
+
+
+```C++
+/*******************************************************************************
+ * DYNAMIXEL-X430-Control-Table-Emulator: DYNAMIXEL X430 Control Table Emulator
+ *
+ * Project:     DYNAMIXEL-X430-Control-Table-Emulator
+ * Description: Constants of the public API: status codes, write options,
+ *              events, persistent slots, Control Table addresses and values.
+ *
+ * Author:      Anton Vynohradov
+ * Email:       avynohradov@systemfromscratch.com
+ *
+ * License:     Apache License 2.0
+ *
+ * Copyright (c) 2026 Anton Vynohradov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ******************************************************************************/
+
+#ifndef X430_DEFS_H
+#define X430_DEFS_H
+
+#define X430_OK 0
+#define X430_ERR_PARAM (-1)
+#define X430_ERR_STATE (-2)
+#define X430_ERR_CONFIG (-3)
+#define X430_ERR_HAL (-4)
+#define X430_ERR_UNSUPPORTED (-5)
+
+#define X430_WRITE_SECONDARY 0x01U
+#define X430_WRITE_VALIDATE_ONLY 0x02U
+
+enum x430_event
+{
+    X430_EVENT_REBOOT = 0,
+    X430_EVENT_FACTORY_RESET,
+    X430_EVENT_CLEAR_MULTI_TURN,
+    X430_EVENT_BUS_WATCHDOG,
+    X430_EVENT_BAUD_RATE,
+    X430_EVENT_TORQUE_SHUTDOWN,
+    X430_EVENT_BACKUP_RESTORED
+};
+
+enum x430_nvm_slot
+{
+    X430_NVM_EEPROM = 0, 
+    X430_NVM_BACKUP = 1  
+};
+
+#define X430_NVM_HEADER_SIZE 10U
+
+#define X430_ADDR_MODEL_NUMBER 0U
+#define X430_ADDR_MODEL_INFORMATION 2U
+#define X430_ADDR_FIRMWARE_VERSION 6U
+#define X430_ADDR_ID 7U
+#define X430_ADDR_BAUD_RATE 8U
+#define X430_ADDR_RETURN_DELAY_TIME 9U
+#define X430_ADDR_DRIVE_MODE 10U
+#define X430_ADDR_OPERATING_MODE 11U
+#define X430_ADDR_SECONDARY_ID 12U
+#define X430_ADDR_PROTOCOL_TYPE 13U
+#define X430_ADDR_HOMING_OFFSET 20U
+#define X430_ADDR_MOVING_THRESHOLD 24U
+#define X430_ADDR_TEMPERATURE_LIMIT 31U
+#define X430_ADDR_MAX_VOLTAGE_LIMIT 32U
+#define X430_ADDR_MIN_VOLTAGE_LIMIT 34U
+#define X430_ADDR_PWM_LIMIT 36U
+#define X430_ADDR_CURRENT_LIMIT 38U
+#define X430_ADDR_VELOCITY_LIMIT 44U
+#define X430_ADDR_MAX_POSITION_LIMIT 48U
+#define X430_ADDR_MIN_POSITION_LIMIT 52U
+#define X430_ADDR_STARTUP_CONFIGURATION 60U
+#define X430_ADDR_SHUTDOWN 63U
+
+#define X430_RAM_START 64U
+
+#define X430_ADDR_TORQUE_ENABLE 64U
+#define X430_ADDR_LED 65U
+#define X430_ADDR_STATUS_RETURN_LEVEL 68U
+#define X430_ADDR_REGISTERED_INSTRUCTION 69U
+#define X430_ADDR_HARDWARE_ERROR_STATUS 70U
+#define X430_ADDR_VELOCITY_I_GAIN 76U
+#define X430_ADDR_VELOCITY_P_GAIN 78U
+#define X430_ADDR_POSITION_D_GAIN 80U
+#define X430_ADDR_POSITION_I_GAIN 82U
+#define X430_ADDR_POSITION_P_GAIN 84U
+#define X430_ADDR_FEEDFORWARD_2ND_GAIN 88U
+#define X430_ADDR_FEEDFORWARD_1ST_GAIN 90U
+#define X430_ADDR_BUS_WATCHDOG 98U
+#define X430_ADDR_GOAL_PWM 100U
+#define X430_ADDR_GOAL_CURRENT 102U
+#define X430_ADDR_GOAL_VELOCITY 104U
+#define X430_ADDR_PROFILE_ACCELERATION 108U
+#define X430_ADDR_PROFILE_VELOCITY 112U
+#define X430_ADDR_GOAL_POSITION 116U
+#define X430_ADDR_REALTIME_TICK 120U
+#define X430_ADDR_MOVING 122U
+#define X430_ADDR_MOVING_STATUS 123U
+#define X430_ADDR_PRESENT_PWM 124U
+#define X430_ADDR_PRESENT_CURRENT 126U
+#define X430_ADDR_PRESENT_LOAD 126U
+#define X430_ADDR_PRESENT_VELOCITY 128U
+#define X430_ADDR_PRESENT_POSITION 132U
+#define X430_ADDR_VELOCITY_TRAJECTORY 136U
+#define X430_ADDR_POSITION_TRAJECTORY 140U
+#define X430_ADDR_PRESENT_INPUT_VOLTAGE 144U
+#define X430_ADDR_PRESENT_TEMPERATURE 146U
+#define X430_ADDR_BACKUP_READY 147U
+
+#define X430_MODE_CURRENT 0U
+#define X430_MODE_VELOCITY 1U
+#define X430_MODE_POSITION 3U
+#define X430_MODE_EXTENDED_POSITION 4U
+#define X430_MODE_CURRENT_BASED_POSITION 5U
+#define X430_MODE_PWM 16U
+
+#define X430_DRIVE_MODE_REVERSE 0x01U
+#define X430_DRIVE_MODE_TIME_BASED 0x04U
+#define X430_DRIVE_MODE_TORQUE_ON_BY_GOAL 0x08U
+
+#define X430_STARTUP_TORQUE_ON 0x01U
+#define X430_STARTUP_RAM_RESTORE 0x02U
+
+#define X430_HW_ERROR_INPUT_VOLTAGE 0x01U
+#define X430_HW_ERROR_OVERHEATING 0x04U
+#define X430_HW_ERROR_MOTOR_ENCODER 0x08U
+#define X430_HW_ERROR_ELECTRICAL_SHOCK 0x10U
+#define X430_HW_ERROR_OVERLOAD 0x20U
+
+#define X430_MOVING_STATUS_IN_POSITION 0x01U
+#define X430_MOVING_STATUS_PROFILE_ONGOING 0x02U
+#define X430_MOVING_STATUS_FOLLOWING_ERROR 0x08U
+#define X430_MOVING_STATUS_PROFILE_STEP 0x00U
+#define X430_MOVING_STATUS_PROFILE_RECTANGULAR 0x10U
+#define X430_MOVING_STATUS_PROFILE_TRIANGULAR 0x20U
+#define X430_MOVING_STATUS_PROFILE_TRAPEZOIDAL 0x30U
+
+#define X430_BUS_WATCHDOG_ERROR 0xFFU
+#define X430_BUS_WATCHDOG_UNIT_MS 20U
+#define X430_SECONDARY_ID_DISABLED 253U
+#define X430_EXTENDED_POSITION_LIMIT 1048575
+#define X430_REALTIME_TICK_PERIOD 32768U
+#define X430_RETURN_DELAY_UNIT_US 2U
+
+#define X430_FACTORY_RESET_ALL 0xFFU
+#define X430_FACTORY_RESET_EXCEPT_ID 0x01U
+#define X430_FACTORY_RESET_EXCEPT_ID_BAUD 0x02U
+#define X430_CLEAR_MULTI_TURN 0x01U
+#define X430_BACKUP_STORE 0x01U
+#define X430_BACKUP_RESTORE 0x02U
+
+#endif /* X430_DEFS_H */
+
+```
+
+

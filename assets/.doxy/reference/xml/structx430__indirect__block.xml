@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__indirect__block" kind="struct" language="C++" prot="public">
+    <compoundname>x430_indirect_block</compoundname>
+    <includes refid="x430__model_8h" local="no">x430_model.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__indirect__block_1a3ff980446e115601cf58577706805f71" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_indirect_block::address</definition>
+        <argsstring></argsstring>
+        <name>address</name>
+        <qualifiedname>x430_indirect_block::address</qualifiedname>
+        <briefdescription>
+<para>Indirect Address 1 of the block. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="85" column="14" bodyfile="inc/x430_model.h" bodystart="85" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__indirect__block_1ad2cd425a2d253f1d3faafd55b67e3f2d" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_indirect_block::data</definition>
+        <argsstring></argsstring>
+        <name>data</name>
+        <qualifiedname>x430_indirect_block::data</qualifiedname>
+        <briefdescription>
+<para>Indirect Data 1 of the block. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="86" column="14" bodyfile="inc/x430_model.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__indirect__block_1a3ffbf5dd8769c00f8ca46631294fb73d" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_indirect_block::count</definition>
+        <argsstring></argsstring>
+        <name>count</name>
+        <qualifiedname>x430_indirect_block::count</qualifiedname>
+        <briefdescription>
+<para>Number of entries. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="87" column="14" bodyfile="inc/x430_model.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Indirect Address block: count addresses of 2 bytes and count data bytes. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="inc/x430_model.h" line="83" column="1" bodyfile="inc/x430_model.h" bodystart="84" bodyend="88"/>
+    <listofallmembers>
+      <member refid="structx430__indirect__block_1a3ff980446e115601cf58577706805f71" prot="public" virt="non-virtual"><scope>x430_indirect_block</scope><name>address</name></member>
+      <member refid="structx430__indirect__block_1a3ffbf5dd8769c00f8ca46631294fb73d" prot="public" virt="non-virtual"><scope>x430_indirect_block</scope><name>count</name></member>
+      <member refid="structx430__indirect__block_1ad2cd425a2d253f1d3faafd55b67e3f2d" prot="public" virt="non-virtual"><scope>x430_indirect_block</scope><name>data</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

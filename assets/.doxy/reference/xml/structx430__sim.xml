@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__sim" kind="struct" language="C++" prot="public">
+    <compoundname>x430_sim</compoundname>
+    <includes refid="x430__types_8h" local="no">x430_types.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__sim_1a275be47249c6c9a2e97b4ebd1fcf5d81" prot="public" static="no" mutable="no">
+        <type>uint64_t</type>
+        <definition>uint64_t x430_sim::opaque[X430_SIM_WORDS]</definition>
+        <argsstring>[X430_SIM_WORDS]</argsstring>
+        <name>opaque</name>
+        <qualifiedname>x430_sim::opaque</qualifiedname>
+        <briefdescription>
+<para>Private state. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="316" column="14" bodyfile="inc/x430_types.h" bodystart="316" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Kinematic model of an X430 behind a device. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Allocated by the application and initialized by <ref refid="group__x430_1ga9e6f35869f8631cbb30b49b11e7107b2" kindref="member">x430_sim_init()</ref>. The content is private. </para>
+    </detaileddescription>
+    <location file="inc/x430_types.h" line="314" column="1" bodyfile="inc/x430_types.h" bodystart="315" bodyend="317"/>
+    <listofallmembers>
+      <member refid="structx430__sim_1a275be47249c6c9a2e97b4ebd1fcf5d81" prot="public" virt="non-virtual"><scope>x430_sim</scope><name>opaque</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

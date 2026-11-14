@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="group__x430__model" kind="group">
+    <compoundname>x430_model</compoundname>
+    <title>Model descriptor</title>
+    <innerclass refid="structx430__reg" prot="public">x430_reg</innerclass>
+    <innerclass refid="structx430__indirect__block" prot="public">x430_indirect_block</innerclass>
+    <innerclass refid="structx430__model" prot="public">x430_model</innerclass>
+    <sectiondef kind="user-defined">
+      <header>Type definitions</header>
+      <memberdef kind="enum" id="group__x430__model_1gac5fe48b7eb39461dc3a600cbc835e395" prot="public" static="no" strong="no">
+        <type></type>
+        <name>x430_check</name>
+        <enumvalue id="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ab2e0d79116ac4fe9a1a6dadd5c77811e" prot="public">
+          <name>X430_CHECK_NONE</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>Read-only register, no check. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ae468738fd7eeb300d7597ee5100ef56d" prot="public">
+          <name>X430_CHECK_RANGE</name>
+          <briefdescription>
+<para>min &lt;= value &lt;= max. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395acb114aad91f232931105d4e39ff218af" prot="public">
+          <name>X430_CHECK_MASK</name>
+          <briefdescription>
+<para>Only the bits of max may be set. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395a4d6b775b9c1a51e8061568dfbc30f19b" prot="public">
+          <name>X430_CHECK_OPMODE</name>
+          <briefdescription>
+<para>One of <ref refid="structx430__model_1a7e50f852a0c49b0f0bcc7a6025dd9dbd" kindref="member">x430_model::operating_modes</ref>. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395a13df5dd2b997b2d3e6f5b65c80b44884" prot="public">
+          <name>X430_CHECK_SYMMETRIC</name>
+          <briefdescription>
+<para>-ref &lt;= value &lt;= ref; ref = limit register address. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ac5a5cd95964256a418797c3bfd51912b" prot="public">
+          <name>X430_CHECK_GOAL_POSITION</name>
+          <briefdescription>
+<para>Position limits in mode 3, +-1,048,575 otherwise. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ae22670d4bb9dbd64301bb84132934e70" prot="public">
+          <name>X430_CHECK_INDIRECT</name>
+          <briefdescription>
+<para>Indirect Address: RAM address min..max. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Write check of a register (<ref refid="structx430__reg_1a692a3f1397d01fe3fbb1d08f7bccdf93" kindref="member">x430_reg::check</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="58" column="1" bodyfile="inc/x430_model.h" bodystart="59" bodyend="67"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Generated data</header>
+      <memberdef kind="variable" id="group__x430__model_1ga1d4a98550ebd1ae429b59b487c6e57b2" prot="public" static="no" extern="yes" mutable="no">
+        <type>const struct <ref refid="structx430__model" kindref="compound">x430_model</ref></type>
+        <definition>const struct x430_model x430_model_active</definition>
+        <argsstring></argsstring>
+        <name>x430_model_active</name>
+        <briefdescription>
+<para>The model selected at build time (x430_model_table.c). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="112" column="30" declfile="inc/x430_model.h" declline="112" declcolumn="30"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Register flags (x430_reg::flags)</header>
+      <memberdef kind="define" id="group__x430__model_1ga5b2e4e700932284934cc7c5a82c4fc68" prot="public" static="no">
+        <name>X430_REG_WRITABLE</name>
+        <initializer>0x01U</initializer>
+        <briefdescription>
+<para>Writable by an instruction (RW); without it the register is read-only. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="44" column="9" bodyfile="inc/x430_model.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__model_1gad3097be267f5fb22c139faf3344b961a" prot="public" static="no">
+        <name>X430_REG_EEPROM</name>
+        <initializer>0x02U</initializer>
+        <briefdescription>
+<para>EEPROM area: persistent, locked while Torque Enable is 1. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="46" column="9" bodyfile="inc/x430_model.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__model_1gab57ab6403b1656cdfa8fae302e8d0800" prot="public" static="no">
+        <name>X430_REG_SIGNED</name>
+        <initializer>0x04U</initializer>
+        <briefdescription>
+<para>Two&apos;s complement value. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="48" column="9" bodyfile="inc/x430_model.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__model_1gaf16aa0d65a906b57b57365337b5977f8" prot="public" static="no">
+        <name>X430_REG_GOAL</name>
+        <initializer>0x08U</initializer>
+        <briefdescription>
+<para>Goal value: read-only while a Bus Watchdog error is active. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="50" column="9" bodyfile="inc/x430_model.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Types of the generated Control Table (one model per build). </para>
+    </briefdescription>
+    <detaileddescription>
+<para>tools/x430_gen_model.py writes x430_model_table.c with the constant <ref refid="group__x430__model_1ga1d4a98550ebd1ae429b59b487c6e57b2" kindref="member">x430_model_active</ref> from the YAML description in models/. The library reads the descriptor only; it never changes it. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__align__sim" kind="struct" language="C++" prot="public">
+    <compoundname>x430_align_sim</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__align__sim_1a6b9d423c6ce45ad539ed794b3081a270" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char x430_align_sim::c</definition>
+        <argsstring></argsstring>
+        <name>c</name>
+        <qualifiedname>x430_align_sim::c</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_sim.c" line="55" column="10" bodyfile="src/x430_sim.c" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__align__sim_1a87d7d8b1fe30ab24a50570de59506d28" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structx430__sim" kindref="compound">x430_sim</ref></type>
+        <definition>struct x430_sim x430_align_sim::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <qualifiedname>x430_align_sim::x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_sim.c" line="56" column="19" bodyfile="src/x430_sim.c" bodystart="56" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>x430_align_sim</label>
+        <link refid="structx430__align__sim"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>x</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>x430_sim</label>
+        <link refid="structx430__sim"/>
+      </node>
+    </collaborationgraph>
+    <location file="src/x430_sim.c" line="53" column="1" bodyfile="src/x430_sim.c" bodystart="54" bodyend="57"/>
+    <listofallmembers>
+      <member refid="structx430__align__sim_1a6b9d423c6ce45ad539ed794b3081a270" prot="public" virt="non-virtual"><scope>x430_align_sim</scope><name>c</name></member>
+      <member refid="structx430__align__sim_1a87d7d8b1fe30ab24a50570de59506d28" prot="public" virt="non-virtual"><scope>x430_align_sim</scope><name>x</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

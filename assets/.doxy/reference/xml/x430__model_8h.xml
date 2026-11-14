@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="x430__model_8h" kind="file" language="C++">
+    <compoundname>x430_model.h</compoundname>
+    <includes local="no">stdint.h</includes>
+    <includedby refid="x430_8h" local="yes">x430.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>inc/x430_model.h</label>
+        <link refid="x430__model_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>stdint.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>inc/x430_model.h</label>
+        <link refid="x430__model_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>src/x430_internal.h</label>
+        <link refid="x430__internal_8h_source"/>
+      </node>
+      <node id="2">
+        <label>x430.h</label>
+        <link refid="x430_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structx430__reg" prot="public">x430_reg</innerclass>
+    <innerclass refid="structx430__indirect__block" prot="public">x430_indirect_block</innerclass>
+    <innerclass refid="structx430__model" prot="public">x430_model</innerclass>
+    <sectiondef kind="user-defined">
+      <header>Register flags (x430_reg::flags)</header>
+      <member refid="group__x430__model_1ga5b2e4e700932284934cc7c5a82c4fc68" kind="define"><name>X430_REG_WRITABLE</name></member>
+      <member refid="group__x430__model_1gad3097be267f5fb22c139faf3344b961a" kind="define"><name>X430_REG_EEPROM</name></member>
+      <member refid="group__x430__model_1gab57ab6403b1656cdfa8fae302e8d0800" kind="define"><name>X430_REG_SIGNED</name></member>
+      <member refid="group__x430__model_1gaf16aa0d65a906b57b57365337b5977f8" kind="define"><name>X430_REG_GOAL</name></member>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Type definitions</header>
+      <member refid="group__x430__model_1gac5fe48b7eb39461dc3a600cbc835e395" kind="enum"><name>x430_check</name></member>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Generated data</header>
+      <member refid="group__x430__model_1ga1d4a98550ebd1ae429b59b487c6e57b2" kind="variable"><name>x430_model_active</name></member>
+    </sectiondef>
+    <briefdescription>
+<para>Model descriptor: the Control Table of the emulated model. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Project: sfs-dynamixel-x430 - DYNAMIXEL X430 Control Table Emulator Author: Anton Vynohradov Email: <ulink url="mailto:avynohradov@systemfromscratch.com">avynohradov@systemfromscratch.com</ulink></para>
+<para><simplesect kind="copyright"><para>Copyright (c) 2026 Anton Vynohradov @license Apache License 2.0</para>
+</simplesect>
+SPDX-License-Identifier: Apache-2.0 </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_MODEL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MODEL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="group__x430__model_1ga5b2e4e700932284934cc7c5a82c4fc68" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_WRITABLE<sp/>0x01U</highlight></codeline>
+<codeline lineno="46" refid="group__x430__model_1gad3097be267f5fb22c139faf3344b961a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_EEPROM<sp/>0x02U</highlight></codeline>
+<codeline lineno="48" refid="group__x430__model_1gab57ab6403b1656cdfa8fae302e8d0800" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_SIGNED<sp/>0x04U</highlight></codeline>
+<codeline lineno="50" refid="group__x430__model_1gaf16aa0d65a906b57b57365337b5977f8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_GOAL<sp/>0x08U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="group__x430__model_1gac5fe48b7eb39461dc3a600cbc835e395" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__x430__model_1gac5fe48b7eb39461dc3a600cbc835e395" kindref="member">x430_check</ref></highlight></codeline>
+<codeline lineno="59"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="60" refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ab2e0d79116ac4fe9a1a6dadd5c77811e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ab2e0d79116ac4fe9a1a6dadd5c77811e" kindref="member">X430_CHECK_NONE</ref><sp/>=<sp/>0,<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="61" refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ae468738fd7eeb300d7597ee5100ef56d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ae468738fd7eeb300d7597ee5100ef56d" kindref="member">X430_CHECK_RANGE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="62" refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395acb114aad91f232931105d4e39ff218af" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395acb114aad91f232931105d4e39ff218af" kindref="member">X430_CHECK_MASK</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="63" refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395a4d6b775b9c1a51e8061568dfbc30f19b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395a4d6b775b9c1a51e8061568dfbc30f19b" kindref="member">X430_CHECK_OPMODE</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="64" refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395a13df5dd2b997b2d3e6f5b65c80b44884" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395a13df5dd2b997b2d3e6f5b65c80b44884" kindref="member">X430_CHECK_SYMMETRIC</ref>,<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="65" refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ac5a5cd95964256a418797c3bfd51912b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ac5a5cd95964256a418797c3bfd51912b" kindref="member">X430_CHECK_GOAL_POSITION</ref>,<sp/></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ae22670d4bb9dbd64301bb84132934e70" kindref="member">X430_CHECK_INDIRECT</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="67" refid="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395ae22670d4bb9dbd64301bb84132934e70" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="structx430__reg" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__reg" kindref="compound">x430_reg</ref></highlight></codeline>
+<codeline lineno="71"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="72" refid="structx430__reg_1a26fc0e9e1f63a8b0a9e3c1d3c46409fc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__reg_1a26fc0e9e1f63a8b0a9e3c1d3c46409fc" kindref="member">address</ref>;<sp/></highlight></codeline>
+<codeline lineno="73" refid="structx430__reg_1a03f9ab97cbf85c05e99ae6fb29bd9896" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__reg_1a03f9ab97cbf85c05e99ae6fb29bd9896" kindref="member">size</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="74" refid="structx430__reg_1a899b6166832f57956e7b22710396a5de" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__reg_1a899b6166832f57956e7b22710396a5de" kindref="member">flags</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="75" refid="structx430__reg_1a692a3f1397d01fe3fbb1d08f7bccdf93" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__reg_1a692a3f1397d01fe3fbb1d08f7bccdf93" kindref="member">check</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="76" refid="structx430__reg_1a2b860d19c20800ea417307e0bef9ce5b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__reg_1a2b860d19c20800ea417307e0bef9ce5b" kindref="member">ref</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="77" refid="structx430__reg_1a2358093f952a98065cb2cd64cb5cca09" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/><ref refid="structx430__reg_1a2358093f952a98065cb2cd64cb5cca09" kindref="member">initial</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="78" refid="structx430__reg_1aa389881c9b434b4fa0d3835582b2dd18" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/><ref refid="structx430__reg_1aa389881c9b434b4fa0d3835582b2dd18" kindref="member">min</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="79" refid="structx430__reg_1a4277a146fd8274b902f1c0454d109126" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int32_t<sp/><ref refid="structx430__reg_1a4277a146fd8274b902f1c0454d109126" kindref="member">max</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="80"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="structx430__indirect__block" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__indirect__block" kindref="compound">x430_indirect_block</ref></highlight></codeline>
+<codeline lineno="84"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="85" refid="structx430__indirect__block_1a3ff980446e115601cf58577706805f71" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__indirect__block_1a3ff980446e115601cf58577706805f71" kindref="member">address</ref>;<sp/></highlight></codeline>
+<codeline lineno="86" refid="structx430__indirect__block_1ad2cd425a2d253f1d3faafd55b67e3f2d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__indirect__block_1ad2cd425a2d253f1d3faafd55b67e3f2d" kindref="member">data</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="87" refid="structx430__indirect__block_1a3ffbf5dd8769c00f8ca46631294fb73d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__indirect__block_1a3ffbf5dd8769c00f8ca46631294fb73d" kindref="member">count</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="88"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="structx430__model" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__model" kindref="compound">x430_model</ref></highlight></codeline>
+<codeline lineno="92"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="93" refid="structx430__model_1ae2acac0be05efede9109e541bc6c0314" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="structx430__model_1ae2acac0be05efede9109e541bc6c0314" kindref="member">name</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="94" refid="structx430__model_1a7d9ab7ff622b3ca3cfa8bf5cad4b56bf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__model_1a7d9ab7ff622b3ca3cfa8bf5cad4b56bf" kindref="member">model_number</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="95" refid="structx430__model_1ad9fe827ee9343a22093f7234e78e92b8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__model_1ad9fe827ee9343a22093f7234e78e92b8" kindref="member">table_size</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="96" refid="structx430__model_1afad2937147abc466a5504e100226c86b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__reg" kindref="compound">x430_reg</ref>*<sp/><ref refid="structx430__model_1afad2937147abc466a5504e100226c86b" kindref="member">registers</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="97" refid="structx430__model_1a4ff782c6969de63e2d83f324a750bded" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__model_1a4ff782c6969de63e2d83f324a750bded" kindref="member">register_count</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="98" refid="structx430__model_1acadb9fdf8e61b94054213eeeec9dd6a6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t*<sp/><ref refid="structx430__model_1acadb9fdf8e61b94054213eeeec9dd6a6" kindref="member">register_map</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="99" refid="structx430__model_1abd1d0ed5fe61e34a0621c1ba875ec9e8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__indirect__block" kindref="compound">x430_indirect_block</ref>*<sp/><ref refid="structx430__model_1abd1d0ed5fe61e34a0621c1ba875ec9e8" kindref="member">indirect</ref>;<sp/></highlight></codeline>
+<codeline lineno="100" refid="structx430__model_1a66c2604dc610250d138c1d8476093158" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__model_1a66c2604dc610250d138c1d8476093158" kindref="member">indirect_count</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="101" refid="structx430__model_1a7e50f852a0c49b0f0bcc7a6025dd9dbd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structx430__model_1a7e50f852a0c49b0f0bcc7a6025dd9dbd" kindref="member">operating_modes</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="102" refid="structx430__model_1a54a442067ecb9189a11e8025c5925dfb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__model_1a54a442067ecb9189a11e8025c5925dfb" kindref="member">current_unit_ua</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="103" refid="structx430__model_1acf3b993bf3fa237758281f6d89015cdf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__model_1acf3b993bf3fa237758281f6d89015cdf" kindref="member">axes</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="104"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__model" kindref="compound">x430_model</ref><sp/><ref refid="group__x430__model_1ga1d4a98550ebd1ae429b59b487c6e57b2" kindref="member">x430_model_active</ref>;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>X430_MODEL_H<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="inc/x430_model.h"/>
+  </compounddef>
+</doxygen>

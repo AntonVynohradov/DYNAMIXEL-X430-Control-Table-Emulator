@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="x430__types_8h" kind="file" language="C++">
+    <compoundname>x430_types.h</compoundname>
+    <includes local="no">stddef.h</includes>
+    <includes local="no">stdint.h</includes>
+    <includes refid="x430__config_8h" local="yes">x430_config.h</includes>
+    <includes local="yes">dxl2.h</includes>
+    <includes refid="x430__defs_8h" local="yes">x430_defs.h</includes>
+    <includedby refid="x430_8h" local="yes">x430.h</includedby>
+    <incdepgraph>
+      <node id="4">
+        <label>x430_config.h</label>
+        <link refid="x430__config_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>x430_defs.h</label>
+        <link refid="x430__defs_8h_source"/>
+      </node>
+      <node id="1">
+        <label>inc/x430_types.h</label>
+        <link refid="x430__types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>dxl2.h</label>
+      </node>
+      <node id="2">
+        <label>stddef.h</label>
+      </node>
+      <node id="3">
+        <label>stdint.h</label>
+      </node>
+      <node id="5">
+        <label>x430_model_info.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>inc/x430_types.h</label>
+        <link refid="x430__types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>src/x430_internal.h</label>
+        <link refid="x430__internal_8h_source"/>
+      </node>
+      <node id="2">
+        <label>x430.h</label>
+        <link refid="x430_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structx430__port" prot="public">x430_port</innerclass>
+    <innerclass refid="structx430__hooks" prot="public">x430_hooks</innerclass>
+    <innerclass refid="structx430__bus__config" prot="public">x430_bus_config</innerclass>
+    <innerclass refid="structx430__device__config" prot="public">x430_device_config</innerclass>
+    <innerclass refid="structx430__sim__config" prot="public">x430_sim_config</innerclass>
+    <innerclass refid="structx430__bus" prot="public">x430_bus</innerclass>
+    <innerclass refid="structx430__device" prot="public">x430_device</innerclass>
+    <innerclass refid="structx430__sim" prot="public">x430_sim</innerclass>
+    <sectiondef kind="define">
+      <member refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kind="define"><name>X430_NVM_EEPROM_SIZE</name></member>
+      <member refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kind="define"><name>X430_NVM_BACKUP_SIZE</name></member>
+      <member refid="group__x430__types_1gaaf9d59e50846d139c38e2d80e697ff83" kind="define"><name>X430_NVM_BUFFER_SIZE</name></member>
+      <member refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kind="define"><name>X430_POINTER_BYTES</name></member>
+      <member refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kind="define"><name>X430_ALIGN_UP</name></member>
+      <member refid="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" kind="define"><name>X430_DXL2_LINK_BYTES</name></member>
+      <member refid="group__x430__types_1ga08d07441b61ab12ae1c227cd60604e9c" kind="define"><name>X430_FAST_READ_BYTES</name></member>
+      <member refid="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" kind="define"><name>X430_BUS_BYTES</name></member>
+      <member refid="group__x430__types_1ga337bba376411a5f61828f9084937ce16" kind="define"><name>X430_DEVICE_BYTES</name></member>
+      <member refid="group__x430__types_1ga05d03ef884f780932e87d617f55d722c" kind="define"><name>X430_SIM_BYTES</name></member>
+      <member refid="group__x430__types_1gafb28dc0de5a6f66dd81ca05716f253d9" kind="define"><name>X430_BUS_WORDS</name></member>
+      <member refid="group__x430__types_1gafd96c5c9e3da83eddd8f8d676a38f483" kind="define"><name>X430_DEVICE_WORDS</name></member>
+      <member refid="group__x430__types_1gadff3011c00dcc31eccda490f0b50a70d" kind="define"><name>X430_SIM_WORDS</name></member>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <member refid="group__x430__types_1ga9e8e20f327e4238a4fd09d90e9c4483a" kind="typedef"><name>x430_lock_fn</name></member>
+      <member refid="group__x430__types_1ga1702be1c004da40de5041f5a66bdcd91" kind="typedef"><name>x430_millis_fn</name></member>
+      <member refid="group__x430__types_1ga0c1ab4094bfac22877af7ea810cb7805" kind="typedef"><name>x430_delay_fn</name></member>
+      <member refid="group__x430__types_1gaff2ec3c355910b93f8d5c5edf59d3040" kind="typedef"><name>x430_write_hook</name></member>
+      <member refid="group__x430__types_1ga1618e2f9c05567bc41339e0fb98845b3" kind="typedef"><name>x430_read_hook</name></member>
+      <member refid="group__x430__types_1ga63594ce085fa44faa322668f28dfe54e" kind="typedef"><name>x430_event_hook</name></member>
+      <member refid="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" kind="typedef"><name>x430_nvm_load_hook</name></member>
+      <member refid="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" kind="typedef"><name>x430_nvm_store_hook</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*******************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>DYNAMIXEL-X430-Control-Table-Emulator:<sp/>DYNAMIXEL<sp/>X430<sp/>Control<sp/>Table<sp/>Emulator</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Project:<sp/><sp/><sp/><sp/><sp/>DYNAMIXEL-X430-Control-Table-Emulator</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Description:<sp/>Public<sp/>types:<sp/>callbacks,<sp/>configuration<sp/>structures<sp/>and<sp/>the</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>opaque,<sp/>caller-owned<sp/>instances<sp/>(bus,<sp/>device,<sp/>simulator).</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Author:<sp/><sp/><sp/><sp/><sp/><sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>Email:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>avynohradov@systemfromscratch.com</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>License:<sp/><sp/><sp/><sp/><sp/>Apache<sp/>License<sp/>2.0</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2026<sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>Licensed<sp/>under<sp/>the<sp/>Apache<sp/>License,<sp/>Version<sp/>2.0<sp/>(the<sp/>&quot;License&quot;);</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>you<sp/>may<sp/>not<sp/>use<sp/>this<sp/>file<sp/>except<sp/>in<sp/>compliance<sp/>with<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>You<sp/>may<sp/>obtain<sp/>a<sp/>copy<sp/>of<sp/>the<sp/>License<sp/>at</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>http://www.apache.org/licenses/LICENSE-2.0</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>Unless<sp/>required<sp/>by<sp/>applicable<sp/>law<sp/>or<sp/>agreed<sp/>to<sp/>in<sp/>writing,<sp/>software</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>distributed<sp/>under<sp/>the<sp/>License<sp/>is<sp/>distributed<sp/>on<sp/>an<sp/>&quot;AS<sp/>IS&quot;<sp/>BASIS,</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>WITHOUT<sp/>WARRANTIES<sp/>OR<sp/>CONDITIONS<sp/>OF<sp/>ANY<sp/>KIND,<sp/>either<sp/>express<sp/>or<sp/>implied.</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>See<sp/>the<sp/>License<sp/>for<sp/>the<sp/>specific<sp/>language<sp/>governing<sp/>permissions<sp/>and</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>limitations<sp/>under<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SPDX-License-Identifier:<sp/>Apache-2.0</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>******************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_TYPES_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_TYPES_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>INCLUDES</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stddef.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="x430__config_8h" kindref="compound">x430_config.h</ref>&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>first:<sp/>sets<sp/>DXL2_MAX_PACKET_SIZE<sp/>for<sp/>dxl2.h<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;dxl2.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;x430_defs.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>*<sp/>INSTANCES<sp/>(FORWARD<sp/>DECLARATIONS)</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__bus" kindref="compound">x430_bus</ref>;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device" kindref="compound">x430_device</ref>;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>*<sp/>PLATFORM<sp/>PORT</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="group__x430__types_1ga9e8e20f327e4238a4fd09d90e9c4483a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="group__x430__types_1ga9e8e20f327e4238a4fd09d90e9c4483a" kindref="member">x430_lock_fn</ref>)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>context);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="group__x430__types_1ga1702be1c004da40de5041f5a66bdcd91" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>uint32_t<sp/>(*<ref refid="group__x430__types_1ga1702be1c004da40de5041f5a66bdcd91" kindref="member">x430_millis_fn</ref>)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>context);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="group__x430__types_1ga0c1ab4094bfac22877af7ea810cb7805" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="group__x430__types_1ga0c1ab4094bfac22877af7ea810cb7805" kindref="member">x430_delay_fn</ref>)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>context,<sp/>uint32_t<sp/>us);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="structx430__port" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__port" kindref="compound">x430_port</ref></highlight></codeline>
+<codeline lineno="100"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="101" refid="structx430__port_1aeb7966fbd633e49215c5ffc64da435f9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><ref refid="structx430__port_1aeb7966fbd633e49215c5ffc64da435f9" kindref="member">context</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="102" refid="structx430__port_1ab2e69d29d9139b33b94c19b85b2b2490" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__types_1ga9e8e20f327e4238a4fd09d90e9c4483a" kindref="member">x430_lock_fn</ref><sp/><ref refid="structx430__port_1ab2e69d29d9139b33b94c19b85b2b2490" kindref="member">lock</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="103" refid="structx430__port_1a971e0c3c5e0a518f8716e1842622c3ab" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__types_1ga9e8e20f327e4238a4fd09d90e9c4483a" kindref="member">x430_lock_fn</ref><sp/><ref refid="structx430__port_1a971e0c3c5e0a518f8716e1842622c3ab" kindref="member">unlock</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="104" refid="structx430__port_1a3f4688d92be10563f0dfff0ad0497cad" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__types_1ga1702be1c004da40de5041f5a66bdcd91" kindref="member">x430_millis_fn</ref><sp/><ref refid="structx430__port_1a3f4688d92be10563f0dfff0ad0497cad" kindref="member">millis</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="105" refid="structx430__port_1abbf7d364f45bc625e7ec74c141482ebb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__types_1ga0c1ab4094bfac22877af7ea810cb7805" kindref="member">x430_delay_fn</ref><sp/><ref refid="structx430__port_1abbf7d364f45bc625e7ec74c141482ebb" kindref="member">delay_us</ref>;<sp/></highlight></codeline>
+<codeline lineno="106"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="109"><highlight class="comment"><sp/>*<sp/>APPLICATION<sp/>HOOKS</highlight></codeline>
+<codeline lineno="110"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122" refid="group__x430__types_1gaff2ec3c355910b93f8d5c5edf59d3040" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>uint8_t<sp/>(*<ref refid="group__x430__types_1gaff2ec3c355910b93f8d5c5edf59d3040" kindref="member">x430_write_hook</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device,<sp/>uint16_t<sp/>address,<sp/>uint8_t<sp/>size,</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>int32_t<sp/>value,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>user_data);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134" refid="group__x430__types_1ga1618e2f9c05567bc41339e0fb98845b3" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>void<sp/>(*<ref refid="group__x430__types_1ga1618e2f9c05567bc41339e0fb98845b3" kindref="member">x430_read_hook</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device,<sp/>uint16_t<sp/>address,<sp/>uint16_t<sp/>length,</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>user_data);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="145" refid="group__x430__types_1ga63594ce085fa44faa322668f28dfe54e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>uint8_t<sp/>(*<ref refid="group__x430__types_1ga63594ce085fa44faa322668f28dfe54e" kindref="member">x430_event_hook</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device,<sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__x430__defs_1ga7d5a16437bb5db3b961b2419ebe8f413" kindref="member">x430_event</ref><sp/>event,</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>user_data);</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158" refid="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>int<sp/>(*<ref refid="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" kindref="member">x430_nvm_load_hook</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device,<sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__x430__defs_1gad147345a04699c34670eadb20e3b03e4" kindref="member">x430_nvm_slot</ref><sp/>slot,</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint8_t*<sp/>data,<sp/>uint16_t<sp/>size,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>user_data);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171" refid="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>int<sp/>(*<ref refid="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" kindref="member">x430_nvm_store_hook</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device,<sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="group__x430__defs_1gad147345a04699c34670eadb20e3b03e4" kindref="member">x430_nvm_slot</ref><sp/>slot,</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t*<sp/>data,<sp/>uint16_t<sp/>size,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/>user_data);</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181" refid="structx430__hooks" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__hooks" kindref="compound">x430_hooks</ref></highlight></codeline>
+<codeline lineno="182"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="183" refid="structx430__hooks_1ac8c1160f5c88e21a95f68b4bd2627b55" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__types_1gaff2ec3c355910b93f8d5c5edf59d3040" kindref="member">x430_write_hook</ref><sp/><ref refid="structx430__hooks_1ac8c1160f5c88e21a95f68b4bd2627b55" kindref="member">write</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="184" refid="structx430__hooks_1aca48905169e4ee844638f12b46d3b0b6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__types_1ga1618e2f9c05567bc41339e0fb98845b3" kindref="member">x430_read_hook</ref><sp/><ref refid="structx430__hooks_1aca48905169e4ee844638f12b46d3b0b6" kindref="member">read</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="185" refid="structx430__hooks_1aa88bdb1b64a0a2e289c6de118f3a0c79" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__types_1ga63594ce085fa44faa322668f28dfe54e" kindref="member">x430_event_hook</ref><sp/><ref refid="structx430__hooks_1aa88bdb1b64a0a2e289c6de118f3a0c79" kindref="member">event</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="186" refid="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" kindref="member">x430_nvm_load_hook</ref><sp/><ref refid="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" kindref="member">nvm_load</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="187" refid="structx430__hooks_1a9fd99af3afec213a15c791489e535336" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" kindref="member">x430_nvm_store_hook</ref><sp/><ref refid="structx430__hooks_1a9fd99af3afec213a15c791489e535336" kindref="member">nvm_store</ref>;<sp/></highlight></codeline>
+<codeline lineno="188"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="191"><highlight class="comment"><sp/>*<sp/>CONFIGURATION<sp/>TYPES</highlight></codeline>
+<codeline lineno="192"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195" refid="structx430__bus__config" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__bus__config" kindref="compound">x430_bus_config</ref></highlight></codeline>
+<codeline lineno="196"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="197" refid="structx430__bus__config_1af4c6bbcdc66e922d7db43fb04c7c7ef3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>dxl2_write_fn<sp/><ref refid="structx430__bus__config_1af4c6bbcdc66e922d7db43fb04c7c7ef3" kindref="member">write</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="198" refid="structx430__bus__config_1a2503c38ee63d95baf06e1cbeb8cc1ff7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><ref refid="structx430__bus__config_1a2503c38ee63d95baf06e1cbeb8cc1ff7" kindref="member">write_context</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="199" refid="structx430__bus__config_1ac256cec19dffd340c12b3cedefd0b769" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__port" kindref="compound">x430_port</ref>*<sp/><ref refid="structx430__bus__config_1ac256cec19dffd340c12b3cedefd0b769" kindref="member">port</ref>;<sp/></highlight></codeline>
+<codeline lineno="200"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203" refid="structx430__device__config" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device__config" kindref="compound">x430_device_config</ref></highlight></codeline>
+<codeline lineno="204"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="206" refid="structx430__device__config_1a123182714547aa6ebd334556afef202a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__device__config_1a123182714547aa6ebd334556afef202a" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="208" refid="structx430__device__config_1a9323213d6b2dec9f59422b23e041433c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__device__config_1a9323213d6b2dec9f59422b23e041433c" kindref="member">firmware_version</ref>;</highlight></codeline>
+<codeline lineno="210" refid="structx430__device__config_1a8d8f5fd0ba2d11fc8d3bb46e898bb516" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structx430__device__config_1a8d8f5fd0ba2d11fc8d3bb46e898bb516" kindref="member">model_information</ref>;</highlight></codeline>
+<codeline lineno="212" refid="structx430__device__config_1a7df4eabf106a684124d7106dcd235235" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__hooks" kindref="compound">x430_hooks</ref>*<sp/><ref refid="structx430__device__config_1a7df4eabf106a684124d7106dcd235235" kindref="member">hooks</ref>;</highlight></codeline>
+<codeline lineno="214" refid="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal">*<sp/><ref refid="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" kindref="member">user_data</ref>;</highlight></codeline>
+<codeline lineno="215"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"></highlight></codeline>
+<codeline lineno="218" refid="structx430__sim__config" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__sim__config" kindref="compound">x430_sim_config</ref></highlight></codeline>
+<codeline lineno="219"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="220" refid="structx430__sim__config_1adcc77f6cc81d71c02d7588ea7b85c60a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__sim__config_1adcc77f6cc81d71c02d7588ea7b85c60a" kindref="member">input_voltage</ref>;<sp/></highlight></codeline>
+<codeline lineno="221" refid="structx430__sim__config_1af2f35658bd2047cf7bda43aa48bffdac" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__sim__config_1af2f35658bd2047cf7bda43aa48bffdac" kindref="member">temperature</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="222"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="225"><highlight class="comment"><sp/>*<sp/>INSTANCES</highlight></codeline>
+<codeline lineno="226"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229" refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_NVM_EEPROM_SIZE<sp/>(X430_NVM_HEADER_SIZE<sp/>+<sp/>X430_RAM_START<sp/>+<sp/>2U)</highlight></codeline>
+<codeline lineno="231" refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_NVM_BACKUP_SIZE<sp/>(X430_NVM_HEADER_SIZE<sp/>+<sp/>X430_TABLE_SIZE<sp/>+<sp/>2U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>X430_FEATURE_BACKUP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235" refid="group__x430__types_1gaaf9d59e50846d139c38e2d80e697ff83" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_NVM_BUFFER_SIZE<sp/>X430_NVM_BACKUP_SIZE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_NVM_BUFFER_SIZE<sp/>X430_NVM_EEPROM_SIZE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="241"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(UINTPTR_MAX)<sp/>&amp;&amp;<sp/>(UINTPTR_MAX<sp/>&gt;<sp/>0xFFFFFFFFU)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_POINTER_BYTES<sp/>8U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="244" refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_POINTER_BYTES<sp/>4U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="248" refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_ALIGN_UP(n,<sp/>a)<sp/>(((((n)<sp/>+<sp/>(a))<sp/>-<sp/>1U)<sp/>/<sp/>(a))<sp/>*<sp/>(a))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="249"><highlight class="normal"></highlight></codeline>
+<codeline lineno="256" refid="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_DXL2_LINK_BYTES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="257"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>X430_ALIGN_UP((4U<sp/>*<sp/>X430_POINTER_BYTES)<sp/>+<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="258"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE,<sp/>X430_POINTER_BYTES)<sp/>+<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="259"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>X430_POINTER_BYTES<sp/>+<sp/>X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE<sp/>-<sp/>6U,<sp/>4U)<sp/>+<sp/>8U,<sp/>\</highlight></codeline>
+<codeline lineno="260"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>X430_POINTER_BYTES)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="261"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>X430_FEATURE_FAST_READ</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="264" refid="group__x430__types_1ga08d07441b61ab12ae1c227cd60604e9c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FAST_READ_BYTES<sp/>DXL2_MAX_PACKET_SIZE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FAST_READ_BYTES<sp/>0U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"></highlight></codeline>
+<codeline lineno="270" refid="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_BUS_BYTES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="271"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>(X430_DXL2_LINK_BYTES<sp/>+<sp/>(3U<sp/>*<sp/>X430_POINTER_BYTES)<sp/>+<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="272"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/>(X430_MAX_DEVICES_U<sp/>*<sp/>X430_POINTER_BYTES)<sp/>+<sp/>10U<sp/>+<sp/>DXL2_MAX_PARAMETER_SIZE<sp/>+<sp/>\</highlight></codeline>
+<codeline lineno="273"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/>X430_FAST_READ_BYTES)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight></codeline>
+<codeline lineno="276" refid="group__x430__types_1ga337bba376411a5f61828f9084937ce16" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_DEVICE_BYTES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="277"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((3U<sp/>*<sp/>X430_POINTER_BYTES)<sp/>+<sp/>17U<sp/>+<sp/>X430_TABLE_SIZE<sp/>+<sp/>X430_REG_WRITE_SIZE_U<sp/>+<sp/>\</highlight></codeline>
+<codeline lineno="278"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/>X430_NVM_BUFFER_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight></codeline>
+<codeline lineno="281" refid="group__x430__types_1ga05d03ef884f780932e87d617f55d722c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_SIM_BYTES<sp/>(24U<sp/>+<sp/>X430_POINTER_BYTES)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"></highlight></codeline>
+<codeline lineno="284" refid="group__x430__types_1gafb28dc0de5a6f66dd81ca05716f253d9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_BUS_WORDS<sp/>((X430_BUS_BYTES<sp/>+<sp/>7U)<sp/>/<sp/>8U)</highlight></codeline>
+<codeline lineno="286" refid="group__x430__types_1gafd96c5c9e3da83eddd8f8d676a38f483" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_DEVICE_WORDS<sp/>((X430_DEVICE_BYTES<sp/>+<sp/>7U)<sp/>/<sp/>8U)</highlight></codeline>
+<codeline lineno="288" refid="group__x430__types_1gadff3011c00dcc31eccda490f0b50a70d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_SIM_WORDS<sp/>((X430_SIM_BYTES<sp/>+<sp/>7U)<sp/>/<sp/>8U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight></codeline>
+<codeline lineno="295" refid="structx430__bus" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__bus" kindref="compound">x430_bus</ref></highlight></codeline>
+<codeline lineno="296"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="297" refid="structx430__bus_1a13301c0044a187ef893a2468bc3bc18a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint64_t<sp/><ref refid="structx430__bus_1a13301c0044a187ef893a2468bc3bc18a" kindref="member">opaque</ref>[<ref refid="group__x430__types_1gafb28dc0de5a6f66dd81ca05716f253d9" kindref="member">X430_BUS_WORDS</ref>];<sp/></highlight></codeline>
+<codeline lineno="298"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"></highlight></codeline>
+<codeline lineno="305" refid="structx430__device" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device" kindref="compound">x430_device</ref></highlight></codeline>
+<codeline lineno="306"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="307" refid="structx430__device_1ab70f8f6af34ff801830a73ea7d74d89f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint64_t<sp/><ref refid="structx430__device_1ab70f8f6af34ff801830a73ea7d74d89f" kindref="member">opaque</ref>[<ref refid="group__x430__types_1gafd96c5c9e3da83eddd8f8d676a38f483" kindref="member">X430_DEVICE_WORDS</ref>];<sp/></highlight></codeline>
+<codeline lineno="308"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="309"><highlight class="normal"></highlight></codeline>
+<codeline lineno="314" refid="structx430__sim" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__sim" kindref="compound">x430_sim</ref></highlight></codeline>
+<codeline lineno="315"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="316" refid="structx430__sim_1a275be47249c6c9a2e97b4ebd1fcf5d81" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint64_t<sp/><ref refid="structx430__sim_1a275be47249c6c9a2e97b4ebd1fcf5d81" kindref="member">opaque</ref>[<ref refid="group__x430__types_1gadff3011c00dcc31eccda490f0b50a70d" kindref="member">X430_SIM_WORDS</ref>];<sp/></highlight></codeline>
+<codeline lineno="317"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="318"><highlight class="normal"></highlight></codeline>
+<codeline lineno="321"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="322"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="323"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="324"><highlight class="normal"></highlight></codeline>
+<codeline lineno="325"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>X430_TYPES_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="inc/x430_types.h"/>
+  </compounddef>
+</doxygen>

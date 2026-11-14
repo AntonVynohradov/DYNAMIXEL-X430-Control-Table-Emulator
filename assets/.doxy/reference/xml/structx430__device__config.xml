@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__device__config" kind="struct" language="C++" prot="public">
+    <compoundname>x430_device_config</compoundname>
+    <includes refid="x430__types_8h" local="no">x430_types.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__device__config_1a123182714547aa6ebd334556afef202a" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_device_config::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <qualifiedname>x430_device_config::id</qualifiedname>
+        <briefdescription>
+<para>Factory ID of this device, 0..252 (0 = model default 1). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Stored EEPROM wins. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="206" column="13" bodyfile="inc/x430_types.h" bodystart="206" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__config_1a9323213d6b2dec9f59422b23e041433c" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_device_config::firmware_version</definition>
+        <argsstring></argsstring>
+        <name>firmware_version</name>
+        <qualifiedname>x430_device_config::firmware_version</qualifiedname>
+        <briefdescription>
+<para>Firmware Version (6); 0 = <ref refid="group__x430__config_1ga88bd99c8234f09536b1eec34903d6383" kindref="member">X430_FIRMWARE_VERSION</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="208" column="13" bodyfile="inc/x430_types.h" bodystart="208" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__config_1a8d8f5fd0ba2d11fc8d3bb46e898bb516" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t x430_device_config::model_information</definition>
+        <argsstring></argsstring>
+        <name>model_information</name>
+        <qualifiedname>x430_device_config::model_information</qualifiedname>
+        <briefdescription>
+<para>Model Information (2), free for the application (e.g. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>its firmware version). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="210" column="14" bodyfile="inc/x430_types.h" bodystart="210" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__config_1a7df4eabf106a684124d7106dcd235235" prot="public" static="no" mutable="no">
+        <type>const struct <ref refid="structx430__hooks" kindref="compound">x430_hooks</ref> *</type>
+        <definition>const struct x430_hooks* x430_device_config::hooks</definition>
+        <argsstring></argsstring>
+        <name>hooks</name>
+        <qualifiedname>x430_device_config::hooks</qualifiedname>
+        <briefdescription>
+<para>Application hooks; NULL = pure register device. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="212" column="28" bodyfile="inc/x430_types.h" bodystart="212" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* x430_device_config::user_data</definition>
+        <argsstring></argsstring>
+        <name>user_data</name>
+        <qualifiedname>x430_device_config::user_data</qualifiedname>
+        <briefdescription>
+<para>Passed to every hook. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="214" column="10" bodyfile="inc/x430_types.h" bodystart="214" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Device configuration, copied by <ref refid="group__x430_1ga63afa6e92da99a8b5a7850091dee360e" kindref="member">x430_device_init()</ref>. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="3">
+        <label>x430_device</label>
+        <link refid="structx430__device"/>
+      </node>
+      <node id="1">
+        <label>x430_device_config</label>
+        <link refid="structx430__device__config"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>hooks</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>x430_hooks</label>
+        <link refid="structx430__hooks"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>event</edgelabel>
+          <edgelabel>nvm_load</edgelabel>
+          <edgelabel>nvm_store</edgelabel>
+          <edgelabel>read</edgelabel>
+          <edgelabel>write</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="inc/x430_types.h" line="203" column="1" bodyfile="inc/x430_types.h" bodystart="204" bodyend="215"/>
+    <listofallmembers>
+      <member refid="structx430__device__config_1a9323213d6b2dec9f59422b23e041433c" prot="public" virt="non-virtual"><scope>x430_device_config</scope><name>firmware_version</name></member>
+      <member refid="structx430__device__config_1a7df4eabf106a684124d7106dcd235235" prot="public" virt="non-virtual"><scope>x430_device_config</scope><name>hooks</name></member>
+      <member refid="structx430__device__config_1a123182714547aa6ebd334556afef202a" prot="public" virt="non-virtual"><scope>x430_device_config</scope><name>id</name></member>
+      <member refid="structx430__device__config_1a8d8f5fd0ba2d11fc8d3bb46e898bb516" prot="public" virt="non-virtual"><scope>x430_device_config</scope><name>model_information</name></member>
+      <member refid="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" prot="public" virt="non-virtual"><scope>x430_device_config</scope><name>user_data</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

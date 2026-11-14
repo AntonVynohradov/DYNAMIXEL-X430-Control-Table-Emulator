@@ -1,0 +1,643 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="x430__internal_8h" kind="file" language="C++">
+    <compoundname>x430_internal.h</compoundname>
+    <includes local="no">stdbool.h</includes>
+    <includes local="no">stdint.h</includes>
+    <includes refid="x430_8h" local="yes">x430.h</includes>
+    <includedby refid="x430__bus_8c" local="yes">src/x430_bus.c</includedby>
+    <includedby refid="x430__device_8c" local="yes">src/x430_device.c</includedby>
+    <includedby refid="x430__sim_8c" local="yes">src/x430_sim.c</includedby>
+    <incdepgraph>
+      <node id="6">
+        <label>x430_config.h</label>
+        <link refid="x430__config_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>x430_defs.h</label>
+        <link refid="x430__defs_8h_source"/>
+      </node>
+      <node id="10">
+        <label>x430_model.h</label>
+        <link refid="x430__model_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>x430_types.h</label>
+        <link refid="x430__types_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/x430_internal.h</label>
+        <link refid="x430__internal_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>x430.h</label>
+        <link refid="x430_8h_source"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>dxl2.h</label>
+      </node>
+      <node id="2">
+        <label>stdbool.h</label>
+      </node>
+      <node id="5">
+        <label>stddef.h</label>
+      </node>
+      <node id="3">
+        <label>stdint.h</label>
+      </node>
+      <node id="7">
+        <label>x430_model_info.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structx430__bus__ctx" prot="public">x430_bus_ctx</innerclass>
+    <innerclass refid="structx430__device__ctx" prot="public">x430_device_ctx</innerclass>
+    <innerclass refid="structx430__sim__ctx" prot="public">x430_sim_ctx</innerclass>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="x430__internal_8h_1a1ffe5da009095f682c2a40a1995c2496" prot="public" static="no">
+        <name>X430_READY</name>
+        <initializer>0x58343330U</initializer>
+        <briefdescription>
+<para>Value of the ready field after a successful initialization. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>A zeroed or never initialized instance holds another value: every function but the *_init() functions then returns <ref refid="group__x430__defs_1gafa97123ff7bd387e2fdf74a6ae002866" kindref="member">X430_ERR_STATE</ref>. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="53" column="9" bodyfile="src/x430_internal.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="x430__internal_8h_1a93b7b04fcaeb6242000f532a6e6c55ed" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>struct <ref refid="structx430__bus__ctx" kindref="compound">x430_bus_ctx</ref> *</type>
+        <definition>static struct x430_bus_ctx * x430_bus_ctx_of</definition>
+        <argsstring>(struct x430_bus *bus)</argsstring>
+        <name>x430_bus_ctx_of</name>
+        <param>
+          <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <briefdescription>
+<para>State of a bus. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md): <ref refid="structx430__bus" kindref="compound">x430_bus</ref> is the opaque storage of <ref refid="structx430__bus__ctx" kindref="compound">x430_bus_ctx</ref>; size and alignment are checked in x430_bus.c. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="108" column="34" bodyfile="src/x430_internal.h" bodystart="108" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1a0c32ab911028a7c828593e2b03237e92" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>const struct <ref refid="structx430__bus__ctx" kindref="compound">x430_bus_ctx</ref> *</type>
+        <definition>static const struct x430_bus_ctx * x430_bus_ctx_of_const</definition>
+        <argsstring>(const struct x430_bus *bus)</argsstring>
+        <name>x430_bus_ctx_of_const</name>
+        <param>
+          <type>const struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <briefdescription>
+<para>Read-only variant of x430_bus_ctx_of(). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="115" column="40" bodyfile="src/x430_internal.h" bodystart="115" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1a253b2d989ef7f9e3c4b1c59fce00b12f" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>struct <ref refid="structx430__device__ctx" kindref="compound">x430_device_ctx</ref> *</type>
+        <definition>static struct x430_device_ctx * x430_device_ctx_of</definition>
+        <argsstring>(struct x430_device *device)</argsstring>
+        <name>x430_device_ctx_of</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <briefdescription>
+<para>State of a device. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md); checked in x430_device.c. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="125" column="37" bodyfile="src/x430_internal.h" bodystart="125" bodyend="129"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1aed10a1b1eabd4c943221d603c3e096d8" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>const struct <ref refid="structx430__device__ctx" kindref="compound">x430_device_ctx</ref> *</type>
+        <definition>static const struct x430_device_ctx * x430_device_ctx_of_const</definition>
+        <argsstring>(const struct x430_device *device)</argsstring>
+        <name>x430_device_ctx_of_const</name>
+        <param>
+          <type>const struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <briefdescription>
+<para>Read-only variant of x430_device_ctx_of(). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="133" column="1" bodyfile="src/x430_internal.h" bodystart="133" bodyend="137"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1ac30418a10a33fdc27745eafaa168e8ca" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>struct <ref refid="structx430__sim__ctx" kindref="compound">x430_sim_ctx</ref> *</type>
+        <definition>static struct x430_sim_ctx * x430_sim_ctx_of</definition>
+        <argsstring>(struct x430_sim *sim)</argsstring>
+        <name>x430_sim_ctx_of</name>
+        <param>
+          <type>struct <ref refid="structx430__sim" kindref="compound">x430_sim</ref> *</type>
+          <declname>sim</declname>
+        </param>
+        <briefdescription>
+<para>State of a simulator. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md); checked in x430_sim.c. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="143" column="34" bodyfile="src/x430_internal.h" bodystart="143" bodyend="147"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1a218c47ed90581f53e723dcec0998be9c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool x430_bus_id_taken</definition>
+        <argsstring>(const struct x430_bus *bus, const struct x430_device *except, uint8_t id)</argsstring>
+        <name>x430_bus_id_taken</name>
+        <param>
+          <type>const struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <param>
+          <type>const struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>except</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+<para>True when another device on <computeroutput>bus</computeroutput> uses <computeroutput>id</computeroutput> (<computeroutput>bus</computeroutput> may be NULL). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="154" column="6" bodyfile="src/x430_bus.c" bodystart="804" bodyend="821" declfile="src/x430_internal.h" declline="154" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1af2b9eb374d8526313b407df185db6a70" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint32_t</type>
+        <definition>uint32_t x430_bus_millis</definition>
+        <argsstring>(const struct x430_bus *bus)</argsstring>
+        <name>x430_bus_millis</name>
+        <param>
+          <type>const struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <briefdescription>
+<para>Milliseconds from the port of <computeroutput>bus</computeroutput>; 0 without bus or clock. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="157" column="10" bodyfile="src/x430_bus.c" bodystart="823" bodyend="832" declfile="src/x430_internal.h" declline="157" declcolumn="10"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1aecdb8b5af6d2ffd2f9c05dff31cc2f7a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int32_t</type>
+        <definition>int32_t x430_device_value</definition>
+        <argsstring>(const struct x430_device *device, uint16_t address)</argsstring>
+        <name>x430_device_value</name>
+        <param>
+          <type>const struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>Value of the register that starts at <computeroutput>address</computeroutput>, 0 when none starts there. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="164" column="9" bodyfile="src/x430_device.c" bodystart="710" bodyend="713" declfile="src/x430_internal.h" declline="164" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1a412babbb8aae19911abcaacb666994b0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void x430_device_store</definition>
+        <argsstring>(struct x430_device *device, uint16_t address, int32_t value)</argsstring>
+        <name>x430_device_store</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>address</declname>
+        </param>
+        <param>
+          <type>int32_t</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+<para>Store <computeroutput>value</computeroutput> into the register that starts at <computeroutput>address</computeroutput> (none: no effect). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="167" column="6" bodyfile="src/x430_device.c" bodystart="715" bodyend="718" declfile="src/x430_internal.h" declline="167" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1a173cfad0ca3b848f85f3bc1750e3b19e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_device_byte</definition>
+        <argsstring>(const struct x430_device *device, uint16_t address)</argsstring>
+        <name>x430_device_byte</name>
+        <param>
+          <type>const struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>address</declname>
+        </param>
+        <briefdescription>
+<para>One byte of the Control Table image. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="170" column="9" bodyfile="src/x430_device.c" bodystart="720" bodyend="723" declfile="src/x430_internal.h" declline="170" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1a1f73ff1f77c6f00559db3be4943d5e23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_device_alert</definition>
+        <argsstring>(const struct x430_device *device)</argsstring>
+        <name>x430_device_alert</name>
+        <param>
+          <type>const struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <briefdescription>
+<para>Status error alert: DXL2_ERR_ALERT_BIT when Hardware Error Status is not 0. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="173" column="9" bodyfile="src/x430_device.c" bodystart="725" bodyend="734" declfile="src/x430_internal.h" declline="173" declcolumn="9"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1a63d65a317ac312694dfdc533eefb713b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void x430_device_watchdog</definition>
+        <argsstring>(struct x430_device *device, uint32_t idle_ms)</argsstring>
+        <name>x430_device_watchdog</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>uint32_t</type>
+          <declname>idle_ms</declname>
+        </param>
+        <briefdescription>
+<para>Bus Watchdog check; <computeroutput>idle_ms</computeroutput> is the time since the last instruction packet. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="176" column="6" bodyfile="src/x430_device.c" bodystart="736" bodyend="747" declfile="src/x430_internal.h" declline="176" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1af09c1c751d2b5cc6755a7cac457a6365" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+        <definition>struct x430_bus * x430_device_bus</definition>
+        <argsstring>(const struct x430_device *device)</argsstring>
+        <name>x430_device_bus</name>
+        <param>
+          <type>const struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <briefdescription>
+<para>Bus of the device, NULL when it is not attached. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="179" column="16" bodyfile="src/x430_device.c" bodystart="749" bodyend="752" declfile="src/x430_internal.h" declline="179" declcolumn="16"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1ad67d868d906115683ab6cc78d987736b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void x430_device_attach</definition>
+        <argsstring>(struct x430_device *device, struct x430_bus *bus)</argsstring>
+        <name>x430_device_attach</name>
+        <param>
+          <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
+          <declname>bus</declname>
+        </param>
+        <briefdescription>
+<para>Records the bus of a device on <ref refid="group__x430_1ga1895c0c496df5f7a87a5a09775c78fba" kindref="member">x430_bus_attach()</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="182" column="6" bodyfile="src/x430_device.c" bodystart="754" bodyend="757" declfile="src/x430_internal.h" declline="182" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1a731fe6efdbe90e3e948d787527fb5272" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool x430_device_ready</definition>
+        <argsstring>(const struct x430_device *device)</argsstring>
+        <name>x430_device_ready</name>
+        <param>
+          <type>const struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+          <declname>device</declname>
+        </param>
+        <briefdescription>
+<para>True for a device that completed <ref refid="group__x430_1ga63afa6e92da99a8b5a7850091dee360e" kindref="member">x430_device_init()</ref> (device may be NULL). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="185" column="6" bodyfile="src/x430_device.c" bodystart="759" bodyend="762" declfile="src/x430_internal.h" declline="185" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1a7bedde63202fd0c2bc6d947b6ce87ee9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void x430_copy</definition>
+        <argsstring>(uint8_t *destination, const uint8_t *source, uint16_t length)</argsstring>
+        <name>x430_copy</name>
+        <param>
+          <type>uint8_t *</type>
+          <declname>destination</declname>
+        </param>
+        <param>
+          <type>const uint8_t *</type>
+          <declname>source</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+<para>Copies <computeroutput>length</computeroutput> bytes (no &lt;string.h&gt;). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="188" column="6" bodyfile="src/x430_device.c" bodystart="694" bodyend="700" declfile="src/x430_internal.h" declline="188" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="x430__internal_8h_1ad03d05b256d7998054c32198f1146420" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void x430_fill</definition>
+        <argsstring>(uint8_t *destination, uint8_t value, uint16_t length)</argsstring>
+        <name>x430_fill</name>
+        <param>
+          <type>uint8_t *</type>
+          <declname>destination</declname>
+        </param>
+        <param>
+          <type>uint8_t</type>
+          <declname>value</declname>
+        </param>
+        <param>
+          <type>uint16_t</type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+<para>Sets <computeroutput>length</computeroutput> bytes to <computeroutput>value</computeroutput> (no &lt;string.h&gt;). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="191" column="6" bodyfile="src/x430_device.c" bodystart="702" bodyend="708" declfile="src/x430_internal.h" declline="191" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*******************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>DYNAMIXEL-X430-Control-Table-Emulator:<sp/>DYNAMIXEL<sp/>X430<sp/>Control<sp/>Table<sp/>Emulator</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>Project:<sp/><sp/><sp/><sp/><sp/>DYNAMIXEL-X430-Control-Table-Emulator</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Description:<sp/>Private<sp/>declarations:<sp/>the<sp/>state<sp/>behind<sp/>the<sp/>opaque<sp/>instances<sp/>and</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>the<sp/>functions<sp/>the<sp/>modules<sp/>share.</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>Author:<sp/><sp/><sp/><sp/><sp/><sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/>Email:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>avynohradov@systemfromscratch.com</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>License:<sp/><sp/><sp/><sp/><sp/>Apache<sp/>License<sp/>2.0</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2026<sp/>Anton<sp/>Vynohradov</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>Licensed<sp/>under<sp/>the<sp/>Apache<sp/>License,<sp/>Version<sp/>2.0<sp/>(the<sp/>&quot;License&quot;);</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/>you<sp/>may<sp/>not<sp/>use<sp/>this<sp/>file<sp/>except<sp/>in<sp/>compliance<sp/>with<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>You<sp/>may<sp/>obtain<sp/>a<sp/>copy<sp/>of<sp/>the<sp/>License<sp/>at</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>http://www.apache.org/licenses/LICENSE-2.0</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>Unless<sp/>required<sp/>by<sp/>applicable<sp/>law<sp/>or<sp/>agreed<sp/>to<sp/>in<sp/>writing,<sp/>software</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>distributed<sp/>under<sp/>the<sp/>License<sp/>is<sp/>distributed<sp/>on<sp/>an<sp/>&quot;AS<sp/>IS&quot;<sp/>BASIS,</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>WITHOUT<sp/>WARRANTIES<sp/>OR<sp/>CONDITIONS<sp/>OF<sp/>ANY<sp/>KIND,<sp/>either<sp/>express<sp/>or<sp/>implied.</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>See<sp/>the<sp/>License<sp/>for<sp/>the<sp/>specific<sp/>language<sp/>governing<sp/>permissions<sp/>and</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>limitations<sp/>under<sp/>the<sp/>License.</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SPDX-License-Identifier:<sp/>Apache-2.0</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>******************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_INTERNAL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_INTERNAL_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>INCLUDES</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdint.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;x430.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;C&quot;</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>*<sp/>DEFINES<sp/>&amp;<sp/>MACROS</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_READY<sp/>0x58343330U</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>*<sp/>TYPE<sp/>DEFINITIONS</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="structx430__bus__ctx" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__bus__ctx" kindref="compound">x430_bus_ctx</ref></highlight></codeline>
+<codeline lineno="61"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="62" refid="structx430__bus__ctx_1a3a9e4c2afb777bcd66182e7cd3528009" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">dxl2_link<sp/><ref refid="structx430__bus__ctx_1a3a9e4c2afb777bcd66182e7cd3528009" kindref="member">link</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="63" refid="structx430__bus__ctx_1a01298f7dacf86fb1aefaa03ded29e5d2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__bus__config" kindref="compound">x430_bus_config</ref><sp/><ref refid="structx430__bus__ctx_1a01298f7dacf86fb1aefaa03ded29e5d2" kindref="member">config</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="64" refid="structx430__bus__ctx_1a9be780070949cbfcfc28e3ec6b51e5eb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/><ref refid="structx430__bus__ctx_1a9be780070949cbfcfc28e3ec6b51e5eb" kindref="member">devices</ref>[<ref refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" kindref="member">X430_MAX_DEVICES</ref>];<sp/></highlight></codeline>
+<codeline lineno="65" refid="structx430__bus__ctx_1a3a44d57ff33972258471fb43ecd94a33" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structx430__bus__ctx_1a3a44d57ff33972258471fb43ecd94a33" kindref="member">ready</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="66" refid="structx430__bus__ctx_1a9338dca83eb34400921ad0766ede907a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structx430__bus__ctx_1a9338dca83eb34400921ad0766ede907a" kindref="member">last_rx_ms</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="67" refid="structx430__bus__ctx_1a3567e9f6cea6cb8b22256b66af0bc155" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__bus__ctx_1a3567e9f6cea6cb8b22256b66af0bc155" kindref="member">device_count</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="68" refid="structx430__bus__ctx_1aba4811f98053200b9a6f434c20a3bd54" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="structx430__bus__ctx_1aba4811f98053200b9a6f434c20a3bd54" kindref="member">write_failed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="69" refid="structx430__bus__ctx_1aad3a33fc4e7f69054334ee423e4e52f3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__bus__ctx_1aad3a33fc4e7f69054334ee423e4e52f3" kindref="member">data</ref>[DXL2_MAX_PARAMETER_SIZE];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>X430_FEATURE_FAST_READ</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/>raw[<ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref>];<sp/></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="structx430__device__ctx" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device__ctx" kindref="compound">x430_device_ctx</ref></highlight></codeline>
+<codeline lineno="77"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="78" refid="structx430__device__ctx_1ac07ff92399b724712fc11e63a1cc8364" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device__config" kindref="compound">x430_device_config</ref><sp/><ref refid="structx430__device__ctx_1ac07ff92399b724712fc11e63a1cc8364" kindref="member">config</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="79" refid="structx430__device__ctx_1ac22e7c3f465eb05e82f28e763bf501e5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__bus" kindref="compound">x430_bus</ref>*<sp/><ref refid="structx430__device__ctx_1ac22e7c3f465eb05e82f28e763bf501e5" kindref="member">bus</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="80" refid="structx430__device__ctx_1ab9affdc2a23b39baeb484bfc92e41b82" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structx430__device__ctx_1ab9affdc2a23b39baeb484bfc92e41b82" kindref="member">ready</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="81" refid="structx430__device__ctx_1ae0ed1b5d1ba8061a21599d46fe075c27" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__device__ctx_1ae0ed1b5d1ba8061a21599d46fe075c27" kindref="member">reg_address</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="82" refid="structx430__device__ctx_1ae0caafb85d52b6c7813049fbfc48c2a6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint16_t<sp/><ref refid="structx430__device__ctx_1ae0caafb85d52b6c7813049fbfc48c2a6" kindref="member">reg_length</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="83" refid="structx430__device__ctx_1ad7deb45ce7e70d0f1ebfec880c503528" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="structx430__device__ctx_1ad7deb45ce7e70d0f1ebfec880c503528" kindref="member">baud_changed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="84" refid="structx430__device__ctx_1ae6f58c2014442892fcd3412072209398" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__device__ctx_1ae6f58c2014442892fcd3412072209398" kindref="member">table</ref>[X430_TABLE_SIZE];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="85" refid="structx430__device__ctx_1a7b621a06b6cec711ed063f91a9c4e7a9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__device__ctx_1a7b621a06b6cec711ed063f91a9c4e7a9" kindref="member">reg_data</ref>[<ref refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" kindref="member">X430_REG_WRITE_SIZE</ref>];<sp/></highlight></codeline>
+<codeline lineno="86" refid="structx430__device__ctx_1a34677fb86c2a8bded50aeb34b341a36d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint8_t<sp/><ref refid="structx430__device__ctx_1a34677fb86c2a8bded50aeb34b341a36d" kindref="member">nvm</ref>[<ref refid="group__x430__types_1gaaf9d59e50846d139c38e2d80e697ff83" kindref="member">X430_NVM_BUFFER_SIZE</ref>];<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="87"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="structx430__sim__ctx" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__sim__ctx" kindref="compound">x430_sim_ctx</ref></highlight></codeline>
+<codeline lineno="91"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="92" refid="structx430__sim__ctx_1a71ed9e5dcdcc21b51cf0700609ddab53" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int64_t<sp/><ref refid="structx430__sim__ctx_1a71ed9e5dcdcc21b51cf0700609ddab53" kindref="member">shaft_mpulse</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="93" refid="structx430__sim__ctx_1a50ff1e3d401a5b76ab8f95fcacec5924" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>int64_t<sp/><ref refid="structx430__sim__ctx_1a50ff1e3d401a5b76ab8f95fcacec5924" kindref="member">velocity_mpulse</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="94" refid="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/><ref refid="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" kindref="member">device</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="95" refid="structx430__sim__ctx_1a00580b45f6c8c18a448c91041263e1c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__sim__config" kindref="compound">x430_sim_config</ref><sp/><ref refid="structx430__sim__ctx_1a00580b45f6c8c18a448c91041263e1c9" kindref="member">config</ref>;<sp/></highlight></codeline>
+<codeline lineno="96" refid="structx430__sim__ctx_1af976265a6014b06d4174cd5b8cfd6339" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>uint32_t<sp/><ref refid="structx430__sim__ctx_1af976265a6014b06d4174cd5b8cfd6339" kindref="member">ready</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="97"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="100"><highlight class="comment"><sp/>*<sp/>INLINE<sp/>FUNCTIONS</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__bus__ctx" kindref="compound">x430_bus_ctx</ref>*<sp/>x430_bus_ctx_of(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__bus" kindref="compound">x430_bus</ref>*<sp/>bus)</highlight></codeline>
+<codeline lineno="109"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cppcheck-suppress<sp/>misra-c2012-11.3<sp/>;<sp/>DEV-01<sp/>opaque<sp/>instance<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__bus__ctx" kindref="compound">x430_bus_ctx</ref>*)bus;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__bus__ctx" kindref="compound">x430_bus_ctx</ref>*<sp/>x430_bus_ctx_of_const(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__bus" kindref="compound">x430_bus</ref>*<sp/>bus)</highlight></codeline>
+<codeline lineno="116"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cppcheck-suppress<sp/>misra-c2012-11.3<sp/>;<sp/>DEV-01<sp/>opaque<sp/>instance<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__bus__ctx" kindref="compound">x430_bus_ctx</ref>*)bus;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device__ctx" kindref="compound">x430_device_ctx</ref>*<sp/>x430_device_ctx_of(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device)</highlight></codeline>
+<codeline lineno="126"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cppcheck-suppress<sp/>misra-c2012-11.3<sp/>;<sp/>DEV-01<sp/>opaque<sp/>instance<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device__ctx" kindref="compound">x430_device_ctx</ref>*)device;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__device__ctx" kindref="compound">x430_device_ctx</ref>*</highlight></codeline>
+<codeline lineno="133"><highlight class="normal">x430_device_ctx_of_const(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device)</highlight></codeline>
+<codeline lineno="134"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cppcheck-suppress<sp/>misra-c2012-11.3<sp/>;<sp/>DEV-01<sp/>opaque<sp/>instance<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device__ctx" kindref="compound">x430_device_ctx</ref>*)device;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__sim__ctx" kindref="compound">x430_sim_ctx</ref>*<sp/>x430_sim_ctx_of(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__sim" kindref="compound">x430_sim</ref>*<sp/>sim)</highlight></codeline>
+<codeline lineno="144"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cppcheck-suppress<sp/>misra-c2012-11.3<sp/>;<sp/>DEV-01<sp/>opaque<sp/>instance<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__sim__ctx" kindref="compound">x430_sim_ctx</ref>*)sim;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="150"><highlight class="comment"><sp/>*<sp/>INTERNAL<sp/>FUNCTIONS:<sp/>x430_bus.c</highlight></codeline>
+<codeline lineno="151"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>x430_bus_id_taken(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__bus" kindref="compound">x430_bus</ref>*<sp/>bus,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>except,<sp/>uint8_t<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal">uint32_t<sp/>x430_bus_millis(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__bus" kindref="compound">x430_bus</ref>*<sp/>bus);</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
+<codeline lineno="160"><highlight class="comment"><sp/>*<sp/>INTERNAL<sp/>FUNCTIONS:<sp/>x430_device.c<sp/>(initialized<sp/>devices<sp/>only,<sp/>no<sp/>checks)</highlight></codeline>
+<codeline lineno="161"><highlight class="comment"><sp/>*<sp/>=============================================================================*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal">int32_t<sp/>x430_device_value(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/><ref refid="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" kindref="member">device</ref>,<sp/>uint16_t<sp/>address);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>x430_device_store(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/><ref refid="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" kindref="member">device</ref>,<sp/>uint16_t<sp/>address,<sp/>int32_t<sp/>value);</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal">uint8_t<sp/>x430_device_byte(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/><ref refid="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" kindref="member">device</ref>,<sp/>uint16_t<sp/>address);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal">uint8_t<sp/>x430_device_alert(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/><ref refid="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" kindref="member">device</ref>);</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>x430_device_watchdog(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/><ref refid="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" kindref="member">device</ref>,<sp/>uint32_t<sp/>idle_ms);</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structx430__bus" kindref="compound">x430_bus</ref>*<sp/>x430_device_bus(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>x430_device_attach(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__bus" kindref="compound">x430_bus</ref>*<sp/>bus);</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>x430_device_ready(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>x430_copy(uint8_t*<sp/>destination,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>uint8_t*<sp/>source,<sp/>uint16_t<sp/>length);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>x430_fill(uint8_t*<sp/>destination,<sp/>uint8_t<sp/>value,<sp/>uint16_t<sp/>length);</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="194"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>X430_INTERNAL_H<sp/>*/</highlight><highlight class="preprocessor"></highlight></codeline>
+    </programlisting>
+    <location file="src/x430_internal.h"/>
+  </compounddef>
+</doxygen>

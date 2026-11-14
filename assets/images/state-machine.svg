@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 420" width="940" height="420" role="img" aria-label="States of an emulated device">
+<title>States of an emulated device</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5A6472"/></marker><marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0F8B9A"/></marker><marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#E07A00"/></marker><marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2E7D32"/></marker></defs>
+<rect x="0" y="0" width="940" height="420" rx="12" fill="#FFFFFF"/>
+<rect x="30" y="40" width="210" height="62" rx="31" fill="#F2F5FA" stroke="#5A6472" stroke-width="2"/>
+<text x="135.0" y="78" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="bold" fill="#5A6472" text-anchor="middle">NOT INITIALIZED</text>
+<rect x="360" y="40" width="210" height="62" rx="31" fill="#EAF1FB" stroke="#1E5AA8" stroke-width="2"/>
+<text x="465.0" y="78" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="bold" fill="#1E5AA8" text-anchor="middle">TORQUE OFF</text>
+<rect x="690" y="40" width="210" height="62" rx="31" fill="#EAF5EA" stroke="#2E7D32" stroke-width="2"/>
+<text x="795.0" y="78" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="bold" fill="#2E7D32" text-anchor="middle">TORQUE ON</text>
+<rect x="360" y="300" width="210" height="62" rx="31" fill="#FDECEC" stroke="#C62828" stroke-width="2"/>
+<text x="465.0" y="338" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="bold" fill="#C62828" text-anchor="middle">SHUTDOWN</text>
+<rect x="690" y="300" width="210" height="62" rx="31" fill="#FFF7EC" stroke="#E07A00" stroke-width="2"/>
+<text x="795.0" y="338" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="14" font-weight="bold" fill="#E07A00" text-anchor="middle">WATCHDOG ERROR</text>
+<line x1="240" y1="71.0" x2="360" y2="71.0" stroke="#2E7D32" stroke-width="1.6" marker-end="url(#arrow-green)"/>
+<text x="300.0" y="61.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#2E7D32" text-anchor="middle">x430_device_init()</text>
+<line x1="570" y1="59.0" x2="690" y2="59.0" stroke="#2E7D32" stroke-width="1.6" marker-end="url(#arrow-green)"/>
+<text x="630.0" y="49.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#2E7D32" text-anchor="middle">Torque Enable = 1</text>
+<text x="630.0" y="22" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#5A6472" text-anchor="middle">(also Startup Configuration bit 0, Drive Mode bit 3)</text>
+<line x1="690" y1="83.0" x2="570" y2="83.0" stroke="#5A6472" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="630.0" y="105.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="middle">Torque Enable = 0</text>
+<path d="M720,102 L720,230 L465,230 L465,300" stroke="#C62828" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+<text x="710" y="200" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#C62828" text-anchor="end">hardware error in Shutdown (63):</text>
+<text x="710" y="216" font-family="'JetBrains Mono', Consolas, 'DejaVu Sans Mono', monospace" font-size="11.5" font-weight="normal" fill="#C62828" text-anchor="end">x430_device_raise_hardware_error()</text>
+<line x1="825" y1="102" x2="825" y2="300" stroke="#E07A00" stroke-width="1.6" marker-end="url(#arrow-orange)"/>
+<text x="815" y="262" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#E07A00" text-anchor="end">no instruction packet for</text>
+<text x="815" y="278" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#E07A00" text-anchor="end">Bus Watchdog x 20 ms</text>
+<path d="M360,331.0 L135,331.0 L135,102" stroke="#5A6472" stroke-width="1.6" fill="none" marker-end="url(#arrow)"/>
+<text x="145" y="300" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="start">REBOOT: RAM reset,</text>
+<text x="145" y="316" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="start">errors cleared</text>
+<text x="700" y="384" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="11.5" font-weight="normal" fill="#E07A00" text-anchor="middle">goal registers answer Data Range Error until Bus Watchdog is written</text>
+<text x="470" y="412" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="middle">Every function but the *_init() functions returns X430_ERR_STATE before a successful initialization.</text>
+</svg>

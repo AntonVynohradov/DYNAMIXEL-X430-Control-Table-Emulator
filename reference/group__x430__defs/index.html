@@ -1,0 +1,3460 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0 in portable C11: the firmware drives any motor, the host sees a genuine X430. No heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+      
+      
+        <meta name="author" content="Anton Vynohradov">
+      
+      
+        <link rel="canonical" href="https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/reference/group__x430__defs/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/brand/systemfromscratch-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Group x430_defs - DYNAMIXEL-X430-Control-Table-Emulator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#group-x430_defs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DYNAMIXEL-X430-Control-Table-Emulator" class="md-header__button md-logo" aria-label="DYNAMIXEL-X430-Control-Table-Emulator" data-md-component="logo">
+      
+  <img src="../../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DYNAMIXEL-X430-Control-Table-Emulator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Group x430_defs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <a href="../../downloads/DYNAMIXEL-X430-Control-Table-Emulator_User_Manual.pdf" class="md-header__button md-icon" title="Download PDF user manual" aria-label="Download PDF user manual" download>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-9.5 8.5c0 .8-.7 1.5-1.5 1.5H7v2H5.5V9H8c.8 0 1.5.7 1.5 1.5zm5 2c0 .8-.7 1.5-1.5 1.5h-2.5V9H13c.8 0 1.5.7 1.5 1.5zm4-3H17v1h1.5V13H17v2h-1.5V9h3zm-6.5 0h1v3h-1zm-5 0h1v1H7z"/></svg>
+      </a>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../overview/" class="md-tabs__link">
+          
+  
+  
+  Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../theory/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  X430 Emulation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../integration/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Integration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../about/" class="md-tabs__link">
+          
+  
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DYNAMIXEL-X430-Control-Table-Emulator" class="md-nav__button md-logo" aria-label="DYNAMIXEL-X430-Control-Table-Emulator" data-md-component="logo">
+      
+  <img src="../../assets/images/brand/systemfromscratch-logo-on-dark.png" alt="logo">
+
+    </a>
+    DYNAMIXEL-X430-Control-Table-Emulator
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How It Works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using the Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../extending/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending the Library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    X430 Emulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Doxygen
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Doxygen
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../annotated/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../macros/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Macros
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MISRA C:2012
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Author & Company
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LICENSE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#public-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Macros
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detailed-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detailed Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-types-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Types Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Public Types Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enum-x430_event" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        enum x430_event
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enum-x430_nvm_slot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        enum x430_nvm_slot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#macro-definition-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Macro Definition Documentation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Macro Definition Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_backup_ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_BACKUP_READY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_baud_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_BAUD_RATE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_bus_watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_BUS_WATCHDOG
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_current_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_CURRENT_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_drive_mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_DRIVE_MODE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_feedforward_1st_gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_FEEDFORWARD_1ST_GAIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_feedforward_2nd_gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_FEEDFORWARD_2ND_GAIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_firmware_version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_FIRMWARE_VERSION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_goal_current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_GOAL_CURRENT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_goal_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_GOAL_POSITION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_goal_pwm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_GOAL_PWM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_goal_velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_GOAL_VELOCITY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_hardware_error_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_HARDWARE_ERROR_STATUS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_homing_offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_HOMING_OFFSET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_ID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_led" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_LED
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_max_position_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_MAX_POSITION_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_max_voltage_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_MAX_VOLTAGE_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_min_position_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_MIN_POSITION_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_min_voltage_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_MIN_VOLTAGE_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_model_information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_MODEL_INFORMATION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_model_number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_MODEL_NUMBER
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_moving" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_MOVING
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_moving_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_MOVING_STATUS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_moving_threshold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_MOVING_THRESHOLD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_operating_mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_OPERATING_MODE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_position_d_gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_POSITION_D_GAIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_position_i_gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_POSITION_I_GAIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_position_p_gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_POSITION_P_GAIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_position_trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_POSITION_TRAJECTORY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_present_current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PRESENT_CURRENT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_present_input_voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PRESENT_INPUT_VOLTAGE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_present_load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PRESENT_LOAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_present_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PRESENT_POSITION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_present_pwm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PRESENT_PWM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_present_temperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PRESENT_TEMPERATURE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_present_velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PRESENT_VELOCITY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_profile_acceleration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PROFILE_ACCELERATION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_profile_velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PROFILE_VELOCITY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_protocol_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PROTOCOL_TYPE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_pwm_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_PWM_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_realtime_tick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_REALTIME_TICK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_registered_instruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_REGISTERED_INSTRUCTION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_return_delay_time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_RETURN_DELAY_TIME
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_secondary_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_SECONDARY_ID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_shutdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_SHUTDOWN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_startup_configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_STARTUP_CONFIGURATION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_status_return_level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_STATUS_RETURN_LEVEL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_temperature_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_TEMPERATURE_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_torque_enable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_TORQUE_ENABLE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_velocity_i_gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_VELOCITY_I_GAIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_velocity_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_VELOCITY_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_velocity_p_gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_VELOCITY_P_GAIN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_addr_velocity_trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ADDR_VELOCITY_TRAJECTORY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_backup_restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_BACKUP_RESTORE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_backup_store" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_BACKUP_STORE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_bus_watchdog_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_BUS_WATCHDOG_ERROR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_bus_watchdog_unit_ms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_BUS_WATCHDOG_UNIT_MS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_clear_multi_turn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_CLEAR_MULTI_TURN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_drive_mode_reverse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_DRIVE_MODE_REVERSE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_drive_mode_time_based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_DRIVE_MODE_TIME_BASED
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_drive_mode_torque_on_by_goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_DRIVE_MODE_TORQUE_ON_BY_GOAL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_err_config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ERR_CONFIG
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_err_hal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ERR_HAL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_err_param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ERR_PARAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_err_state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ERR_STATE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_err_unsupported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_ERR_UNSUPPORTED
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_extended_position_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_EXTENDED_POSITION_LIMIT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_factory_reset_all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_FACTORY_RESET_ALL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_factory_reset_except_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_FACTORY_RESET_EXCEPT_ID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_factory_reset_except_id_baud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_FACTORY_RESET_EXCEPT_ID_BAUD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_hw_error_electrical_shock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_HW_ERROR_ELECTRICAL_SHOCK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_hw_error_input_voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_HW_ERROR_INPUT_VOLTAGE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_hw_error_motor_encoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_HW_ERROR_MOTOR_ENCODER
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_hw_error_overheating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_HW_ERROR_OVERHEATING
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_hw_error_overload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_HW_ERROR_OVERLOAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_mode_current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MODE_CURRENT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_mode_current_based_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MODE_CURRENT_BASED_POSITION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_mode_extended_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MODE_EXTENDED_POSITION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_mode_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MODE_POSITION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_mode_pwm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MODE_PWM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_mode_velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MODE_VELOCITY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_moving_status_following_error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MOVING_STATUS_FOLLOWING_ERROR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_moving_status_in_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MOVING_STATUS_IN_POSITION
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_moving_status_profile_ongoing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MOVING_STATUS_PROFILE_ONGOING
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_moving_status_profile_rectangular" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MOVING_STATUS_PROFILE_RECTANGULAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_moving_status_profile_step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MOVING_STATUS_PROFILE_STEP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_moving_status_profile_trapezoidal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MOVING_STATUS_PROFILE_TRAPEZOIDAL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_moving_status_profile_triangular" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_MOVING_STATUS_PROFILE_TRIANGULAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_nvm_header_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_NVM_HEADER_SIZE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_ok" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_OK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_ram_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_RAM_START
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_realtime_tick_period" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_REALTIME_TICK_PERIOD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_return_delay_unit_us" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_RETURN_DELAY_UNIT_US
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_secondary_id_disabled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_SECONDARY_ID_DISABLED
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_startup_ram_restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_STARTUP_RAM_RESTORE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_startup_torque_on" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_STARTUP_TORQUE_ON
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_write_secondary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_WRITE_SECONDARY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_write_validate_only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_WRITE_VALIDATE_ONLY
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="group-x430_defs">Group x430_defs<a class="headerlink" href="#group-x430_defs" title="Permanent link">&para;</a></h1>
+<p><a href="../modules/"><strong>Modules</strong></a> <strong>&gt;</strong> <a href="./"><strong>x430_defs</strong></a></p>
+<p><em>Status codes, options, events and the addresses, operating modes and bit fields of the X430 Control Table.</em> <a href="#detailed-description">More...</a></p>
+<h2 id="public-types">Public Types<a class="headerlink" href="#public-types" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Type</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">enum</td>
+<td style="text-align: left;"><a href="#enum-x430_event"><strong>x430_event</strong></a>  <br><em>Notifications from a device to the application (</em> <a href="../structx430__hooks/#variable-event"><em><strong>x430_hooks::event</strong></em></a> <em>).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">enum</td>
+<td style="text-align: left;"><a href="#enum-x430_nvm_slot"><strong>x430_nvm_slot</strong></a>  <br><em>Persistent storage slots (</em> <a href="../structx430__hooks/#variable-nvm_load"><em><strong>x430_hooks::nvm_load</strong></em></a> <em>,</em><a href="../structx430__hooks/#variable-nvm_store"><em><strong>x430_hooks::nvm_store</strong></em></a> <em>).</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="macros">Macros<a class="headerlink" href="#macros" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Type</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_backup_ready"><strong>X430_ADDR_BACKUP_READY</strong></a>  <code>147U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_baud_rate"><strong>X430_ADDR_BAUD_RATE</strong></a>  <code>8U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_bus_watchdog"><strong>X430_ADDR_BUS_WATCHDOG</strong></a>  <code>98U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_current_limit"><strong>X430_ADDR_CURRENT_LIMIT</strong></a>  <code>38U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_drive_mode"><strong>X430_ADDR_DRIVE_MODE</strong></a>  <code>10U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_feedforward_1st_gain"><strong>X430_ADDR_FEEDFORWARD_1ST_GAIN</strong></a>  <code>90U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_feedforward_2nd_gain"><strong>X430_ADDR_FEEDFORWARD_2ND_GAIN</strong></a>  <code>88U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_firmware_version"><strong>X430_ADDR_FIRMWARE_VERSION</strong></a>  <code>6U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_goal_current"><strong>X430_ADDR_GOAL_CURRENT</strong></a>  <code>102U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_goal_position"><strong>X430_ADDR_GOAL_POSITION</strong></a>  <code>116U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_goal_pwm"><strong>X430_ADDR_GOAL_PWM</strong></a>  <code>100U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_goal_velocity"><strong>X430_ADDR_GOAL_VELOCITY</strong></a>  <code>104U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_hardware_error_status"><strong>X430_ADDR_HARDWARE_ERROR_STATUS</strong></a>  <code>70U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_homing_offset"><strong>X430_ADDR_HOMING_OFFSET</strong></a>  <code>20U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_id"><strong>X430_ADDR_ID</strong></a>  <code>7U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_led"><strong>X430_ADDR_LED</strong></a>  <code>65U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_max_position_limit"><strong>X430_ADDR_MAX_POSITION_LIMIT</strong></a>  <code>48U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_max_voltage_limit"><strong>X430_ADDR_MAX_VOLTAGE_LIMIT</strong></a>  <code>32U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_min_position_limit"><strong>X430_ADDR_MIN_POSITION_LIMIT</strong></a>  <code>52U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_min_voltage_limit"><strong>X430_ADDR_MIN_VOLTAGE_LIMIT</strong></a>  <code>34U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_model_information"><strong>X430_ADDR_MODEL_INFORMATION</strong></a>  <code>2U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_model_number"><strong>X430_ADDR_MODEL_NUMBER</strong></a>  <code>0U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_moving"><strong>X430_ADDR_MOVING</strong></a>  <code>122U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_moving_status"><strong>X430_ADDR_MOVING_STATUS</strong></a>  <code>123U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_moving_threshold"><strong>X430_ADDR_MOVING_THRESHOLD</strong></a>  <code>24U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_operating_mode"><strong>X430_ADDR_OPERATING_MODE</strong></a>  <code>11U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_position_d_gain"><strong>X430_ADDR_POSITION_D_GAIN</strong></a>  <code>80U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_position_i_gain"><strong>X430_ADDR_POSITION_I_GAIN</strong></a>  <code>82U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_position_p_gain"><strong>X430_ADDR_POSITION_P_GAIN</strong></a>  <code>84U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_position_trajectory"><strong>X430_ADDR_POSITION_TRAJECTORY</strong></a>  <code>140U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_present_current"><strong>X430_ADDR_PRESENT_CURRENT</strong></a>  <code>126U</code><br><em>Present Current (XM/XH/XD/XW) or Present Load (XL/XC), same address.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_present_input_voltage"><strong>X430_ADDR_PRESENT_INPUT_VOLTAGE</strong></a>  <code>144U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_present_load"><strong>X430_ADDR_PRESENT_LOAD</strong></a>  <code>126U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_present_position"><strong>X430_ADDR_PRESENT_POSITION</strong></a>  <code>132U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_present_pwm"><strong>X430_ADDR_PRESENT_PWM</strong></a>  <code>124U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_present_temperature"><strong>X430_ADDR_PRESENT_TEMPERATURE</strong></a>  <code>146U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_present_velocity"><strong>X430_ADDR_PRESENT_VELOCITY</strong></a>  <code>128U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_profile_acceleration"><strong>X430_ADDR_PROFILE_ACCELERATION</strong></a>  <code>108U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_profile_velocity"><strong>X430_ADDR_PROFILE_VELOCITY</strong></a>  <code>112U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_protocol_type"><strong>X430_ADDR_PROTOCOL_TYPE</strong></a>  <code>13U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_pwm_limit"><strong>X430_ADDR_PWM_LIMIT</strong></a>  <code>36U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_realtime_tick"><strong>X430_ADDR_REALTIME_TICK</strong></a>  <code>120U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_registered_instruction"><strong>X430_ADDR_REGISTERED_INSTRUCTION</strong></a>  <code>69U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_return_delay_time"><strong>X430_ADDR_RETURN_DELAY_TIME</strong></a>  <code>9U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_secondary_id"><strong>X430_ADDR_SECONDARY_ID</strong></a>  <code>12U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_shutdown"><strong>X430_ADDR_SHUTDOWN</strong></a>  <code>63U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_startup_configuration"><strong>X430_ADDR_STARTUP_CONFIGURATION</strong></a>  <code>60U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_status_return_level"><strong>X430_ADDR_STATUS_RETURN_LEVEL</strong></a>  <code>68U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_temperature_limit"><strong>X430_ADDR_TEMPERATURE_LIMIT</strong></a>  <code>31U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_torque_enable"><strong>X430_ADDR_TORQUE_ENABLE</strong></a>  <code>64U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_velocity_i_gain"><strong>X430_ADDR_VELOCITY_I_GAIN</strong></a>  <code>76U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_velocity_limit"><strong>X430_ADDR_VELOCITY_LIMIT</strong></a>  <code>44U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_velocity_p_gain"><strong>X430_ADDR_VELOCITY_P_GAIN</strong></a>  <code>78U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_addr_velocity_trajectory"><strong>X430_ADDR_VELOCITY_TRAJECTORY</strong></a>  <code>136U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_backup_restore"><strong>X430_BACKUP_RESTORE</strong></a>  <code>0x02U</code><br><em>BACKUP option: restore the Control Table.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_backup_store"><strong>X430_BACKUP_STORE</strong></a>  <code>0x01U</code><br><em>BACKUP option: store the Control Table.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_bus_watchdog_error"><strong>X430_BUS_WATCHDOG_ERROR</strong></a>  <code>0xFFU</code><br><em>Bus Watchdog (98) value while a Bus Watchdog error is active (-1).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_bus_watchdog_unit_ms"><strong>X430_BUS_WATCHDOG_UNIT_MS</strong></a>  <code>20U</code><br><em>Bus Watchdog (98) time unit in milliseconds.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_clear_multi_turn"><strong>X430_CLEAR_MULTI_TURN</strong></a>  <code>0x01U</code><br><em>CLEAR option: clear the multi-turn information of Present Position.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_drive_mode_reverse"><strong>X430_DRIVE_MODE_REVERSE</strong></a>  <code>0x01U</code><br><em>Reverse mode: positive goals turn clockwise.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_drive_mode_time_based"><strong>X430_DRIVE_MODE_TIME_BASED</strong></a>  <code>0x04U</code><br><em>Time-based profile: Profile Velocity/Acceleration are times in ms.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_drive_mode_torque_on_by_goal"><strong>X430_DRIVE_MODE_TORQUE_ON_BY_GOAL</strong></a>  <code>0x08U</code><br><em>Torque On by Goal Update: writing a goal value enables torque.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_err_config"><strong>X430_ERR_CONFIG</strong></a>  <code>(-3)</code><br><em>Values that are valid alone but not together (bus full, ID already used on the bus).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_err_hal"><strong>X430_ERR_HAL</strong></a>  <code>(-4)</code><br><em>The byte writer of the bus (</em> <a href="../structx430__bus__config/#variable-write"><em><strong>x430_bus_config::write</strong></em></a> <em>) returned an error.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_err_param"><strong>X430_ERR_PARAM</strong></a>  <code>(-1)</code><br><em>NULL pointer or a value outside its documented range.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_err_state"><strong>X430_ERR_STATE</strong></a>  <code>(-2)</code><br><em>Call not allowed in the current state (instance not initialized, device attached).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_err_unsupported"><strong>X430_ERR_UNSUPPORTED</strong></a>  <code>(-5)</code><br><em>The function belongs to a feature that is not compiled in (X430_FEATURE_*).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_extended_position_limit"><strong>X430_EXTENDED_POSITION_LIMIT</strong></a>  <code>1048575</code><br><em>Goal Position range outside Position Control Mode.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_factory_reset_all"><strong>X430_FACTORY_RESET_ALL</strong></a>  <code>0xFFU</code><br><em>FACTORY_RESET option: reset everything (refused on the broadcast ID).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_factory_reset_except_id"><strong>X430_FACTORY_RESET_EXCEPT_ID</strong></a>  <code>0x01U</code><br><em>FACTORY_RESET option: keep the ID.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_factory_reset_except_id_baud"><strong>X430_FACTORY_RESET_EXCEPT_ID_BAUD</strong></a>  <code>0x02U</code><br><em>FACTORY_RESET option: keep the ID and the Baud Rate.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_hw_error_electrical_shock"><strong>X430_HW_ERROR_ELECTRICAL_SHOCK</strong></a>  <code>0x10U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_hw_error_input_voltage"><strong>X430_HW_ERROR_INPUT_VOLTAGE</strong></a>  <code>0x01U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_hw_error_motor_encoder"><strong>X430_HW_ERROR_MOTOR_ENCODER</strong></a>  <code>0x08U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_hw_error_overheating"><strong>X430_HW_ERROR_OVERHEATING</strong></a>  <code>0x04U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_hw_error_overload"><strong>X430_HW_ERROR_OVERLOAD</strong></a>  <code>0x20U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_mode_current"><strong>X430_MODE_CURRENT</strong></a>  <code>0U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_mode_current_based_position"><strong>X430_MODE_CURRENT_BASED_POSITION</strong></a>  <code>5U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_mode_extended_position"><strong>X430_MODE_EXTENDED_POSITION</strong></a>  <code>4U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_mode_position"><strong>X430_MODE_POSITION</strong></a>  <code>3U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_mode_pwm"><strong>X430_MODE_PWM</strong></a>  <code>16U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_mode_velocity"><strong>X430_MODE_VELOCITY</strong></a>  <code>1U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_moving_status_following_error"><strong>X430_MOVING_STATUS_FOLLOWING_ERROR</strong></a>  <code>0x08U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_moving_status_in_position"><strong>X430_MOVING_STATUS_IN_POSITION</strong></a>  <code>0x01U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_moving_status_profile_ongoing"><strong>X430_MOVING_STATUS_PROFILE_ONGOING</strong></a>  <code>0x02U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_moving_status_profile_rectangular"><strong>X430_MOVING_STATUS_PROFILE_RECTANGULAR</strong></a>  <code>0x10U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_moving_status_profile_step"><strong>X430_MOVING_STATUS_PROFILE_STEP</strong></a>  <code>0x00U</code><br><em>Velocity profile type, bits 4-5.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_moving_status_profile_trapezoidal"><strong>X430_MOVING_STATUS_PROFILE_TRAPEZOIDAL</strong></a>  <code>0x30U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_moving_status_profile_triangular"><strong>X430_MOVING_STATUS_PROFILE_TRIANGULAR</strong></a>  <code>0x20U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_nvm_header_size"><strong>X430_NVM_HEADER_SIZE</strong></a>  <code>10U</code><br><em>Size of the persistent block header: magic, model, format, slot, payload size.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_ok"><strong>X430_OK</strong></a>  <code>0</code><br><em>Success.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_ram_start"><strong>X430_RAM_START</strong></a>  <code>64U</code><br><em>First address of the RAM area; addresses below belong to the EEPROM area.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_realtime_tick_period"><strong>X430_REALTIME_TICK_PERIOD</strong></a>  <code>32768U</code><br><em>Realtime Tick (120) wraps at this value, in ms.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_return_delay_unit_us"><strong>X430_RETURN_DELAY_UNIT_US</strong></a>  <code>2U</code><br><em>Return Delay Time (9) unit in microseconds.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_secondary_id_disabled"><strong>X430_SECONDARY_ID_DISABLED</strong></a>  <code>253U</code><br><em>Secondary ID (12) values from 253 disable the Secondary ID.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_startup_ram_restore"><strong>X430_STARTUP_RAM_RESTORE</strong></a>  <code>0x02U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_startup_torque_on"><strong>X430_STARTUP_TORQUE_ON</strong></a>  <code>0x01U</code><br></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_write_secondary"><strong>X430_WRITE_SECONDARY</strong></a>  <code>0x01U</code><br><em>Packet addressed by the Secondary ID: the EEPROM area is locked.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_write_validate_only"><strong>X430_WRITE_VALIDATE_ONLY</strong></a>  <code>0x02U</code><br><em>Validate only: change nothing and call no hook.</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="detailed-description">Detailed Description<a class="headerlink" href="#detailed-description" title="Permanent link">&para;</a></h2>
+<p>Control Table values come from the ROBOTIS e-Manual of the X430 models (<a href="https://emanual.robotis.com/docs/en/dxl/x/">https://emanual.robotis.com/docs/en/dxl/x/</a>). Which registers a model really has is decided by its generated table: XL/XC models have no Current Limit (38) and Goal Current (102) and report Present Load at 126; XW models have no LED (65). </p>
+<h2 id="public-types-documentation">Public Types Documentation<a class="headerlink" href="#public-types-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="enum-x430_event">enum x430_event<a class="headerlink" href="#enum-x430_event" title="Permanent link">&para;</a></h3>
+<p><em>Notifications from a device to the application (</em> <a href="../structx430__hooks/#variable-event"><em><strong>x430_hooks::event</strong></em></a> <em>).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>enum x430_event {
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    X430_EVENT_REBOOT = 0,
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    X430_EVENT_FACTORY_RESET,
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    X430_EVENT_CLEAR_MULTI_TURN,
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    X430_EVENT_BUS_WATCHDOG,
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    X430_EVENT_BAUD_RATE,
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    X430_EVENT_TORQUE_SHUTDOWN,
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    X430_EVENT_BACKUP_RESTORED
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>};
+</code></pre></div></p>
+<hr>
+
+<h3 id="enum-x430_nvm_slot">enum x430_nvm_slot<a class="headerlink" href="#enum-x430_nvm_slot" title="Permanent link">&para;</a></h3>
+<p><em>Persistent storage slots (</em> <a href="../structx430__hooks/#variable-nvm_load"><em><strong>x430_hooks::nvm_load</strong></em></a> <em>,</em><a href="../structx430__hooks/#variable-nvm_store"><em><strong>x430_hooks::nvm_store</strong></em></a> <em>).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>enum x430_nvm_slot {
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    X430_NVM_EEPROM = 0,
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    X430_NVM_BACKUP = 1
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>};
+</code></pre></div></p>
+<hr>
+<h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="define-x430_addr_backup_ready">define X430_ADDR_BACKUP_READY<a class="headerlink" href="#define-x430_addr_backup_ready" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>#define X430_ADDR_BACKUP_READY `147U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_baud_rate">define X430_ADDR_BAUD_RATE<a class="headerlink" href="#define-x430_addr_baud_rate" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#define X430_ADDR_BAUD_RATE `8U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_bus_watchdog">define X430_ADDR_BUS_WATCHDOG<a class="headerlink" href="#define-x430_addr_bus_watchdog" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#define X430_ADDR_BUS_WATCHDOG `98U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_current_limit">define X430_ADDR_CURRENT_LIMIT<a class="headerlink" href="#define-x430_addr_current_limit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define X430_ADDR_CURRENT_LIMIT `38U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_drive_mode">define X430_ADDR_DRIVE_MODE<a class="headerlink" href="#define-x430_addr_drive_mode" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#define X430_ADDR_DRIVE_MODE `10U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_feedforward_1st_gain">define X430_ADDR_FEEDFORWARD_1ST_GAIN<a class="headerlink" href="#define-x430_addr_feedforward_1st_gain" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#define X430_ADDR_FEEDFORWARD_1ST_GAIN `90U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_feedforward_2nd_gain">define X430_ADDR_FEEDFORWARD_2ND_GAIN<a class="headerlink" href="#define-x430_addr_feedforward_2nd_gain" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#define X430_ADDR_FEEDFORWARD_2ND_GAIN `88U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_firmware_version">define X430_ADDR_FIRMWARE_VERSION<a class="headerlink" href="#define-x430_addr_firmware_version" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>#define X430_ADDR_FIRMWARE_VERSION `6U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_goal_current">define X430_ADDR_GOAL_CURRENT<a class="headerlink" href="#define-x430_addr_goal_current" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>#define X430_ADDR_GOAL_CURRENT `102U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_goal_position">define X430_ADDR_GOAL_POSITION<a class="headerlink" href="#define-x430_addr_goal_position" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>#define X430_ADDR_GOAL_POSITION `116U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_goal_pwm">define X430_ADDR_GOAL_PWM<a class="headerlink" href="#define-x430_addr_goal_pwm" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>#define X430_ADDR_GOAL_PWM `100U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_goal_velocity">define X430_ADDR_GOAL_VELOCITY<a class="headerlink" href="#define-x430_addr_goal_velocity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>#define X430_ADDR_GOAL_VELOCITY `104U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_hardware_error_status">define X430_ADDR_HARDWARE_ERROR_STATUS<a class="headerlink" href="#define-x430_addr_hardware_error_status" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>#define X430_ADDR_HARDWARE_ERROR_STATUS `70U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_homing_offset">define X430_ADDR_HOMING_OFFSET<a class="headerlink" href="#define-x430_addr_homing_offset" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>#define X430_ADDR_HOMING_OFFSET `20U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_id">define X430_ADDR_ID<a class="headerlink" href="#define-x430_addr_id" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>#define X430_ADDR_ID `7U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_led">define X430_ADDR_LED<a class="headerlink" href="#define-x430_addr_led" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>#define X430_ADDR_LED `65U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_max_position_limit">define X430_ADDR_MAX_POSITION_LIMIT<a class="headerlink" href="#define-x430_addr_max_position_limit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>#define X430_ADDR_MAX_POSITION_LIMIT `48U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_max_voltage_limit">define X430_ADDR_MAX_VOLTAGE_LIMIT<a class="headerlink" href="#define-x430_addr_max_voltage_limit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>#define X430_ADDR_MAX_VOLTAGE_LIMIT `32U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_min_position_limit">define X430_ADDR_MIN_POSITION_LIMIT<a class="headerlink" href="#define-x430_addr_min_position_limit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>#define X430_ADDR_MIN_POSITION_LIMIT `52U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_min_voltage_limit">define X430_ADDR_MIN_VOLTAGE_LIMIT<a class="headerlink" href="#define-x430_addr_min_voltage_limit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>#define X430_ADDR_MIN_VOLTAGE_LIMIT `34U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_model_information">define X430_ADDR_MODEL_INFORMATION<a class="headerlink" href="#define-x430_addr_model_information" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>#define X430_ADDR_MODEL_INFORMATION `2U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_model_number">define X430_ADDR_MODEL_NUMBER<a class="headerlink" href="#define-x430_addr_model_number" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>#define X430_ADDR_MODEL_NUMBER `0U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_moving">define X430_ADDR_MOVING<a class="headerlink" href="#define-x430_addr_moving" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>#define X430_ADDR_MOVING `122U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_moving_status">define X430_ADDR_MOVING_STATUS<a class="headerlink" href="#define-x430_addr_moving_status" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>#define X430_ADDR_MOVING_STATUS `123U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_moving_threshold">define X430_ADDR_MOVING_THRESHOLD<a class="headerlink" href="#define-x430_addr_moving_threshold" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>#define X430_ADDR_MOVING_THRESHOLD `24U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_operating_mode">define X430_ADDR_OPERATING_MODE<a class="headerlink" href="#define-x430_addr_operating_mode" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>#define X430_ADDR_OPERATING_MODE `11U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_position_d_gain">define X430_ADDR_POSITION_D_GAIN<a class="headerlink" href="#define-x430_addr_position_d_gain" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>#define X430_ADDR_POSITION_D_GAIN `80U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_position_i_gain">define X430_ADDR_POSITION_I_GAIN<a class="headerlink" href="#define-x430_addr_position_i_gain" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>#define X430_ADDR_POSITION_I_GAIN `82U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_position_p_gain">define X430_ADDR_POSITION_P_GAIN<a class="headerlink" href="#define-x430_addr_position_p_gain" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>#define X430_ADDR_POSITION_P_GAIN `84U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_position_trajectory">define X430_ADDR_POSITION_TRAJECTORY<a class="headerlink" href="#define-x430_addr_position_trajectory" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>#define X430_ADDR_POSITION_TRAJECTORY `140U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_present_current">define X430_ADDR_PRESENT_CURRENT<a class="headerlink" href="#define-x430_addr_present_current" title="Permanent link">&para;</a></h3>
+<p><em>Present Current (XM/XH/XD/XW) or Present Load (XL/XC), same address.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>#define X430_ADDR_PRESENT_CURRENT `126U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_addr_present_input_voltage">define X430_ADDR_PRESENT_INPUT_VOLTAGE<a class="headerlink" href="#define-x430_addr_present_input_voltage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>#define X430_ADDR_PRESENT_INPUT_VOLTAGE `144U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_present_load">define X430_ADDR_PRESENT_LOAD<a class="headerlink" href="#define-x430_addr_present_load" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>#define X430_ADDR_PRESENT_LOAD `126U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_present_position">define X430_ADDR_PRESENT_POSITION<a class="headerlink" href="#define-x430_addr_present_position" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>#define X430_ADDR_PRESENT_POSITION `132U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_present_pwm">define X430_ADDR_PRESENT_PWM<a class="headerlink" href="#define-x430_addr_present_pwm" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>#define X430_ADDR_PRESENT_PWM `124U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_present_temperature">define X430_ADDR_PRESENT_TEMPERATURE<a class="headerlink" href="#define-x430_addr_present_temperature" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>#define X430_ADDR_PRESENT_TEMPERATURE `146U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_present_velocity">define X430_ADDR_PRESENT_VELOCITY<a class="headerlink" href="#define-x430_addr_present_velocity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>#define X430_ADDR_PRESENT_VELOCITY `128U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_profile_acceleration">define X430_ADDR_PROFILE_ACCELERATION<a class="headerlink" href="#define-x430_addr_profile_acceleration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>#define X430_ADDR_PROFILE_ACCELERATION `108U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_profile_velocity">define X430_ADDR_PROFILE_VELOCITY<a class="headerlink" href="#define-x430_addr_profile_velocity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>#define X430_ADDR_PROFILE_VELOCITY `112U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_protocol_type">define X430_ADDR_PROTOCOL_TYPE<a class="headerlink" href="#define-x430_addr_protocol_type" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>#define X430_ADDR_PROTOCOL_TYPE `13U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_pwm_limit">define X430_ADDR_PWM_LIMIT<a class="headerlink" href="#define-x430_addr_pwm_limit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>#define X430_ADDR_PWM_LIMIT `36U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_realtime_tick">define X430_ADDR_REALTIME_TICK<a class="headerlink" href="#define-x430_addr_realtime_tick" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>#define X430_ADDR_REALTIME_TICK `120U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_registered_instruction">define X430_ADDR_REGISTERED_INSTRUCTION<a class="headerlink" href="#define-x430_addr_registered_instruction" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>#define X430_ADDR_REGISTERED_INSTRUCTION `69U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_return_delay_time">define X430_ADDR_RETURN_DELAY_TIME<a class="headerlink" href="#define-x430_addr_return_delay_time" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>#define X430_ADDR_RETURN_DELAY_TIME `9U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_secondary_id">define X430_ADDR_SECONDARY_ID<a class="headerlink" href="#define-x430_addr_secondary_id" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>#define X430_ADDR_SECONDARY_ID `12U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_shutdown">define X430_ADDR_SHUTDOWN<a class="headerlink" href="#define-x430_addr_shutdown" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>#define X430_ADDR_SHUTDOWN `63U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_startup_configuration">define X430_ADDR_STARTUP_CONFIGURATION<a class="headerlink" href="#define-x430_addr_startup_configuration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>#define X430_ADDR_STARTUP_CONFIGURATION `60U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_status_return_level">define X430_ADDR_STATUS_RETURN_LEVEL<a class="headerlink" href="#define-x430_addr_status_return_level" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>#define X430_ADDR_STATUS_RETURN_LEVEL `68U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_temperature_limit">define X430_ADDR_TEMPERATURE_LIMIT<a class="headerlink" href="#define-x430_addr_temperature_limit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>#define X430_ADDR_TEMPERATURE_LIMIT `31U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_torque_enable">define X430_ADDR_TORQUE_ENABLE<a class="headerlink" href="#define-x430_addr_torque_enable" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>#define X430_ADDR_TORQUE_ENABLE `64U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_velocity_i_gain">define X430_ADDR_VELOCITY_I_GAIN<a class="headerlink" href="#define-x430_addr_velocity_i_gain" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>#define X430_ADDR_VELOCITY_I_GAIN `76U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_velocity_limit">define X430_ADDR_VELOCITY_LIMIT<a class="headerlink" href="#define-x430_addr_velocity_limit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>#define X430_ADDR_VELOCITY_LIMIT `44U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_velocity_p_gain">define X430_ADDR_VELOCITY_P_GAIN<a class="headerlink" href="#define-x430_addr_velocity_p_gain" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>#define X430_ADDR_VELOCITY_P_GAIN `78U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_addr_velocity_trajectory">define X430_ADDR_VELOCITY_TRAJECTORY<a class="headerlink" href="#define-x430_addr_velocity_trajectory" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>#define X430_ADDR_VELOCITY_TRAJECTORY `136U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_backup_restore">define X430_BACKUP_RESTORE<a class="headerlink" href="#define-x430_backup_restore" title="Permanent link">&para;</a></h3>
+<p><em>BACKUP option: restore the Control Table.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>#define X430_BACKUP_RESTORE `0x02U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_backup_store">define X430_BACKUP_STORE<a class="headerlink" href="#define-x430_backup_store" title="Permanent link">&para;</a></h3>
+<p><em>BACKUP option: store the Control Table.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>#define X430_BACKUP_STORE `0x01U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_bus_watchdog_error">define X430_BUS_WATCHDOG_ERROR<a class="headerlink" href="#define-x430_bus_watchdog_error" title="Permanent link">&para;</a></h3>
+<p><em>Bus Watchdog (98) value while a Bus Watchdog error is active (-1).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>#define X430_BUS_WATCHDOG_ERROR `0xFFU`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_bus_watchdog_unit_ms">define X430_BUS_WATCHDOG_UNIT_MS<a class="headerlink" href="#define-x430_bus_watchdog_unit_ms" title="Permanent link">&para;</a></h3>
+<p><em>Bus Watchdog (98) time unit in milliseconds.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>#define X430_BUS_WATCHDOG_UNIT_MS `20U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_clear_multi_turn">define X430_CLEAR_MULTI_TURN<a class="headerlink" href="#define-x430_clear_multi_turn" title="Permanent link">&para;</a></h3>
+<p><em>CLEAR option: clear the multi-turn information of Present Position.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>#define X430_CLEAR_MULTI_TURN `0x01U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_drive_mode_reverse">define X430_DRIVE_MODE_REVERSE<a class="headerlink" href="#define-x430_drive_mode_reverse" title="Permanent link">&para;</a></h3>
+<p><em>Reverse mode: positive goals turn clockwise.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>#define X430_DRIVE_MODE_REVERSE `0x01U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_drive_mode_time_based">define X430_DRIVE_MODE_TIME_BASED<a class="headerlink" href="#define-x430_drive_mode_time_based" title="Permanent link">&para;</a></h3>
+<p><em>Time-based profile: Profile Velocity/Acceleration are times in ms.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>#define X430_DRIVE_MODE_TIME_BASED `0x04U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_drive_mode_torque_on_by_goal">define X430_DRIVE_MODE_TORQUE_ON_BY_GOAL<a class="headerlink" href="#define-x430_drive_mode_torque_on_by_goal" title="Permanent link">&para;</a></h3>
+<p><em>Torque On by Goal Update: writing a goal value enables torque.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>#define X430_DRIVE_MODE_TORQUE_ON_BY_GOAL `0x08U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_err_config">define X430_ERR_CONFIG<a class="headerlink" href="#define-x430_err_config" title="Permanent link">&para;</a></h3>
+<p><em>Values that are valid alone but not together (bus full, ID already used on the bus).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>#define X430_ERR_CONFIG `(-3)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_err_hal">define X430_ERR_HAL<a class="headerlink" href="#define-x430_err_hal" title="Permanent link">&para;</a></h3>
+<p><em>The byte writer of the bus (</em> <a href="../structx430__bus__config/#variable-write"><em><strong>x430_bus_config::write</strong></em></a> <em>) returned an error.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>#define X430_ERR_HAL `(-4)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_err_param">define X430_ERR_PARAM<a class="headerlink" href="#define-x430_err_param" title="Permanent link">&para;</a></h3>
+<p><em>NULL pointer or a value outside its documented range.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>#define X430_ERR_PARAM `(-1)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_err_state">define X430_ERR_STATE<a class="headerlink" href="#define-x430_err_state" title="Permanent link">&para;</a></h3>
+<p><em>Call not allowed in the current state (instance not initialized, device attached).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>#define X430_ERR_STATE `(-2)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_err_unsupported">define X430_ERR_UNSUPPORTED<a class="headerlink" href="#define-x430_err_unsupported" title="Permanent link">&para;</a></h3>
+<p><em>The function belongs to a feature that is not compiled in (X430_FEATURE_*).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>#define X430_ERR_UNSUPPORTED `(-5)`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_extended_position_limit">define X430_EXTENDED_POSITION_LIMIT<a class="headerlink" href="#define-x430_extended_position_limit" title="Permanent link">&para;</a></h3>
+<p><em>Goal Position range outside Position Control Mode.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>#define X430_EXTENDED_POSITION_LIMIT `1048575`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_factory_reset_all">define X430_FACTORY_RESET_ALL<a class="headerlink" href="#define-x430_factory_reset_all" title="Permanent link">&para;</a></h3>
+<p><em>FACTORY_RESET option: reset everything (refused on the broadcast ID).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>#define X430_FACTORY_RESET_ALL `0xFFU`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_factory_reset_except_id">define X430_FACTORY_RESET_EXCEPT_ID<a class="headerlink" href="#define-x430_factory_reset_except_id" title="Permanent link">&para;</a></h3>
+<p><em>FACTORY_RESET option: keep the ID.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>#define X430_FACTORY_RESET_EXCEPT_ID `0x01U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_factory_reset_except_id_baud">define X430_FACTORY_RESET_EXCEPT_ID_BAUD<a class="headerlink" href="#define-x430_factory_reset_except_id_baud" title="Permanent link">&para;</a></h3>
+<p><em>FACTORY_RESET option: keep the ID and the Baud Rate.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>#define X430_FACTORY_RESET_EXCEPT_ID_BAUD `0x02U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_hw_error_electrical_shock">define X430_HW_ERROR_ELECTRICAL_SHOCK<a class="headerlink" href="#define-x430_hw_error_electrical_shock" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>#define X430_HW_ERROR_ELECTRICAL_SHOCK `0x10U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_hw_error_input_voltage">define X430_HW_ERROR_INPUT_VOLTAGE<a class="headerlink" href="#define-x430_hw_error_input_voltage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>#define X430_HW_ERROR_INPUT_VOLTAGE `0x01U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_hw_error_motor_encoder">define X430_HW_ERROR_MOTOR_ENCODER<a class="headerlink" href="#define-x430_hw_error_motor_encoder" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>#define X430_HW_ERROR_MOTOR_ENCODER `0x08U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_hw_error_overheating">define X430_HW_ERROR_OVERHEATING<a class="headerlink" href="#define-x430_hw_error_overheating" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>#define X430_HW_ERROR_OVERHEATING `0x04U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_hw_error_overload">define X430_HW_ERROR_OVERLOAD<a class="headerlink" href="#define-x430_hw_error_overload" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>#define X430_HW_ERROR_OVERLOAD `0x20U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_mode_current">define X430_MODE_CURRENT<a class="headerlink" href="#define-x430_mode_current" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>#define X430_MODE_CURRENT `0U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_mode_current_based_position">define X430_MODE_CURRENT_BASED_POSITION<a class="headerlink" href="#define-x430_mode_current_based_position" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>#define X430_MODE_CURRENT_BASED_POSITION `5U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_mode_extended_position">define X430_MODE_EXTENDED_POSITION<a class="headerlink" href="#define-x430_mode_extended_position" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>#define X430_MODE_EXTENDED_POSITION `4U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_mode_position">define X430_MODE_POSITION<a class="headerlink" href="#define-x430_mode_position" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>#define X430_MODE_POSITION `3U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_mode_pwm">define X430_MODE_PWM<a class="headerlink" href="#define-x430_mode_pwm" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>#define X430_MODE_PWM `16U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_mode_velocity">define X430_MODE_VELOCITY<a class="headerlink" href="#define-x430_mode_velocity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>#define X430_MODE_VELOCITY `1U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_moving_status_following_error">define X430_MOVING_STATUS_FOLLOWING_ERROR<a class="headerlink" href="#define-x430_moving_status_following_error" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>#define X430_MOVING_STATUS_FOLLOWING_ERROR `0x08U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_moving_status_in_position">define X430_MOVING_STATUS_IN_POSITION<a class="headerlink" href="#define-x430_moving_status_in_position" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>#define X430_MOVING_STATUS_IN_POSITION `0x01U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_moving_status_profile_ongoing">define X430_MOVING_STATUS_PROFILE_ONGOING<a class="headerlink" href="#define-x430_moving_status_profile_ongoing" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>#define X430_MOVING_STATUS_PROFILE_ONGOING `0x02U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_moving_status_profile_rectangular">define X430_MOVING_STATUS_PROFILE_RECTANGULAR<a class="headerlink" href="#define-x430_moving_status_profile_rectangular" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-87-1" name="__codelineno-87-1" href="#__codelineno-87-1"></a>#define X430_MOVING_STATUS_PROFILE_RECTANGULAR `0x10U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_moving_status_profile_step">define X430_MOVING_STATUS_PROFILE_STEP<a class="headerlink" href="#define-x430_moving_status_profile_step" title="Permanent link">&para;</a></h3>
+<p><em>Velocity profile type, bits 4-5.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-88-1" name="__codelineno-88-1" href="#__codelineno-88-1"></a>#define X430_MOVING_STATUS_PROFILE_STEP `0x00U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_moving_status_profile_trapezoidal">define X430_MOVING_STATUS_PROFILE_TRAPEZOIDAL<a class="headerlink" href="#define-x430_moving_status_profile_trapezoidal" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-89-1" name="__codelineno-89-1" href="#__codelineno-89-1"></a>#define X430_MOVING_STATUS_PROFILE_TRAPEZOIDAL `0x30U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_moving_status_profile_triangular">define X430_MOVING_STATUS_PROFILE_TRIANGULAR<a class="headerlink" href="#define-x430_moving_status_profile_triangular" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-90-1" name="__codelineno-90-1" href="#__codelineno-90-1"></a>#define X430_MOVING_STATUS_PROFILE_TRIANGULAR `0x20U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_nvm_header_size">define X430_NVM_HEADER_SIZE<a class="headerlink" href="#define-x430_nvm_header_size" title="Permanent link">&para;</a></h3>
+<p><em>Size of the persistent block header: magic, model, format, slot, payload size.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-91-1" name="__codelineno-91-1" href="#__codelineno-91-1"></a>#define X430_NVM_HEADER_SIZE `10U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_ok">define X430_OK<a class="headerlink" href="#define-x430_ok" title="Permanent link">&para;</a></h3>
+<p><em>Success.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-92-1" name="__codelineno-92-1" href="#__codelineno-92-1"></a>#define X430_OK `0`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_ram_start">define X430_RAM_START<a class="headerlink" href="#define-x430_ram_start" title="Permanent link">&para;</a></h3>
+<p><em>First address of the RAM area; addresses below belong to the EEPROM area.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-93-1" name="__codelineno-93-1" href="#__codelineno-93-1"></a>#define X430_RAM_START `64U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_realtime_tick_period">define X430_REALTIME_TICK_PERIOD<a class="headerlink" href="#define-x430_realtime_tick_period" title="Permanent link">&para;</a></h3>
+<p><em>Realtime Tick (120) wraps at this value, in ms.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-94-1" name="__codelineno-94-1" href="#__codelineno-94-1"></a>#define X430_REALTIME_TICK_PERIOD `32768U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_return_delay_unit_us">define X430_RETURN_DELAY_UNIT_US<a class="headerlink" href="#define-x430_return_delay_unit_us" title="Permanent link">&para;</a></h3>
+<p><em>Return Delay Time (9) unit in microseconds.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-95-1" name="__codelineno-95-1" href="#__codelineno-95-1"></a>#define X430_RETURN_DELAY_UNIT_US `2U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_secondary_id_disabled">define X430_SECONDARY_ID_DISABLED<a class="headerlink" href="#define-x430_secondary_id_disabled" title="Permanent link">&para;</a></h3>
+<p><em>Secondary ID (12) values from 253 disable the Secondary ID.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-96-1" name="__codelineno-96-1" href="#__codelineno-96-1"></a>#define X430_SECONDARY_ID_DISABLED `253U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_startup_ram_restore">define X430_STARTUP_RAM_RESTORE<a class="headerlink" href="#define-x430_startup_ram_restore" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-97-1" name="__codelineno-97-1" href="#__codelineno-97-1"></a>#define X430_STARTUP_RAM_RESTORE `0x02U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_startup_torque_on">define X430_STARTUP_TORQUE_ON<a class="headerlink" href="#define-x430_startup_torque_on" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-98-1" name="__codelineno-98-1" href="#__codelineno-98-1"></a>#define X430_STARTUP_TORQUE_ON `0x01U`
+</code></pre></div>
+<hr>
+
+<h3 id="define-x430_write_secondary">define X430_WRITE_SECONDARY<a class="headerlink" href="#define-x430_write_secondary" title="Permanent link">&para;</a></h3>
+<p><em>Packet addressed by the Secondary ID: the EEPROM area is locked.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-99-1" name="__codelineno-99-1" href="#__codelineno-99-1"></a>#define X430_WRITE_SECONDARY `0x01U`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_write_validate_only">define X430_WRITE_VALIDATE_ONLY<a class="headerlink" href="#define-x430_write_validate_only" title="Permanent link">&para;</a></h3>
+<p><em>Validate only: change nothing and call no hook.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-100-1" name="__codelineno-100-1" href="#__codelineno-100-1"></a>#define X430_WRITE_VALIDATE_ONLY `0x02U`
+</code></pre></div></p>
+<hr>
+
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Anton Vynohradov · <a href="https://systemfromscratch.com">SystemFromScratch®</a> · Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/AntonVynohradov" target="_blank" rel="noopener" title="Anton Vynohradov on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://www.linkedin.com/in/vynohradov" target="_blank" rel="noopener" title="Anton Vynohradov on LinkedIn" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://orcid.org/0009-0005-6965-0911" target="_blank" rel="noopener" title="Anton Vynohradov on ORCID" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M294.7 188.2h-45.9V342h47.5c67.6 0 83.1-51.3 83.1-76.9 0-41.6-26.5-76.9-84.7-76.9M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496m-80.8 360.8h-29.8V161.3h29.8zM160.3 98.5a19.6 19.6 0 1 1 0 39.2 19.6 19.6 0 1 1 0-39.2M300 369h-81V161.3h80.6c76.7 0 110.4 54.8 110.4 103.9 0 53.3-41.7 103.9-110 103.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://systemfromscratch.com" target="_blank" rel="noopener" title="SystemFromScratch®" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2s.06-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.92 7.92 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8 8 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.7 15.7 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "navigation.tracking", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

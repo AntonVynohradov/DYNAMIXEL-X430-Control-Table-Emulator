@@ -1,0 +1,565 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="group__x430__types" kind="group">
+    <compoundname>x430_types</compoundname>
+    <title>Types</title>
+    <innerclass refid="structx430__port" prot="public">x430_port</innerclass>
+    <innerclass refid="structx430__hooks" prot="public">x430_hooks</innerclass>
+    <innerclass refid="structx430__bus__config" prot="public">x430_bus_config</innerclass>
+    <innerclass refid="structx430__device__config" prot="public">x430_device_config</innerclass>
+    <innerclass refid="structx430__sim__config" prot="public">x430_sim_config</innerclass>
+    <innerclass refid="structx430__bus" prot="public">x430_bus</innerclass>
+    <innerclass refid="structx430__device" prot="public">x430_device</innerclass>
+    <innerclass refid="structx430__sim" prot="public">x430_sim</innerclass>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="group__x430__types_1ga9e8e20f327e4238a4fd09d90e9c4483a" prot="public" static="no">
+        <type>void(*</type>
+        <definition>typedef void(* x430_lock_fn) (void *context)</definition>
+        <argsstring>)(void *context)</argsstring>
+        <name>x430_lock_fn</name>
+        <briefdescription>
+<para>Take or release the bus lock (<ref refid="structx430__port_1ab2e69d29d9139b33b94c19b85b2b2490" kindref="member">x430_port::lock</ref>, <ref refid="structx430__port_1a971e0c3c5e0a518f8716e1842622c3ab" kindref="member">x430_port::unlock</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>context</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="structx430__port_1aeb7966fbd633e49215c5ffc64da435f9" kindref="member">x430_port::context</ref>. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="70" column="9" bodyfile="inc/x430_types.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__x430__types_1ga1702be1c004da40de5041f5a66bdcd91" prot="public" static="no">
+        <type>uint32_t(*</type>
+        <definition>typedef uint32_t(* x430_millis_fn) (void *context)</definition>
+        <argsstring>)(void *context)</argsstring>
+        <name>x430_millis_fn</name>
+        <briefdescription>
+<para>Free-running millisecond counter (<ref refid="structx430__port_1a3f4688d92be10563f0dfff0ad0497cad" kindref="member">x430_port::millis</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>context</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="structx430__port_1aeb7966fbd633e49215c5ffc64da435f9" kindref="member">x430_port::context</ref>. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Milliseconds; wraps at 2^32. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="77" column="9" bodyfile="inc/x430_types.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__x430__types_1ga0c1ab4094bfac22877af7ea810cb7805" prot="public" static="no">
+        <type>void(*</type>
+        <definition>typedef void(* x430_delay_fn) (void *context, uint32_t us)</definition>
+        <argsstring>)(void *context, uint32_t us)</argsstring>
+        <name>x430_delay_fn</name>
+        <briefdescription>
+<para>Busy or sleeping delay (<ref refid="structx430__port_1abbf7d364f45bc625e7ec74c141482ebb" kindref="member">x430_port::delay_us</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>context</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="structx430__port_1aeb7966fbd633e49215c5ffc64da435f9" kindref="member">x430_port::context</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>us</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Delay in microseconds. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="84" column="9" bodyfile="inc/x430_types.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__x430__types_1gaff2ec3c355910b93f8d5c5edf59d3040" prot="public" static="no">
+        <type>uint8_t(*</type>
+        <definition>typedef uint8_t(* x430_write_hook) (struct x430_device *device, uint16_t address, uint8_t size, int32_t value, void *user_data)</definition>
+        <argsstring>)(struct x430_device *device, uint16_t address, uint8_t size, int32_t value, void *user_data)</argsstring>
+        <name>x430_write_hook</name>
+        <briefdescription>
+<para>A validated register write, before the value is stored (<ref refid="structx430__hooks_1ac8c1160f5c88e21a95f68b4bd2627b55" kindref="member">x430_hooks::write</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device written. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First address of the register. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Register size in bytes (1, 2 or 4). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>value</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>New value (sign-extended for signed registers). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>user_data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" kindref="member">x430_device_config::user_data</ref>. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>DXL2_ERR_NONE to accept, another DXL2_ERR_* code to refuse (the instruction stops at this register and the host gets that error). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="122" column="9" bodyfile="inc/x430_types.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__x430__types_1ga1618e2f9c05567bc41339e0fb98845b3" prot="public" static="no">
+        <type>void(*</type>
+        <definition>typedef void(* x430_read_hook) (struct x430_device *device, uint16_t address, uint16_t length, void *user_data)</definition>
+        <argsstring>)(struct x430_device *device, uint16_t address, uint16_t length, void *user_data)</argsstring>
+        <name>x430_read_hook</name>
+        <briefdescription>
+<para>Data is about to be read (<ref refid="structx430__hooks_1aca48905169e4ee844638f12b46d3b0b6" kindref="member">x430_hooks::read</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Called once per contiguous run of real addresses (Indirect Data is resolved to the addresses it points at). The hook may refresh live registers with <ref refid="group__x430_1gaf7a2c5ffac2a155fd4c7afe4aa0cee8c" kindref="member">x430_device_set()</ref>. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device read. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>address</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First real address of the run. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>length</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Bytes in the run. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>user_data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" kindref="member">x430_device_config::user_data</ref>. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="134" column="9" bodyfile="inc/x430_types.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__x430__types_1ga63594ce085fa44faa322668f28dfe54e" prot="public" static="no">
+        <type>uint8_t(*</type>
+        <definition>typedef uint8_t(* x430_event_hook) (struct x430_device *device, enum x430_event event, void *user_data)</definition>
+        <argsstring>)(struct x430_device *device, enum x430_event event, void *user_data)</argsstring>
+        <name>x430_event_hook</name>
+        <briefdescription>
+<para>Device event (<ref refid="structx430__hooks_1aa88bdb1b64a0a2e289c6de118f3a0c79" kindref="member">x430_hooks::event</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>event</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>What happened. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>user_data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" kindref="member">x430_device_config::user_data</ref>. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>DXL2_ERR_NONE, or a DXL2_ERR_* code where the event can be refused (<ref refid="group__x430__defs_1gga7d5a16437bb5db3b961b2419ebe8f413a05b062231373da8ca6a8653c39051544" kindref="member">X430_EVENT_CLEAR_MULTI_TURN</ref>); ignored otherwise. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="145" column="9" bodyfile="inc/x430_types.h" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" prot="public" static="no">
+        <type>int(*</type>
+        <definition>typedef int(* x430_nvm_load_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint8_t *data, uint16_t size, void *user_data)</definition>
+        <argsstring>)(struct x430_device *device, enum x430_nvm_slot slot, uint8_t *data, uint16_t size, void *user_data)</argsstring>
+        <name>x430_nvm_load_hook</name>
+        <briefdescription>
+<para>Load a persistent block (<ref refid="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" kindref="member">x430_hooks::nvm_load</ref>). </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>slot</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Block to load. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Destination of <computeroutput>size</computeroutput> bytes. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kindref="member">X430_NVM_EEPROM_SIZE</ref> or <ref refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kindref="member">X430_NVM_BACKUP_SIZE</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>user_data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" kindref="member">x430_device_config::user_data</ref>. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername>0</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>size</computeroutput> bytes were read. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>&lt;0</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>No data (the factory values stay). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="158" column="9" bodyfile="inc/x430_types.h" bodystart="158" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" prot="public" static="no">
+        <type>int(*</type>
+        <definition>typedef int(* x430_nvm_store_hook) (struct x430_device *device, enum x430_nvm_slot slot, const uint8_t *data, uint16_t size, void *user_data)</definition>
+        <argsstring>)(struct x430_device *device, enum x430_nvm_slot slot, const uint8_t *data, uint16_t size, void *user_data)</argsstring>
+        <name>x430_nvm_store_hook</name>
+        <briefdescription>
+<para>Store a persistent block (<ref refid="structx430__hooks_1a9fd99af3afec213a15c791489e535336" kindref="member">x430_hooks::nvm_store</ref>), after the change; may be slow. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>device</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Device. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>slot</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Block to store. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><computeroutput>size</computeroutput> bytes: header, payload and CRC, opaque to the application. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kindref="member">X430_NVM_EEPROM_SIZE</ref> or <ref refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kindref="member">X430_NVM_BACKUP_SIZE</ref>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>user_data</parametername>
+</parameternamelist>
+<parameterdescription>
+<para><ref refid="structx430__device__config_1a22187374bf1952dadb84ba9b9c4fd61d" kindref="member">x430_device_config::user_data</ref>. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="retval"><parameteritem>
+<parameternamelist>
+<parametername>0</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Stored. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>&lt;0</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Failure, reported to the host as Result Fail. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="171" column="9" bodyfile="inc/x430_types.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" prot="public" static="no">
+        <name>X430_NVM_EEPROM_SIZE</name>
+        <initializer>(<ref refid="group__x430__defs_1gabd497cf3105b7e7a9b2a534eeaf415bb" kindref="member">X430_NVM_HEADER_SIZE</ref> + <ref refid="group__x430__defs_1gaab54a7d40320e028f2958ee828d7447b" kindref="member">X430_RAM_START</ref> + 2U)</initializer>
+        <briefdescription>
+<para>Size of the persistent EEPROM block (nvm_load / nvm_store). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="229" column="9" bodyfile="inc/x430_types.h" bodystart="229" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" prot="public" static="no">
+        <name>X430_NVM_BACKUP_SIZE</name>
+        <initializer>(<ref refid="group__x430__defs_1gabd497cf3105b7e7a9b2a534eeaf415bb" kindref="member">X430_NVM_HEADER_SIZE</ref> + X430_TABLE_SIZE + 2U)</initializer>
+        <briefdescription>
+<para>Size of the persistent Control Table backup block. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="231" column="9" bodyfile="inc/x430_types.h" bodystart="231" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1gaaf9d59e50846d139c38e2d80e697ff83" prot="public" static="no">
+        <name>X430_NVM_BUFFER_SIZE</name>
+        <initializer><ref refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kindref="member">X430_NVM_BACKUP_SIZE</ref></initializer>
+        <briefdescription>
+<para>Bytes of the persistent block buffer inside each device. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="235" column="9" bodyfile="inc/x430_types.h" bodystart="235" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" prot="public" static="no">
+        <name>X430_POINTER_BYTES</name>
+        <initializer>4U</initializer>
+        <briefdescription>
+<para>Size of a pointer and of size_t: 8 on 64-bit hosts, 4 on Cortex-M. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="244" column="10" bodyfile="inc/x430_types.h" bodystart="244" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" prot="public" static="no">
+        <name>X430_ALIGN_UP</name>
+        <param><defname>n</defname></param>
+        <param><defname>a</defname></param>
+        <initializer>(((((n) + (a)) - 1U) / (a)) * (a))</initializer>
+        <briefdescription>
+<para><computeroutput>n</computeroutput> rounded up to a multiple of <computeroutput>a</computeroutput>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="248" column="9" bodyfile="inc/x430_types.h" bodystart="248" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" prot="public" static="no">
+        <name>X430_DXL2_LINK_BYTES</name>
+        <initializer>    <ref refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kindref="member">X430_ALIGN_UP</ref>((4U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) +                                                 \
+                      <ref refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kindref="member">X430_ALIGN_UP</ref>(<ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref>, <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) +               \
+                      <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref> + <ref refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kindref="member">X430_ALIGN_UP</ref>(<ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref> - 6U, 4U) + 8U, \
+                  <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>)</initializer>
+        <briefdescription>
+<para>Bytes of struct dxl2_link of DXL2-C 1.0.0 (configuration, parser, packet, counters), from DXL2_MAX_PACKET_SIZE. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Plain arithmetic so that the instance size needs no sizeof (static analysis); x430_bus.c checks it at compile time. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="256" column="9" bodyfile="inc/x430_types.h" bodystart="256" bodyend="260"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1ga08d07441b61ab12ae1c227cd60604e9c" prot="public" static="no">
+        <name>X430_FAST_READ_BYTES</name>
+        <initializer><ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref></initializer>
+        <briefdescription>
+<para>Bytes of the Fast Sync/Bulk Read response buffer of a bus. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="264" column="9" bodyfile="inc/x430_types.h" bodystart="264" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" prot="public" static="no">
+        <name>X430_BUS_BYTES</name>
+        <initializer>    (<ref refid="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" kindref="member">X430_DXL2_LINK_BYTES</ref> + (3U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) +                          \
+     (X430_MAX_DEVICES_U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 10U + DXL2_MAX_PARAMETER_SIZE + \
+     <ref refid="group__x430__types_1ga08d07441b61ab12ae1c227cd60604e9c" kindref="member">X430_FAST_READ_BYTES</ref>)</initializer>
+        <briefdescription>
+<para>Private state of a bus in bytes; x430_bus.c checks it at compile time. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="270" column="9" bodyfile="inc/x430_types.h" bodystart="270" bodyend="273"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1ga337bba376411a5f61828f9084937ce16" prot="public" static="no">
+        <name>X430_DEVICE_BYTES</name>
+        <initializer>    ((3U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 17U + X430_TABLE_SIZE + X430_REG_WRITE_SIZE_U + \
+     <ref refid="group__x430__types_1gaaf9d59e50846d139c38e2d80e697ff83" kindref="member">X430_NVM_BUFFER_SIZE</ref>)</initializer>
+        <briefdescription>
+<para>Private state of a device in bytes; x430_device.c checks it at compile time. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="276" column="9" bodyfile="inc/x430_types.h" bodystart="276" bodyend="278"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1ga05d03ef884f780932e87d617f55d722c" prot="public" static="no">
+        <name>X430_SIM_BYTES</name>
+        <initializer>(24U + <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>)</initializer>
+        <briefdescription>
+<para>Private state of a simulator in bytes; x430_sim.c checks it at compile time. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="281" column="9" bodyfile="inc/x430_types.h" bodystart="281" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1gafb28dc0de5a6f66dd81ca05716f253d9" prot="public" static="no">
+        <name>X430_BUS_WORDS</name>
+        <initializer>((<ref refid="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" kindref="member">X430_BUS_BYTES</ref> + 7U) / 8U)</initializer>
+        <briefdescription>
+<para>Size of <ref refid="structx430__bus" kindref="compound">x430_bus</ref> in 64-bit words. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="284" column="9" bodyfile="inc/x430_types.h" bodystart="284" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1gafd96c5c9e3da83eddd8f8d676a38f483" prot="public" static="no">
+        <name>X430_DEVICE_WORDS</name>
+        <initializer>((<ref refid="group__x430__types_1ga337bba376411a5f61828f9084937ce16" kindref="member">X430_DEVICE_BYTES</ref> + 7U) / 8U)</initializer>
+        <briefdescription>
+<para>Size of <ref refid="structx430__device" kindref="compound">x430_device</ref> in 64-bit words. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="286" column="9" bodyfile="inc/x430_types.h" bodystart="286" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__types_1gadff3011c00dcc31eccda490f0b50a70d" prot="public" static="no">
+        <name>X430_SIM_WORDS</name>
+        <initializer>((<ref refid="group__x430__types_1ga05d03ef884f780932e87d617f55d722c" kindref="member">X430_SIM_BYTES</ref> + 7U) / 8U)</initializer>
+        <briefdescription>
+<para>Size of <ref refid="structx430__sim" kindref="compound">x430_sim</ref> in 64-bit words. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="288" column="9" bodyfile="inc/x430_types.h" bodystart="288" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Callbacks, configuration structures and the opaque instances. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

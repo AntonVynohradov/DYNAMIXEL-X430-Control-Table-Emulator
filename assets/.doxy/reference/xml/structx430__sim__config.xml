@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__sim__config" kind="struct" language="C++" prot="public">
+    <compoundname>x430_sim_config</compoundname>
+    <includes refid="x430__types_8h" local="no">x430_types.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__sim__config_1adcc77f6cc81d71c02d7588ea7b85c60a" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_sim_config::input_voltage</definition>
+        <argsstring></argsstring>
+        <name>input_voltage</name>
+        <qualifiedname>x430_sim_config::input_voltage</qualifiedname>
+        <briefdescription>
+<para>Present Input Voltage [0.1 V] (default 120 = 12.0 V). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="220" column="14" bodyfile="inc/x430_types.h" bodystart="220" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__sim__config_1af2f35658bd2047cf7bda43aa48bffdac" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_sim_config::temperature</definition>
+        <argsstring></argsstring>
+        <name>temperature</name>
+        <qualifiedname>x430_sim_config::temperature</qualifiedname>
+        <briefdescription>
+<para>Present Temperature [deg C] (default 30). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="221" column="13" bodyfile="inc/x430_types.h" bodystart="221" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Simulator configuration, copied by <ref refid="group__x430_1ga9e6f35869f8631cbb30b49b11e7107b2" kindref="member">x430_sim_init()</ref>. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Zero selects the default. </para>
+    </detaileddescription>
+    <location file="inc/x430_types.h" line="218" column="1" bodyfile="inc/x430_types.h" bodystart="219" bodyend="222"/>
+    <listofallmembers>
+      <member refid="structx430__sim__config_1adcc77f6cc81d71c02d7588ea7b85c60a" prot="public" virt="non-virtual"><scope>x430_sim_config</scope><name>input_voltage</name></member>
+      <member refid="structx430__sim__config_1af2f35658bd2047cf7bda43aa48bffdac" prot="public" virt="non-virtual"><scope>x430_sim_config</scope><name>temperature</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

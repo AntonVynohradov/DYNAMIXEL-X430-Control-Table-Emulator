@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__align__bus" kind="struct" language="C++" prot="public">
+    <compoundname>x430_align_bus</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__align__bus_1aa645491458505102459e02ab99635790" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char x430_align_bus::c</definition>
+        <argsstring></argsstring>
+        <name>c</name>
+        <qualifiedname>x430_align_bus::c</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_bus.c" line="82" column="10" bodyfile="src/x430_bus.c" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__align__bus_1a799ebe9632003a9c457a069934b06b1e" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref></type>
+        <definition>struct x430_bus x430_align_bus::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <qualifiedname>x430_align_bus::x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_bus.c" line="83" column="19" bodyfile="src/x430_bus.c" bodystart="83" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>x430_align_bus</label>
+        <link refid="structx430__align__bus"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>x</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>x430_bus</label>
+        <link refid="structx430__bus"/>
+      </node>
+    </collaborationgraph>
+    <location file="src/x430_bus.c" line="80" column="1" bodyfile="src/x430_bus.c" bodystart="81" bodyend="84"/>
+    <listofallmembers>
+      <member refid="structx430__align__bus_1aa645491458505102459e02ab99635790" prot="public" virt="non-virtual"><scope>x430_align_bus</scope><name>c</name></member>
+      <member refid="structx430__align__bus_1a799ebe9632003a9c457a069934b06b1e" prot="public" virt="non-virtual"><scope>x430_align_bus</scope><name>x</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

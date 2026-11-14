@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__reg" kind="struct" language="C++" prot="public">
+    <compoundname>x430_reg</compoundname>
+    <includes refid="x430__model_8h" local="no">x430_model.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__reg_1a26fc0e9e1f63a8b0a9e3c1d3c46409fc" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_reg::address</definition>
+        <argsstring></argsstring>
+        <name>address</name>
+        <qualifiedname>x430_reg::address</qualifiedname>
+        <briefdescription>
+<para>First byte. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="72" column="14" bodyfile="inc/x430_model.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__reg_1a03f9ab97cbf85c05e99ae6fb29bd9896" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_reg::size</definition>
+        <argsstring></argsstring>
+        <name>size</name>
+        <qualifiedname>x430_reg::size</qualifiedname>
+        <briefdescription>
+<para>1, 2 or 4 bytes. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="73" column="13" bodyfile="inc/x430_model.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__reg_1a899b6166832f57956e7b22710396a5de" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_reg::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <qualifiedname>x430_reg::flags</qualifiedname>
+        <briefdescription>
+<para>X430_REG_* bits. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="74" column="13" bodyfile="inc/x430_model.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__reg_1a692a3f1397d01fe3fbb1d08f7bccdf93" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_reg::check</definition>
+        <argsstring></argsstring>
+        <name>check</name>
+        <qualifiedname>x430_reg::check</qualifiedname>
+        <briefdescription>
+<para>enum x430_check. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="75" column="13" bodyfile="inc/x430_model.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__reg_1a2b860d19c20800ea417307e0bef9ce5b" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_reg::ref</definition>
+        <argsstring></argsstring>
+        <name>ref</name>
+        <qualifiedname>x430_reg::ref</qualifiedname>
+        <briefdescription>
+<para>Limit register address for SYMMETRIC. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="76" column="14" bodyfile="inc/x430_model.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__reg_1a2358093f952a98065cb2cd64cb5cca09" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t x430_reg::initial</definition>
+        <argsstring></argsstring>
+        <name>initial</name>
+        <qualifiedname>x430_reg::initial</qualifiedname>
+        <briefdescription>
+<para>Value after a factory reset. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="77" column="13" bodyfile="inc/x430_model.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__reg_1aa389881c9b434b4fa0d3835582b2dd18" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t x430_reg::min</definition>
+        <argsstring></argsstring>
+        <name>min</name>
+        <qualifiedname>x430_reg::min</qualifiedname>
+        <briefdescription>
+<para>RANGE/INDIRECT lower bound. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="78" column="13" bodyfile="inc/x430_model.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__reg_1a4277a146fd8274b902f1c0454d109126" prot="public" static="no" mutable="no">
+        <type>int32_t</type>
+        <definition>int32_t x430_reg::max</definition>
+        <argsstring></argsstring>
+        <name>max</name>
+        <qualifiedname>x430_reg::max</qualifiedname>
+        <briefdescription>
+<para>RANGE/INDIRECT upper bound, MASK allowed bits. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="79" column="13" bodyfile="inc/x430_model.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>One Control Table item. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="inc/x430_model.h" line="70" column="1" bodyfile="inc/x430_model.h" bodystart="71" bodyend="80"/>
+    <listofallmembers>
+      <member refid="structx430__reg_1a26fc0e9e1f63a8b0a9e3c1d3c46409fc" prot="public" virt="non-virtual"><scope>x430_reg</scope><name>address</name></member>
+      <member refid="structx430__reg_1a692a3f1397d01fe3fbb1d08f7bccdf93" prot="public" virt="non-virtual"><scope>x430_reg</scope><name>check</name></member>
+      <member refid="structx430__reg_1a899b6166832f57956e7b22710396a5de" prot="public" virt="non-virtual"><scope>x430_reg</scope><name>flags</name></member>
+      <member refid="structx430__reg_1a2358093f952a98065cb2cd64cb5cca09" prot="public" virt="non-virtual"><scope>x430_reg</scope><name>initial</name></member>
+      <member refid="structx430__reg_1a4277a146fd8274b902f1c0454d109126" prot="public" virt="non-virtual"><scope>x430_reg</scope><name>max</name></member>
+      <member refid="structx430__reg_1aa389881c9b434b4fa0d3835582b2dd18" prot="public" virt="non-virtual"><scope>x430_reg</scope><name>min</name></member>
+      <member refid="structx430__reg_1a2b860d19c20800ea417307e0bef9ce5b" prot="public" virt="non-virtual"><scope>x430_reg</scope><name>ref</name></member>
+      <member refid="structx430__reg_1a03f9ab97cbf85c05e99ae6fb29bd9896" prot="public" virt="non-virtual"><scope>x430_reg</scope><name>size</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

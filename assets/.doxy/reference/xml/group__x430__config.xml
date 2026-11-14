@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="group__x430__config" kind="group">
+    <compoundname>x430_config</compoundname>
+    <title>Configuration</title>
+    <sectiondef kind="user-defined">
+      <header>Device and bus sizing</header>
+      <memberdef kind="define" id="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" prot="public" static="no">
+        <name>DXL2_MAX_PACKET_SIZE</name>
+        <initializer>768U</initializer>
+        <briefdescription>
+<para>Largest packet of the DXL2-C link, in bytes (default 768: a READ of the whole Control Table, as DYNAMIXEL Wizard does it). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Defined here, before dxl2.h is included, so that every translation unit that includes <ref refid="x430_8h_source" kindref="compound">x430.h</ref> sees the size the library was built with (the instance size of a bus depends on it). DXL2-C itself must be compiled with the same value; x430.cmake passes it to DXL2-C. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="65" column="10" bodyfile="inc/x430_config.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" prot="public" static="no">
+        <name>X430_MAX_DEVICES</name>
+        <initializer>(4U)</initializer>
+        <briefdescription>
+<para>Devices (DYNAMIXEL IDs) one bus can host. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="77" column="10" bodyfile="inc/x430_config.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" prot="public" static="no">
+        <name>X430_REG_WRITE_SIZE</name>
+        <initializer>(32U)</initializer>
+        <briefdescription>
+<para>Largest data block a REG_WRITE can register, in bytes. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="89" column="10" bodyfile="inc/x430_config.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Identity</header>
+      <memberdef kind="define" id="group__x430__config_1ga88bd99c8234f09536b1eec34903d6383" prot="public" static="no">
+        <name>X430_FIRMWARE_VERSION</name>
+        <initializer>(52U)</initializer>
+        <briefdescription>
+<para>Firmware Version (address 6) used when the device configuration gives 0. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="106" column="10" bodyfile="inc/x430_config.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1ga7f332f10f262be05132db10adf218a0e" prot="public" static="no">
+        <name>X430_MODEL_NUMBER</name>
+        <initializer>(X430_MODEL_NUMBER_DEFAULT)</initializer>
+        <briefdescription>
+<para>Model Number reported by PING and address 0. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>CONFIG_X430_MODEL_NUMBER_OVERRIDE (non-zero) replaces the number of the ROBOTIS documentation, for hosts that only know another number. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="120" column="10" bodyfile="inc/x430_config.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1ga0c564a82c2c26a378004de001db17b6a" prot="public" static="no">
+        <name>X430_BAUD_RATE_CODE_MAX</name>
+        <initializer>(7U)</initializer>
+        <briefdescription>
+<para>Highest Baud Rate (address 8) code accepted by a write. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The X430 table defines 0..7. A larger value lets an application use its own codes; the application validates them in the write hook. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="134" column="10" bodyfile="inc/x430_config.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Optional features</header>
+      <description><para>1 = compiled in, 0 = left out. With Kconfig, a feature is off when its symbol is not set; without Kconfig every feature is on. </para>
+</description>
+      <memberdef kind="define" id="group__x430__config_1ga622c73f8617fa71de66001997915236a" prot="public" static="no">
+        <name>X430_FEATURE_BULK</name>
+        <initializer>1</initializer>
+        <briefdescription>
+<para>BULK_READ and BULK_WRITE instructions. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="150" column="9" bodyfile="inc/x430_config.h" bodystart="150" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1ga6cc790b9c8fbc5d86a09bd8ecd96ac9e" prot="public" static="no">
+        <name>X430_FEATURE_FAST_READ</name>
+        <initializer>1</initializer>
+        <briefdescription>
+<para>FAST_SYNC_READ and FAST_BULK_READ instructions (used by ROS 2 by default). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="159" column="9" bodyfile="inc/x430_config.h" bodystart="159" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1gaad138ea4f3dd8d6af92b9f92229c3643" prot="public" static="no">
+        <name>X430_FEATURE_BACKUP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+<para>Control Table BACKUP instruction, Backup Ready and Startup RAM Restore. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="168" column="9" bodyfile="inc/x430_config.h" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1ga2fad795e8d559947ef01969bcfcbe13c" prot="public" static="no">
+        <name>X430_FEATURE_SIMULATOR</name>
+        <initializer>1</initializer>
+        <briefdescription>
+<para>Built-in simulator backend (x430_sim.h). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="177" column="9" bodyfile="inc/x430_config.h" bodystart="177" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
+      <header>Options as unsigned constants</header>
+      <description><para>A definition on the compiler command line may be a plain (signed) literal; the library uses these copies in expressions (MISRA C:2012 Rule 10.4). </para>
+</description>
+      <memberdef kind="define" id="group__x430__config_1gaa241cd443d233029d4364198090f9b7e" prot="public" static="no">
+        <name>X430_MAX_DEVICES_U</name>
+        <initializer>((uint32_t)(<ref refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" kindref="member">X430_MAX_DEVICES</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="193" column="9" bodyfile="inc/x430_config.h" bodystart="193" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1gae43921fed358fd872aad0a3e96ad94bb" prot="public" static="no">
+        <name>X430_REG_WRITE_SIZE_U</name>
+        <initializer>((uint32_t)(<ref refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" kindref="member">X430_REG_WRITE_SIZE</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="194" column="9" bodyfile="inc/x430_config.h" bodystart="194" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1gaad47f5653349a7e772e6d3687a1f69e8" prot="public" static="no">
+        <name>X430_BAUD_RATE_CODE_MAX_U</name>
+        <initializer>((uint32_t)(<ref refid="group__x430__config_1ga0c564a82c2c26a378004de001db17b6a" kindref="member">X430_BAUD_RATE_CODE_MAX</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="195" column="9" bodyfile="inc/x430_config.h" bodystart="195" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Build-time configuration: Kconfig symbols or plain compiler definitions. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>The values come from three places, highest priority first: <itemizedlist>
+<listitem><para>a compiler definition of the X430_* macro itself (for example <computeroutput>-DX430_MAX_DEVICES=8U</computeroutput>); </para>
+</listitem>
+<listitem><para>the Kconfig header x430_autoconf.h (CONFIG_X430_* symbols), included when the build defines X430_HAS_AUTOCONF; </para>
+</listitem>
+<listitem><para>the defaults below.</para>
+</listitem>
+</itemizedlist>
+The emulated model is not configured here: CMake generates its Control Table (x430_model_table.c) and x430_model_info.h for the model selected with Kconfig or with the X430_MODEL cache variable. </para>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

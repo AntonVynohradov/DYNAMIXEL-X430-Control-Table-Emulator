@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__port" kind="struct" language="C++" prot="public">
+    <compoundname>x430_port</compoundname>
+    <includes refid="x430__types_8h" local="no">x430_types.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__port_1aeb7966fbd633e49215c5ffc64da435f9" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* x430_port::context</definition>
+        <argsstring></argsstring>
+        <name>context</name>
+        <qualifiedname>x430_port::context</qualifiedname>
+        <briefdescription>
+<para>Passed to every function. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="101" column="10" bodyfile="inc/x430_types.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__port_1ab2e69d29d9139b33b94c19b85b2b2490" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1ga9e8e20f327e4238a4fd09d90e9c4483a" kindref="member">x430_lock_fn</ref></type>
+        <definition>x430_lock_fn x430_port::lock</definition>
+        <argsstring></argsstring>
+        <name>lock</name>
+        <qualifiedname>x430_port::lock</qualifiedname>
+        <briefdescription>
+<para>Take the bus lock. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="102" column="18" bodyfile="inc/x430_types.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__port_1a971e0c3c5e0a518f8716e1842622c3ab" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1ga9e8e20f327e4238a4fd09d90e9c4483a" kindref="member">x430_lock_fn</ref></type>
+        <definition>x430_lock_fn x430_port::unlock</definition>
+        <argsstring></argsstring>
+        <name>unlock</name>
+        <qualifiedname>x430_port::unlock</qualifiedname>
+        <briefdescription>
+<para>Release the bus lock. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="103" column="18" bodyfile="inc/x430_types.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__port_1a3f4688d92be10563f0dfff0ad0497cad" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1ga1702be1c004da40de5041f5a66bdcd91" kindref="member">x430_millis_fn</ref></type>
+        <definition>x430_millis_fn x430_port::millis</definition>
+        <argsstring></argsstring>
+        <name>millis</name>
+        <qualifiedname>x430_port::millis</qualifiedname>
+        <briefdescription>
+<para>Free-running millisecond counter. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="104" column="20" bodyfile="inc/x430_types.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__port_1abbf7d364f45bc625e7ec74c141482ebb" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1ga0c1ab4094bfac22877af7ea810cb7805" kindref="member">x430_delay_fn</ref></type>
+        <definition>x430_delay_fn x430_port::delay_us</definition>
+        <argsstring></argsstring>
+        <name>delay_us</name>
+        <qualifiedname>x430_port::delay_us</qualifiedname>
+        <briefdescription>
+<para>Delay before a status packet. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="105" column="19" bodyfile="inc/x430_types.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Platform services. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Every member may be NULL; the library then works without that service:</para>
+<para><table rows="5" cols="3"><row>
+<entry thead="yes"><para>Member   </para>
+</entry><entry thead="yes"><para>Used for   </para>
+</entry><entry thead="yes"><para>NULL means    </para>
+</entry></row>
+<row>
+<entry thead="no"><para>lock   </para>
+</entry><entry thead="no"><para>mutual exclusion of the Control Tables   </para>
+</entry><entry thead="no"><para>single context (bare metal)    </para>
+</entry></row>
+<row>
+<entry thead="no"><para>unlock   </para>
+</entry><entry thead="no"><para>(pair of lock)   </para>
+</entry><entry thead="no"><para></para>
+</entry></row>
+<row>
+<entry thead="no"><para>millis   </para>
+</entry><entry thead="no"><para>Realtime Tick (120), Bus Watchdog (98)   </para>
+</entry><entry thead="no"><para>tick 0, no watchdog timeout    </para>
+</entry></row>
+<row>
+<entry thead="no"><para>delay_us   </para>
+</entry><entry thead="no"><para>Return Delay Time (9) before a status   </para>
+</entry><entry thead="no"><para>status sent at once   </para>
+</entry></row>
+</table>
+</para>
+<para>The bus keeps a pointer to the port: keep it alive as long as the bus. </para>
+    </detaileddescription>
+    <location file="inc/x430_types.h" line="99" column="1" bodyfile="inc/x430_types.h" bodystart="100" bodyend="106"/>
+    <listofallmembers>
+      <member refid="structx430__port_1aeb7966fbd633e49215c5ffc64da435f9" prot="public" virt="non-virtual"><scope>x430_port</scope><name>context</name></member>
+      <member refid="structx430__port_1abbf7d364f45bc625e7ec74c141482ebb" prot="public" virt="non-virtual"><scope>x430_port</scope><name>delay_us</name></member>
+      <member refid="structx430__port_1ab2e69d29d9139b33b94c19b85b2b2490" prot="public" virt="non-virtual"><scope>x430_port</scope><name>lock</name></member>
+      <member refid="structx430__port_1a3f4688d92be10563f0dfff0ad0497cad" prot="public" virt="non-virtual"><scope>x430_port</scope><name>millis</name></member>
+      <member refid="structx430__port_1a971e0c3c5e0a518f8716e1842622c3ab" prot="public" virt="non-virtual"><scope>x430_port</scope><name>unlock</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__hooks" kind="struct" language="C++" prot="public">
+    <compoundname>x430_hooks</compoundname>
+    <includes refid="x430__types_8h" local="no">x430_types.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__hooks_1ac8c1160f5c88e21a95f68b4bd2627b55" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1gaff2ec3c355910b93f8d5c5edf59d3040" kindref="member">x430_write_hook</ref></type>
+        <definition>x430_write_hook x430_hooks::write</definition>
+        <argsstring></argsstring>
+        <name>write</name>
+        <qualifiedname>x430_hooks::write</qualifiedname>
+        <briefdescription>
+<para>Every accepted register write. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="183" column="21" bodyfile="inc/x430_types.h" bodystart="183" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__hooks_1aca48905169e4ee844638f12b46d3b0b6" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1ga1618e2f9c05567bc41339e0fb98845b3" kindref="member">x430_read_hook</ref></type>
+        <definition>x430_read_hook x430_hooks::read</definition>
+        <argsstring></argsstring>
+        <name>read</name>
+        <qualifiedname>x430_hooks::read</qualifiedname>
+        <briefdescription>
+<para>Before data is read. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="184" column="20" bodyfile="inc/x430_types.h" bodystart="184" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__hooks_1aa88bdb1b64a0a2e289c6de118f3a0c79" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1ga63594ce085fa44faa322668f28dfe54e" kindref="member">x430_event_hook</ref></type>
+        <definition>x430_event_hook x430_hooks::event</definition>
+        <argsstring></argsstring>
+        <name>event</name>
+        <qualifiedname>x430_hooks::event</qualifiedname>
+        <briefdescription>
+<para>Reboot, factory reset, watchdog, ... </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="185" column="21" bodyfile="inc/x430_types.h" bodystart="185" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" kindref="member">x430_nvm_load_hook</ref></type>
+        <definition>x430_nvm_load_hook x430_hooks::nvm_load</definition>
+        <argsstring></argsstring>
+        <name>nvm_load</name>
+        <qualifiedname>x430_hooks::nvm_load</qualifiedname>
+        <briefdescription>
+<para>Load the EEPROM area or the backup. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="186" column="24" bodyfile="inc/x430_types.h" bodystart="186" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__hooks_1a9fd99af3afec213a15c791489e535336" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" kindref="member">x430_nvm_store_hook</ref></type>
+        <definition>x430_nvm_store_hook x430_hooks::nvm_store</definition>
+        <argsstring></argsstring>
+        <name>nvm_store</name>
+        <qualifiedname>x430_hooks::nvm_store</qualifiedname>
+        <briefdescription>
+<para>Store the EEPROM area or the backup. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_types.h" line="187" column="25" bodyfile="inc/x430_types.h" bodystart="187" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Application hooks of a device. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Every member may be NULL.</para>
+<para>Hooks run in the bus context with the bus lock held. They may call the lock-free device functions (<ref refid="group__x430_1gaea1c26465555bcd3d5b7fd49078d8440" kindref="member">x430_device_get()</ref>, <ref refid="group__x430_1gaf7a2c5ffac2a155fd4c7afe4aa0cee8c" kindref="member">x430_device_set()</ref>, <ref refid="group__x430_1ga723d7f0be186727e19a077e7f41718d8" kindref="member">x430_device_id()</ref>, <ref refid="group__x430_1ga2da15cacd4c4b35fa33c58a656e4263c" kindref="member">x430_device_raise_hardware_error()</ref>), but no bus function. </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>x430_device</label>
+        <link refid="structx430__device"/>
+      </node>
+      <node id="1">
+        <label>x430_hooks</label>
+        <link refid="structx430__hooks"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>event</edgelabel>
+          <edgelabel>nvm_load</edgelabel>
+          <edgelabel>nvm_store</edgelabel>
+          <edgelabel>read</edgelabel>
+          <edgelabel>write</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="inc/x430_types.h" line="181" column="1" bodyfile="inc/x430_types.h" bodystart="182" bodyend="188"/>
+    <listofallmembers>
+      <member refid="structx430__hooks_1aa88bdb1b64a0a2e289c6de118f3a0c79" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>event</name></member>
+      <member refid="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>nvm_load</name></member>
+      <member refid="structx430__hooks_1a9fd99af3afec213a15c791489e535336" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>nvm_store</name></member>
+      <member refid="structx430__hooks_1aca48905169e4ee844638f12b46d3b0b6" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>read</name></member>
+      <member refid="structx430__hooks_1ac8c1160f5c88e21a95f68b4bd2627b55" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>write</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
