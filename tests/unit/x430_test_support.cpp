@@ -44,32 +44,42 @@ static uint8_t hook_event(struct x430_device*, enum x430_event event, void*)
     return g_env->event_result;
 }
 
-static int hook_nvm_load(struct x430_device*, enum x430_nvm_slot slot, uint8_t* data, uint16_t size,
-                         void*)
+static int hook_nvm_read(struct x430_device*, enum x430_nvm_slot slot, uint16_t offset,
+                         uint8_t* data, uint16_t length, void*)
 {
+    g_env->nvm_reads++;
     auto it = g_env->nvm.find(slot);
-    if ((it == g_env->nvm.end()) || (it->second.size() != size))
+    if ((it == g_env->nvm.end()) || ((size_t)offset + length > it->second.size()) ||
+        (g_env->nvm_reads == g_env->nvm_read_fail_call))
     {
         return -1;
     }
-    std::memcpy(data, it->second.data(), size);
+    std::memcpy(data, it->second.data() + offset, length);
     return 0;
 }
 
-static int hook_nvm_store(struct x430_device*, enum x430_nvm_slot slot, const uint8_t* data,
-                          uint16_t size, void*)
+/* Parts arrive in increasing offsets from 0: offset 0 starts a new block. */
+static int hook_nvm_write(struct x430_device*, enum x430_nvm_slot slot, uint16_t offset,
+                          const uint8_t* data, uint16_t length, void*)
 {
-    g_env->nvm_stores++;
-    if (g_env->nvm_store_fails)
+    g_env->nvm_writes++;
+    if (offset == 0U)
+    {
+        g_env->nvm_stores++;
+        g_env->nvm[slot].clear();
+    }
+    if (g_env->nvm_store_fails || (g_env->nvm_writes == g_env->nvm_write_fail_call))
     {
         return -1;
     }
-    g_env->nvm[slot] = std::vector<uint8_t>(data, data + size);
+    std::vector<uint8_t>& block = g_env->nvm[slot];
+    EXPECT_EQ(block.size(), offset) << "parts out of order";
+    block.insert(block.end(), data, data + length);
     return 0;
 }
 
 const struct x430_hooks test_hooks = {
-    hook_write, hook_read, hook_event, hook_nvm_load, hook_nvm_store,
+    hook_write, hook_read, hook_event, hook_nvm_read, hook_nvm_write,
 };
 
 static void port_lock(void* context)

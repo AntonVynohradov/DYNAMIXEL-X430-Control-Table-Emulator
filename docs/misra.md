@@ -63,9 +63,8 @@ given to it as copies in `<build>/x430/analysis-include`.
 
 ### DEV-02: Rule 11.5 (advisory), context of a callback
 
-- **Location:** `x430_writer()` and `x430_handler()` in `src/x430_bus.c` (the byte writer
-  and the packet handler given to DXL2-C) and `x430_sim_of()` in `src/x430_sim.c` (the
-  user data of the simulator hooks). Marked with `cppcheck-suppress misra-c2012-11.5`.
+- **Location:** `x430_handler()` in `src/x430_bus.c` (the packet handler given to DXL2-C)
+  and `x430_sim_of()` in `src/x430_sim.c` (the user data of the simulator hooks). Marked with `cppcheck-suppress misra-c2012-11.5`.
 - **Rationale:** DXL2-C and the hook interface pass a `void*` context back to the callback,
   the usual C way to give a callback its object without global state. The library converts
   it back to the type it registered.

@@ -46,7 +46,7 @@ int app_start(void)
 
 `x430_device_config::id` is the **factory ID**: it is used while no EEPROM block is stored
 and again after FACTORY_RESET 0xFF; an ID stored by the host wins at startup.
-`x430_device_init()` loads the factory values, the stored EEPROM area (`nvm_load`), the RAM
+`x430_device_init()` loads the factory values, the stored EEPROM area (`nvm_read`), the RAM
 area and applies the Startup Configuration — which may already call the write hook to
 switch the torque on. Initialize a device before attaching it, never while a bus serves
 it. A dual-axis 2XL430/2XC430 is two devices (factory IDs 1 and 2).
@@ -58,7 +58,7 @@ it. A dual-axis 2XL430/2XC430 is two devices (factory IDs 1 and 2).
 | `write` | For every register a WRITE, SYNC_WRITE, BULK_WRITE or ACTION touches, after all of them passed the checks, before the value is stored | Applies goals, limits and modes to the motor; returns `DXL2_ERR_NONE` or a `DXL2_ERR_*` code to refuse |
 | `read` | Before data is read, once per run of contiguous real addresses | May refresh the live registers it covers |
 | `event` | REBOOT, FACTORY_RESET, CLEAR, Bus Watchdog, Baud Rate, shutdown, backup restored | Resets or stops the motor, switches the UART |
-| `nvm_load`, `nvm_store` | Initialization, EEPROM writes, FACTORY_RESET, BACKUP | Reads or writes an opaque block |
+| `nvm_read`, `nvm_write` | Initialization, REBOOT, EEPROM writes, FACTORY_RESET, BACKUP | Reads or writes part of an opaque block at an offset |
 
 Every member may be NULL. A write hook for a stepper joint:
 
@@ -184,5 +184,5 @@ void sim_tick_1ms(void)
 | ROS 2 refuses the device | The Model Number is not in its model files (XW430-T200); use `CONFIG_X430_MODEL_NUMBER_OVERRIDE` |
 | The arm jumps when the torque is switched on | Present Position was not current when the host wrote Torque Enable |
 | EEPROM writes answer Access Error | The torque is on (as on a real X430), or the packet used the Secondary ID |
-| The host sees the old values after a power cycle | No `nvm_store` hook, or `nvm_load` returns the block with another size |
+| The host sees the old values after a power cycle | No `nvm_write` hook, `nvm_write` does not keep the parts at their offsets, or `nvm_read` fails |
 | Deadlock in a hook | The hook called a bus function, or the lock is not recursive |

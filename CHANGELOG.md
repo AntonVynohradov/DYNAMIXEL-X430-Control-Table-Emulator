@@ -4,8 +4,6 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
-
 ## [1.0.0] - 2026-11-14
 
 First release: device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0. The
@@ -25,9 +23,16 @@ public API (x430.h and inc/) is stable within major version 1.
   Address/Data, hardware error shutdown and alert bit, Startup Configuration, Drive Mode
   "torque on by goal update", Goal Position := Present Position on torque on, factory
   reset, reboot, multi-turn clear and Control Table backup.
-- Application hooks per device (write, read, event, nvm_load, nvm_store) and an optional
+- Application hooks per device (write, read, event, nvm_read, nvm_write) and an optional
   platform port (lock, millisecond clock, delay). Persistent blocks carry a header (model,
-  format, slot, size) and a CRC-16; a foreign or damaged block is ignored.
+  format, slot, size) and a CRC-16; a foreign or damaged block is ignored. The device reads
+  and writes them in parts at an offset and keeps no copy of a block in RAM.
+- Memory layout for small MCUs: a device keeps a compact image of its Control Table
+  (316 of 662 bytes: the long reserved runs are left out); the bus builds every status
+  packet in one buffer and stuffs it in place (no packet buffer on the stack); the model
+  table has no address map and generates the 56 Indirect Address registers from the
+  indirect blocks. A status whose byte-stuffed form exceeds DXL2_MAX_PACKET_SIZE is
+  answered with a Data Length Error.
 - All 17 X430 models (XM430-W350/W210, XH430-W350/W210/V350/V210, XD430-T350/T210,
   XW430-T333/T200, XL430-W250, 2XL430-W250, XC430-W150/W240/T150BB/T240BB, 2XC430-W250):
   Control Tables generated from models/*.yaml and checked against the ROBOTIS e-Manual
@@ -53,11 +58,11 @@ public API (x430.h and inc/) is stable within major version 1.
 
 ### Quality
 
-- Cortex-M4 (arm-none-eabi-gcc 13.2.1, -Os, XM430-W350, 768-byte packets): 1,400 B RAM
-  per device, 3,128 B per bus (1,080 B with 256-byte packets), 32 B per simulator;
-  11,185 B flash with the model table (+850 B DXL2-C); .data and .bss empty; worst-case
-  stack 1,796 B (x430_bus_receive(); 772 B with 256-byte packets).
-- 125 GoogleTest cases with 100 % line and branch coverage of src/, and 94 cases with
+- Cortex-M4 (arm-none-eabi-gcc 13.2.1, -Os, XM430-W350, 768-byte packets): 384 B RAM
+  per device, 2,368 B per bus (832 B with 256-byte packets), 32 B per simulator;
+  9,921 B flash with the model table (+850 B DXL2-C); .data and .bss empty; worst-case
+  stack 424 B (x430_bus_receive(), with any packet size).
+- 131 GoogleTest cases with 100 % line and branch coverage of src/, and 100 cases with
   100 % without the optional features; unit tests for all 17 models; model data against
   the e-Manual; 52 checks end to end with the official ROBOTIS DynamixelSDK; the
   simulator's trapezoidal move within 0.7 % of the closed form.

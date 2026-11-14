@@ -35,6 +35,7 @@
  * =============================================================================*/
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 #include "x430.h"
@@ -66,10 +67,7 @@ struct x430_bus_ctx
     uint32_t last_rx_ms;                           /**< Time of the last instruction packet. */
     uint8_t device_count;                          /**< Entries in devices. */
     bool write_failed;                             /**< The writer failed since the last call. */
-    uint8_t data[DXL2_MAX_PARAMETER_SIZE];         /**< Status data scratch buffer. */
-#if X430_FEATURE_FAST_READ
-    uint8_t raw[DXL2_MAX_PACKET_SIZE]; /**< Fast read response packet. */
-#endif
+    uint8_t tx[DXL2_MAX_PACKET_SIZE];              /**< Status packet, built and framed in place. */
 };
 
 /** @brief State behind the opaque ::x430_device. Its layout may change in any release. */
@@ -81,9 +79,8 @@ struct x430_device_ctx
     uint16_t reg_address;                  /**< REG_WRITE address. */
     uint16_t reg_length;                   /**< REG_WRITE length, 0 = none. */
     bool baud_changed;                     /**< Deferred ::X430_EVENT_BAUD_RATE. */
-    uint8_t table[X430_TABLE_SIZE];        /**< Control Table image, little endian. */
+    uint8_t table[X430_IMAGE_SIZE];        /**< Compact Control Table image, little endian. */
     uint8_t reg_data[X430_REG_WRITE_SIZE]; /**< REG_WRITE data. */
-    uint8_t nvm[X430_NVM_BUFFER_SIZE];     /**< Persistent block buffer. */
 };
 
 /** @brief State behind the opaque ::x430_sim. Its layout may change in any release. */
@@ -156,6 +153,20 @@ bool x430_bus_id_taken(const struct x430_bus* bus, const struct x430_device* exc
 /** @brief Milliseconds from the port of @p bus; 0 without bus or clock. */
 uint32_t x430_bus_millis(const struct x430_bus* bus);
 
+/**
+ * @brief  Completes a status packet in place (no second buffer): header, @p id, the
+ *         byte stuffing of instruction, error and data, the length field and the CRC.
+ *         The result is byte for byte the packet of dxl2_encode().
+ *         A status whose stuffed form does not fit @p capacity becomes a Data Length
+ *         Error without data (the alert bit is kept).
+ * @param  tx        Packet buffer: error byte at offset 8, @p count data bytes from 9.
+ * @param  capacity  Size of @p tx, at least 9 + @p count and at least 11 bytes.
+ * @param  id        ID of the answering device.
+ * @param  count     Status data bytes.
+ * @return Packet length (at least 11).
+ */
+size_t x430_frame_status(uint8_t* tx, size_t capacity, uint8_t id, uint16_t count);
+
 /* ==============================================================================
  * INTERNAL FUNCTIONS: x430_device.c (initialized devices only, no checks)
  * =============================================================================*/
@@ -166,7 +177,7 @@ int32_t x430_device_value(const struct x430_device* device, uint16_t address);
 /** @brief Store @p value into the register that starts at @p address (none: no effect). */
 void x430_device_store(struct x430_device* device, uint16_t address, int32_t value);
 
-/** @brief One byte of the Control Table image. */
+/** @brief Control Table byte @p address, below ::X430_IMAGE_DIRECT (stored at its own index). */
 uint8_t x430_device_byte(const struct x430_device* device, uint16_t address);
 
 /** @brief Status error alert: DXL2_ERR_ALERT_BIT when Hardware Error Status is not 0. */

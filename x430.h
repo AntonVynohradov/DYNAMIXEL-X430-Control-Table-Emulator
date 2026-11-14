@@ -195,7 +195,7 @@ int x430_bus_find(const struct x430_bus* bus, uint8_t id, struct x430_device** d
  * =============================================================================*/
 
 /**
- * @brief  Initialize a device: factory values, stored EEPROM area (nvm_load), the RAM
+ * @brief  Initialize a device: factory values, stored EEPROM area (nvm_read), the RAM
  *         area and the Startup Configuration (which may call the write hook).
  *         Initialize a device before x430_bus_attach(), never while a bus serves it:
  *         the content of the instance before the call is not trusted (it may be the

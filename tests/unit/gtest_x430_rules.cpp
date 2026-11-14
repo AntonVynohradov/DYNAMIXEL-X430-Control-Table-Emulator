@@ -276,6 +276,67 @@ TEST(X430Hooks, WriteOfLengthZero)
 
 /* ------------------------------------------------------- persistent blocks */
 
+TEST_F(X430Test, PartlyReadableEepromBlocks)
+{
+    EXPECT_EQ(write8(1, X430_ADDR_RETURN_DELAY_TIME, 7), 0);
+    const std::vector<uint8_t> good = env.nvm[X430_NVM_EEPROM];
+    const struct x430_device_config config = {9U, 0U, 0U, &test_hooks, &env};
+    struct x430_device device;
+
+    /* The CRC cannot be read: no block */
+    env.nvm[X430_NVM_EEPROM].resize(good.size() - 1U);
+    ASSERT_EQ(x430_device_init(&device, &config), X430_OK);
+    EXPECT_EQ(reg(&device, X430_ADDR_RETURN_DELAY_TIME), 250);
+
+    /* Checked in 6 reads (header, 4 payload chunks, CRC), then one read per register in
+       address order: ID (7), Baud Rate (8), Return Delay Time (9). A register whose read
+       fails keeps its factory value; the others are loaded. */
+    env.nvm[X430_NVM_EEPROM] = good;
+    env.nvm_reads = 0;
+    env.nvm_read_fail_call = 9;
+    ASSERT_EQ(x430_device_init(&device, &config), X430_OK);
+    EXPECT_EQ(reg(&device, X430_ADDR_RETURN_DELAY_TIME), 250);
+    env.nvm_reads = 0;
+    env.nvm_read_fail_call = 8;
+    ASSERT_EQ(x430_device_init(&device, &config), X430_OK);
+    EXPECT_EQ(reg(&device, X430_ADDR_RETURN_DELAY_TIME), 7);
+}
+
+TEST_F(X430Test, InterruptedEepromStoreLeavesNoValidBlock)
+{
+    EXPECT_EQ(write8(1, X430_ADDR_RETURN_DELAY_TIME, 7), 0);
+    env.nvm_writes = 0;
+    env.nvm_write_fail_call = 2; /* the header is written, the payload fails */
+    EXPECT_EQ(write8(1, X430_ADDR_RETURN_DELAY_TIME, 8), DXL2_ERR_RESULT_FAIL);
+    struct x430_device device;
+    const struct x430_device_config config = {9U, 0U, 0U, &test_hooks, &env};
+    ASSERT_EQ(x430_device_init(&device, &config), X430_OK);
+    EXPECT_EQ(reg(&device, X430_ADDR_RETURN_DELAY_TIME), 250);
+
+    env.nvm_writes = 0;
+    env.nvm_write_fail_call = 3; /* the CRC fails */
+    EXPECT_EQ(write8(1, X430_ADDR_RETURN_DELAY_TIME, 9), DXL2_ERR_RESULT_FAIL);
+    ASSERT_EQ(x430_device_init(&device, &config), X430_OK);
+    EXPECT_EQ(reg(&device, X430_ADDR_RETURN_DELAY_TIME), 250);
+}
+
+TEST_F(X430Test, EepromBlockKeepsItsFormat)
+{
+    /* Header "X430", model number, format 1, slot, payload size; CRC-16 (0x8005) of all */
+    EXPECT_EQ(write8(1, X430_ADDR_RETURN_DELAY_TIME, 7), 0);
+    const std::vector<uint8_t>& block = env.nvm[X430_NVM_EEPROM];
+    ASSERT_EQ(block.size(), X430_NVM_EEPROM_SIZE);
+    EXPECT_EQ(std::vector<uint8_t>(block.begin(), block.begin() + 4),
+              (std::vector<uint8_t>{'X', '4', '3', '0'}));
+    EXPECT_EQ(block[4] | (block[5] << 8), x430_model_active.model_number);
+    EXPECT_EQ(block[6], 1);
+    EXPECT_EQ(block[7], X430_NVM_EEPROM);
+    EXPECT_EQ(block[8] | (block[9] << 8), X430_RAM_START);
+    EXPECT_EQ(block[X430_NVM_HEADER_SIZE + X430_ADDR_RETURN_DELAY_TIME], 7);
+    const size_t crc_at = X430_NVM_EEPROM_SIZE - 2U;
+    EXPECT_EQ(block[crc_at] | (block[crc_at + 1U] << 8), dxl2_crc16(block.data(), crc_at));
+}
+
 TEST_F(X430Test, ForeignOrDamagedEepromBlocksAreIgnored)
 {
     EXPECT_EQ(write8(1, X430_ADDR_RETURN_DELAY_TIME, 7), 0);

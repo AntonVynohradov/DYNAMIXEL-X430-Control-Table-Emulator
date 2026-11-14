@@ -65,7 +65,7 @@ for packet in 256 768; do
 done
 MIN="-DX430_FEATURE_BULK=0 -DX430_FEATURE_FAST_READ=0 -DX430_FEATURE_BACKUP=0 -DX430_FEATURE_SIMULATOR=0"
 echo "- Cortex-M4, DXL2_MAX_PACKET_SIZE 768, no optional feature: $(sizes $ARM -- $PACKET $MIN)"
-echo "- Cortex-M4, DXL2_MAX_PACKET_SIZE 256, no optional feature: $(sizes $ARM -- $MIN)"
+echo "- Cortex-M4, DXL2_MAX_PACKET_SIZE 256, no optional feature: $(sizes $ARM -- -DDXL2_MAX_PACKET_SIZE=256U $MIN)"
 echo
 
 flash() { # <opt> <defines...>
@@ -97,9 +97,9 @@ echo
 
 # Worst case of the public functions of x430.h. DXL2-C calls the packet handler of the
 # bus through a function pointer: that edge (dxl2_link_receive -> x430_handler) is
-# added, so x430_bus_receive() includes the whole instruction handling, and so is the
-# bus writer (dxl2_link_send -> x430_writer). The hooks
-# and the port functions of the application are not included.
+# added, so x430_bus_receive() includes the whole instruction handling. The bus frames
+# and writes its status packets itself (no DXL2-C send function). The hooks, the port
+# functions and the byte writer of the application are not included.
 stack_table() {
     PYTHONPATH="$ROOT/tools/docs" python3 - "$OUT" "$ROOT/x430.h" <<'PY'
 import re
@@ -110,7 +110,6 @@ import stack_usage as su
 stack, calls, _ = su.load(sys.argv[1])
 names = {su.short(n): n for n in stack}
 calls.setdefault(names["dxl2_link_receive"], set()).add(names["x430_handler"])
-calls.setdefault(names["dxl2_link_send"], set()).add(names["x430_writer"])
 public = re.findall(r"^int (x430_\w+)\(", open(sys.argv[2], encoding="utf-8").read(), re.M)
 print("| Function | Worst case (bytes) | Deepest chain |")
 print("| --- | ---: | --- |")

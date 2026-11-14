@@ -21,7 +21,7 @@ The X430 emulator does not touch hardware. An integration has four parts:
 | `x430_bus_poll()` | Every 5–20 ms (Bus Watchdog unit 20 ms) |
 | Live register updates | At the rate of the control loop, between `x430_bus_lock()` and `x430_bus_unlock()` |
 | Interrupts | Never call a library function from an interrupt handler: the UART interrupt only stores bytes |
-| Stack of the bus context | 1,796 B (768-byte packets, the default) or 772 B (256-byte packets) on Cortex-M4 `-Os`, plus the hooks ([Configuration](configuration.md#stack-usage)) |
+| Stack of the bus context | 424 B on Cortex-M4 `-Os` (with any packet size), plus the hooks ([Configuration](configuration.md#stack-usage)) |
 
 ## Bare metal
 
@@ -129,31 +129,51 @@ static uint8_t on_event(struct x430_device* device, enum x430_event event, void*
 
 ## Persistent storage
 
-The EEPROM area (76-byte block) and the backup (674-byte block) are opaque byte blocks with
-a header and a CRC ([format](theory.md#persistent-blocks)); store them where your flash
-allows:
+The EEPROM area (76-byte block) and the backup (328-byte block) are opaque byte blocks with
+a header and a CRC ([format](theory.md#persistent-blocks)). The device keeps no copy of
+them: it reads and writes them in parts at an offset, so the hooks map directly onto a
+memory-mapped flash page or an I²C EEPROM:
 
 ```c
-static int nvm_load(struct x430_device* device, enum x430_nvm_slot slot, uint8_t* data,
-                    uint16_t size, void* user_data)
+static int nvm_read(struct x430_device* device, enum x430_nvm_slot slot, uint16_t offset,
+                    uint8_t* data, uint16_t length, void* user_data)
 {
     (void)device;
     (void)user_data;
-    return flash_read((uint32_t)slot, data, size); /* 0, or negative without data */
+    return flash_read((uint32_t)slot, offset, data, length); /* 0, or negative without data */
 }
 
-static int nvm_store(struct x430_device* device, enum x430_nvm_slot slot, const uint8_t* data,
-                     uint16_t size, void* user_data)
+static int nvm_write(struct x430_device* device, enum x430_nvm_slot slot, uint16_t offset,
+                     const uint8_t* data, uint16_t length, void* user_data)
 {
     (void)device;
     (void)user_data;
-    return flash_write((uint32_t)slot, data, size); /* 0, or negative: Result Fail */
+    if (offset == 0U)
+    {
+        flash_erase((uint32_t)slot); /* a new block starts at offset 0 */
+    }
+    return flash_write((uint32_t)slot, offset, data, length); /* 0, or negative: Result Fail */
 }
 ```
 
-`nvm_store` is called from the bus context after the change. On an MCU with one flash bank
-an erase stalls the CPU: refuse the store (return a negative value, the host gets Result
-Fail) while the power stage runs, or copy the block and write it from another thread.
+A block is read as header, payload in chunks of 16 bytes and CRC (checked before anything
+is taken from it), then once per register the device takes. It is written as three parts
+with increasing offsets — header, payload, CRC — so the last part ends at
+`X430_NVM_EEPROM_SIZE` or `X430_NVM_BACKUP_SIZE`; a block cut short by a reset fails its CRC
+and the device starts with factory values. To keep the previous block until the new one
+is complete, write into a second page and switch pages when the last part arrives.
+
+A key-value store that keeps whole records only (Zephyr NVS or settings, for example)
+needs one buffer of `X430_NVM_BACKUP_SIZE` bytes (`X430_NVM_EEPROM_SIZE` without BACKUP)
+in the application: collect the parts there and store the record when the last part
+arrives; for `nvm_read`, load the record into it at offset 0 and copy from it. All
+devices can share that buffer when they are initialized and served from one context: a
+device finishes one block (it always starts at offset 0) before it or another device
+touches the next.
+
+`nvm_write` is called from the bus context after the change. On an MCU with one flash bank
+an erase stalls the CPU: refuse the write (return a negative value, the host gets Result
+Fail) while the power stage runs, or copy the parts and write them from another thread.
 
 ## Adding the library to a CMake build
 
@@ -241,7 +261,7 @@ cmake --preset "X430[Examples]" && cmake --build "build/X430[Examples]"
    Present Position.
 4. Move in Position mode: Present Position and Moving follow the motor.
 5. Write an EEPROM register (Return Delay Time) with the torque off, power-cycle: the value
-   survives (`nvm_store` / `nvm_load`).
+   survives (`nvm_write` / `nvm_read`).
 6. Set Bus Watchdog to 10 and stop the host: after 200 ms the motor stops and Bus Watchdog
    reads −1.
 7. Raise a hardware error with its Shutdown bit: the torque goes off, statuses carry the

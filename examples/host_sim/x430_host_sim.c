@@ -120,12 +120,14 @@ static void nvm_path(const struct host* host, const struct x430_device* device,
 
 static struct host* g_host = NULL;
 
-static int file_nvm_load(struct x430_device* device, enum x430_nvm_slot slot, uint8_t* data,
-                         uint16_t size, void* user_data)
+/* A block is one file: read at an offset; written in parts from offset 0 ("wb" starts
+   the file, the following parts are appended). */
+static int file_nvm_read(struct x430_device* device, enum x430_nvm_slot slot, uint16_t offset,
+                         uint8_t* data, uint16_t length, void* user_data)
 {
     char path[512];
     FILE* file;
-    size_t got;
+    size_t got = 0U;
 
     (void)user_data;
     nvm_path(g_host, device, slot, path, sizeof(path));
@@ -134,13 +136,16 @@ static int file_nvm_load(struct x430_device* device, enum x430_nvm_slot slot, ui
     {
         return -1;
     }
-    got = fread(data, 1U, size, file);
+    if (fseek(file, (long)offset, SEEK_SET) == 0)
+    {
+        got = fread(data, 1U, length, file);
+    }
     (void)fclose(file);
-    return (got == size) ? 0 : -1;
+    return (got == length) ? 0 : -1;
 }
 
-static int file_nvm_store(struct x430_device* device, enum x430_nvm_slot slot, const uint8_t* data,
-                          uint16_t size, void* user_data)
+static int file_nvm_write(struct x430_device* device, enum x430_nvm_slot slot, uint16_t offset,
+                          const uint8_t* data, uint16_t length, void* user_data)
 {
     char path[512];
     FILE* file;
@@ -148,14 +153,14 @@ static int file_nvm_store(struct x430_device* device, enum x430_nvm_slot slot, c
 
     (void)user_data;
     nvm_path(g_host, device, slot, path, sizeof(path));
-    file = fopen(path, "wb");
+    file = fopen(path, (offset == 0U) ? "wb" : "ab");
     if (file == NULL)
     {
         return -1;
     }
-    put = fwrite(data, 1U, size, file);
+    put = fwrite(data, 1U, length, file);
     (void)fclose(file);
-    return (put == size) ? 0 : -1;
+    return (put == length) ? 0 : -1;
 }
 
 static uint8_t host_event(struct x430_device* device, enum x430_event event, void* user_data)
@@ -342,8 +347,8 @@ int main(int argc, char** argv)
     host.hooks.event = host_event;
     if (host.nvm_dir != NULL)
     {
-        host.hooks.nvm_load = file_nvm_load;
-        host.hooks.nvm_store = file_nvm_store;
+        host.hooks.nvm_read = file_nvm_read;
+        host.hooks.nvm_write = file_nvm_write;
     }
 
     {

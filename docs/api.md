@@ -56,7 +56,7 @@ locked), `X430_WRITE_VALIDATE_ONLY` (0x02, check only, store nothing, call no ho
 | `X430_EVENT_BACKUP_RESTORED` | BACKUP restore copied the backup into the table | Ignored |
 
 **Persistent slots** (`enum x430_nvm_slot`): `X430_NVM_EEPROM` (0, `X430_NVM_EEPROM_SIZE`
-= 76 bytes), `X430_NVM_BACKUP` (1, `X430_NVM_BACKUP_SIZE` = 674 bytes);
+= 76 bytes), `X430_NVM_BACKUP` (1, `X430_NVM_BACKUP_SIZE` = 328 bytes);
 `X430_NVM_HEADER_SIZE` = 10.
 
 **Control Table** constants: `X430_ADDR_*` (addresses of the registers used by the library
@@ -73,7 +73,7 @@ and by applications, for example `X430_ADDR_GOAL_POSITION` = 116, `X430_RAM_STAR
 | Type | Members | Meaning |
 | --- | --- | --- |
 | `struct x430_port` | `context`, `lock`, `unlock`, `millis`, `delay_us` | Platform services ([Configuration](configuration.md#struct-x430_port)) |
-| `struct x430_hooks` | `write`, `read`, `event`, `nvm_load`, `nvm_store` | Application hooks of a device ([Using the Library](usage.md#reacting-to-the-host-hooks)) |
+| `struct x430_hooks` | `write`, `read`, `event`, `nvm_read`, `nvm_write` | Application hooks of a device ([Using the Library](usage.md#reacting-to-the-host-hooks)) |
 | `struct x430_bus_config` | `write`, `write_context`, `port` | Bus configuration |
 | `struct x430_device_config` | `id`, `firmware_version`, `model_information`, `hooks`, `user_data` | Device configuration |
 | `struct x430_sim_config` | `input_voltage`, `temperature` | Simulator configuration |
@@ -88,12 +88,12 @@ Callback types:
 | `x430_write_hook` | `uint8_t (*)(struct x430_device* device, uint16_t address, uint8_t size, int32_t value, void* user_data)` | `DXL2_ERR_NONE` to accept, a `DXL2_ERR_*` code to refuse |
 | `x430_read_hook` | `void (*)(struct x430_device* device, uint16_t address, uint16_t length, void* user_data)` | – |
 | `x430_event_hook` | `uint8_t (*)(struct x430_device* device, enum x430_event event, void* user_data)` | See the events above |
-| `x430_nvm_load_hook` | `int (*)(struct x430_device* device, enum x430_nvm_slot slot, uint8_t* data, uint16_t size, void* user_data)` | 0 when `size` bytes were read, negative without data |
-| `x430_nvm_store_hook` | `int (*)(struct x430_device* device, enum x430_nvm_slot slot, const uint8_t* data, uint16_t size, void* user_data)` | 0, or negative (the host gets Result Fail) |
+| `x430_nvm_read_hook` | `int (*)(struct x430_device* device, enum x430_nvm_slot slot, uint16_t offset, uint8_t* data, uint16_t length, void* user_data)` | 0 when `length` bytes from `offset` were read, negative without data |
+| `x430_nvm_write_hook` | `int (*)(struct x430_device* device, enum x430_nvm_slot slot, uint16_t offset, const uint8_t* data, uint16_t length, void* user_data)` | 0, or negative (the remaining parts are not written, the host gets Result Fail) |
 
 **Instances.** `struct x430_bus`, `struct x430_device` and `struct x430_sim` are opaque
-arrays of `X430_BUS_WORDS`, `X430_DEVICE_WORDS` and `X430_SIM_WORDS` 64-bit words (3,128 B,
-1,400 B and 32 B on Cortex-M4 with the default options). Allocate them, pass their
+arrays of `X430_BUS_WORDS`, `X430_DEVICE_WORDS` and `X430_SIM_WORDS` 64-bit words (2,368 B,
+384 B and 32 B on Cortex-M4 with the default options). Allocate them, pass their
 addresses, never read or write their content.
 
 ## Variables — `x430.h`
@@ -278,7 +278,7 @@ Attached device with the primary ID `id` (lock-free).
 int x430_device_init(struct x430_device* device, const struct x430_device_config* config);
 ```
 
-Initialize a device: factory values, stored EEPROM area (nvm_load), the RAM area and the Startup Configuration (which may call the write hook). Initialize a device before x430_bus_attach(), never while a bus serves it: the content of the instance before the call is not trusted (it may be the garbage of a stack instance), so an attachment cannot be detected.
+Initialize a device: factory values, stored EEPROM area (nvm_read), the RAM area and the Startup Configuration (which may call the write hook). Initialize a device before x430_bus_attach(), never while a bus serves it: the content of the instance before the call is not trusted (it may be the garbage of a stack instance), so an attachment cannot be detected.
 
 | Parameter | Description |
 | --- | --- |

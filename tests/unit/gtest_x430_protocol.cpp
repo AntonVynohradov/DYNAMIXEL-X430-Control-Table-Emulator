@@ -7,6 +7,10 @@
 
 #include "x430_test_support.h"
 
+extern "C" {
+#include "x430_internal.h"
+}
+
 TEST_F(X430Test, PingAnswersModelNumberAndFirmware)
 {
     auto status = transact(1, DXL2_INST_PING, {});
@@ -48,6 +52,73 @@ TEST_F(X430Test, ReadReturnsTableBytes)
     EXPECT_EQ(status.data[0] | (status.data[1] << 8), X430_MODEL_NUMBER);
     EXPECT_EQ(get_i32(status.data, 2), 0x12345678); /* Model Information from the config */
     EXPECT_EQ(status.data[7], 1);                   /* ID */
+}
+
+TEST_F(X430Test, StatusDataIsByteStuffed)
+{
+    /* Goal Position bytes FF FF FD 00: the status needs one stuffing byte */
+    ASSERT_EQ(x430_device_set(&dev[0], X430_ADDR_GOAL_POSITION, 0x00FDFFFF), X430_OK);
+    auto status = read(1, X430_ADDR_GOAL_POSITION, 4);
+    EXPECT_EQ(status.error, 0);
+    EXPECT_EQ(status.data, (std::vector<uint8_t>{0xFF, 0xFF, 0xFD, 0x00}));
+}
+
+/* The in-place framing of the bus against dxl2_encode(), with data full of FF FF FD runs. */
+TEST(X430Frame, MatchesDxl2EncodeByteForByte)
+{
+    const uint8_t pool[] = {0xFF, 0xFD, 0x00, 0xFF, 0xFF, 0xFD, 0x12};
+    uint32_t seed = 12345U;
+
+    for (int round = 0; round < 400; round++)
+    {
+        const uint16_t count = (uint16_t)(round % 80);
+        uint8_t params[128];
+        uint8_t tx[256] = {0};
+        uint8_t expected[256];
+        size_t expected_length = 0;
+
+        params[0] = (uint8_t)((round % 3 == 0) ? 0xFF : 0x80); /* error byte, alert bit */
+        for (uint16_t i = 0; i < count; i++)
+        {
+            seed = seed * 1103515245U + 12345U;
+            params[1 + i] = pool[(seed >> 16) % sizeof(pool)];
+        }
+        tx[8] = params[0];
+        std::memcpy(&tx[9], &params[1], count);
+        ASSERT_EQ(dxl2_encode(7, DXL2_INST_STATUS, params, (uint16_t)(count + 1U), expected,
+                              sizeof(expected), &expected_length),
+                  0);
+        ASSERT_EQ(x430_frame_status(tx, sizeof(tx), 7, count), expected_length);
+        EXPECT_EQ(std::vector<uint8_t>(tx, tx + expected_length),
+                  std::vector<uint8_t>(expected, expected + expected_length))
+            << "round " << round;
+    }
+}
+
+TEST(X430Frame, StuffedPacketThatDoesNotFitBecomesDataLengthError)
+{
+    uint8_t tx[16] = {0};
+    const uint8_t error_only[] = {(uint8_t)(DXL2_ERR_DATA_LENGTH | DXL2_ERR_ALERT_BIT)};
+    uint8_t expected[16];
+    size_t expected_length = 0;
+
+    /* Data FF FF FD: 12 bytes + CRC unstuffed, one stuffing byte more */
+    tx[8] = DXL2_ERR_ALERT_BIT;
+    tx[9] = 0xFF;
+    tx[10] = 0xFF;
+    tx[11] = 0xFD;
+    ASSERT_EQ(x430_frame_status(tx, 14U, 1, 3), 11U);
+    ASSERT_EQ(dxl2_encode(1, DXL2_INST_STATUS, error_only, 1, expected, sizeof(expected),
+                          &expected_length),
+              0);
+    EXPECT_EQ(std::vector<uint8_t>(tx, tx + 11), std::vector<uint8_t>(expected, expected + 11));
+
+    tx[8] = 0;
+    tx[9] = 0xFF;
+    tx[10] = 0xFF;
+    tx[11] = 0xFD;
+    EXPECT_EQ(x430_frame_status(tx, 15U, 1, 3), 15U); /* fits exactly */
+    EXPECT_EQ(tx[12], 0xFD);
 }
 
 TEST_F(X430Test, ReadWholeTableInChunks)

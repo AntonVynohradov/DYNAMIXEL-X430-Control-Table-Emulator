@@ -79,7 +79,7 @@ where the emulator deviates on purpose:
    fails, nothing is stored.
 4. In address order the write hook is called for each register; it may refuse, which stops
    the write at that register. Accepted registers are stored.
-5. If an EEPROM register changed, the EEPROM area is stored through `nvm_store`; a failure
+5. If an EEPROM register changed, the EEPROM area is stored through `nvm_write`; a failure
    is reported as Result Fail.
 6. Drive Mode bit 3: a goal written with the torque off switches the torque on (through the
    write hook). Torque Enable 0 → 1 copies Present Position into Goal Position.
@@ -156,13 +156,19 @@ another model or a damaged flash page is detected:
 | 4 | 2 | Model Number (little endian) |
 | 6 | 1 | Format version (1) |
 | 7 | 1 | Slot: 0 EEPROM area, 1 backup |
-| 8 | 2 | Payload size: 64 (EEPROM area) or 662 (whole table) |
-| 10 | n | Payload: the table bytes 0..n−1 |
-| 10 + n | 2 | CRC-16 of DYNAMIXEL Protocol 2.0 over bytes 0..9+n |
+| 8 | 2 | Payload size: 64 (EEPROM area) or 316 (the compact image of the device) |
+| 10 | n | Payload: the first n bytes of the compact image (the table bytes 0..63 for the EEPROM area) |
+| 10 + n | 2 | CRC-16 of DYNAMIXEL Protocol 2.0 (polynomial 0x8005) over bytes 0..9+n |
 
 A block with any field that does not match is ignored: the device keeps its factory
-values. The EEPROM block is 76 bytes (`X430_NVM_EEPROM_SIZE`), the backup 674 bytes
+values. The EEPROM block is 76 bytes (`X430_NVM_EEPROM_SIZE`), the backup 328 bytes
 (`X430_NVM_BACKUP_SIZE`).
+
+The **compact image** is the Control Table a device keeps in RAM without its long
+reserved runs: for every X430 model the addresses 0–147, 168–251 (Indirect Address 1–28
+and Indirect Data 1–28) and 578–661 (Indirect Address 29–56 and Indirect Data 29–56),
+316 of 662 bytes. The generator writes these segments into the model table; the
+reserved bytes left out read 0 like every other reserved address.
 
 ## The simulator
 

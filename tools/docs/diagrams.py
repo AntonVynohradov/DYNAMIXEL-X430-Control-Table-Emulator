@@ -209,7 +209,7 @@ def write_pipeline() -> None:
         ("2  Indirect", ["Indirect Data resolved", "to the real registers"], LIGHT, GREY),
         ("3  Check all", ["access, EEPROM lock,", "range, limits, watchdog"], SOFT_TEAL, TEAL),
         ("4  Hook + store", ["write hook per register", "in address order"], SOFT_BLUE, BLUE),
-        ("5  Persist", ["EEPROM changed:", "nvm_store()"], SOFT_ORANGE, ORANGE),
+        ("5  Persist", ["EEPROM changed:", "nvm_write()"], SOFT_ORANGE, ORANGE),
         ("6  Follow-ups", ["Torque On by Goal;", "Goal := Present"], SOFT_GREEN, GREEN),
     ]
     w, gap = 140, 22

@@ -46,7 +46,11 @@ struct TestEnv
     std::vector<std::pair<uint16_t, uint16_t>> reads; /* read hook calls */
     std::vector<x430_event> events;                   /* event hook calls */
     std::map<int, std::vector<uint8_t>> nvm;          /* stored blocks per slot */
-    int nvm_stores = 0;
+    int nvm_stores = 0;                               /* blocks started (nvm_write at offset 0) */
+    int nvm_reads = 0;                                /* nvm_read calls */
+    int nvm_writes = 0;                               /* nvm_write calls */
+    int nvm_read_fail_call = 0;       /* nvm_read call number (1, 2, ...) that fails, 0 = none */
+    int nvm_write_fail_call = 0;      /* nvm_write call number (1, 2, ...) that fails, 0 = none */
     uint8_t refuse_address_error = 0; /* write hook refuses this address... */
     uint16_t refuse_address = 0xFFFF; /* ...with this error */
     uint8_t event_result = DXL2_ERR_NONE;

@@ -98,7 +98,7 @@ enum x430_event
     X430_EVENT_BACKUP_RESTORED
 };
 
-/** @brief Persistent storage slots (x430_hooks::nvm_load, x430_hooks::nvm_store). */
+/** @brief Persistent storage slots (x430_hooks::nvm_read, x430_hooks::nvm_write). */
 enum x430_nvm_slot
 {
     X430_NVM_EEPROM = 0, /**< EEPROM area, ::X430_NVM_EEPROM_SIZE bytes. */

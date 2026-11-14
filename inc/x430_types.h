@@ -146,30 +146,45 @@ typedef uint8_t (*x430_event_hook)(struct x430_device* device, enum x430_event e
                                    void* user_data);
 
 /**
- * @brief  Load a persistent block (x430_hooks::nvm_load).
+ * @brief  Read part of a persistent block (x430_hooks::nvm_read).
+ *
+ * The device reads a block in parts, so that it needs no buffer of its own: first the
+ * whole block in chunks (header, payload and CRC are checked), then the registers it
+ * takes from it. Return the stored bytes; where they live is up to the application.
  * @param  device     Device.
- * @param  slot       Block to load.
- * @param  data       Destination of @p size bytes.
- * @param  size       ::X430_NVM_EEPROM_SIZE or ::X430_NVM_BACKUP_SIZE.
+ * @param  slot       Block to read.
+ * @param  offset     First byte, from the start of the block.
+ * @param  data       Destination of @p length bytes.
+ * @param  length     Bytes; offset + length is at most ::X430_NVM_EEPROM_SIZE or
+ *                    ::X430_NVM_BACKUP_SIZE.
  * @param  user_data  x430_device_config::user_data.
- * @retval 0   @p size bytes were read.
- * @retval <0  No data (the factory values stay).
+ * @retval 0   @p length bytes were read.
+ * @retval <0  No data: the device treats the block as missing (factory values stay).
  */
-typedef int (*x430_nvm_load_hook)(struct x430_device* device, enum x430_nvm_slot slot,
-                                  uint8_t* data, uint16_t size, void* user_data);
+typedef int (*x430_nvm_read_hook)(struct x430_device* device, enum x430_nvm_slot slot,
+                                  uint16_t offset, uint8_t* data, uint16_t length, void* user_data);
 
 /**
- * @brief  Store a persistent block (x430_hooks::nvm_store), after the change; may be slow.
+ * @brief  Write part of a persistent block (x430_hooks::nvm_write), after the change; may be
+ *         slow.
+ *
+ * A block is written in parts with increasing offsets, from 0 to its end (::X430_NVM_EEPROM_SIZE
+ * or ::X430_NVM_BACKUP_SIZE): header, payload (straight from the Control Table image of the
+ * device) and CRC. Start a new block at offset 0 (for example erase the flash page) and
+ * commit it when offset + length reaches the size. A block that is not written to its end
+ * fails the CRC check when it is read.
  * @param  device     Device.
- * @param  slot       Block to store.
- * @param  data       @p size bytes: header, payload and CRC, opaque to the application.
- * @param  size       ::X430_NVM_EEPROM_SIZE or ::X430_NVM_BACKUP_SIZE.
+ * @param  slot       Block to write.
+ * @param  offset     First byte, from the start of the block.
+ * @param  data       @p length bytes, opaque to the application.
+ * @param  length     Bytes.
  * @param  user_data  x430_device_config::user_data.
- * @retval 0   Stored.
- * @retval <0  Failure, reported to the host as Result Fail.
+ * @retval 0   Written.
+ * @retval <0  Failure: the remaining parts are not written, the host gets Result Fail.
  */
-typedef int (*x430_nvm_store_hook)(struct x430_device* device, enum x430_nvm_slot slot,
-                                   const uint8_t* data, uint16_t size, void* user_data);
+typedef int (*x430_nvm_write_hook)(struct x430_device* device, enum x430_nvm_slot slot,
+                                   uint16_t offset, const uint8_t* data, uint16_t length,
+                                   void* user_data);
 
 /**
  * @brief Application hooks of a device. Every member may be NULL.
@@ -183,8 +198,8 @@ struct x430_hooks
     x430_write_hook write;         /**< Every accepted register write. */
     x430_read_hook read;           /**< Before data is read. */
     x430_event_hook event;         /**< Reboot, factory reset, watchdog, ... */
-    x430_nvm_load_hook nvm_load;   /**< Load the EEPROM area or the backup. */
-    x430_nvm_store_hook nvm_store; /**< Store the EEPROM area or the backup. */
+    x430_nvm_read_hook nvm_read;   /**< Read part of the EEPROM block or of the backup. */
+    x430_nvm_write_hook nvm_write; /**< Write part of the EEPROM block or of the backup. */
 };
 
 /* ==============================================================================
@@ -225,17 +240,10 @@ struct x430_sim_config
  * INSTANCES
  * =============================================================================*/
 
-/** @brief Size of the persistent EEPROM block (nvm_load / nvm_store). */
+/** @brief Size of the persistent EEPROM block (nvm_read / nvm_write). */
 #define X430_NVM_EEPROM_SIZE (X430_NVM_HEADER_SIZE + X430_RAM_START + 2U)
-/** @brief Size of the persistent Control Table backup block. */
-#define X430_NVM_BACKUP_SIZE (X430_NVM_HEADER_SIZE + X430_TABLE_SIZE + 2U)
-
-/** @brief Bytes of the persistent block buffer inside each device. */
-#if X430_FEATURE_BACKUP
-#define X430_NVM_BUFFER_SIZE X430_NVM_BACKUP_SIZE
-#else
-#define X430_NVM_BUFFER_SIZE X430_NVM_EEPROM_SIZE
-#endif
+/** @brief Size of the persistent Control Table backup block (the compact image). */
+#define X430_NVM_BACKUP_SIZE (X430_NVM_HEADER_SIZE + X430_IMAGE_SIZE + 2U)
 
 /** @brief Size of a pointer and of size_t: 8 on 64-bit hosts, 4 on Cortex-M. */
 #if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
@@ -259,23 +267,14 @@ struct x430_sim_config
                       X430_POINTER_BYTES + X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE - 6U, 4U) + 8U, \
                   X430_POINTER_BYTES)
 
-/** @brief Bytes of the Fast Sync/Bulk Read response buffer of a bus. */
-#if X430_FEATURE_FAST_READ
-#define X430_FAST_READ_BYTES DXL2_MAX_PACKET_SIZE
-#else
-#define X430_FAST_READ_BYTES 0U
-#endif
-
 /** @brief Private state of a bus in bytes; x430_bus.c checks it at compile time. */
-#define X430_BUS_BYTES                                                           \
-    (X430_DXL2_LINK_BYTES + (3U * X430_POINTER_BYTES) +                          \
-     (X430_MAX_DEVICES_U * X430_POINTER_BYTES) + 10U + DXL2_MAX_PARAMETER_SIZE + \
-     X430_FAST_READ_BYTES)
+#define X430_BUS_BYTES                                  \
+    (X430_DXL2_LINK_BYTES + (3U * X430_POINTER_BYTES) + \
+     (X430_MAX_DEVICES_U * X430_POINTER_BYTES) + 10U + DXL2_MAX_PACKET_SIZE)
 
 /** @brief Private state of a device in bytes; x430_device.c checks it at compile time. */
-#define X430_DEVICE_BYTES                                                        \
-    ((3U * X430_POINTER_BYTES) + 17U + X430_TABLE_SIZE + X430_REG_WRITE_SIZE_U + \
-     X430_NVM_BUFFER_SIZE)
+#define X430_DEVICE_BYTES \
+    ((3U * X430_POINTER_BYTES) + 17U + X430_IMAGE_SIZE + X430_REG_WRITE_SIZE_U)
 
 /** @brief Private state of a simulator in bytes; x430_sim.c checks it at compile time. */
 #define X430_SIM_BYTES (24U + X430_POINTER_BYTES)

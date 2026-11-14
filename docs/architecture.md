@@ -61,17 +61,19 @@ While a hardware error bit is set, every status packet carries the alert bit (0x
 
 | Object | Owner | Size on Cortex-M4 | Lifetime |
 | --- | --- | --- | --- |
-| `struct x430_bus` | Application (static, stack or pool) | 3,128 B (768-byte packets, the default), 1,080 B (256-byte packets) | From `x430_bus_init()` |
-| `struct x430_device` | Application | 1,400 B (all features), 800 B (no backup) | From `x430_device_init()` |
+| `struct x430_bus` | Application (static, stack or pool) | 2,368 B (768-byte packets, the default), 832 B (256-byte packets) | From `x430_bus_init()` |
+| `struct x430_device` | Application | 384 B (with every feature and without) | From `x430_device_init()` |
 | `struct x430_sim` | Application | 32 B | From `x430_sim_init()` |
 | Configurations | Application; copied by the *_init() functions | – | Only during the call |
 | Hooks (`struct x430_hooks`), port (`struct x430_port`) | Application | – | As long as the device or bus (the library keeps a pointer) |
-| Model table | Library (`const`, flash) | 2,901 B | Static |
+| Model table | Library (`const`, flash) | 921 B | Static |
 
-A device holds its Control Table image (662 bytes), the REG_WRITE data
-(`X430_REG_WRITE_SIZE`) and the buffer of one persistent block (674 bytes with BACKUP,
-76 bytes without). A bus holds the DXL2-C link (two packet-sized buffers), a status data
-buffer and, with Fast reads, one more packet buffer. There is no heap, no global or static
+A device holds the compact image of its Control Table (316 bytes: the 662 addresses
+without their long reserved runs, [theory](theory.md#persistent-blocks)) and the
+REG_WRITE data (`X430_REG_WRITE_SIZE`); it keeps no copy of a persistent block, the hooks
+read and write blocks in parts. A bus holds the DXL2-C link (receive buffer and decoded
+packet) and one packet buffer in which it builds and byte-stuffs every status packet, Fast
+Sync/Bulk Read answers included. There is no heap, no global or static
 mutable variable and no hidden buffer: the sizes are fixed at compile time by
 `X430_BUS_WORDS`, `X430_DEVICE_WORDS` and `X430_SIM_WORDS` (plain arithmetic of the
 configuration macros, which static analysis can evaluate) and checked against the private

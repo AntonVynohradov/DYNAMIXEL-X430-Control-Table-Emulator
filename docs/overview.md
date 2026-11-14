@@ -30,7 +30,7 @@ DYNAMIXEL ecosystem (DynamixelSDK, DYNAMIXEL Wizard 2.0, ROS 2
 | --- | --- |
 | UART, DMA and baud rate drivers | Hardware-specific; the application moves the received bytes in and writes the status packets out in a callback. |
 | Motion and current control | The motor is the application's; the write hook receives each accepted goal, limit and mode. |
-| Flash or EEPROM drivers | The library hands opaque blocks to `nvm_load` / `nvm_store`; where they live is up to the application. |
+| Flash or EEPROM drivers | The library reads and writes opaque blocks in parts through `nvm_read` / `nvm_write`; where they live is up to the application. |
 | Threads, queues, interrupts | The library defines the contexts and takes an optional lock; the application decides where they run. See the [integration guide](integration.md). |
 | Protocol 1.0, other DYNAMIXEL series | Only Protocol 2.0 and the X430 family are emulated. Another family needs its model data. |
 
@@ -49,11 +49,11 @@ DYNAMIXEL ecosystem (DynamixelSDK, DYNAMIXEL Wizard 2.0, ROS 2
 | Language | C11, no warnings with `-Wall -Wextra -Wpedantic -Wconversion` |
 | Dependencies | `<stddef.h>`, `<stdint.h>`, `<stdbool.h>`; DXL2-C 1.0.0 (fetched by CMake) |
 | Memory | No heap, no global or static mutable data (`.data` and `.bss` are empty) |
-| RAM | 1,400 B per device, 3,128 B per bus, 32 B per simulator (Cortex-M4, default options; [details](configuration.md#memory-footprint)) |
-| Flash | 11,185 B with the model table, plus 850 B of DXL2-C (Cortex-M4, `-Os`, all features) |
-| Stack | 1,796 B worst case, `x430_bus_receive()` with 768-byte packets (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
+| RAM | 384 B per device, 2,368 B per bus, 32 B per simulator (Cortex-M4, default options; [details](configuration.md#memory-footprint)) |
+| Flash | 9,921 B with the model table, plus 850 B of DXL2-C (Cortex-M4, `-Os`, all features) |
+| Stack | 424 B worst case, `x430_bus_receive()`, with any packet size (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
 | Coding standard | MISRA C:2012, 0 Cppcheck 2.13 addon violations, [2 deviations](misra.md) |
-| Tests | 100 % line and branch coverage of `src/` in both unit test presets (125 and 94 GoogleTest cases); model data against the e-Manual; 52 checks end to end with the official DynamixelSDK |
+| Tests | 100 % line and branch coverage of `src/` in both unit test presets (131 and 100 GoogleTest cases); model data against the e-Manual; 52 checks end to end with the official DynamixelSDK |
 | Thread safety | One bus context per line, an optional lock for the live register updates; see [Threading](architecture.md#threading-and-reentrancy) |
 | License | [Apache License 2.0](LICENSE.md) |
 
@@ -78,7 +78,7 @@ Control Table
     while the torque is on) and RAM area (64–661).
 
 Hook
-:   An application function the device calls: write, read, event, nvm_load, nvm_store.
+:   An application function the device calls: write, read, event, nvm_read, nvm_write.
 
 Live register
 :   A read-only RAM register the application keeps current: Present Position, Present
