@@ -101,6 +101,16 @@ config X430_MODEL_NUMBER_OVERRIDE
 	  the ROBOTIS documentation. Use it when the host only knows another
 	  number, e.g. 1270 for an XW430-T200 with dynamixel_hardware_interface.
 
+config X430_MODEL_OVERRIDES
+	string "Application overrides of the model (YAML file)"
+	default ""
+	help
+	  Absolute path of a YAML file with an 'overrides:' mapping, as in the
+	  model files: register name -> fields (initial, min, max, ...). It is
+	  applied after models/ when the Control Table is generated, so a product
+	  can change ranges or initial values without editing the model data,
+	  e.g. a Max Voltage Limit above the 16 V of an XM430. Empty = none.
+
 config X430_FIRMWARE_VERSION
 	int "Firmware Version (address 6)"
 	default 52

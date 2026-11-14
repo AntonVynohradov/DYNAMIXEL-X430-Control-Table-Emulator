@@ -46,15 +46,19 @@ option(X430_KCONFIG "Configure the library with Kconfig (Kconfiglib)" ON)
 
 set(X430_MODEL "xm430_w350" CACHE STRING "Emulated model without Kconfig (models/x430/<model>.yaml)")
 set(X430_DXL2_MAX_PACKET_SIZE 256 CACHE STRING "DXL2_MAX_PACKET_SIZE without Kconfig")
+set(X430_MODEL_OVERRIDES "" CACHE FILEPATH
+    "Application overrides of the model (YAML, 'overrides:' as in models/); empty = none")
 
 if(X430_KCONFIG)
     include(x430_kconfig)
     set(X430_SELECTED_MODEL "${CONFIG_X430_MODEL_NAME}")
     set(X430_SELECTED_PACKET_SIZE "${CONFIG_X430_DXL2_MAX_PACKET_SIZE}")
+    set(X430_SELECTED_OVERRIDES "${CONFIG_X430_MODEL_OVERRIDES}")
     list(APPEND X430_COMPILE_DEFINITIONS X430_HAS_AUTOCONF)
 else()
     set(X430_SELECTED_MODEL "${X430_MODEL}")
     set(X430_SELECTED_PACKET_SIZE "${X430_DXL2_MAX_PACKET_SIZE}")
+    set(X430_SELECTED_OVERRIDES "${X430_MODEL_OVERRIDES}")
     set(X430_AUTOCONF_DIR "")
 endif()
 
@@ -66,11 +70,22 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 set(X430_GENERATED_DIR ${CMAKE_BINARY_DIR}/x430/generated)
 
+set(X430_OVERRIDES_ARGS "")
+if(NOT X430_SELECTED_OVERRIDES STREQUAL "")
+    if(NOT EXISTS "${X430_SELECTED_OVERRIDES}")
+        message(FATAL_ERROR "x430: model overrides ${X430_SELECTED_OVERRIDES} not found")
+    endif()
+    set(X430_OVERRIDES_ARGS --overrides ${X430_SELECTED_OVERRIDES})
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${X430_SELECTED_OVERRIDES})
+    message(STATUS "x430: model overrides ${X430_SELECTED_OVERRIDES}")
+endif()
+
 execute_process(
     COMMAND ${Python3_EXECUTABLE} ${X430_ROOT}/tools/x430_gen_model.py
             --models-dir ${X430_ROOT}/models
             --model ${X430_SELECTED_MODEL}
             --out-dir ${X430_GENERATED_DIR}
+            ${X430_OVERRIDES_ARGS}
     RESULT_VARIABLE X430_GENERATE_RESULT
 )
 if(X430_GENERATE_RESULT)

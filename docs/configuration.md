@@ -77,6 +77,7 @@ Without Kconfig every optional feature is on unless you define it to 0.
 |---|---|---|---|
 | `X430_MODEL_*` (choice) | `X430_MODEL_NAME`, `X430_MODEL_IS_<KEY>` | XM430-W350 | Emulated model (one per build) |
 | `X430_MODEL_NUMBER_OVERRIDE` | `X430_MODEL_NUMBER` | 0 = documented | Model Number reported by PING / address 0 |
+| `X430_MODEL_OVERRIDES` | — (CMake `X430_MODEL_OVERRIDES` without Kconfig) | empty | YAML file of application overrides, applied after `models/` when the Control Table is generated (see below) |
 | `X430_FIRMWARE_VERSION` | `X430_FIRMWARE_VERSION` | 52 | Firmware Version (6) when the device config gives 0 |
 | `X430_MAX_DEVICES` | `X430_MAX_DEVICES` | 4 | Devices (IDs) per bus |
 | `X430_REG_WRITE_SIZE` | `X430_REG_WRITE_SIZE` | 32 | REG_WRITE data per device |
@@ -108,3 +109,20 @@ words. Per bus: one DXL2-C link (about 2 × `DXL2_MAX_PACKET_SIZE`), a status bu
 and, with Fast reads, one more packet buffer. One static buffer of
 `X430_NVM_BACKUP_SIZE` (674 bytes) is shared for persistence. A typical Cortex-M
 build of the library takes about 15-25 KiB of flash depending on the features.
+
+## Application overrides of the model
+
+A product built on the emulator may need another range or initial value than the ROBOTIS
+model, for example a supply above the 16 V of an XM430. Instead of editing `models/`, give a
+YAML file with the same `overrides:` mapping as the model files:
+
+```yaml
+overrides:
+  Max Voltage Limit: {max: 300}
+  Min Voltage Limit: {max: 300}
+```
+
+Set its absolute path in `CONFIG_X430_MODEL_OVERRIDES` (Kconfig) or in the CMake cache variable
+`X430_MODEL_OVERRIDES`. `tools/x430_gen_model.py --overrides <file>` applies it after the model
+file; an unknown register name or an initial value outside the resulting range stops the build.
+`--dump <model> --overrides <file>` prints the resolved table.

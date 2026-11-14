@@ -15,6 +15,7 @@
 #   x430_gen_model.py --models-dir models --model xm430_w350 --out-dir build/gen
 #   x430_gen_model.py --models-dir models --list
 #   x430_gen_model.py --models-dir models --dump xm430_w350   (resolved table)
+#   x430_gen_model.py ... --overrides product.yaml   (application overrides, see resolve())
 #
 # Outputs (in --out-dir):
 #   x430_model_info.h   compile-time facts of the selected model
@@ -131,12 +132,37 @@ def _find_model_file(models_dir: pathlib.Path, key: str) -> pathlib.Path:
     raise ModelError(f"unknown model '{key}' (available: {', '.join(list_models(models_dir))})")
 
 
-def resolve(models_dir: pathlib.Path, key: str, firmware_placeholder: int = 0) -> Model:
-    """Merge the family table with the model file and validate the result."""
+def load_overrides(path: Optional[pathlib.Path]) -> Dict[str, dict]:
+    """Application overrides: a YAML file with an `overrides:` mapping, as in a model file.
+
+    Example (a product whose supply is above the XM430 voltage range):
+
+        overrides:
+          Max Voltage Limit: {max: 300}
+          Min Voltage Limit: {max: 300}
+    """
+    if path is None:
+        return {}
+    data = _load_yaml(path) or {}
+    overrides = data.get("overrides", {}) or {}
+    if not isinstance(overrides, dict) or not all(isinstance(v, dict) for v in overrides.values()):
+        raise ModelError(f"{path}: 'overrides' must map register names to field mappings")
+    return overrides
+
+
+def resolve(models_dir: pathlib.Path, key: str, firmware_placeholder: int = 0,
+            extra_overrides: Optional[Dict[str, dict]] = None) -> Model:
+    """Merge the family table with the model file and validate the result.
+
+    `extra_overrides` (load_overrides()) apply after the overrides of the model file:
+    an application changes initial values or ranges without editing models/.
+    """
     model_file = _find_model_file(models_dir, key)
     spec = _load_yaml(model_file)
     family_file = models_dir / f"{spec['family']}_family.yaml"
     family = _load_yaml(family_file)
+    extra = extra_overrides or {}
+    unknown_extra = set(extra)
 
     variant = spec["variant"]
     removed = set(spec.get("remove", []))
@@ -165,7 +191,9 @@ def resolve(models_dir: pathlib.Path, key: str, firmware_placeholder: int = 0) -
             continue
         item = dict(item)
         item.update(overrides.get(item["name"], {}))
+        item.update(extra.get(item["name"], {}))
         unknown.discard(item["name"])
+        unknown_extra.discard(item["name"])
         initial = item["initial"]
         if initial == "model":
             initial = model.number
@@ -190,6 +218,8 @@ def resolve(models_dir: pathlib.Path, key: str, firmware_placeholder: int = 0) -
         )
     if unknown:
         raise ModelError(f"{model_file}: overrides/remove name unknown registers: {sorted(unknown)}")
+    if unknown_extra:
+        raise ModelError(f"application overrides name unknown registers: {sorted(unknown_extra)}")
 
     # Indirect Address registers (2 bytes, RAM, RW) are generated from the blocks.
     for block in model.indirect:
@@ -209,6 +239,11 @@ def resolve(models_dir: pathlib.Path, key: str, firmware_placeholder: int = 0) -
             )
     model.registers.sort(key=lambda r: r.address)
     _validate(model)
+    for reg in model.registers:
+        if reg.name in extra and reg.check == "range" and not (
+                reg.minimum <= reg.initial <= reg.maximum):
+            raise ModelError(f"application overrides: {reg.name}: initial {reg.initial} "
+                             f"outside {reg.minimum}..{reg.maximum}")
     return model
 
 
@@ -387,6 +422,8 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--out-dir", type=pathlib.Path)
     parser.add_argument("--list", action="store_true", help="print the available model keys")
     parser.add_argument("--dump", metavar="MODEL", help="print the resolved Control Table")
+    parser.add_argument("--overrides", type=pathlib.Path,
+                        help="YAML file with application overrides (overrides: {name: {...}})")
     args = parser.parse_args(argv)
 
     try:
@@ -394,7 +431,8 @@ def main(argv: Optional[List[str]] = None) -> int:
             print("\n".join(list_models(args.models_dir)))
             return 0
         if args.dump:
-            model = resolve(args.models_dir, args.dump)
+            model = resolve(args.models_dir, args.dump,
+                            extra_overrides=load_overrides(args.overrides))
             print(f"{model.name} ({model.number}), variant {model.variant}, modes {model.operating_modes}")
             for reg in model.registers:
                 print(
@@ -405,7 +443,8 @@ def main(argv: Optional[List[str]] = None) -> int:
             return 0
         if not args.model or not args.out_dir:
             parser.error("--model and --out-dir are required")
-        model = resolve(args.models_dir, args.model)
+        model = resolve(args.models_dir, args.model,
+                        extra_overrides=load_overrides(args.overrides))
         args.out_dir.mkdir(parents=True, exist_ok=True)
         _write_if_changed(args.out_dir / "x430_model_info.h", render_info_header(model))
         _write_if_changed(args.out_dir / "x430_model_table.c", render_table_source(model))

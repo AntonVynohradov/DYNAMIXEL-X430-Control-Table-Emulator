@@ -6,6 +6,12 @@ All notable changes to this project are documented here. Versions follow
 ## [Unreleased]
 
 ### Added
+- Application overrides of the model: `CONFIG_X430_MODEL_OVERRIDES` (CMake
+  `X430_MODEL_OVERRIDES`, generator `--overrides`) names a YAML file with the
+  `overrides:` mapping of the model files, applied after `models/`, so a product
+  changes ranges or initial values (e.g. Max Voltage Limit above 16 V) without
+  editing the model data. Unknown names and initial values outside the range are
+  errors.
 - Device-side emulation of all 17 DYNAMIXEL X430 models (Protocol 2.0), one
   model per build, Control Tables generated from `models/` (YAML, transcribed
   from the ROBOTIS e-Manual and checked against it by `tests/models`).

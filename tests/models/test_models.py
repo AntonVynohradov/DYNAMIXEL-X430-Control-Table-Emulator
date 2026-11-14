@@ -78,5 +78,40 @@ class ModelData(unittest.TestCase):
         self.assertEqual(gen.main(["--models-dir", str(MODELS), "--model", "xx999", "--out-dir", "/tmp"]), 1)
 
 
+    def _overrides_file(self, directory, text):
+        path = pathlib.Path(directory) / "overrides.yaml"
+        path.write_text(text, encoding="utf-8")
+        return path
+
+    def test_application_overrides(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = self._overrides_file(tmp, "overrides:\n"
+                                        "  Max Voltage Limit: {max: 300, initial: 280}\n"
+                                        "  Min Voltage Limit: {max: 300}\n")
+            model = gen.resolve(MODELS, "xm430_w350", extra_overrides=gen.load_overrides(path))
+            regs = {r.name: r for r in model.registers}
+            self.assertEqual((regs["Max Voltage Limit"].maximum, regs["Max Voltage Limit"].initial),
+                             (300, 280))
+            self.assertEqual(regs["Min Voltage Limit"].maximum, 300)
+            self.assertEqual(regs["Min Voltage Limit"].initial, 95)       # not overridden
+            out = pathlib.Path(tmp) / "gen"
+            self.assertEqual(gen.main(["--models-dir", str(MODELS), "--model", "xm430_w350",
+                                       "--out-dir", str(out), "--overrides", str(path)]), 0)
+            self.assertIn("300", (out / "x430_model_table.c").read_text(encoding="utf-8"))
+        self.assertEqual(gen.load_overrides(None), {})
+
+    def test_bad_application_overrides_are_reported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            unknown = self._overrides_file(tmp, "overrides:\n  No Such Register: {max: 1}\n")
+            with self.assertRaises(gen.ModelError):
+                gen.resolve(MODELS, "xm430_w350", extra_overrides=gen.load_overrides(unknown))
+            outside = self._overrides_file(tmp, "overrides:\n  Max Voltage Limit: {initial: 200}\n")
+            with self.assertRaises(gen.ModelError):
+                gen.resolve(MODELS, "xm430_w350", extra_overrides=gen.load_overrides(outside))
+            not_mapping = self._overrides_file(tmp, "overrides:\n  Max Voltage Limit: 3\n")
+            with self.assertRaises(gen.ModelError):
+                gen.load_overrides(not_mapping)
+
+
 if __name__ == "__main__":
     unittest.main()
