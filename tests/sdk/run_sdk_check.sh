@@ -13,7 +13,12 @@ BUILD=$(realpath "$1")
 HERE=$(cd "$(dirname "$0")" && pwd)
 SDK=${2:-$BUILD/DynamixelSDK}
 SIM=$BUILD/examples/x430_host_sim
-LINK=$BUILD/ttyDXL
+# DynamixelSDK copies the port name into char[100] with strcpy, so the link
+# must not live under a long build path (CI checkouts exceed 100 characters).
+TMP=$(mktemp -d /tmp/x430.XXXXXX)
+LINK=$TMP/ttyDXL
+SIM_PID=
+trap 'if [ -n "$SIM_PID" ]; then kill "$SIM_PID" 2>/dev/null || true; fi; rm -rf "$TMP"' EXIT
 
 if [ ! -d "$SDK/c++/src/dynamixel_sdk" ]; then
     git clone -q --depth 1 https://github.com/ROBOTIS-GIT/DynamixelSDK.git "$SDK"
@@ -28,6 +33,5 @@ g++ -std=c++14 -O1 -I"$SDK/c++/include/dynamixel_sdk" "$HERE/sdk_check.cpp" \
 MODEL=$( ("$SIM" --help 2>&1 || true) | sed -n 's/.*Model Number \([0-9]*\).*/\1/p')
 "$SIM" --pty --link "$LINK" --ids 1,2,3 &
 SIM_PID=$!
-trap 'kill $SIM_PID 2>/dev/null || true' EXIT
 sleep 0.5
 "$BUILD/sdk_check" "$LINK" "$MODEL"
