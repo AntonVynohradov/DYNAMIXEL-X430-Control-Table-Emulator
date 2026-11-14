@@ -98,10 +98,19 @@ endif()
 # The sources include the generated model header and DXL2-C: one folder with copies
 # of them is the configuration folder (CONFIG_DIR) of the MISRA analysis and an
 # include folder of tools/docs/check_snippets.py.
+#
+# No file(GLOB) here: the build folders of the presets are named build/X430[...], and
+# GLOB reads the brackets as a character class (it then finds nothing).
 set(X430_MISRA_INCLUDE_DIR ${CMAKE_BINARY_DIR}/x430/analysis-include)
-file(GLOB X430_DXL2_HEADERS ${dxl2_SOURCE_DIR}/dxl2.h ${dxl2_SOURCE_DIR}/inc/*.h)
-file(COPY ${X430_GENERATED_DIR}/x430_model_info.h ${X430_DXL2_HEADERS}
+file(COPY ${X430_GENERATED_DIR}/x430_model_info.h ${dxl2_SOURCE_DIR}/dxl2.h
      DESTINATION ${X430_MISRA_INCLUDE_DIR})
+file(COPY ${dxl2_SOURCE_DIR}/inc/ DESTINATION ${X430_MISRA_INCLUDE_DIR}
+     FILES_MATCHING PATTERN "*.h")
+foreach(X430_REQUIRED_HEADER x430_model_info.h dxl2.h dxl2_config.h dxl2_link.h)
+    if(NOT EXISTS ${X430_MISRA_INCLUDE_DIR}/${X430_REQUIRED_HEADER})
+        message(FATAL_ERROR "x430: ${X430_REQUIRED_HEADER} missing in ${X430_MISRA_INCLUDE_DIR}")
+    endif()
+endforeach()
 
 # ==============================================================================
 # STATIC ANALYSIS TARGETS
