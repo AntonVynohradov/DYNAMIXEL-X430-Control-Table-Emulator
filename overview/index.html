@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0 in portable C11: the firmware drives any motor, the host sees a genuine X430. No heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0 in portable C11: the firmware drives any motor, the host sees an X430-compatible device. No heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -1392,11 +1392,12 @@ Protocol 2.0 instruction packets (with <a href="https://github.com/AntonVynohrad
 keeps the Control Table of the selected X430 model, enforces the rules a real actuator
 enforces and answers with status packets. The motor behind it can be anything — a stepper,
 a BLDC, a simulation: the library reaches it only through hooks, so the host tools of the
-DYNAMIXEL ecosystem (DynamixelSDK, DYNAMIXEL Wizard 2.0, ROS 2
-<code>dynamixel_hardware_interface</code>) work unchanged.</p>
+DYNAMIXEL ecosystem work unchanged. DynamixelSDK (end to end) and DYNAMIXEL Wizard 2.0
+(on hardware) are verified; ROS 2 <code>dynamixel_hardware_interface</code> uses the same
+instructions (<a href="../integration/#ros-2-dynamixel_hardware_interface">points to check</a>).</p>
 <h2 id="what-the-library-does">What the library does<a class="headerlink" href="#what-the-library-does" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Control Table of a real X430.</strong> One of 17 models per build, generated from YAML data
+<li><strong>The X430 Control Table.</strong> One of 17 models per build, generated from YAML data
   that the test suite compares with the ROBOTIS e-Manual tables: addresses, sizes, access,
   initial values and ranges, limit registers, the EEPROM lock while the torque is on.</li>
 <li><strong>Every instruction a host uses.</strong> PING, READ, WRITE, REG_WRITE, ACTION,

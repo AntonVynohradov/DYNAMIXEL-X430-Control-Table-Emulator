@@ -1500,7 +1500,7 @@
       </memberdef>
     </sectiondef>
     <briefdescription>
-<para>Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0: the firmware moves any motor, the host sees a genuine X430. </para>
+<para>Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0: the firmware moves any motor, the host sees an X430-compatible device. </para>
     </briefdescription>
     <detaileddescription>
 <para><bold>Parts.</bold> A <emphasis>bus</emphasis> (<ref refid="structx430__bus" kindref="compound">x430_bus</ref>) decodes the instructions of one serial line with DXL2-C and answers for its <emphasis>devices</emphasis> (<ref refid="structx430__device" kindref="compound">x430_device</ref>). A device holds the Control Table of the model selected at build time and enforces the rules of the real actuator; the application connects it to its motor through <ref refid="structx430__hooks" kindref="compound">x430_hooks</ref>. The optional <emphasis>simulator</emphasis> (<ref refid="structx430__sim" kindref="compound">x430_sim</ref>) replaces the motor.</para>

@@ -8,7 +8,7 @@
 
 
 
-_Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0: the firmware moves any motor, the host sees a genuine X430._ [More...](#detailed-description)
+_Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0: the firmware moves any motor, the host sees an X430-compatible device._ [More...](#detailed-description)
 
 
 

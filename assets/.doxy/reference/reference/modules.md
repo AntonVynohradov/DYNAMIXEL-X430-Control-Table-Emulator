@@ -5,7 +5,7 @@
 Here is a list of all modules:
 
 
-* [**DYNAMIXEL X430 Control Table Emulator API**](group__x430.md) _Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0: the firmware moves any motor, the host sees a genuine X430._ 
+* [**DYNAMIXEL X430 Control Table Emulator API**](group__x430.md) _Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0: the firmware moves any motor, the host sees an X430-compatible device._ 
     
 
 

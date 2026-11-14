@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0 in portable C11: the firmware drives any motor, the host sees a genuine X430. No heap, no RTOS, MISRA C:2012, 100 % test coverage.">
+        <meta name="description" content="Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0 in portable C11: the firmware drives any motor, the host sees an X430-compatible device. No heap, no RTOS, MISRA C:2012, 100 % test coverage.">
       
       
         <meta name="author" content="Anton Vynohradov">
@@ -1369,7 +1369,7 @@
 </div>
 <p>DYNAMIXEL-X430-Control-Table-Emulator is designed, written and maintained by <strong>Anton Vynohradov</strong> and published by
 <strong>SystemFromScratch®</strong> — secure embedded systems and compliance-ready engineering, from
-concept to certification.</p>
+concept to certification-ready product.</p>
 <h2 id="author">Author<a class="headerlink" href="#author" title="Permanent link">&para;</a></h2>
 <div class="sfs-author">
 <p class="sfs-author__name"><strong>Anton Vynohradov</strong> · <a href="https://orcid.org/0009-0005-6965-0911">ORCID 0009-0005-6965-0911</a></p>
@@ -1429,28 +1429,32 @@ regulations that govern them.</p>
 </thead>
 <tbody>
 <tr>
-<td>Embedded software development</td>
-<td>Bare-metal, RTOS and Linux firmware for performance, reliability and long-term maintainability</td>
-</tr>
-<tr>
-<td>BSP &amp; device drivers</td>
-<td>Board support packages, bootloaders and low-level drivers for MCUs, SoCs, FPGAs and custom hardware</td>
-</tr>
-<tr>
-<td>RTOS &amp; Embedded Linux</td>
-<td>Zephyr, FreeRTOS and Embedded Linux (Yocto, Buildroot): porting, configuration, integration, reproducible builds</td>
+<td>Hardware design with partners</td>
+<td>Component selection, second sourcing and hardware design with partner engineers: proven, available parts instead of one expensive supplier</td>
 </tr>
 <tr>
 <td>Hardware bring-up &amp; integration</td>
-<td>Schematic review, first boot, validation and production support, including SoC FPGA and motor-control platforms</td>
+<td>From the first power-on of a new board to a working system: first boot and validation (STM32, SmartFusion2)</td>
 </tr>
 <tr>
-<td>Cybersecurity &amp; CRA readiness</td>
-<td>Secure boot, firmware integrity, threat modelling and a secure development lifecycle for the EU Cyber Resilience Act</td>
+<td>BSP &amp; device drivers</td>
+<td>Board support packages, bootloaders (MCUboot) and drivers for Zephyr, the Linux kernel and FPGAs that keep timing exact</td>
 </tr>
 <tr>
-<td>Compliance &amp; consulting</td>
-<td>MISRA C/C++, static analysis, code and architecture reviews, compliance roadmaps</td>
+<td>RTOS &amp; Embedded Linux</td>
+<td>A maintained, secure foundation on Zephyr, FreeRTOS or Embedded Linux (Yocto, Buildroot)</td>
+</tr>
+<tr>
+<td>Embedded software development</td>
+<td>Devices that talk to each other reliably over CAN, ISO-TP, RS-485, UART, SPI and I²C, even when the hardware underneath changes</td>
+</tr>
+<tr>
+<td>System integration</td>
+<td>Systems that work end to end and can be tested on a laptop before the hardware exists: software-in-the-loop, Docker, CI/CD, ROS 2</td>
+</tr>
+<tr>
+<td>Cybersecurity, CRA &amp; compliance</td>
+<td>Secure boot, signed updates, threat modelling and MISRA C:2012 designed in from the start, so EU Cyber Resilience Act conformity is not a last-minute patch</td>
 </tr>
 </tbody>
 </table>
