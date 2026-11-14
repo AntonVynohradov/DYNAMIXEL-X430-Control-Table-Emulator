@@ -6,12 +6,13 @@ Protocol 2.0 instruction packets (with [DXL2-C](https://github.com/AntonVynohrad
 keeps the Control Table of the selected X430 model, enforces the rules a real actuator
 enforces and answers with status packets. The motor behind it can be anything — a stepper,
 a BLDC, a simulation: the library reaches it only through hooks, so the host tools of the
-DYNAMIXEL ecosystem (DynamixelSDK, DYNAMIXEL Wizard 2.0, ROS 2
-`dynamixel_hardware_interface`) work unchanged.
+DYNAMIXEL ecosystem work unchanged. DynamixelSDK (end to end) and DYNAMIXEL Wizard 2.0
+(on hardware) are verified; ROS 2 `dynamixel_hardware_interface` uses the same
+instructions ([points to check](integration.md#ros-2-dynamixel_hardware_interface)).
 
 ## What the library does
 
-- **Control Table of a real X430.** One of 17 models per build, generated from YAML data
+- **The X430 Control Table.** One of 17 models per build, generated from YAML data
   that the test suite compares with the ROBOTIS e-Manual tables: addresses, sizes, access,
   initial values and ranges, limit registers, the EEPROM lock while the torque is on.
 - **Every instruction a host uses.** PING, READ, WRITE, REG_WRITE, ACTION,

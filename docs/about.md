@@ -8,7 +8,7 @@
 
 DYNAMIXEL-X430-Control-Table-Emulator is designed, written and maintained by **Anton Vynohradov** and published by
 **SystemFromScratch®** — secure embedded systems and compliance-ready engineering, from
-concept to certification.
+concept to certification-ready product.
 
 ## Author
 
@@ -56,12 +56,13 @@ regulations that govern them.
 
 | Service | What it covers |
 | --- | --- |
-| Embedded software development | Bare-metal, RTOS and Linux firmware for performance, reliability and long-term maintainability |
-| BSP & device drivers | Board support packages, bootloaders and low-level drivers for MCUs, SoCs, FPGAs and custom hardware |
-| RTOS & Embedded Linux | Zephyr, FreeRTOS and Embedded Linux (Yocto, Buildroot): porting, configuration, integration, reproducible builds |
-| Hardware bring-up & integration | Schematic review, first boot, validation and production support, including SoC FPGA and motor-control platforms |
-| Cybersecurity & CRA readiness | Secure boot, firmware integrity, threat modelling and a secure development lifecycle for the EU Cyber Resilience Act |
-| Compliance & consulting | MISRA C/C++, static analysis, code and architecture reviews, compliance roadmaps |
+| Hardware design with partners | Component selection, second sourcing and hardware design with partner engineers: proven, available parts instead of one expensive supplier |
+| Hardware bring-up & integration | From the first power-on of a new board to a working system: first boot and validation (STM32, SmartFusion2) |
+| BSP & device drivers | Board support packages, bootloaders (MCUboot) and drivers for Zephyr, the Linux kernel and FPGAs that keep timing exact |
+| RTOS & Embedded Linux | A maintained, secure foundation on Zephyr, FreeRTOS or Embedded Linux (Yocto, Buildroot) |
+| Embedded software development | Devices that talk to each other reliably over CAN, ISO-TP, RS-485, UART, SPI and I²C, even when the hardware underneath changes |
+| System integration | Systems that work end to end and can be tested on a laptop before the hardware exists: software-in-the-loop, Docker, CI/CD, ROS 2 |
+| Cybersecurity, CRA & compliance | Secure boot, signed updates, threat modelling and MISRA C:2012 designed in from the start, so EU Cyber Resilience Act conformity is not a last-minute patch |
 
 DYNAMIXEL-X430-Control-Table-Emulator is one of the open-source projects in the SystemFromScratch® portfolio: public
 engineering work that can be inspected line by line, built with the same rules — MISRA C,

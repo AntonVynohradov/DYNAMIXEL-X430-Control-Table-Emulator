@@ -5,8 +5,8 @@ title: "DYNAMIXEL-X430-Control-Table-Emulator"
 abstract: >-
   Device-side emulation of ROBOTIS DYNAMIXEL X430 actuators over Protocol 2.0 in portable
   C11: the Control Tables of all 17 X430 models and the rules of the real devices, so that
-  firmware driving any motor appears to DynamixelSDK, DYNAMIXEL Wizard and ROS 2 as a
-  genuine X430. No heap, no RTOS, MISRA C:2012, 100 % test coverage.
+  firmware driving any motor appears to DynamixelSDK and DYNAMIXEL Wizard as an
+  X430-compatible device. No heap, no RTOS, MISRA C:2012, 100 % test coverage.
 authors:
   - family-names: Vynohradov
     given-names: Anton

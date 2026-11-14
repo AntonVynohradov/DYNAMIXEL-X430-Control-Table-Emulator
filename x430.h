@@ -73,7 +73,7 @@ extern "C" {
 /**
  * @defgroup x430 DYNAMIXEL X430 Control Table Emulator API
  * @brief    Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0:
- *           the firmware moves any motor, the host sees a genuine X430.
+ *           the firmware moves any motor, the host sees an X430-compatible device.
  *
  * **Parts.** A *bus* (::x430_bus) decodes the instructions of one serial line with
  * DXL2-C and answers for its *devices* (::x430_device). A device holds the Control

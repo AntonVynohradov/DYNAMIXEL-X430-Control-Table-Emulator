@@ -1,8 +1,8 @@
 site_name: DYNAMIXEL-X430-Control-Table-Emulator
 site_description: >-
   Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0 in portable C11:
-  the firmware drives any motor, the host sees a genuine X430. No heap, no RTOS,
-  MISRA C:2012, 100 % test coverage.
+  the firmware drives any motor, the host sees an X430-compatible device. No heap, no
+  RTOS, MISRA C:2012, 100 % test coverage.
 site_author: Anton Vynohradov
 site_url: https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/   # GitHub Pages path = repository name
 repo_url: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator
@@ -104,10 +104,10 @@ extra:
     title: Any motor as a DYNAMIXEL X430
     accent: in portable C
     lead: >-
-      The X430 emulator turns DYNAMIXEL Protocol 2.0 packets into the Control Table of a
-      genuine X430 and into hook calls for your motor, so DynamixelSDK, DYNAMIXEL Wizard
-      and ROS 2 drive a stepper or a BLDC unchanged, with no heap, no RTOS and code that
-      passes MISRA C:2012.
+      The X430 emulator turns DYNAMIXEL Protocol 2.0 packets into the X430 Control Table
+      and into hook calls for your motor, so DynamixelSDK and DYNAMIXEL Wizard drive a
+      stepper or a BLDC unchanged, with no heap, no RTOS and code that passes
+      MISRA C:2012.
     hero_image: assets/images/hero-3d.svg
     hero_alt: >-
       Isometric scene: a host adapter sends Protocol 2.0 packets over the bus to a
@@ -128,11 +128,11 @@ extra:
         A robot arm built around a stepper or a BLDC driver needs a host protocol. Writing
         one means a host driver, a ROS 2 plugin and a configuration tool of your own.
         Answering as a DYNAMIXEL X430 instead gives you DynamixelSDK, DYNAMIXEL Wizard and
-        dynamixel_hardware_interface — if the device behaves like a real X430 down to the
+        dynamixel_hardware_interface — if the device behaves like an X430 down to the
         rules of its Control Table, inside the RAM and flash of a small MCU.
       cards:
         - icon: wave
-          title: Behaves like the real actuator
+          title: Behaves like the X430
           text: >-
             All 17 X430 models with Control Tables generated from YAML and checked against
             the e-Manual; every instruction a host uses, Indirect Address, Bus Watchdog,
@@ -141,11 +141,11 @@ extra:
         - icon: memory
           title: Tight embedded budgets
           text: >-
-            1,400 B of RAM per device and 3,128 B per bus on Cortex-M4, 11.2 KB of flash
+            384 B of RAM per device and 2,368 B per bus on Cortex-M4, 9,921 B of flash
             at -Os including the model table; no allocation, no globals, no OS.
           tags: [Static memory, Bare metal & RTOS]
         - icon: shield
-          title: Code you can certify
+          title: Built for review and certification
           text: >-
             Zero MISRA C:2012 violations, a documented deviation register, 100 % line
             and branch coverage, bounded execution time and static analysis in CI.
@@ -158,22 +158,23 @@ extra:
         that hold the Control Tables, and an optional simulator — one model per build,
         optional instructions selected with Kconfig or plain definitions.
       cards:
-        - {icon: layers, title: The Control Table of a real X430, text: "Access rights, ranges and limit registers, EEPROM lock, REG_WRITE/ACTION, Secondary ID, Status Return Level, Return Delay Time.", tags: [17 models, Generated tables], link: theory/}
+        - {icon: layers, title: The X430 Control Table, text: "Access rights, ranges and limit registers, EEPROM lock, REG_WRITE/ACTION, Secondary ID, Status Return Level, Return Delay Time.", tags: [17 models, Generated tables], link: theory/}
         - {icon: gauge, title: Group and Fast reads, text: "SYNC, BULK, FAST_SYNC and FAST_BULK reads and writes, as ROS 2 uses them with Indirect Address.", tags: [SYNC, BULK, FAST], link: theory/#group-instructions}
         - {icon: plug, title: Any motor, any board, text: "One byte writer, an optional port (lock, clock, delay) and five hooks per device connect it to your firmware.", tags: [Hooks, Zephyr, FreeRTOS, Bare metal], link: integration/}
-        - {icon: lock, title: The safety rules of the actuator, text: "Hardware error shutdown, Bus Watchdog, goal synchronisation on torque on, and a persistent EEPROM area with CRC.", tags: [Shutdown, Watchdog, Persistence], link: usage/}
+        - {icon: lock, title: The safety rules of the actuator, text: "Hardware error shutdown, Bus Watchdog, goal synchronization on torque on, and a persistent EEPROM area with CRC.", tags: [Shutdown, Watchdog, Persistence], link: usage/}
         - {icon: document, title: Complete documentation, text: "Guides, the theory with measured results, the integration guide and a full API reference, also as a PDF.", tags: [API, Guides, PDF], link: api/}
         - {icon: check, title: Quality gates in CI, text: "Unit tests (and model-based tests) with a 100 % coverage gate, MISRA C:2012 gate, Cppcheck and CodeQL.", tags: [GoogleTest, Coverage, MISRA C], link: misra/}
     stats:                                   # measured values only
       - {value: "24", label: public functions}
-      - {value: "1,400 B", label: RAM per device (Cortex-M4)}
-      - {value: "1,796 B", label: worst-case stack (Cortex-M4)}
+      - {value: "384 B", label: RAM per device (Cortex-M4)}
+      - {value: "424 B", label: worst-case stack (Cortex-M4)}
       - {value: "0", label: MISRA C:2012 violations}
     portfolio:
       title: Part of an open-source embedded portfolio
       text: >-
-        The X430 emulator is developed by Anton Vynohradov under SystemFromScratch® — embedded
-        software and hardware built from the first schematic to certification.
+        The X430 emulator is developed by Anton Vynohradov under SystemFromScratch® — secure
+        embedded systems and compliance-ready engineering, from concept to
+        certification-ready product.
       buttons:
         - {text: SystemFromScratch®, link: "https://systemfromscratch.com", style: primary}
         - {text: About the author, link: about/, style: outline}

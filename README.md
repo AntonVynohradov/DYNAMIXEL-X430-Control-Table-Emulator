@@ -6,8 +6,9 @@
 
 **Any motor as a DYNAMIXEL X430 — device-side emulation of the X430 Control Table over
 Protocol 2.0, in portable C11.** Your firmware drives a stepper, a BLDC or a simulation;
-DynamixelSDK, DYNAMIXEL Wizard 2.0 and ROS 2 `dynamixel_hardware_interface` see a genuine
-X430.
+the host sees an X430-compatible device. Verified end to end with the official
+DynamixelSDK and with DYNAMIXEL Wizard 2.0 on hardware; built for ROS 2
+`dynamixel_hardware_interface`.
 
 [![Google Unit Tests](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/google-unit-tests.yml/badge.svg)](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/google-unit-tests.yml)
 [![Static Analysis](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/static-analysis.yml)
@@ -97,9 +98,14 @@ int main(void)
     const struct x430_bus_config bus_config = {.write = uart_write};
     const struct x430_device_config joint_config = {.id = 1U, .hooks = &hooks};
 
-    (void)x430_bus_init(&bus, &bus_config);
-    (void)x430_device_init(&joint, &joint_config);
-    (void)x430_bus_attach(&bus, &joint);
+    if ((x430_bus_init(&bus, &bus_config) != X430_OK) ||
+        (x430_device_init(&joint, &joint_config) != X430_OK) ||
+        (x430_bus_attach(&bus, &joint) != X430_OK))
+    {
+        for (;;)
+        {
+        }
+    }
     for (;;)
     {
         uint8_t bytes[64];
