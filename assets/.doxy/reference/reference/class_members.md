@@ -5,7 +5,7 @@
 
 ## a
 
-* **address** ([**x430\_indirect\_block**](structx430__indirect__block.md), [**x430\_reg**](structx430__reg.md))
+* **address** ([**x430\_indirect\_block**](structx430__indirect__block.md), [**x430\_reg**](structx430__reg.md), [**x430\_segment**](structx430__segment.md))
 * **axes** ([**x430\_model**](structx430__model.md))
 
 
@@ -22,14 +22,13 @@
 * **count** ([**x430\_indirect\_block**](structx430__indirect__block.md))
 * **current\_unit\_ua** ([**x430\_model**](structx430__model.md))
 * **context** ([**x430\_port**](structx430__port.md))
-* **check** ([**x430\_reg**](structx430__reg.md))
 
 
 ## d
 
-* **data** ([**x430\_bus\_ctx**](structx430__bus__ctx.md), [**x430\_indirect\_block**](structx430__indirect__block.md))
 * **device\_count** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
 * **devices** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
+* **data** ([**x430\_indirect\_block**](structx430__indirect__block.md))
 * **delay\_us** ([**x430\_port**](structx430__port.md))
 * **device** ([**x430\_sim\_ctx**](structx430__sim__ctx.md))
 
@@ -64,6 +63,7 @@
 * **last\_rx\_ms** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
 * **link** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
 * **lock** ([**x430\_port**](structx430__port.md))
+* **length** ([**x430\_segment**](structx430__segment.md))
 
 
 ## m
@@ -77,9 +77,8 @@
 
 ## n
 
-* **nvm** ([**x430\_device\_ctx**](structx430__device__ctx.md))
-* **nvm\_load** ([**x430\_hooks**](structx430__hooks.md))
-* **nvm\_store** ([**x430\_hooks**](structx430__hooks.md))
+* **nvm\_read** ([**x430\_hooks**](structx430__hooks.md))
+* **nvm\_write** ([**x430\_hooks**](structx430__hooks.md))
 * **name** ([**x430\_model**](structx430__model.md))
 
 
@@ -87,6 +86,7 @@
 
 * **opaque** ([**x430\_bus**](structx430__bus.md), [**x430\_device**](structx430__device.md), [**x430\_sim**](structx430__sim.md))
 * **operating\_modes** ([**x430\_model**](structx430__model.md))
+* **offset** ([**x430\_segment**](structx430__segment.md))
 
 
 ## p
@@ -102,19 +102,20 @@
 * **reg\_length** ([**x430\_device\_ctx**](structx430__device__ctx.md))
 * **read** ([**x430\_hooks**](structx430__hooks.md))
 * **register\_count** ([**x430\_model**](structx430__model.md))
-* **register\_map** ([**x430\_model**](structx430__model.md))
 * **registers** ([**x430\_model**](structx430__model.md))
-* **ref** ([**x430\_reg**](structx430__reg.md))
 
 
 ## s
 
+* **segment\_count** ([**x430\_model**](structx430__model.md))
+* **segments** ([**x430\_model**](structx430__model.md))
 * **size** ([**x430\_reg**](structx430__reg.md))
 * **shaft\_mpulse** ([**x430\_sim\_ctx**](structx430__sim__ctx.md))
 
 
 ## t
 
+* **tx** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
 * **table** ([**x430\_device\_ctx**](structx430__device__ctx.md))
 * **table\_size** ([**x430\_model**](structx430__model.md))
 * **temperature** ([**x430\_sim\_config**](structx430__sim__config.md))

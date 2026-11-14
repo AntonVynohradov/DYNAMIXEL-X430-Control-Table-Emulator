@@ -47,8 +47,8 @@ _Callbacks, configuration structures and the opaque instances._
 | typedef uint8\_t(\* | [**x430\_event\_hook**](#typedef-x430_event_hook)  <br>_Device event (_ [_**x430\_hooks::event**_](structx430__hooks.md#variable-event) _)._ |
 | typedef void(\* | [**x430\_lock\_fn**](#typedef-x430_lock_fn)  <br>_Take or release the bus lock (_ [_**x430\_port::lock**_](structx430__port.md#variable-lock) _,_[_**x430\_port::unlock**_](structx430__port.md#variable-unlock) _)._ |
 | typedef uint32\_t(\* | [**x430\_millis\_fn**](#typedef-x430_millis_fn)  <br>_Free-running millisecond counter (_ [_**x430\_port::millis**_](structx430__port.md#variable-millis) _)._ |
-| typedef int(\* | [**x430\_nvm\_load\_hook**](#typedef-x430_nvm_load_hook)  <br>_Load a persistent block (_ [_**x430\_hooks::nvm\_load**_](structx430__hooks.md#variable-nvm_load) _)._ |
-| typedef int(\* | [**x430\_nvm\_store\_hook**](#typedef-x430_nvm_store_hook)  <br>_Store a persistent block (_ [_**x430\_hooks::nvm\_store**_](structx430__hooks.md#variable-nvm_store) _), after the change; may be slow._ |
+| typedef int(\* | [**x430\_nvm\_read\_hook**](#typedef-x430_nvm_read_hook)  <br>_Read part of a persistent block (_ [_**x430\_hooks::nvm\_read**_](structx430__hooks.md#variable-nvm_read) _)._ |
+| typedef int(\* | [**x430\_nvm\_write\_hook**](#typedef-x430_nvm_write_hook)  <br>_Write part of a persistent block (_ [_**x430\_hooks::nvm\_write**_](structx430__hooks.md#variable-nvm_write) _), after the change; may be slow._ |
 | typedef void(\* | [**x430\_read\_hook**](#typedef-x430_read_hook)  <br>_Data is about to be read (_ [_**x430\_hooks::read**_](structx430__hooks.md#variable-read) _)._ |
 | typedef uint8\_t(\* | [**x430\_write\_hook**](#typedef-x430_write_hook)  <br>_A validated register write, before the value is stored (_ [_**x430\_hooks::write**_](structx430__hooks.md#variable-write) _)._ |
 
@@ -105,13 +105,11 @@ _Callbacks, configuration structures and the opaque instances._
 | define  | [**X430\_ALIGN\_UP**](group__x430__types.md#define-x430_align_up) (n, a) `(((((n) + (a)) - 1U) / (a)) \* (a))`<br>`n` _rounded up to a multiple of_`a` _._ |
 | define  | [**X430\_BUS\_BYTES**](group__x430__types.md#define-x430_bus_bytes)  `/* multi line expression */`<br>_Private state of a bus in bytes; x430\_bus.c checks it at compile time._  |
 | define  | [**X430\_BUS\_WORDS**](group__x430__types.md#define-x430_bus_words)  `(([**X430\_BUS\_BYTES**](group__x430__types.md#define-x430_bus_bytes) + 7U) / 8U)`<br>_Size of_ [_**x430\_bus**_](structx430__bus.md) _in 64-bit words._ |
-| define  | [**X430\_DEVICE\_BYTES**](group__x430__types.md#define-x430_device_bytes)  `/* multi line expression */`<br>_Private state of a device in bytes; x430\_device.c checks it at compile time._  |
+| define  | [**X430\_DEVICE\_BYTES**](group__x430__types.md#define-x430_device_bytes)  `((3U \* [**X430\_POINTER\_BYTES**](group__x430__types.md#define-x430_pointer_bytes)) + 17U + X430\_IMAGE\_SIZE + X430\_REG\_WRITE\_SIZE\_U)`<br>_Private state of a device in bytes; x430\_device.c checks it at compile time._  |
 | define  | [**X430\_DEVICE\_WORDS**](group__x430__types.md#define-x430_device_words)  `(([**X430\_DEVICE\_BYTES**](group__x430__types.md#define-x430_device_bytes) + 7U) / 8U)`<br>_Size of_ [_**x430\_device**_](structx430__device.md) _in 64-bit words._ |
 | define  | [**X430\_DXL2\_LINK\_BYTES**](group__x430__types.md#define-x430_dxl2_link_bytes)  `/* multi line expression */`<br>_Bytes of struct dxl2\_link of DXL2-C 1.0.0 (configuration, parser, packet, counters), from DXL2\_MAX\_PACKET\_SIZE._  |
-| define  | [**X430\_FAST\_READ\_BYTES**](group__x430__types.md#define-x430_fast_read_bytes)  `[**DXL2\_MAX\_PACKET\_SIZE**](group__x430__config.md#define-dxl2_max_packet_size)`<br>_Bytes of the Fast Sync/Bulk Read response buffer of a bus._  |
-| define  | [**X430\_NVM\_BACKUP\_SIZE**](group__x430__types.md#define-x430_nvm_backup_size)  `([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + X430\_TABLE\_SIZE + 2U)`<br>_Size of the persistent Control Table backup block._  |
-| define  | [**X430\_NVM\_BUFFER\_SIZE**](group__x430__types.md#define-x430_nvm_buffer_size)  `[**X430\_NVM\_BACKUP\_SIZE**](group__x430__types.md#define-x430_nvm_backup_size)`<br>_Bytes of the persistent block buffer inside each device._  |
-| define  | [**X430\_NVM\_EEPROM\_SIZE**](group__x430__types.md#define-x430_nvm_eeprom_size)  `([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + [**X430\_RAM\_START**](group__x430__defs.md#define-x430_ram_start) + 2U)`<br>_Size of the persistent EEPROM block (nvm\_load / nvm\_store)._  |
+| define  | [**X430\_NVM\_BACKUP\_SIZE**](group__x430__types.md#define-x430_nvm_backup_size)  `([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + X430\_IMAGE\_SIZE + 2U)`<br>_Size of the persistent Control Table backup block (the compact image)._  |
+| define  | [**X430\_NVM\_EEPROM\_SIZE**](group__x430__types.md#define-x430_nvm_eeprom_size)  `([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + [**X430\_RAM\_START**](group__x430__defs.md#define-x430_ram_start) + 2U)`<br>_Size of the persistent EEPROM block (nvm\_read / nvm\_write)._  |
 | define  | [**X430\_POINTER\_BYTES**](group__x430__types.md#define-x430_pointer_bytes)  `4U`<br>_Size of a pointer and of size\_t: 8 on 64-bit hosts, 4 on Cortex-M._  |
 | define  | [**X430\_SIM\_BYTES**](group__x430__types.md#define-x430_sim_bytes)  `(24U + [**X430\_POINTER\_BYTES**](group__x430__types.md#define-x430_pointer_bytes))`<br>_Private state of a simulator in bytes; x430\_sim.c checks it at compile time._  |
 | define  | [**X430\_SIM\_WORDS**](group__x430__types.md#define-x430_sim_words)  `(([**X430\_SIM\_BYTES**](group__x430__types.md#define-x430_sim_bytes) + 7U) / 8U)`<br>_Size of_ [_**x430\_sim**_](structx430__sim.md) _in 64-bit words._ |
@@ -238,24 +236,25 @@ Milliseconds; wraps at 2^32.
 
 
 
-### typedef x430\_nvm\_load\_hook 
+### typedef x430\_nvm\_read\_hook 
 
-_Load a persistent block (_ [_**x430\_hooks::nvm\_load**_](structx430__hooks.md#variable-nvm_load) _)._
+_Read part of a persistent block (_ [_**x430\_hooks::nvm\_read**_](structx430__hooks.md#variable-nvm_read) _)._
 ```
-typedef int(* x430_nvm_load_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint8_t *data, uint16_t size, void *user_data);
+typedef int(* x430_nvm_read_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint16_t offset, uint8_t *data, uint16_t length, void *user_data);
 ```
 
 
 
-
+The device reads a block in parts, so that it needs no buffer of its own: first the whole block in chunks (header, payload and CRC are checked), then the registers it takes from it. Return the stored bytes; where they live is up to the application. 
 
 **Parameters:**
 
 
 * `device` Device. 
-* `slot` Block to load. 
-* `data` Destination of `size` bytes. 
-* `size` [**X430\_NVM\_EEPROM\_SIZE**](group__x430__types.md#define-x430_nvm_eeprom_size) or [**X430\_NVM\_BACKUP\_SIZE**](group__x430__types.md#define-x430_nvm_backup_size). 
+* `slot` Block to read. 
+* `offset` First byte, from the start of the block. 
+* `data` Destination of `length` bytes. 
+* `length` Bytes; offset + length is at most [**X430\_NVM\_EEPROM\_SIZE**](group__x430__types.md#define-x430_nvm_eeprom_size) or [**X430\_NVM\_BACKUP\_SIZE**](group__x430__types.md#define-x430_nvm_backup_size). 
 * `user_data` [**x430\_device\_config::user\_data**](structx430__device__config.md#variable-user_data). 
 
 
@@ -263,8 +262,8 @@ typedef int(* x430_nvm_load_hook) (struct x430_device *device, enum x430_nvm_slo
 **Return value:**
 
 
-* `0` `size` bytes were read. 
-* `<0` No data (the factory values stay). 
+* `0` `length` bytes were read. 
+* `<0` No data: the device treats the block as missing (factory values stay). 
 
 
 
@@ -275,24 +274,25 @@ typedef int(* x430_nvm_load_hook) (struct x430_device *device, enum x430_nvm_slo
 
 
 
-### typedef x430\_nvm\_store\_hook 
+### typedef x430\_nvm\_write\_hook 
 
-_Store a persistent block (_ [_**x430\_hooks::nvm\_store**_](structx430__hooks.md#variable-nvm_store) _), after the change; may be slow._
+_Write part of a persistent block (_ [_**x430\_hooks::nvm\_write**_](structx430__hooks.md#variable-nvm_write) _), after the change; may be slow._
 ```
-typedef int(* x430_nvm_store_hook) (struct x430_device *device, enum x430_nvm_slot slot, const uint8_t *data, uint16_t size, void *user_data);
+typedef int(* x430_nvm_write_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint16_t offset, const uint8_t *data, uint16_t length, void *user_data);
 ```
 
 
 
-
+A block is written in parts with increasing offsets, from 0 to its end ([**X430\_NVM\_EEPROM\_SIZE**](group__x430__types.md#define-x430_nvm_eeprom_size) or [**X430\_NVM\_BACKUP\_SIZE**](group__x430__types.md#define-x430_nvm_backup_size)): header, payload (straight from the Control Table image of the device) and CRC. Start a new block at offset 0 (for example erase the flash page) and commit it when offset + length reaches the size. A block that is not written to its end fails the CRC check when it is read. 
 
 **Parameters:**
 
 
 * `device` Device. 
-* `slot` Block to store. 
-* `data` `size` bytes: header, payload and CRC, opaque to the application. 
-* `size` [**X430\_NVM\_EEPROM\_SIZE**](group__x430__types.md#define-x430_nvm_eeprom_size) or [**X430\_NVM\_BACKUP\_SIZE**](group__x430__types.md#define-x430_nvm_backup_size). 
+* `slot` Block to write. 
+* `offset` First byte, from the start of the block. 
+* `data` `length` bytes, opaque to the application. 
+* `length` Bytes. 
 * `user_data` [**x430\_device\_config::user\_data**](structx430__device__config.md#variable-user_data). 
 
 
@@ -300,8 +300,8 @@ typedef int(* x430_nvm_store_hook) (struct x430_device *device, enum x430_nvm_sl
 **Return value:**
 
 
-* `0` Stored. 
-* `<0` Failure, reported to the host as Result Fail. 
+* `0` Written. 
+* `<0` Failure: the remaining parts are not written, the host gets Result Fail. 
 
 
 
@@ -428,7 +428,7 @@ _Size of_ [_**x430\_bus**_](structx430__bus.md) _in 64-bit words._
 
 _Private state of a device in bytes; x430\_device.c checks it at compile time._ 
 ```
-#define X430_DEVICE_BYTES `((3U * X430_POINTER_BYTES ) + 17U + X430_TABLE_SIZE + X430_REG_WRITE_SIZE_U + \ X430_NVM_BUFFER_SIZE )`
+#define X430_DEVICE_BYTES `((3U * X430_POINTER_BYTES ) + 17U + X430_IMAGE_SIZE + X430_REG_WRITE_SIZE_U)`
 ```
 
 
@@ -470,39 +470,11 @@ Plain arithmetic so that the instance size needs no sizeof (static analysis); x4
 
 
 
-### define X430\_FAST\_READ\_BYTES 
-
-_Bytes of the Fast Sync/Bulk Read response buffer of a bus._ 
-```
-#define X430_FAST_READ_BYTES `DXL2_MAX_PACKET_SIZE`
-```
-
-
-
-
-<hr>
-
-
-
 ### define X430\_NVM\_BACKUP\_SIZE 
 
-_Size of the persistent Control Table backup block._ 
+_Size of the persistent Control Table backup block (the compact image)._ 
 ```
-#define X430_NVM_BACKUP_SIZE `( X430_NVM_HEADER_SIZE + X430_TABLE_SIZE + 2U)`
-```
-
-
-
-
-<hr>
-
-
-
-### define X430\_NVM\_BUFFER\_SIZE 
-
-_Bytes of the persistent block buffer inside each device._ 
-```
-#define X430_NVM_BUFFER_SIZE `X430_NVM_BACKUP_SIZE`
+#define X430_NVM_BACKUP_SIZE `( X430_NVM_HEADER_SIZE + X430_IMAGE_SIZE + 2U)`
 ```
 
 
@@ -514,7 +486,7 @@ _Bytes of the persistent block buffer inside each device._
 
 ### define X430\_NVM\_EEPROM\_SIZE 
 
-_Size of the persistent EEPROM block (nvm\_load / nvm\_store)._ 
+_Size of the persistent EEPROM block (nvm\_read / nvm\_write)._ 
 ```
 #define X430_NVM_EEPROM_SIZE `( X430_NVM_HEADER_SIZE + X430_RAM_START + 2U)`
 ```

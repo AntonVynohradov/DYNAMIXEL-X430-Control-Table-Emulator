@@ -94,19 +94,20 @@ typedef void (*x430_read_hook)(struct x430_device* device, uint16_t address, uin
 typedef uint8_t (*x430_event_hook)(struct x430_device* device, enum x430_event event,
                                    void* user_data);
 
-typedef int (*x430_nvm_load_hook)(struct x430_device* device, enum x430_nvm_slot slot,
-                                  uint8_t* data, uint16_t size, void* user_data);
+typedef int (*x430_nvm_read_hook)(struct x430_device* device, enum x430_nvm_slot slot,
+                                  uint16_t offset, uint8_t* data, uint16_t length, void* user_data);
 
-typedef int (*x430_nvm_store_hook)(struct x430_device* device, enum x430_nvm_slot slot,
-                                   const uint8_t* data, uint16_t size, void* user_data);
+typedef int (*x430_nvm_write_hook)(struct x430_device* device, enum x430_nvm_slot slot,
+                                   uint16_t offset, const uint8_t* data, uint16_t length,
+                                   void* user_data);
 
 struct x430_hooks
 {
     x430_write_hook write;         
     x430_read_hook read;           
     x430_event_hook event;         
-    x430_nvm_load_hook nvm_load;   
-    x430_nvm_store_hook nvm_store; 
+    x430_nvm_read_hook nvm_read;   
+    x430_nvm_write_hook nvm_write; 
 };
 
 /* ==============================================================================
@@ -140,13 +141,7 @@ struct x430_sim_config
  * =============================================================================*/
 
 #define X430_NVM_EEPROM_SIZE (X430_NVM_HEADER_SIZE + X430_RAM_START + 2U)
-#define X430_NVM_BACKUP_SIZE (X430_NVM_HEADER_SIZE + X430_TABLE_SIZE + 2U)
-
-#if X430_FEATURE_BACKUP
-#define X430_NVM_BUFFER_SIZE X430_NVM_BACKUP_SIZE
-#else
-#define X430_NVM_BUFFER_SIZE X430_NVM_EEPROM_SIZE
-#endif
+#define X430_NVM_BACKUP_SIZE (X430_NVM_HEADER_SIZE + X430_IMAGE_SIZE + 2U)
 
 #if defined(UINTPTR_MAX) && (UINTPTR_MAX > 0xFFFFFFFFU)
 #define X430_POINTER_BYTES 8U
@@ -162,20 +157,12 @@ struct x430_sim_config
                       X430_POINTER_BYTES + X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE - 6U, 4U) + 8U, \
                   X430_POINTER_BYTES)
 
-#if X430_FEATURE_FAST_READ
-#define X430_FAST_READ_BYTES DXL2_MAX_PACKET_SIZE
-#else
-#define X430_FAST_READ_BYTES 0U
-#endif
+#define X430_BUS_BYTES                                  \
+    (X430_DXL2_LINK_BYTES + (3U * X430_POINTER_BYTES) + \
+     (X430_MAX_DEVICES_U * X430_POINTER_BYTES) + 10U + DXL2_MAX_PACKET_SIZE)
 
-#define X430_BUS_BYTES                                                           \
-    (X430_DXL2_LINK_BYTES + (3U * X430_POINTER_BYTES) +                          \
-     (X430_MAX_DEVICES_U * X430_POINTER_BYTES) + 10U + DXL2_MAX_PARAMETER_SIZE + \
-     X430_FAST_READ_BYTES)
-
-#define X430_DEVICE_BYTES                                                        \
-    ((3U * X430_POINTER_BYTES) + 17U + X430_TABLE_SIZE + X430_REG_WRITE_SIZE_U + \
-     X430_NVM_BUFFER_SIZE)
+#define X430_DEVICE_BYTES \
+    ((3U * X430_POINTER_BYTES) + 17U + X430_IMAGE_SIZE + X430_REG_WRITE_SIZE_U)
 
 #define X430_SIM_BYTES (24U + X430_POINTER_BYTES)
 

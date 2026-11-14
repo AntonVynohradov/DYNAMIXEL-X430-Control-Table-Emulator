@@ -1294,6 +1294,7 @@
 <li><strong>x430_execute</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_factory_reset_check</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_find</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
+<li><strong>x430_frame_status</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>, <a href="../x430__internal_8h/"><strong>x430_internal.h</strong></a>)</li>
 <li><strong>x430_group_read</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_handler</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_id_of</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
@@ -1302,17 +1303,19 @@
 <li><strong>x430_magic_ok</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_millis</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_send_status</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
+<li><strong>x430_stuffed_at</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_sync_read</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_sync_write</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_take_write_result</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_unlock</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
-<li><strong>x430_writer</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
+<li><strong>x430_write_tx</strong> (<a href="../x430__bus_8c/"><strong>x430_bus.c</strong></a>)</li>
 <li><strong>x430_abs</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_apply_eeprom</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_check2</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_check_value</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_check_write</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_copy</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>, <a href="../x430__internal_8h/"><strong>x430_internal.h</strong></a>)</li>
+<li><strong>x430_crc16</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_device_alert</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>, <a href="../x430__internal_8h/"><strong>x430_internal.h</strong></a>)</li>
 <li><strong>x430_device_attach</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>, <a href="../x430__internal_8h/"><strong>x430_internal.h</strong></a>)</li>
 <li><strong>x430_device_bus</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>, <a href="../x430__internal_8h/"><strong>x430_internal.h</strong></a>)</li>
@@ -1325,20 +1328,28 @@
 <li><strong>x430_event</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_fill</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>, <a href="../x430__internal_8h/"><strong>x430_internal.h</strong></a>)</li>
 <li><strong>x430_get</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_indirect_reg</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_is_touched</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_load_factory</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_load_identity</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_mark_touched</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_merge</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
-<li><strong>x430_nvm_load</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
-<li><strong>x430_nvm_pack</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_nvm_apply</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_nvm_header</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_nvm_read</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_nvm_store</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_nvm_valid</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_peek</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_put</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_raw_get</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_raw_put</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
-<li><strong>x430_reg_at</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_reg_by_index</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_reg_find</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_reg_start</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_reg_store</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_reg_value</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_resolve</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
+<li><strong>x430_slot</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_startup</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_store_raw_bytes</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>
 <li><strong>x430_sync_goal</strong> (<a href="../x430__device_8c/"><strong>x430_device.c</strong></a>)</li>

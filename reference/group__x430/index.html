@@ -1664,7 +1664,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
-<td style="text-align: left;"><a href="#function-x430_device_init"><strong>x430_device_init</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, const struct <a href="../structx430__device__config/"><strong>x430_device_config</strong></a> * config) <br><em>Initialize a device: factory values, stored EEPROM area (nvm_load), the RAM area and the Startup Configuration (which may call the write hook).</em></td>
+<td style="text-align: left;"><a href="#function-x430_device_init"><strong>x430_device_init</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, const struct <a href="../structx430__device__config/"><strong>x430_device_config</strong></a> * config) <br><em>Initialize a device: factory values, stored EEPROM area (nvm_read), the RAM area and the Startup Configuration (which may call the write hook).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
@@ -2006,7 +2006,7 @@
 <hr>
 
 <h3 id="function-x430_device_init">function x430_device_init<a class="headerlink" href="#function-x430_device_init" title="Permanent link">&para;</a></h3>
-<p><em>Initialize a device: factory values, stored EEPROM area (nvm_load), the RAM area and the Startup Configuration (which may call the write hook).</em> 
+<p><em>Initialize a device: factory values, stored EEPROM area (nvm_read), the RAM area and the Startup Configuration (which may call the write hook).</em> 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>int x430_device_init (
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    struct x430_device * device,
 <a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    const struct x430_device_config * config

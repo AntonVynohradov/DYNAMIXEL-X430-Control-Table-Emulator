@@ -45,6 +45,7 @@
  * =============================================================================*/
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 #include "x430.h"
@@ -72,10 +73,7 @@ struct x430_bus_ctx
     uint32_t last_rx_ms;                           
     uint8_t device_count;                          
     bool write_failed;                             
-    uint8_t data[DXL2_MAX_PARAMETER_SIZE];         
-#if X430_FEATURE_FAST_READ
-    uint8_t raw[DXL2_MAX_PACKET_SIZE]; 
-#endif
+    uint8_t tx[DXL2_MAX_PACKET_SIZE];              
 };
 
 struct x430_device_ctx
@@ -86,9 +84,8 @@ struct x430_device_ctx
     uint16_t reg_address;                  
     uint16_t reg_length;                   
     bool baud_changed;                     
-    uint8_t table[X430_TABLE_SIZE];        
+    uint8_t table[X430_IMAGE_SIZE];        
     uint8_t reg_data[X430_REG_WRITE_SIZE]; 
-    uint8_t nvm[X430_NVM_BUFFER_SIZE];     
 };
 
 struct x430_sim_ctx
@@ -142,6 +139,8 @@ static inline struct x430_sim_ctx* x430_sim_ctx_of(struct x430_sim* sim)
 bool x430_bus_id_taken(const struct x430_bus* bus, const struct x430_device* except, uint8_t id);
 
 uint32_t x430_bus_millis(const struct x430_bus* bus);
+
+size_t x430_frame_status(uint8_t* tx, size_t capacity, uint8_t id, uint16_t count);
 
 /* ==============================================================================
  * INTERNAL FUNCTIONS: x430_device.c (initialized devices only, no checks)

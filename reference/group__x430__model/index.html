@@ -1302,6 +1302,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#define-x430_reg_check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_REG_CHECK
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_reg_check_shift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_REG_CHECK_SHIFT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#define-x430_reg_eeprom" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1389,7 +1411,11 @@
 </tr>
 <tr>
 <td style="text-align: right;">struct</td>
-<td style="text-align: left;"><a href="../structx430__reg/"><strong>x430_reg</strong></a> <br><em>One Control Table item.</em></td>
+<td style="text-align: left;"><a href="../structx430__reg/"><strong>x430_reg</strong></a> <br><em>One Control Table item (16 bytes of flash).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct</td>
+<td style="text-align: left;"><a href="../structx430__segment/"><strong>x430_segment</strong></a> <br><em>Segment of the compact Control Table image of a device: Control Table addresses address .</em></td>
 </tr>
 </tbody>
 </table>
@@ -1404,7 +1430,7 @@
 <tbody>
 <tr>
 <td style="text-align: right;">enum</td>
-<td style="text-align: left;"><a href="#enum-x430_check"><strong>x430_check</strong></a>  <br><em>Write check of a register (</em> <a href="../structx430__reg/#variable-check"><em><strong>x430_reg::check</strong></em></a> <em>).</em></td>
+<td style="text-align: left;"><a href="#enum-x430_check"><strong>x430_check</strong></a>  <br><em>Write check of a register (upper four bits of</em> <a href="../structx430__reg/#variable-flags"><em><strong>x430_reg::flags</strong></em></a> <em>).</em></td>
 </tr>
 </tbody>
 </table>
@@ -1434,6 +1460,14 @@
 <tbody>
 <tr>
 <td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_reg_check"><strong>X430_REG_CHECK</strong></a> (check) <code>((uint32\_t)(check) &amp;lt;&amp;lt; [**X430\_REG\_CHECK\_SHIFT**](group__x430__model.md#define-x430_reg_check_shift))</code><br><em>Write check</em> <code>check</code> <em>as</em><a href="../structx430__reg/#variable-flags"><em><strong>x430_reg::flags</strong></em></a> <em>bits.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_reg_check_shift"><strong>X430_REG_CHECK_SHIFT</strong></a>  <code>4U</code><br><em>Shift of the write check (enum x430_check) in the upper four bits of</em> <a href="../structx430__reg/#variable-flags"><em><strong>x430_reg::flags</strong></em></a> <em>.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
 <td style="text-align: left;"><a href="./#define-x430_reg_eeprom"><strong>X430_REG_EEPROM</strong></a>  <code>0x02U</code><br><em>EEPROM area: persistent, locked while Torque Enable is 1.</em></td>
 </tr>
 <tr>
@@ -1454,7 +1488,7 @@
 <p>tools/x430_gen_model.py writes x430_model_table.c with the constant <a href="./#variable-x430_model_active"><strong>x430_model_active</strong></a> from the YAML description in models/. The library reads the descriptor only; it never changes it. </p>
 <h2 id="public-types-documentation">Public Types Documentation<a class="headerlink" href="#public-types-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="enum-x430_check">enum x430_check<a class="headerlink" href="#enum-x430_check" title="Permanent link">&para;</a></h3>
-<p><em>Write check of a register (</em> <a href="../structx430__reg/#variable-check"><em><strong>x430_reg::check</strong></em></a> <em>).</em>
+<p><em>Write check of a register (upper four bits of</em> <a href="../structx430__reg/#variable-flags"><em><strong>x430_reg::flags</strong></em></a> <em>).</em>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>enum x430_check {
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    X430_CHECK_NONE = 0,
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    X430_CHECK_RANGE,
@@ -1473,27 +1507,41 @@
 </code></pre></div></p>
 <hr>
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="define-x430_reg_check">define X430_REG_CHECK<a class="headerlink" href="#define-x430_reg_check" title="Permanent link">&para;</a></h3>
+<p><em>Write check</em> <code>check</code> <em>as</em><a href="../structx430__reg/#variable-flags"><em><strong>x430_reg::flags</strong></em></a> <em>bits.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>#define X430_REG_CHECK (
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    check
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>) `((uint32_t)(check) &lt;&lt; X430_REG_CHECK_SHIFT )`
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_reg_check_shift">define X430_REG_CHECK_SHIFT<a class="headerlink" href="#define-x430_reg_check_shift" title="Permanent link">&para;</a></h3>
+<p><em>Shift of the write check (enum x430_check) in the upper four bits of</em> <a href="../structx430__reg/#variable-flags"><em><strong>x430_reg::flags</strong></em></a> <em>.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#define X430_REG_CHECK_SHIFT `4U`
+</code></pre></div></p>
+<hr>
+
 <h3 id="define-x430_reg_eeprom">define X430_REG_EEPROM<a class="headerlink" href="#define-x430_reg_eeprom" title="Permanent link">&para;</a></h3>
 <p><em>EEPROM area: persistent, locked while Torque Enable is 1.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>#define X430_REG_EEPROM `0x02U`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#define X430_REG_EEPROM `0x02U`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_reg_goal">define X430_REG_GOAL<a class="headerlink" href="#define-x430_reg_goal" title="Permanent link">&para;</a></h3>
 <p><em>Goal value: read-only while a Bus Watchdog error is active.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#define X430_REG_GOAL `0x08U`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define X430_REG_GOAL `0x08U`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_reg_signed">define X430_REG_SIGNED<a class="headerlink" href="#define-x430_reg_signed" title="Permanent link">&para;</a></h3>
 <p><em>Two's complement value.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#define X430_REG_SIGNED `0x04U`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#define X430_REG_SIGNED `0x04U`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_reg_writable">define X430_REG_WRITABLE<a class="headerlink" href="#define-x430_reg_writable" title="Permanent link">&para;</a></h3>
 <p><em>Writable by an instruction (RW); without it the register is read-only.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define X430_REG_WRITABLE `0x01U`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#define X430_REG_WRITABLE `0x01U`
 </code></pre></div></p>
 <hr>
 

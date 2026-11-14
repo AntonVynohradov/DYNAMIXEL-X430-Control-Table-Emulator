@@ -171,10 +171,11 @@ Here is a list of all modules:
 
 
 
+
+
+
     * [**Types**](group__x430__types.md) _Callbacks, configuration structures and the opaque instances._ 
         
-
-
 
 
 

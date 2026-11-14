@@ -18,7 +18,67 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="93" column="16" bodyfile="inc/x430_model.h" bodystart="93" bodyend="-1"/>
+        <location file="inc/x430_model.h" line="114" column="16" bodyfile="inc/x430_model.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__model_1afad2937147abc466a5504e100226c86b" prot="public" static="no" mutable="no">
+        <type>const struct <ref refid="structx430__reg" kindref="compound">x430_reg</ref> *</type>
+        <definition>const struct x430_reg* x430_model::registers</definition>
+        <argsstring></argsstring>
+        <name>registers</name>
+        <qualifiedname>x430_model::registers</qualifiedname>
+        <briefdescription>
+<para>Sorted by address, no Indirect Address. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="115" column="26" bodyfile="inc/x430_model.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__model_1abd1d0ed5fe61e34a0621c1ba875ec9e8" prot="public" static="no" mutable="no">
+        <type>const struct <ref refid="structx430__indirect__block" kindref="compound">x430_indirect_block</ref> *</type>
+        <definition>const struct x430_indirect_block* x430_model::indirect</definition>
+        <argsstring></argsstring>
+        <name>indirect</name>
+        <qualifiedname>x430_model::indirect</qualifiedname>
+        <briefdescription>
+<para>Indirect blocks, sorted by address. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="116" column="37" bodyfile="inc/x430_model.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__model_1a9a13e1fbbb2ffa8dea1b21f44a7fc656" prot="public" static="no" mutable="no">
+        <type>const struct <ref refid="structx430__segment" kindref="compound">x430_segment</ref> *</type>
+        <definition>const struct x430_segment* x430_model::segments</definition>
+        <argsstring></argsstring>
+        <name>segments</name>
+        <qualifiedname>x430_model::segments</qualifiedname>
+        <briefdescription>
+<para>Image segments; the first starts at 0. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="117" column="30" bodyfile="inc/x430_model.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__model_1a7e50f852a0c49b0f0bcc7a6025dd9dbd" prot="public" static="no" mutable="no">
+        <type>uint32_t</type>
+        <definition>uint32_t x430_model::operating_modes</definition>
+        <argsstring></argsstring>
+        <name>operating_modes</name>
+        <qualifiedname>x430_model::operating_modes</qualifiedname>
+        <briefdescription>
+<para>Bit n set: Operating Mode n allowed. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="118" column="14" bodyfile="inc/x430_model.h" bodystart="118" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__model_1a7d9ab7ff622b3ca3cfa8bf5cad4b56bf" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -33,7 +93,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="94" column="14" bodyfile="inc/x430_model.h" bodystart="94" bodyend="-1"/>
+        <location file="inc/x430_model.h" line="119" column="14" bodyfile="inc/x430_model.h" bodystart="119" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__model_1ad9fe827ee9343a22093f7234e78e92b8" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -49,22 +109,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="95" column="14" bodyfile="inc/x430_model.h" bodystart="95" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structx430__model_1afad2937147abc466a5504e100226c86b" prot="public" static="no" mutable="no">
-        <type>const struct <ref refid="structx430__reg" kindref="compound">x430_reg</ref> *</type>
-        <definition>const struct x430_reg* x430_model::registers</definition>
-        <argsstring></argsstring>
-        <name>registers</name>
-        <qualifiedname>x430_model::registers</qualifiedname>
-        <briefdescription>
-<para>Sorted by address. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/x430_model.h" line="96" column="26" bodyfile="inc/x430_model.h" bodystart="96" bodyend="-1"/>
+        <location file="inc/x430_model.h" line="120" column="14" bodyfile="inc/x430_model.h" bodystart="120" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__model_1a4ff782c6969de63e2d83f324a750bded" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -79,67 +124,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="97" column="14" bodyfile="inc/x430_model.h" bodystart="97" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structx430__model_1acadb9fdf8e61b94054213eeeec9dd6a6" prot="public" static="no" mutable="no">
-        <type>const uint8_t *</type>
-        <definition>const uint8_t* x430_model::register_map</definition>
-        <argsstring></argsstring>
-        <name>register_map</name>
-        <qualifiedname>x430_model::register_map</qualifiedname>
-        <briefdescription>
-<para>Index + 1 per address, 0 = reserved. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/x430_model.h" line="98" column="19" bodyfile="inc/x430_model.h" bodystart="98" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structx430__model_1abd1d0ed5fe61e34a0621c1ba875ec9e8" prot="public" static="no" mutable="no">
-        <type>const struct <ref refid="structx430__indirect__block" kindref="compound">x430_indirect_block</ref> *</type>
-        <definition>const struct x430_indirect_block* x430_model::indirect</definition>
-        <argsstring></argsstring>
-        <name>indirect</name>
-        <qualifiedname>x430_model::indirect</qualifiedname>
-        <briefdescription>
-<para>Indirect blocks. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/x430_model.h" line="99" column="37" bodyfile="inc/x430_model.h" bodystart="99" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structx430__model_1a66c2604dc610250d138c1d8476093158" prot="public" static="no" mutable="no">
-        <type>uint8_t</type>
-        <definition>uint8_t x430_model::indirect_count</definition>
-        <argsstring></argsstring>
-        <name>indirect_count</name>
-        <qualifiedname>x430_model::indirect_count</qualifiedname>
-        <briefdescription>
-<para>Entries in indirect. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/x430_model.h" line="100" column="13" bodyfile="inc/x430_model.h" bodystart="100" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structx430__model_1a7e50f852a0c49b0f0bcc7a6025dd9dbd" prot="public" static="no" mutable="no">
-        <type>uint32_t</type>
-        <definition>uint32_t x430_model::operating_modes</definition>
-        <argsstring></argsstring>
-        <name>operating_modes</name>
-        <qualifiedname>x430_model::operating_modes</qualifiedname>
-        <briefdescription>
-<para>Bit n set: Operating Mode n allowed. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/x430_model.h" line="101" column="14" bodyfile="inc/x430_model.h" bodystart="101" bodyend="-1"/>
+        <location file="inc/x430_model.h" line="121" column="14" bodyfile="inc/x430_model.h" bodystart="121" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__model_1a54a442067ecb9189a11e8025c5925dfb" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -154,7 +139,37 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="102" column="14" bodyfile="inc/x430_model.h" bodystart="102" bodyend="-1"/>
+        <location file="inc/x430_model.h" line="122" column="14" bodyfile="inc/x430_model.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__model_1a66c2604dc610250d138c1d8476093158" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_model::indirect_count</definition>
+        <argsstring></argsstring>
+        <name>indirect_count</name>
+        <qualifiedname>x430_model::indirect_count</qualifiedname>
+        <briefdescription>
+<para>Entries in indirect. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="123" column="13" bodyfile="inc/x430_model.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__model_1a3561253c1f2365ff3811cffd76a60492" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_model::segment_count</definition>
+        <argsstring></argsstring>
+        <name>segment_count</name>
+        <qualifiedname>x430_model::segment_count</qualifiedname>
+        <briefdescription>
+<para>Entries in segments. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="124" column="13" bodyfile="inc/x430_model.h" bodystart="124" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__model_1acf3b993bf3fa237758281f6d89015cdf" prot="public" static="no" mutable="no">
         <type>uint8_t</type>
@@ -169,13 +184,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="103" column="13" bodyfile="inc/x430_model.h" bodystart="103" bodyend="-1"/>
+        <location file="inc/x430_model.h" line="125" column="13" bodyfile="inc/x430_model.h" bodystart="125" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
 <para>Control Table and capabilities of one model. </para>
     </briefdescription>
     <detaileddescription>
+<para>The Indirect Address registers are not in x430_model::registers: the library generates them from the blocks (2 bytes, RW, initial value Indirect Data n, range 64 .. table_size - 1) and numbers them after the table registers, which all lie below the first block. </para>
     </detaileddescription>
     <collaborationgraph>
       <node id="3">
@@ -191,13 +207,20 @@
         <childnode refid="3" relation="usage">
           <edgelabel>indirect</edgelabel>
         </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>segments</edgelabel>
+        </childnode>
       </node>
       <node id="2">
         <label>x430_reg</label>
         <link refid="structx430__reg"/>
       </node>
+      <node id="4">
+        <label>x430_segment</label>
+        <link refid="structx430__segment"/>
+      </node>
     </collaborationgraph>
-    <location file="inc/x430_model.h" line="91" column="1" bodyfile="inc/x430_model.h" bodystart="92" bodyend="104"/>
+    <location file="inc/x430_model.h" line="112" column="1" bodyfile="inc/x430_model.h" bodystart="113" bodyend="126"/>
     <listofallmembers>
       <member refid="structx430__model_1acf3b993bf3fa237758281f6d89015cdf" prot="public" virt="non-virtual"><scope>x430_model</scope><name>axes</name></member>
       <member refid="structx430__model_1a54a442067ecb9189a11e8025c5925dfb" prot="public" virt="non-virtual"><scope>x430_model</scope><name>current_unit_ua</name></member>
@@ -207,8 +230,9 @@
       <member refid="structx430__model_1ae2acac0be05efede9109e541bc6c0314" prot="public" virt="non-virtual"><scope>x430_model</scope><name>name</name></member>
       <member refid="structx430__model_1a7e50f852a0c49b0f0bcc7a6025dd9dbd" prot="public" virt="non-virtual"><scope>x430_model</scope><name>operating_modes</name></member>
       <member refid="structx430__model_1a4ff782c6969de63e2d83f324a750bded" prot="public" virt="non-virtual"><scope>x430_model</scope><name>register_count</name></member>
-      <member refid="structx430__model_1acadb9fdf8e61b94054213eeeec9dd6a6" prot="public" virt="non-virtual"><scope>x430_model</scope><name>register_map</name></member>
       <member refid="structx430__model_1afad2937147abc466a5504e100226c86b" prot="public" virt="non-virtual"><scope>x430_model</scope><name>registers</name></member>
+      <member refid="structx430__model_1a3561253c1f2365ff3811cffd76a60492" prot="public" virt="non-virtual"><scope>x430_model</scope><name>segment_count</name></member>
+      <member refid="structx430__model_1a9a13e1fbbb2ffa8dea1b21f44a7fc656" prot="public" virt="non-virtual"><scope>x430_model</scope><name>segments</name></member>
       <member refid="structx430__model_1ad9fe827ee9343a22093f7234e78e92b8" prot="public" virt="non-virtual"><scope>x430_model</scope><name>table_size</name></member>
     </listofallmembers>
   </compounddef>

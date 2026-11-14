@@ -2224,7 +2224,7 @@ locked), <code>X430_WRITE_VALIDATE_ONLY</code> (0x02, check only, store nothing,
 </tbody>
 </table>
 <p><strong>Persistent slots</strong> (<code>enum x430_nvm_slot</code>): <code>X430_NVM_EEPROM</code> (0, <code>X430_NVM_EEPROM_SIZE</code>
-= 76 bytes), <code>X430_NVM_BACKUP</code> (1, <code>X430_NVM_BACKUP_SIZE</code> = 674 bytes);
+= 76 bytes), <code>X430_NVM_BACKUP</code> (1, <code>X430_NVM_BACKUP_SIZE</code> = 328 bytes);
 <code>X430_NVM_HEADER_SIZE</code> = 10.</p>
 <p><strong>Control Table</strong> constants: <code>X430_ADDR_*</code> (addresses of the registers used by the library
 and by applications, for example <code>X430_ADDR_GOAL_POSITION</code> = 116, <code>X430_RAM_START</code> = 64),
@@ -2251,7 +2251,7 @@ and by applications, for example <code>X430_ADDR_GOAL_POSITION</code> = 116, <co
 </tr>
 <tr>
 <td><code>struct x430_hooks</code></td>
-<td><code>write</code>, <code>read</code>, <code>event</code>, <code>nvm_load</code>, <code>nvm_store</code></td>
+<td><code>write</code>, <code>read</code>, <code>event</code>, <code>nvm_read</code>, <code>nvm_write</code></td>
 <td>Application hooks of a device (<a href="../usage/#reacting-to-the-host-hooks">Using the Library</a>)</td>
 </tr>
 <tr>
@@ -2312,20 +2312,20 @@ and by applications, for example <code>X430_ADDR_GOAL_POSITION</code> = 116, <co
 <td>See the events above</td>
 </tr>
 <tr>
-<td><code>x430_nvm_load_hook</code></td>
-<td><code>int (*)(struct x430_device* device, enum x430_nvm_slot slot, uint8_t* data, uint16_t size, void* user_data)</code></td>
-<td>0 when <code>size</code> bytes were read, negative without data</td>
+<td><code>x430_nvm_read_hook</code></td>
+<td><code>int (*)(struct x430_device* device, enum x430_nvm_slot slot, uint16_t offset, uint8_t* data, uint16_t length, void* user_data)</code></td>
+<td>0 when <code>length</code> bytes from <code>offset</code> were read, negative without data</td>
 </tr>
 <tr>
-<td><code>x430_nvm_store_hook</code></td>
-<td><code>int (*)(struct x430_device* device, enum x430_nvm_slot slot, const uint8_t* data, uint16_t size, void* user_data)</code></td>
-<td>0, or negative (the host gets Result Fail)</td>
+<td><code>x430_nvm_write_hook</code></td>
+<td><code>int (*)(struct x430_device* device, enum x430_nvm_slot slot, uint16_t offset, const uint8_t* data, uint16_t length, void* user_data)</code></td>
+<td>0, or negative (the remaining parts are not written, the host gets Result Fail)</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Instances.</strong> <code>struct x430_bus</code>, <code>struct x430_device</code> and <code>struct x430_sim</code> are opaque
-arrays of <code>X430_BUS_WORDS</code>, <code>X430_DEVICE_WORDS</code> and <code>X430_SIM_WORDS</code> 64-bit words (3,128 B,
-1,400 B and 32 B on Cortex-M4 with the default options). Allocate them, pass their
+arrays of <code>X430_BUS_WORDS</code>, <code>X430_DEVICE_WORDS</code> and <code>X430_SIM_WORDS</code> 64-bit words (2,368 B,
+384 B and 32 B on Cortex-M4 with the default options). Allocate them, pass their
 addresses, never read or write their content.</p>
 <h2 id="variables-x430h">Variables — <code>x430.h</code><a class="headerlink" href="#variables-x430h" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">extern</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_hooks</span><span class="w"> </span><span class="n">x430_sim_hooks</span><span class="p">;</span>
@@ -2699,7 +2699,7 @@ or between <code>x430_bus_lock()</code> and <code>x430_bus_unlock()</code>.</p>
 <h4 id="x430_device_init">x430_device_init<a class="headerlink" href="#x430_device_init" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">x430_device_init</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_config</span><span class="o">*</span><span class="w"> </span><span class="n">config</span><span class="p">);</span>
 </code></pre></div>
-<p>Initialize a device: factory values, stored EEPROM area (nvm_load), the RAM area and the Startup Configuration (which may call the write hook). Initialize a device before x430_bus_attach(), never while a bus serves it: the content of the instance before the call is not trusted (it may be the garbage of a stack instance), so an attachment cannot be detected.</p>
+<p>Initialize a device: factory values, stored EEPROM area (nvm_read), the RAM area and the Startup Configuration (which may call the write hook). Initialize a device before x430_bus_attach(), never while a bus serves it: the content of the instance before the call is not trusted (it may be the garbage of a stack instance), so an attachment cannot be detected.</p>
 <table>
 <thead>
 <tr>

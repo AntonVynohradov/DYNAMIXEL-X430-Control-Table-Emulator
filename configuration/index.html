@@ -1707,8 +1707,8 @@ bytes and the size of a Fast read answer to <code>DXL2_MAX_PACKET_SIZE</code> by
 (<code>10 + devices × (bytes + 4)</code>). The default is 768: a READ of up to 757 bytes, so a host
 can read the whole Control Table (addresses 0–661, 662 bytes) at once, as DYNAMIXEL
 Wizard 2.0 does (with 256 it gets a Data Length Error and shows TIME OUT). A product whose
-hosts read less may lower it: with 256 the bus needs 1,080 B instead of 3,128 B and
-<code>x430_bus_receive()</code> 772 B of stack instead of 1,796 B. <code>x430_config.h</code> sets the default
+hosts read less may lower it: with 256 the bus needs 832 B instead of 2,368 B (the stack
+does not depend on the packet size: the bus builds its answers in its own buffer). <code>x430_config.h</code> sets the default
 before it includes <code>dxl2.h</code>, so every file that includes <code>x430.h</code> sees the size the library
 was built with. Without CMake, compile DXL2-C with the same value
 (<code>-DDXL2_MAX_PACKET_SIZE=768U</code>; the default of DXL2-C alone is 256), and include <code>x430.h</code>
@@ -1881,18 +1881,18 @@ The hooks and the port they point at are not copied: keep them alive.</p>
 <tbody>
 <tr>
 <td><code>struct x430_device</code> (RAM per device)</td>
-<td style="text-align: right;">1,400 B</td>
-<td style="text-align: right;">800 B</td>
+<td style="text-align: right;">384 B</td>
+<td style="text-align: right;">384 B</td>
 </tr>
 <tr>
 <td><code>struct x430_bus</code> (RAM per bus)</td>
-<td style="text-align: right;">3,128 B</td>
-<td style="text-align: right;">2,360 B</td>
+<td style="text-align: right;">2,368 B</td>
+<td style="text-align: right;">2,368 B</td>
 </tr>
 <tr>
 <td><code>struct x430_bus</code>, <code>DXL2_MAX_PACKET_SIZE</code> 256</td>
-<td style="text-align: right;">1,080 B</td>
-<td style="text-align: right;">824 B</td>
+<td style="text-align: right;">832 B</td>
+<td style="text-align: right;">832 B</td>
 </tr>
 <tr>
 <td><code>struct x430_sim</code></td>
@@ -1906,6 +1906,11 @@ The hooks and the port they point at are not copied: keep them alive.</p>
 </tr>
 </tbody>
 </table>
+<p>A device is its compact Control Table image (316 B), the REG_WRITE data
+(<code>X430_REG_WRITE_SIZE</code>, 32 B) and its state; it keeps no copy of a persistent block. A bus
+is the DXL2-C link (receive buffer and decoded packet, 1,560 B with 768-byte packets),
+one packet buffer for its answers (<code>DXL2_MAX_PACKET_SIZE</code>) and the device list
+(<code>X430_MAX_DEVICES</code> pointers). The optional features change code, not RAM.</p>
 <p>Flash (<code>.text</code>, including constants) per module:</p>
 <table>
 <thead>
@@ -1919,15 +1924,15 @@ The hooks and the port they point at are not copied: keep them alive.</p>
 <tbody>
 <tr>
 <td><code>x430_device.c</code></td>
-<td style="text-align: right;">3,618 B</td>
-<td style="text-align: right;">4,312 B</td>
-<td style="text-align: right;">3,240 B</td>
+<td style="text-align: right;">4,158 B</td>
+<td style="text-align: right;">5,916 B</td>
+<td style="text-align: right;">3,814 B</td>
 </tr>
 <tr>
 <td><code>x430_bus.c</code></td>
-<td style="text-align: right;">2,644 B</td>
-<td style="text-align: right;">3,596 B</td>
-<td style="text-align: right;">1,880 B</td>
+<td style="text-align: right;">2,820 B</td>
+<td style="text-align: right;">3,824 B</td>
+<td style="text-align: right;">2,042 B</td>
 </tr>
 <tr>
 <td><code>x430_sim.c</code></td>
@@ -1937,15 +1942,15 @@ The hooks and the port they point at are not copied: keep them alive.</p>
 </tr>
 <tr>
 <td><code>x430_model_table.c</code> (XM430-W350)</td>
-<td style="text-align: right;">2,901 B</td>
-<td style="text-align: right;">2,901 B</td>
-<td style="text-align: right;">2,901 B</td>
+<td style="text-align: right;">921 B</td>
+<td style="text-align: right;">921 B</td>
+<td style="text-align: right;">921 B</td>
 </tr>
 <tr>
 <td><strong>Library</strong></td>
-<td style="text-align: right;"><strong>11,185 B</strong></td>
-<td style="text-align: right;"><strong>13,173 B</strong></td>
-<td style="text-align: right;"><strong>8,053 B</strong></td>
+<td style="text-align: right;"><strong>9,921 B</strong></td>
+<td style="text-align: right;"><strong>13,025 B</strong></td>
+<td style="text-align: right;"><strong>6,809 B</strong></td>
 </tr>
 <tr>
 <td>DXL2-C (<code>dxl2_protocol.c</code>, <code>dxl2_link.c</code>)</td>
@@ -1955,7 +1960,12 @@ The hooks and the port they point at are not copied: keep them alive.</p>
 </tr>
 </tbody>
 </table>
-<p>On the x86-64 host the device needs 1,416 B and the bus 3,176 B (64-bit pointers).</p>
+<p>The model table holds 55 registers of 16 bytes, the two Indirect Address blocks (the
+library generates their 56 registers) and the three segments of the image; a register is
+found by binary search. DXL2-C is listed as compiled: the bus uses only its parser and
+<code>dxl2_crc16()</code>, so a link with <code>--gc-sections</code> drops <code>dxl2_link_send()</code> and
+<code>dxl2_link_send_status()</code>.</p>
+<p>On the x86-64 host the device needs 392 B and the bus 2,424 B (64-bit pointers).</p>
 <h2 id="stack-usage">Stack usage<a class="headerlink" href="#stack-usage" title="Permanent link">&para;</a></h2>
 <p>Worst-case stack of each public function including the library and DXL2-C functions it
 calls, measured with <code>-fstack-usage -fcallgraph-info=su</code> and <code>tools/docs/stack_usage.py</code>.
@@ -1986,15 +1996,15 @@ stack to the function that calls them.</p>
 </tr>
 <tr>
 <td><code>x430_bus_receive()</code></td>
-<td style="text-align: right;">1,796</td>
-<td style="text-align: right;">1,984</td>
-<td style="text-align: right;">772</td>
+<td style="text-align: right;">424</td>
+<td style="text-align: right;">656</td>
+<td style="text-align: right;">424</td>
 </tr>
 <tr>
 <td><code>x430_bus_handle_packet()</code></td>
-<td style="text-align: right;">1,764</td>
-<td style="text-align: right;">1,928</td>
-<td style="text-align: right;">740</td>
+<td style="text-align: right;">392</td>
+<td style="text-align: right;">600</td>
+<td style="text-align: right;">392</td>
 </tr>
 <tr>
 <td><code>x430_bus_poll()</code></td>
@@ -2016,21 +2026,21 @@ stack to the function that calls them.</p>
 </tr>
 <tr>
 <td><code>x430_device_init()</code></td>
-<td style="text-align: right;">88</td>
-<td style="text-align: right;">168</td>
-<td style="text-align: right;">88</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">136</td>
 </tr>
 <tr>
 <td><code>x430_device_get()</code></td>
-<td style="text-align: right;">48</td>
-<td style="text-align: right;">112</td>
-<td style="text-align: right;">48</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">92</td>
 </tr>
 <tr>
 <td><code>x430_device_set()</code></td>
-<td style="text-align: right;">48</td>
-<td style="text-align: right;">120</td>
-<td style="text-align: right;">48</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">92</td>
 </tr>
 <tr>
 <td><code>x430_device_id()</code></td>
@@ -2052,51 +2062,51 @@ stack to the function that calls them.</p>
 </tr>
 <tr>
 <td><code>x430_device_read()</code></td>
-<td style="text-align: right;">96</td>
+<td style="text-align: right;">112</td>
 <td style="text-align: right;">136</td>
-<td style="text-align: right;">96</td>
+<td style="text-align: right;">112</td>
 </tr>
 <tr>
 <td><code>x430_device_write()</code></td>
 <td style="text-align: right;">256</td>
-<td style="text-align: right;">320</td>
+<td style="text-align: right;">384</td>
 <td style="text-align: right;">256</td>
 </tr>
 <tr>
 <td><code>x430_device_reg_write()</code></td>
 <td style="text-align: right;">264</td>
-<td style="text-align: right;">320</td>
+<td style="text-align: right;">384</td>
 <td style="text-align: right;">264</td>
 </tr>
 <tr>
 <td><code>x430_device_action()</code></td>
 <td style="text-align: right;">248</td>
-<td style="text-align: right;">320</td>
+<td style="text-align: right;">384</td>
 <td style="text-align: right;">248</td>
 </tr>
 <tr>
 <td><code>x430_device_reboot()</code></td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">160</td>
-<td style="text-align: right;">80</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">128</td>
 </tr>
 <tr>
 <td><code>x430_device_factory_reset()</code></td>
-<td style="text-align: right;">96</td>
-<td style="text-align: right;">176</td>
-<td style="text-align: right;">96</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">216</td>
+<td style="text-align: right;">144</td>
 </tr>
 <tr>
 <td><code>x430_device_clear()</code></td>
-<td style="text-align: right;">48</td>
-<td style="text-align: right;">128</td>
-<td style="text-align: right;">48</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">176</td>
+<td style="text-align: right;">108</td>
 </tr>
 <tr>
 <td><code>x430_device_backup()</code></td>
-<td style="text-align: right;">76</td>
-<td style="text-align: right;">152</td>
-<td style="text-align: right;">76</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">120</td>
 </tr>
 <tr>
 <td><code>x430_sim_init()</code></td>
@@ -2106,14 +2116,17 @@ stack to the function that calls them.</p>
 </tr>
 <tr>
 <td><code>x430_sim_step()</code></td>
-<td style="text-align: right;">232</td>
-<td style="text-align: right;">624</td>
-<td style="text-align: right;">232</td>
+<td style="text-align: right;">284</td>
+<td style="text-align: right;">680</td>
+<td style="text-align: right;">284</td>
 </tr>
 </tbody>
 </table>
-<p>Most of the stack of <code>x430_bus_receive()</code> is the packet buffer of <code>dxl2_link_send()</code>
-(DXL2-C encodes each status packet into a local buffer of <code>DXL2_MAX_PACKET_SIZE</code> bytes).
+<p>The deepest chain of <code>x430_bus_receive()</code> is a REG_WRITE: dispatch, the write of the
+device (the written bytes merged with Indirect Data resolved). No packet-sized buffer is on
+the stack: the bus builds and byte-stuffs each status packet in place in its own buffer,
+and the device reads and writes persistent blocks in parts (a 16-byte chunk on the stack
+while it checks a block).
 Give the bus context this figure plus its hooks.</p>
 <p>To re-measure (in a configured build directory):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>tools/x430_measure.sh<span class="w"> </span><span class="s2">"build/X430[Release]"</span>

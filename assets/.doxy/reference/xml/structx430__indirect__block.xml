@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="85" column="14" bodyfile="inc/x430_model.h" bodystart="85" bodyend="-1"/>
+        <location file="inc/x430_model.h" line="87" column="14" bodyfile="inc/x430_model.h" bodystart="87" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__indirect__block_1ad2cd425a2d253f1d3faafd55b67e3f2d" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="86" column="14" bodyfile="inc/x430_model.h" bodystart="86" bodyend="-1"/>
+        <location file="inc/x430_model.h" line="88" column="14" bodyfile="inc/x430_model.h" bodystart="88" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__indirect__block_1a3ffbf5dd8769c00f8ca46631294fb73d" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -47,7 +47,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="87" column="14" bodyfile="inc/x430_model.h" bodystart="87" bodyend="-1"/>
+        <location file="inc/x430_model.h" line="89" column="14" bodyfile="inc/x430_model.h" bodystart="89" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -55,7 +55,7 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="inc/x430_model.h" line="83" column="1" bodyfile="inc/x430_model.h" bodystart="84" bodyend="88"/>
+    <location file="inc/x430_model.h" line="85" column="1" bodyfile="inc/x430_model.h" bodystart="86" bodyend="90"/>
     <listofallmembers>
       <member refid="structx430__indirect__block_1a3ff980446e115601cf58577706805f71" prot="public" virt="non-virtual"><scope>x430_indirect_block</scope><name>address</name></member>
       <member refid="structx430__indirect__block_1a3ffbf5dd8769c00f8ca46631294fb73d" prot="public" virt="non-virtual"><scope>x430_indirect_block</scope><name>count</name></member>

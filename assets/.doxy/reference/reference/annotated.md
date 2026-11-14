@@ -20,7 +20,8 @@ Here are the classes, structs, unions and interfaces with brief descriptions:
 * **struct** [**x430\_indirect\_block**](structx430__indirect__block.md) _Indirect Address block: count addresses of 2 bytes and count data bytes._     
 * **struct** [**x430\_model**](structx430__model.md) _Control Table and capabilities of one model._     
 * **struct** [**x430\_port**](structx430__port.md) _Platform services._     
-* **struct** [**x430\_reg**](structx430__reg.md) _One Control Table item._     
+* **struct** [**x430\_reg**](structx430__reg.md) _One Control Table item (16 bytes of flash)._     
+* **struct** [**x430\_segment**](structx430__segment.md) _Segment of the compact Control Table image of a device: Control Table addresses address ._     
 * **struct** [**x430\_sim**](structx430__sim.md) _Kinematic model of an X430 behind a device._     
 * **struct** [**x430\_sim\_config**](structx430__sim__config.md) _Simulator configuration, copied by_ [_**x430\_sim\_init()**_](group__x430.md#function-x430_sim_init) _._    
 * **struct** [**x430\_sim\_ctx**](structx430__sim__ctx.md) _State behind the opaque_ [_**x430\_sim**_](structx430__sim.md) _._    

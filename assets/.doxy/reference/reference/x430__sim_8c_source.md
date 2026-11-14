@@ -533,8 +533,8 @@ const struct x430_hooks x430_sim_hooks = {
     .write = x430_sim_write,
     .read = NULL,
     .event = x430_sim_event,
-    .nvm_load = NULL,
-    .nvm_store = NULL,
+    .nvm_read = NULL,
+    .nvm_write = NULL,
 };
 
 /* ==============================================================================
@@ -603,8 +603,8 @@ const struct x430_hooks x430_sim_hooks = {
     .write = NULL,
     .read = NULL,
     .event = NULL,
-    .nvm_load = NULL,
-    .nvm_store = NULL,
+    .nvm_read = NULL,
+    .nvm_write = NULL,
 };
 
 int x430_sim_init(struct x430_sim* sim, struct x430_device* device,

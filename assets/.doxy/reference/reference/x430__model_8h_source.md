@@ -22,6 +22,8 @@ extern "C" {
 #define X430_REG_EEPROM 0x02U
 #define X430_REG_SIGNED 0x04U
 #define X430_REG_GOAL 0x08U
+#define X430_REG_CHECK_SHIFT 4U
+#define X430_REG_CHECK(check) ((uint32_t)(check) << X430_REG_CHECK_SHIFT)
 
 enum x430_check
 {
@@ -39,11 +41,9 @@ struct x430_reg
     uint16_t address; 
     uint8_t size;     
     uint8_t flags;    
-    uint8_t check;    
-    uint16_t ref;     
     int32_t initial;  
     int32_t min;      
-    int32_t max;      
+    int32_t max; 
 };
 
 struct x430_indirect_block
@@ -53,18 +53,26 @@ struct x430_indirect_block
     uint16_t count;   
 };
 
+struct x430_segment
+{
+    uint16_t address; 
+    uint16_t length;  
+    uint16_t offset;  
+};
+
 struct x430_model
 {
     const char* name;                           
+    const struct x430_reg* registers;           
+    const struct x430_indirect_block* indirect; 
+    const struct x430_segment* segments;        
+    uint32_t operating_modes;                   
     uint16_t model_number;                      
     uint16_t table_size;                        
-    const struct x430_reg* registers;           
     uint16_t register_count;                    
-    const uint8_t* register_map;                
-    const struct x430_indirect_block* indirect; 
-    uint8_t indirect_count;                     
-    uint32_t operating_modes;                   
     uint16_t current_unit_ua;                   
+    uint8_t indirect_count;                     
+    uint8_t segment_count;                      
     uint8_t axes;                               
 };
 

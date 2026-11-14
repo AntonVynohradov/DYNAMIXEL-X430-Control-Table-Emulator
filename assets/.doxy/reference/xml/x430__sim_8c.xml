@@ -45,6 +45,8 @@
         <link refid="x430__internal_8h_source"/>
         <childnode refid="11" relation="include">
         </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
         <childnode refid="4" relation="include">
         </childnode>
         <childnode refid="2" relation="include">
@@ -637,8 +639,8 @@
 <codeline lineno="543"><highlight class="normal"><sp/><sp/><sp/><sp/>.<ref refid="structx430__hooks_1ac8c1160f5c88e21a95f68b4bd2627b55" kindref="member">write</ref><sp/>=<sp/>x430_sim_write,</highlight></codeline>
 <codeline lineno="544"><highlight class="normal"><sp/><sp/><sp/><sp/>.read<sp/>=<sp/>NULL,</highlight></codeline>
 <codeline lineno="545"><highlight class="normal"><sp/><sp/><sp/><sp/>.event<sp/>=<sp/>x430_sim_event,</highlight></codeline>
-<codeline lineno="546"><highlight class="normal"><sp/><sp/><sp/><sp/>.nvm_load<sp/>=<sp/>NULL,</highlight></codeline>
-<codeline lineno="547"><highlight class="normal"><sp/><sp/><sp/><sp/>.nvm_store<sp/>=<sp/>NULL,</highlight></codeline>
+<codeline lineno="546"><highlight class="normal"><sp/><sp/><sp/><sp/>.nvm_read<sp/>=<sp/>NULL,</highlight></codeline>
+<codeline lineno="547"><highlight class="normal"><sp/><sp/><sp/><sp/>.nvm_write<sp/>=<sp/>NULL,</highlight></codeline>
 <codeline lineno="548"><highlight class="normal">};</highlight></codeline>
 <codeline lineno="549"><highlight class="normal"></highlight></codeline>
 <codeline lineno="550"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>==============================================================================</highlight></codeline>
@@ -707,8 +709,8 @@
 <codeline lineno="613"><highlight class="normal"><sp/><sp/><sp/><sp/>.<ref refid="structx430__hooks_1ac8c1160f5c88e21a95f68b4bd2627b55" kindref="member">write</ref><sp/>=<sp/>NULL,</highlight></codeline>
 <codeline lineno="614"><highlight class="normal"><sp/><sp/><sp/><sp/>.read<sp/>=<sp/>NULL,</highlight></codeline>
 <codeline lineno="615"><highlight class="normal"><sp/><sp/><sp/><sp/>.event<sp/>=<sp/>NULL,</highlight></codeline>
-<codeline lineno="616"><highlight class="normal"><sp/><sp/><sp/><sp/>.nvm_load<sp/>=<sp/>NULL,</highlight></codeline>
-<codeline lineno="617"><highlight class="normal"><sp/><sp/><sp/><sp/>.nvm_store<sp/>=<sp/>NULL,</highlight></codeline>
+<codeline lineno="616"><highlight class="normal"><sp/><sp/><sp/><sp/>.nvm_read<sp/>=<sp/>NULL,</highlight></codeline>
+<codeline lineno="617"><highlight class="normal"><sp/><sp/><sp/><sp/>.nvm_write<sp/>=<sp/>NULL,</highlight></codeline>
 <codeline lineno="618"><highlight class="normal">};</highlight></codeline>
 <codeline lineno="619"><highlight class="normal"></highlight></codeline>
 <codeline lineno="620"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="group__x430_1ga9e6f35869f8631cbb30b49b11e7107b2" kindref="member">x430_sim_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__sim" kindref="compound">x430_sim</ref>*<sp/>sim,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structx430__device" kindref="compound">x430_device</ref>*<sp/>device,</highlight></codeline>

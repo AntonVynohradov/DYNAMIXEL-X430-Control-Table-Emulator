@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="183" column="21" bodyfile="inc/x430_types.h" bodystart="183" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="198" column="21" bodyfile="inc/x430_types.h" bodystart="198" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__hooks_1aca48905169e4ee844638f12b46d3b0b6" prot="public" static="no" mutable="no">
         <type><ref refid="group__x430__types_1ga1618e2f9c05567bc41339e0fb98845b3" kindref="member">x430_read_hook</ref></type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="184" column="20" bodyfile="inc/x430_types.h" bodystart="184" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="199" column="20" bodyfile="inc/x430_types.h" bodystart="199" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__hooks_1aa88bdb1b64a0a2e289c6de118f3a0c79" prot="public" static="no" mutable="no">
         <type><ref refid="group__x430__types_1ga63594ce085fa44faa322668f28dfe54e" kindref="member">x430_event_hook</ref></type>
@@ -47,37 +47,37 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="185" column="21" bodyfile="inc/x430_types.h" bodystart="185" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="200" column="21" bodyfile="inc/x430_types.h" bodystart="200" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" prot="public" static="no" mutable="no">
-        <type><ref refid="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" kindref="member">x430_nvm_load_hook</ref></type>
-        <definition>x430_nvm_load_hook x430_hooks::nvm_load</definition>
+      <memberdef kind="variable" id="structx430__hooks_1a5a7339c6c85d02ce552efd0088bb36aa" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1ga9146fe322468686c662aa285ccba5aa7" kindref="member">x430_nvm_read_hook</ref></type>
+        <definition>x430_nvm_read_hook x430_hooks::nvm_read</definition>
         <argsstring></argsstring>
-        <name>nvm_load</name>
-        <qualifiedname>x430_hooks::nvm_load</qualifiedname>
+        <name>nvm_read</name>
+        <qualifiedname>x430_hooks::nvm_read</qualifiedname>
         <briefdescription>
-<para>Load the EEPROM area or the backup. </para>
+<para>Read part of the EEPROM block or of the backup. </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="186" column="24" bodyfile="inc/x430_types.h" bodystart="186" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="201" column="24" bodyfile="inc/x430_types.h" bodystart="201" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structx430__hooks_1a9fd99af3afec213a15c791489e535336" prot="public" static="no" mutable="no">
-        <type><ref refid="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" kindref="member">x430_nvm_store_hook</ref></type>
-        <definition>x430_nvm_store_hook x430_hooks::nvm_store</definition>
+      <memberdef kind="variable" id="structx430__hooks_1ad8b7dc1964e5ea54939219f0b5b8872e" prot="public" static="no" mutable="no">
+        <type><ref refid="group__x430__types_1gaa07179a5b4e38a94c05bac2880ecc738" kindref="member">x430_nvm_write_hook</ref></type>
+        <definition>x430_nvm_write_hook x430_hooks::nvm_write</definition>
         <argsstring></argsstring>
-        <name>nvm_store</name>
-        <qualifiedname>x430_hooks::nvm_store</qualifiedname>
+        <name>nvm_write</name>
+        <qualifiedname>x430_hooks::nvm_write</qualifiedname>
         <briefdescription>
-<para>Store the EEPROM area or the backup. </para>
+<para>Write part of the EEPROM block or of the backup. </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="187" column="25" bodyfile="inc/x430_types.h" bodystart="187" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="202" column="25" bodyfile="inc/x430_types.h" bodystart="202" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -97,18 +97,18 @@
         <link refid="structx430__hooks"/>
         <childnode refid="2" relation="usage">
           <edgelabel>event</edgelabel>
-          <edgelabel>nvm_load</edgelabel>
-          <edgelabel>nvm_store</edgelabel>
+          <edgelabel>nvm_read</edgelabel>
+          <edgelabel>nvm_write</edgelabel>
           <edgelabel>read</edgelabel>
           <edgelabel>write</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="inc/x430_types.h" line="181" column="1" bodyfile="inc/x430_types.h" bodystart="182" bodyend="188"/>
+    <location file="inc/x430_types.h" line="196" column="1" bodyfile="inc/x430_types.h" bodystart="197" bodyend="203"/>
     <listofallmembers>
       <member refid="structx430__hooks_1aa88bdb1b64a0a2e289c6de118f3a0c79" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>event</name></member>
-      <member refid="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>nvm_load</name></member>
-      <member refid="structx430__hooks_1a9fd99af3afec213a15c791489e535336" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>nvm_store</name></member>
+      <member refid="structx430__hooks_1a5a7339c6c85d02ce552efd0088bb36aa" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>nvm_read</name></member>
+      <member refid="structx430__hooks_1ad8b7dc1964e5ea54939219f0b5b8872e" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>nvm_write</name></member>
       <member refid="structx430__hooks_1aca48905169e4ee844638f12b46d3b0b6" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>read</name></member>
       <member refid="structx430__hooks_1ac8c1160f5c88e21a95f68b4bd2627b55" prot="public" virt="non-virtual"><scope>x430_hooks</scope><name>write</name></member>
     </listofallmembers>

@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__segment" kind="struct" language="C++" prot="public">
+    <compoundname>x430_segment</compoundname>
+    <includes refid="x430__model_8h" local="no">x430_model.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__segment_1a9d5a09e53e273f9f985f1760b28848e5" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_segment::address</definition>
+        <argsstring></argsstring>
+        <name>address</name>
+        <qualifiedname>x430_segment::address</qualifiedname>
+        <briefdescription>
+<para>First Control Table address. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="99" column="14" bodyfile="inc/x430_model.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__segment_1a3580b02a8720ee43c00f3a965c97de46" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_segment::length</definition>
+        <argsstring></argsstring>
+        <name>length</name>
+        <qualifiedname>x430_segment::length</qualifiedname>
+        <briefdescription>
+<para>Bytes. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="100" column="14" bodyfile="inc/x430_model.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__segment_1a83d4fd2dfec7240919b2d256238dc7c0" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_segment::offset</definition>
+        <argsstring></argsstring>
+        <name>offset</name>
+        <qualifiedname>x430_segment::offset</qualifiedname>
+        <briefdescription>
+<para>Index of the first byte in the image. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="101" column="14" bodyfile="inc/x430_model.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Segment of the compact Control Table image of a device: Control Table addresses address . </para>
+    </briefdescription>
+    <detaileddescription>
+<para>. address + length - 1 are image bytes offset .. offset + length - 1. Addresses outside every segment are reserved and read 0. </para>
+    </detaileddescription>
+    <location file="inc/x430_model.h" line="97" column="1" bodyfile="inc/x430_model.h" bodystart="98" bodyend="102"/>
+    <listofallmembers>
+      <member refid="structx430__segment_1a9d5a09e53e273f9f985f1760b28848e5" prot="public" virt="non-virtual"><scope>x430_segment</scope><name>address</name></member>
+      <member refid="structx430__segment_1a3580b02a8720ee43c00f3a965c97de46" prot="public" virt="non-virtual"><scope>x430_segment</scope><name>length</name></member>
+      <member refid="structx430__segment_1a83d4fd2dfec7240919b2d256238dc7c0" prot="public" virt="non-virtual"><scope>x430_segment</scope><name>offset</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

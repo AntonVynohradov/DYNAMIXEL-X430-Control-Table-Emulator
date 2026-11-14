@@ -11,6 +11,7 @@
 
 
 * `#include <stdbool.h>`
+* `#include <stddef.h>`
 * `#include <stdint.h>`
 * `#include "x430.h"`
 
@@ -67,12 +68,13 @@
 |  uint8\_t | [**x430\_device\_alert**](#function-x430_device_alert) (const struct [**x430\_device**](structx430__device.md) \* device) <br>_Status error alert: DXL2\_ERR\_ALERT\_BIT when Hardware Error Status is not 0._  |
 |  void | [**x430\_device\_attach**](#function-x430_device_attach) (struct [**x430\_device**](structx430__device.md) \* device, struct [**x430\_bus**](structx430__bus.md) \* bus) <br>_Records the bus of a device on_ [_**x430\_bus\_attach()**_](group__x430.md#function-x430_bus_attach) _._ |
 |  struct [**x430\_bus**](structx430__bus.md) \* | [**x430\_device\_bus**](#function-x430_device_bus) (const struct [**x430\_device**](structx430__device.md) \* device) <br>_Bus of the device, NULL when it is not attached._  |
-|  uint8\_t | [**x430\_device\_byte**](#function-x430_device_byte) (const struct [**x430\_device**](structx430__device.md) \* device, uint16\_t address) <br>_One byte of the Control Table image._  |
+|  uint8\_t | [**x430\_device\_byte**](#function-x430_device_byte) (const struct [**x430\_device**](structx430__device.md) \* device, uint16\_t address) <br>_Control Table byte_ `address` _, below ::X430\_IMAGE\_DIRECT (stored at its own index)._ |
 |  bool | [**x430\_device\_ready**](#function-x430_device_ready) (const struct [**x430\_device**](structx430__device.md) \* device) <br>_True for a device that completed_ [_**x430\_device\_init()**_](group__x430.md#function-x430_device_init) _(device may be NULL)._ |
 |  void | [**x430\_device\_store**](#function-x430_device_store) (struct [**x430\_device**](structx430__device.md) \* device, uint16\_t address, int32\_t value) <br>_Store_ `value` _into the register that starts at_`address` _(none: no effect)._ |
 |  int32\_t | [**x430\_device\_value**](#function-x430_device_value) (const struct [**x430\_device**](structx430__device.md) \* device, uint16\_t address) <br>_Value of the register that starts at_ `address` _, 0 when none starts there._ |
 |  void | [**x430\_device\_watchdog**](#function-x430_device_watchdog) (struct [**x430\_device**](structx430__device.md) \* device, uint32\_t idle\_ms) <br>_Bus Watchdog check;_ `idle_ms` _is the time since the last instruction packet._ |
 |  void | [**x430\_fill**](#function-x430_fill) (uint8\_t \* destination, uint8\_t value, uint16\_t length) <br>_Sets_ `length` _bytes to_`value` _(no &lt;string.h&gt;)._ |
+|  size\_t | [**x430\_frame\_status**](#function-x430_frame_status) (uint8\_t \* tx, size\_t capacity, uint8\_t id, uint16\_t count) <br>_Completes a status packet in place (no second buffer): header,_ `id` _, the byte stuffing of instruction, error and data, the length field and the CRC._ |
 
 
 ## Public Static Functions
@@ -223,7 +225,7 @@ struct x430_bus * x430_device_bus (
 
 ### function x430\_device\_byte 
 
-_One byte of the Control Table image._ 
+_Control Table byte_ `address` _, below ::X430\_IMAGE\_DIRECT (stored at its own index)._
 ```C++
 uint8_t x430_device_byte (
     const struct x430_device * device,
@@ -319,6 +321,46 @@ void x430_fill (
 
 
 
+
+<hr>
+
+
+
+### function x430\_frame\_status 
+
+_Completes a status packet in place (no second buffer): header,_ `id` _, the byte stuffing of instruction, error and data, the length field and the CRC._
+```C++
+size_t x430_frame_status (
+    uint8_t * tx,
+    size_t capacity,
+    uint8_t id,
+    uint16_t count
+) 
+```
+
+
+
+The result is byte for byte the packet of dxl2\_encode(). A status whose stuffed form does not fit `capacity` becomes a Data Length Error without data (the alert bit is kept). 
+
+**Parameters:**
+
+
+* `tx` Packet buffer: error byte at offset 8, `count` data bytes from 9. 
+* `capacity` Size of `tx`, at least 9 + `count` and at least 11 bytes. 
+* `id` ID of the answering device. 
+* `count` Status data bytes. 
+
+
+
+**Returns:**
+
+Packet length (at least 11). 
+
+
+
+
+
+        
 
 <hr>
 ## Public Static Functions Documentation

@@ -1449,7 +1449,7 @@ Initialize the bus and every device, then attach the devices:</p>
 </code></pre></div>
 <p><code>x430_device_config::id</code> is the <strong>factory ID</strong>: it is used while no EEPROM block is stored
 and again after FACTORY_RESET 0xFF; an ID stored by the host wins at startup.
-<code>x430_device_init()</code> loads the factory values, the stored EEPROM area (<code>nvm_load</code>), the RAM
+<code>x430_device_init()</code> loads the factory values, the stored EEPROM area (<code>nvm_read</code>), the RAM
 area and applies the Startup Configuration — which may already call the write hook to
 switch the torque on. Initialize a device before attaching it, never while a bus serves
 it. A dual-axis 2XL430/2XC430 is two devices (factory IDs 1 and 2).</p>
@@ -1479,9 +1479,9 @@ it. A dual-axis 2XL430/2XC430 is two devices (factory IDs 1 and 2).</p>
 <td>Resets or stops the motor, switches the UART</td>
 </tr>
 <tr>
-<td><code>nvm_load</code>, <code>nvm_store</code></td>
-<td>Initialization, EEPROM writes, FACTORY_RESET, BACKUP</td>
-<td>Reads or writes an opaque block</td>
+<td><code>nvm_read</code>, <code>nvm_write</code></td>
+<td>Initialization, REBOOT, EEPROM writes, FACTORY_RESET, BACKUP</td>
+<td>Reads or writes part of an opaque block at an offset</td>
 </tr>
 </tbody>
 </table>
@@ -1647,7 +1647,7 @@ refuses Torque Enable = 1 with Result Fail until REBOOT.</p>
 </tr>
 <tr>
 <td>The host sees the old values after a power cycle</td>
-<td>No <code>nvm_store</code> hook, or <code>nvm_load</code> returns the block with another size</td>
+<td>No <code>nvm_write</code> hook, <code>nvm_write</code> does not keep the parts at their offsets, or <code>nvm_read</code> fails</td>
 </tr>
 <tr>
 <td>Deadlock in a hook</td>

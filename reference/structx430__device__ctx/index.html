@@ -1246,17 +1246,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-nvm" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        variable nvm
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#variable-ready" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1361,10 +1350,6 @@
 <td style="text-align: left;"><a href="#variable-config"><strong>config</strong></a>  <br><em>Copy of the configuration.</em></td>
 </tr>
 <tr>
-<td style="text-align: right;">uint8_t</td>
-<td style="text-align: left;"><a href="#variable-nvm"><strong>nvm</strong></a>  <br><em>Persistent block buffer.</em></td>
-</tr>
-<tr>
 <td style="text-align: right;">uint32_t</td>
 <td style="text-align: left;"><a href="#variable-ready"><strong>ready</strong></a>  <br><em>X430_READY after</em> <a href="../group__x430/#function-x430_device_init"><em><strong>x430_device_init()</strong></em></a> <em>.</em></td>
 </tr>
@@ -1382,7 +1367,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint8_t</td>
-<td style="text-align: left;"><a href="#variable-table"><strong>table</strong></a>  <br><em>Control Table image, little endian.</em></td>
+<td style="text-align: left;"><a href="#variable-table"><strong>table</strong></a>  <br><em>Compact Control Table image, little endian.</em></td>
 </tr>
 </tbody>
 </table>
@@ -1407,39 +1392,33 @@
 </code></pre></div></p>
 <hr>
 
-<h3 id="variable-nvm">variable nvm<a class="headerlink" href="#variable-nvm" title="Permanent link">&para;</a></h3>
-<p><em>Persistent block buffer.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">nvm</span><span class="p">[</span><span class="n">X430_NVM_BUFFER_SIZE</span><span class="p">];</span>
-</code></pre></div></p>
-<hr>
-
 <h3 id="variable-ready">variable ready<a class="headerlink" href="#variable-ready" title="Permanent link">&para;</a></h3>
 <p><em>X430_READY after</em> <a href="../group__x430/#function-x430_device_init"><em><strong>x430_device_init()</strong></em></a> <em>.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">ready</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">ready</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-reg_address">variable reg_address<a class="headerlink" href="#variable-reg_address" title="Permanent link">&para;</a></h3>
 <p><em>REG_WRITE address.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">reg_address</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">reg_address</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-reg_data">variable reg_data<a class="headerlink" href="#variable-reg_data" title="Permanent link">&para;</a></h3>
 <p><em>REG_WRITE data.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">reg_data</span><span class="p">[</span><span class="n">X430_REG_WRITE_SIZE</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">reg_data</span><span class="p">[</span><span class="n">X430_REG_WRITE_SIZE</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-reg_length">variable reg_length<a class="headerlink" href="#variable-reg_length" title="Permanent link">&para;</a></h3>
 <p><em>REG_WRITE length, 0 = none.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">reg_length</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">reg_length</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-table">variable table<a class="headerlink" href="#variable-table" title="Permanent link">&para;</a></h3>
-<p><em>Control Table image, little endian.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">table</span><span class="p">[</span><span class="n">X430_TABLE_SIZE</span><span class="p">];</span>
+<p><em>Compact Control Table image, little endian.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_device_ctx</span><span class="o">::</span><span class="n">table</span><span class="p">[</span><span class="n">X430_IMAGE_SIZE</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 

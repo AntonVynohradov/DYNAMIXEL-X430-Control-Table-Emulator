@@ -1537,9 +1537,8 @@ given to it as copies in <code>&lt;build&gt;/x430/analysis-include</code>.</p>
 </ul>
 <h3 id="dev-02-rule-115-advisory-context-of-a-callback">DEV-02: Rule 11.5 (advisory), context of a callback<a class="headerlink" href="#dev-02-rule-115-advisory-context-of-a-callback" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Location:</strong> <code>x430_writer()</code> and <code>x430_handler()</code> in <code>src/x430_bus.c</code> (the byte writer
-  and the packet handler given to DXL2-C) and <code>x430_sim_of()</code> in <code>src/x430_sim.c</code> (the
-  user data of the simulator hooks). Marked with <code>cppcheck-suppress misra-c2012-11.5</code>.</li>
+<li><strong>Location:</strong> <code>x430_handler()</code> in <code>src/x430_bus.c</code> (the packet handler given to DXL2-C)
+  and <code>x430_sim_of()</code> in <code>src/x430_sim.c</code> (the user data of the simulator hooks). Marked with <code>cppcheck-suppress misra-c2012-11.5</code>.</li>
 <li><strong>Rationale:</strong> DXL2-C and the hook interface pass a <code>void*</code> context back to the callback,
   the usual C way to give a callback its object without global state. The library converts
   it back to the type it registered.</li>

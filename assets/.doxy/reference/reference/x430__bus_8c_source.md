@@ -60,6 +60,11 @@
 #define X430_FAST_SEGMENT_OVERHEAD 4U
 #define X430_FAST_HEADER 8U
 #define X430_STATUS_DATA_MAX (DXL2_MAX_PARAMETER_SIZE - 1U)
+#define X430_TX_BODY 7U
+#define X430_TX_ERROR 8U
+#define X430_TX_DATA 9U
+#define X430_TX_LENGTH 5U
+#define X430_STUFFING 0xFDU
 
 /* ==============================================================================
  * PRIVATE TYPE DEFINITIONS
@@ -129,17 +134,17 @@ static void x430_unlock(const struct x430_bus_ctx* m)
     }
 }
 
-static int x430_writer(void* context, const uint8_t* data, size_t length)
+static bool x430_stuffed_at(const uint8_t* tx, uint32_t index)
 {
-    /* cppcheck-suppress misra-c2012-11.5 ; DEV-02 callback context */
-    struct x430_bus_ctx* m = (struct x430_bus_ctx*)context;
-    const int written = m->config.write(m->config.write_context, data, length);
+    return (tx[index] == 0xFDU) && (tx[index - 1U] == 0xFFU) && (tx[index - 2U] == 0xFFU);
+}
 
-    if (written != 0)
+static void x430_write_tx(struct x430_bus_ctx* m, size_t length)
+{
+    if (m->config.write(m->config.write_context, m->tx, length) != 0)
     {
         m->write_failed = true;
     }
-    return written;
 }
 
 static void x430_delay_status(const struct x430_bus_ctx* m, const struct x430_device* device)
@@ -166,17 +171,17 @@ static bool x430_answers(const struct x430_device* device, uint8_t needed)
 static void x430_send_status(struct x430_bus_ctx* m, const struct x430_device* device, uint8_t id,
                              uint8_t error, uint16_t length)
 {
-    const uint8_t* data = NULL;
     uint16_t count = 0U;
+    size_t total = 0U;
 
     if (error == DXL2_ERR_NONE)
     {
-        data = m->data;
         count = length;
     }
+    m->tx[X430_TX_ERROR] = (uint8_t)(error | x430_device_alert(device));
+    total = x430_frame_status(m->tx, sizeof(m->tx), id, count);
     x430_delay_status(m, device);
-    (void)dxl2_link_send_status(&m->link, id, (uint8_t)(error | x430_device_alert(device)), data,
-                                count);
+    x430_write_tx(m, total);
 }
 
 static bool x430_magic_ok(const uint8_t* parameters, uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4)
@@ -214,7 +219,7 @@ static void x430_group_read(struct x430_bus_ctx* m, uint8_t id, uint16_t address
         {
             uint8_t error = DXL2_ERR_NONE;
 
-            (void)x430_device_read(device, address, length, m->data, &error);
+            (void)x430_device_read(device, address, length, &m->tx[X430_TX_DATA], &error);
             x430_send_status(m, device, id, error, length);
         }
     }
@@ -269,8 +274,9 @@ static uint16_t x430_instruction(struct x430_bus_ctx* m, struct x430_device* dev
     switch (packet->instruction)
     {
         case DXL2_INST_PING:
-            dxl2_put_u16(&m->data[0], (uint16_t)x430_device_value(device, X430_ADDR_MODEL_NUMBER));
-            m->data[2] = x430_device_byte(device, X430_ADDR_FIRMWARE_VERSION);
+            dxl2_put_u16(&m->tx[X430_TX_DATA],
+                         (uint16_t)x430_device_value(device, X430_ADDR_MODEL_NUMBER));
+            m->tx[X430_TX_DATA + 2U] = x430_device_byte(device, X430_ADDR_FIRMWARE_VERSION);
             length = 3U;
             break;
         case DXL2_INST_READ:
@@ -287,8 +293,8 @@ static uint16_t x430_instruction(struct x430_bus_ctx* m, struct x430_device* dev
                 }
                 else
                 {
-                    (void)x430_device_read(device, dxl2_get_u16(parameters), length, m->data,
-                                           error);
+                    (void)x430_device_read(device, dxl2_get_u16(parameters), length,
+                                           &m->tx[X430_TX_DATA], error);
                 }
             }
             break;
@@ -582,15 +588,15 @@ static void x430_fast_read(struct x430_bus_ctx* m, const struct dxl2_packet* pac
                  x430_answers(device, X430_LEVEL_READ))
         {
             uint8_t error = DXL2_ERR_NONE;
-            uint8_t* data = &m->raw[position + 2U];
+            uint8_t* data = &m->tx[position + 2U];
 
             (void)x430_device_read(device, address, length, data, &error);
             if (error != DXL2_ERR_NONE)
             {
                 x430_fill(data, 0U, length);
             }
-            m->raw[position] = (uint8_t)(error | x430_device_alert(device));
-            m->raw[position + 1U] = id;
+            m->tx[position] = (uint8_t)(error | x430_device_alert(device));
+            m->tx[position + 1U] = id;
             ends[segments] = (uint16_t)(position + 2U + length);
             position = (uint32_t)ends[segments] + 2U;
             segments++;
@@ -608,19 +614,19 @@ static void x430_fast_read(struct x430_bus_ctx* m, const struct dxl2_packet* pac
 
     if (valid && (first != NULL))
     {
-        m->raw[0] = 0xFFU;
-        m->raw[1] = 0xFFU;
-        m->raw[2] = 0xFDU;
-        m->raw[3] = 0x00U;
-        m->raw[4] = DXL2_BROADCAST_ID;
-        dxl2_put_u16(&m->raw[5], (uint16_t)(position - 7U));
-        m->raw[7] = DXL2_INST_STATUS;
+        m->tx[0] = 0xFFU;
+        m->tx[1] = 0xFFU;
+        m->tx[2] = 0xFDU;
+        m->tx[3] = 0x00U;
+        m->tx[4] = DXL2_BROADCAST_ID;
+        dxl2_put_u16(&m->tx[5], (uint16_t)(position - 7U));
+        m->tx[7] = DXL2_INST_STATUS;
         for (uint8_t segment = 0U; segment < segments; segment++)
         {
-            dxl2_put_u16(&m->raw[ends[segment]], dxl2_crc16(m->raw, ends[segment]));
+            dxl2_put_u16(&m->tx[ends[segment]], dxl2_crc16(m->tx, ends[segment]));
         }
         x430_delay_status(m, first);
-        (void)x430_writer(m, m->raw, (size_t)position);
+        x430_write_tx(m, (size_t)position);
     }
 }
 
@@ -785,6 +791,54 @@ static int x430_take_write_result(struct x430_bus_ctx* m)
  * INTERNAL FUNCTIONS (x430_internal.h)
  * =============================================================================*/
 
+size_t x430_frame_status(uint8_t* tx, size_t capacity, uint8_t id, uint16_t count)
+{
+    uint32_t end = X430_TX_DATA + (uint32_t)count;
+    uint32_t stuffing = 0U;
+    uint32_t from = 0U;
+    uint32_t to = 0U;
+
+    tx[X430_TX_BODY] = DXL2_INST_STATUS;
+    for (uint32_t index = X430_TX_DATA; index < end; index++)
+    {
+        if (x430_stuffed_at(tx, index))
+        {
+            stuffing++;
+        }
+    }
+    if (((size_t)end + stuffing + 2U) > capacity)
+    {
+        /* The stuffed data does not fit: Data Length Error without data (alert bit kept). */
+        tx[X430_TX_ERROR] =
+            (uint8_t)((tx[X430_TX_ERROR] & DXL2_ERR_ALERT_BIT) | DXL2_ERR_DATA_LENGTH);
+        end = X430_TX_DATA;
+        stuffing = 0U;
+    }
+
+    /* Moves each byte up by the stuffing still to insert below it; reads stay below writes. */
+    from = end;
+    to = end + stuffing;
+    while (to > from)
+    {
+        from--;
+        if (x430_stuffed_at(tx, from))
+        {
+            to--;
+            tx[to] = X430_STUFFING;
+        }
+        to--;
+        tx[to] = tx[from];
+    }
+    tx[0] = 0xFFU;
+    tx[1] = 0xFFU;
+    tx[2] = 0xFDU;
+    tx[3] = 0x00U;
+    tx[4] = id;
+    dxl2_put_u16(&tx[X430_TX_LENGTH], (uint16_t)((end + stuffing + 2U) - X430_TX_BODY));
+    dxl2_put_u16(&tx[end + stuffing], dxl2_crc16(tx, (size_t)end + stuffing));
+    return (size_t)end + stuffing + 2U;
+}
+
 bool x430_bus_id_taken(const struct x430_bus* bus, const struct x430_device* except, uint8_t id)
 {
     bool taken = false;
@@ -834,15 +888,17 @@ int x430_bus_init(struct x430_bus* bus, const struct x430_bus_config* config)
     }
     else
     {
+        /* Receive only: the bus frames its status packets in tx[] itself, so that no
+           packet-sized buffer is needed on the stack (dxl2_link_send() has one). */
         const struct dxl2_link_config link = {
-            .write = x430_writer,
-            .write_context = m,
+            .write = NULL,
+            .write_context = NULL,
             .handler = x430_handler,
             .handler_context = m,
         };
 
         /* Field by field (no temporary copy of the context); devices[] is read only below
-           device_count, data[] and raw[] are written before they are sent. */
+           device_count, tx[] is written before it is sent. */
         m->config = *config;
         m->device_count = 0U;
         m->write_failed = false;

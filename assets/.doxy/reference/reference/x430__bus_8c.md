@@ -69,6 +69,7 @@
 | ---: | :--- |
 |  bool | [**x430\_bus\_id\_taken**](#function-x430_bus_id_taken) (const struct [**x430\_bus**](structx430__bus.md) \* bus, const struct [**x430\_device**](structx430__device.md) \* except, uint8\_t id) <br>_True when another device on_ `bus` _uses_`id` _(_`bus` _may be NULL)._ |
 |  uint32\_t | [**x430\_bus\_millis**](#function-x430_bus_millis) (const struct [**x430\_bus**](structx430__bus.md) \* bus) <br>_Milliseconds from the port of_ `bus` _; 0 without bus or clock._ |
+|  size\_t | [**x430\_frame\_status**](#function-x430_frame_status) (uint8\_t \* tx, size\_t capacity, uint8\_t id, uint16\_t count) <br>_Completes a status packet in place (no second buffer): header,_ `id` _, the byte stuffing of instruction, error and data, the length field and the CRC._ |
 
 
 ## Public Static Functions
@@ -91,12 +92,13 @@
 |  void | [**x430\_lock**](#function-x430_lock) (const struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m) <br> |
 |  bool | [**x430\_magic\_ok**](#function-x430_magic_ok) (const uint8\_t \* parameters, uint8\_t b1, uint8\_t b2, uint8\_t b3, uint8\_t b4) <br> |
 |  uint32\_t | [**x430\_millis**](#function-x430_millis) (const struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m) <br> |
-|  void | [**x430\_send\_status**](#function-x430_send_status) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, const struct [**x430\_device**](structx430__device.md) \* device, uint8\_t id, uint8\_t error, uint16\_t length) <br> |
+|  void | [**x430\_send\_status**](#function-x430_send_status) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, const struct [**x430\_device**](structx430__device.md) \* device, uint8\_t id, uint8\_t error, uint16\_t length) <br>_Sends the status packet whose_ `length` _data bytes are at X430\_TX\_DATA (none on error)._ |
+|  bool | [**x430\_stuffed\_at**](#function-x430_stuffed_at) (const uint8\_t \* tx, uint32\_t index) <br>_True when the body byte at_ `index` _ends the pattern FF FF FD (Protocol 2.0 byte stuffing)._ |
 |  void | [**x430\_sync\_read**](#function-x430_sync_read) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, const struct dxl2\_packet \* packet) <br> |
 |  void | [**x430\_sync\_write**](#function-x430_sync_write) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, const struct dxl2\_packet \* packet) <br> |
 |  int | [**x430\_take\_write\_result**](#function-x430_take_write_result) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m) <br>_Status of an entry point that may have sent status packets._  |
 |  void | [**x430\_unlock**](#function-x430_unlock) (const struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m) <br> |
-|  int | [**x430\_writer**](#function-x430_writer) (void \* context, const uint8\_t \* data, size\_t length) <br>_Writer given to DXL2-C: calls the application writer and records a failure._  |
+|  void | [**x430\_write\_tx**](#function-x430_write_tx) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, size\_t length) <br>_Writes_ `length` _bytes of the TX buffer with the application writer; records a failure._ |
 
 
 
@@ -135,6 +137,11 @@
 | define  | [**X430\_OPTION\_PARAMS**](x430__bus_8c.md#define-x430_option_params)  `5U`<br>_Parameters of CLEAR and BACKUP: option and four magic bytes._  |
 | define  | [**X430\_READ\_PARAMS**](x430__bus_8c.md#define-x430_read_params)  `4U`<br>_Parameters of READ and of the SYNC\_READ header: address and length._  |
 | define  | [**X430\_STATUS\_DATA\_MAX**](x430__bus_8c.md#define-x430_status_data_max)  `(DXL2\_MAX\_PARAMETER\_SIZE - 1U)`<br>_Largest data length of a status packet (the error byte comes first)._  |
+| define  | [**X430\_STUFFING**](x430__bus_8c.md#define-x430_stuffing)  `0xFDU`<br>_Byte stuffing: the byte inserted after FF FF FD inside the body._  |
+| define  | [**X430\_TX\_BODY**](x430__bus_8c.md#define-x430_tx_body)  `7U`<br>_Status packet in the TX buffer: offset of the instruction, the first byte stuffing covers._  |
+| define  | [**X430\_TX\_DATA**](x430__bus_8c.md#define-x430_tx_data)  `9U`<br>_Status packet in the TX buffer: offset of the status data._  |
+| define  | [**X430\_TX\_ERROR**](x430__bus_8c.md#define-x430_tx_error)  `8U`<br>_Status packet in the TX buffer: offset of the error byte._  |
+| define  | [**X430\_TX\_LENGTH**](x430__bus_8c.md#define-x430_tx_length)  `5U`<br>_Length field of a packet: offset in the packet._  |
 | define  | [**X430\_WRITE\_HEADER**](x430__bus_8c.md#define-x430_write_header)  `2U`<br>_Parameters of WRITE before the data: address._  |
 
 ## Public Types Documentation
@@ -191,6 +198,46 @@ uint32_t x430_bus_millis (
 
 
 
+
+<hr>
+
+
+
+### function x430\_frame\_status 
+
+_Completes a status packet in place (no second buffer): header,_ `id` _, the byte stuffing of instruction, error and data, the length field and the CRC._
+```C++
+size_t x430_frame_status (
+    uint8_t * tx,
+    size_t capacity,
+    uint8_t id,
+    uint16_t count
+) 
+```
+
+
+
+The result is byte for byte the packet of dxl2\_encode(). A status whose stuffed form does not fit `capacity` becomes a Data Length Error without data (the alert bit is kept). 
+
+**Parameters:**
+
+
+* `tx` Packet buffer: error byte at offset 8, `count` data bytes from 9. 
+* `capacity` Size of `tx`, at least 9 + `count` and at least 11 bytes. 
+* `id` ID of the answering device. 
+* `count` Status data bytes. 
+
+
+
+**Returns:**
+
+Packet length (at least 11). 
+
+
+
+
+
+        
 
 <hr>
 ## Public Static Functions Documentation
@@ -473,6 +520,7 @@ static uint32_t x430_millis (
 
 ### function x430\_send\_status 
 
+_Sends the status packet whose_ `length` _data bytes are at X430\_TX\_DATA (none on error)._
 ```C++
 static void x430_send_status (
     struct x430_bus_ctx * m,
@@ -485,6 +533,27 @@ static void x430_send_status (
 
 
 
+
+<hr>
+
+
+
+### function x430\_stuffed\_at 
+
+_True when the body byte at_ `index` _ends the pattern FF FF FD (Protocol 2.0 byte stuffing)._
+```C++
+static bool x430_stuffed_at (
+    const uint8_t * tx,
+    uint32_t index
+) 
+```
+
+
+
+`index` is at least X430\_TX\_DATA: the pattern lies inside the body. 
+
+
+        
 
 <hr>
 
@@ -553,13 +622,12 @@ static void x430_unlock (
 
 
 
-### function x430\_writer 
+### function x430\_write\_tx 
 
-_Writer given to DXL2-C: calls the application writer and records a failure._ 
+_Writes_ `length` _bytes of the TX buffer with the application writer; records a failure._
 ```C++
-static int x430_writer (
-    void * context,
-    const uint8_t * data,
+static void x430_write_tx (
+    struct x430_bus_ctx * m,
     size_t length
 ) 
 ```
@@ -689,6 +757,76 @@ _Parameters of READ and of the SYNC\_READ header: address and length._
 _Largest data length of a status packet (the error byte comes first)._ 
 ```C++
 #define X430_STATUS_DATA_MAX `(DXL2_MAX_PARAMETER_SIZE - 1U)`
+```
+
+
+
+
+<hr>
+
+
+
+### define X430\_STUFFING 
+
+_Byte stuffing: the byte inserted after FF FF FD inside the body._ 
+```C++
+#define X430_STUFFING `0xFDU`
+```
+
+
+
+
+<hr>
+
+
+
+### define X430\_TX\_BODY 
+
+_Status packet in the TX buffer: offset of the instruction, the first byte stuffing covers._ 
+```C++
+#define X430_TX_BODY `7U`
+```
+
+
+
+
+<hr>
+
+
+
+### define X430\_TX\_DATA 
+
+_Status packet in the TX buffer: offset of the status data._ 
+```C++
+#define X430_TX_DATA `9U`
+```
+
+
+
+
+<hr>
+
+
+
+### define X430\_TX\_ERROR 
+
+_Status packet in the TX buffer: offset of the error byte._ 
+```C++
+#define X430_TX_ERROR `8U`
+```
+
+
+
+
+<hr>
+
+
+
+### define X430\_TX\_LENGTH 
+
+_Length field of a packet: offset in the packet._ 
+```C++
+#define X430_TX_LENGTH `5U`
 ```
 
 

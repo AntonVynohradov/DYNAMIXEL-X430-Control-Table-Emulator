@@ -1268,10 +1268,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#typedef-x430_nvm_load_hook" class="md-nav__link">
+  <a href="#typedef-x430_nvm_read_hook" class="md-nav__link">
     <span class="md-ellipsis">
       
-        typedef x430_nvm_load_hook
+        typedef x430_nvm_read_hook
       
     </span>
   </a>
@@ -1279,10 +1279,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#typedef-x430_nvm_store_hook" class="md-nav__link">
+  <a href="#typedef-x430_nvm_write_hook" class="md-nav__link">
     <span class="md-ellipsis">
       
-        typedef x430_nvm_store_hook
+        typedef x430_nvm_write_hook
       
     </span>
   </a>
@@ -1395,32 +1395,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#define-x430_fast_read_bytes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        define X430_FAST_READ_BYTES
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#define-x430_nvm_backup_size" class="md-nav__link">
     <span class="md-ellipsis">
       
         define X430_NVM_BACKUP_SIZE
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#define-x430_nvm_buffer_size" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        define X430_NVM_BUFFER_SIZE
       
     </span>
   </a>
@@ -1566,11 +1544,11 @@
 </tr>
 <tr>
 <td style="text-align: right;">typedef int(*</td>
-<td style="text-align: left;"><a href="#typedef-x430_nvm_load_hook"><strong>x430_nvm_load_hook</strong></a>  <br><em>Load a persistent block (</em> <a href="../structx430__hooks/#variable-nvm_load"><em><strong>x430_hooks::nvm_load</strong></em></a> <em>).</em></td>
+<td style="text-align: left;"><a href="#typedef-x430_nvm_read_hook"><strong>x430_nvm_read_hook</strong></a>  <br><em>Read part of a persistent block (</em> <a href="../structx430__hooks/#variable-nvm_read"><em><strong>x430_hooks::nvm_read</strong></em></a> <em>).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">typedef int(*</td>
-<td style="text-align: left;"><a href="#typedef-x430_nvm_store_hook"><strong>x430_nvm_store_hook</strong></a>  <br><em>Store a persistent block (</em> <a href="../structx430__hooks/#variable-nvm_store"><em><strong>x430_hooks::nvm_store</strong></em></a> <em>), after the change; may be slow.</em></td>
+<td style="text-align: left;"><a href="#typedef-x430_nvm_write_hook"><strong>x430_nvm_write_hook</strong></a>  <br><em>Write part of a persistent block (</em> <a href="../structx430__hooks/#variable-nvm_write"><em><strong>x430_hooks::nvm_write</strong></em></a> <em>), after the change; may be slow.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">typedef void(*</td>
@@ -1605,7 +1583,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-x430_device_bytes"><strong>X430_DEVICE_BYTES</strong></a>  <code>/* multi line expression */</code><br><em>Private state of a device in bytes; x430_device.c checks it at compile time.</em></td>
+<td style="text-align: left;"><a href="./#define-x430_device_bytes"><strong>X430_DEVICE_BYTES</strong></a>  <code>((3U \* [**X430\_POINTER\_BYTES**](group__x430__types.md#define-x430_pointer_bytes)) + 17U + X430\_IMAGE\_SIZE + X430\_REG\_WRITE\_SIZE\_U)</code><br><em>Private state of a device in bytes; x430_device.c checks it at compile time.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -1617,19 +1595,11 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-x430_fast_read_bytes"><strong>X430_FAST_READ_BYTES</strong></a>  <code>[**DXL2\_MAX\_PACKET\_SIZE**](group__x430__config.md#define-dxl2_max_packet_size)</code><br><em>Bytes of the Fast Sync/Bulk Read response buffer of a bus.</em></td>
+<td style="text-align: left;"><a href="./#define-x430_nvm_backup_size"><strong>X430_NVM_BACKUP_SIZE</strong></a>  <code>([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + X430\_IMAGE\_SIZE + 2U)</code><br><em>Size of the persistent Control Table backup block (the compact image).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-x430_nvm_backup_size"><strong>X430_NVM_BACKUP_SIZE</strong></a>  <code>([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + X430\_TABLE\_SIZE + 2U)</code><br><em>Size of the persistent Control Table backup block.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-x430_nvm_buffer_size"><strong>X430_NVM_BUFFER_SIZE</strong></a>  <code>[**X430\_NVM\_BACKUP\_SIZE**](group__x430__types.md#define-x430_nvm_backup_size)</code><br><em>Bytes of the persistent block buffer inside each device.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-x430_nvm_eeprom_size"><strong>X430_NVM_EEPROM_SIZE</strong></a>  <code>([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + [**X430\_RAM\_START**](group__x430__defs.md#define-x430_ram_start) + 2U)</code><br><em>Size of the persistent EEPROM block (nvm_load / nvm_store).</em></td>
+<td style="text-align: left;"><a href="./#define-x430_nvm_eeprom_size"><strong>X430_NVM_EEPROM_SIZE</strong></a>  <code>([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + [**X430\_RAM\_START**](group__x430__defs.md#define-x430_ram_start) + 2U)</code><br><em>Size of the persistent EEPROM block (nvm_read / nvm_write).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -1693,41 +1663,45 @@
 <p>Milliseconds; wraps at 2^32. </p>
 <hr>
 
-<h3 id="typedef-x430_nvm_load_hook">typedef x430_nvm_load_hook<a class="headerlink" href="#typedef-x430_nvm_load_hook" title="Permanent link">&para;</a></h3>
-<p><em>Load a persistent block (</em> <a href="../structx430__hooks/#variable-nvm_load"><em><strong>x430_hooks::nvm_load</strong></em></a> <em>).</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>typedef int(* x430_nvm_load_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint8_t *data, uint16_t size, void *user_data);
+<h3 id="typedef-x430_nvm_read_hook">typedef x430_nvm_read_hook<a class="headerlink" href="#typedef-x430_nvm_read_hook" title="Permanent link">&para;</a></h3>
+<p><em>Read part of a persistent block (</em> <a href="../structx430__hooks/#variable-nvm_read"><em><strong>x430_hooks::nvm_read</strong></em></a> <em>).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>typedef int(* x430_nvm_read_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint16_t offset, uint8_t *data, uint16_t length, void *user_data);
 </code></pre></div></p>
+<p>The device reads a block in parts, so that it needs no buffer of its own: first the whole block in chunks (header, payload and CRC are checked), then the registers it takes from it. Return the stored bytes; where they live is up to the application. </p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>device</code> Device. </li>
-<li><code>slot</code> Block to load. </li>
-<li><code>data</code> Destination of <code>size</code> bytes. </li>
-<li><code>size</code> <a href="./#define-x430_nvm_eeprom_size"><strong>X430_NVM_EEPROM_SIZE</strong></a> or <a href="./#define-x430_nvm_backup_size"><strong>X430_NVM_BACKUP_SIZE</strong></a>. </li>
+<li><code>slot</code> Block to read. </li>
+<li><code>offset</code> First byte, from the start of the block. </li>
+<li><code>data</code> Destination of <code>length</code> bytes. </li>
+<li><code>length</code> Bytes; offset + length is at most <a href="./#define-x430_nvm_eeprom_size"><strong>X430_NVM_EEPROM_SIZE</strong></a> or <a href="./#define-x430_nvm_backup_size"><strong>X430_NVM_BACKUP_SIZE</strong></a>. </li>
 <li><code>user_data</code> <a href="../structx430__device__config/#variable-user_data"><strong>x430_device_config::user_data</strong></a>. </li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
-<li><code>0</code> <code>size</code> bytes were read. </li>
-<li><code>&lt;0</code> No data (the factory values stay). </li>
+<li><code>0</code> <code>length</code> bytes were read. </li>
+<li><code>&lt;0</code> No data: the device treats the block as missing (factory values stay). </li>
 </ul>
 <hr>
 
-<h3 id="typedef-x430_nvm_store_hook">typedef x430_nvm_store_hook<a class="headerlink" href="#typedef-x430_nvm_store_hook" title="Permanent link">&para;</a></h3>
-<p><em>Store a persistent block (</em> <a href="../structx430__hooks/#variable-nvm_store"><em><strong>x430_hooks::nvm_store</strong></em></a> <em>), after the change; may be slow.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>typedef int(* x430_nvm_store_hook) (struct x430_device *device, enum x430_nvm_slot slot, const uint8_t *data, uint16_t size, void *user_data);
+<h3 id="typedef-x430_nvm_write_hook">typedef x430_nvm_write_hook<a class="headerlink" href="#typedef-x430_nvm_write_hook" title="Permanent link">&para;</a></h3>
+<p><em>Write part of a persistent block (</em> <a href="../structx430__hooks/#variable-nvm_write"><em><strong>x430_hooks::nvm_write</strong></em></a> <em>), after the change; may be slow.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>typedef int(* x430_nvm_write_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint16_t offset, const uint8_t *data, uint16_t length, void *user_data);
 </code></pre></div></p>
+<p>A block is written in parts with increasing offsets, from 0 to its end (<a href="./#define-x430_nvm_eeprom_size"><strong>X430_NVM_EEPROM_SIZE</strong></a> or <a href="./#define-x430_nvm_backup_size"><strong>X430_NVM_BACKUP_SIZE</strong></a>): header, payload (straight from the Control Table image of the device) and CRC. Start a new block at offset 0 (for example erase the flash page) and commit it when offset + length reaches the size. A block that is not written to its end fails the CRC check when it is read. </p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>device</code> Device. </li>
-<li><code>slot</code> Block to store. </li>
-<li><code>data</code> <code>size</code> bytes: header, payload and CRC, opaque to the application. </li>
-<li><code>size</code> <a href="./#define-x430_nvm_eeprom_size"><strong>X430_NVM_EEPROM_SIZE</strong></a> or <a href="./#define-x430_nvm_backup_size"><strong>X430_NVM_BACKUP_SIZE</strong></a>. </li>
+<li><code>slot</code> Block to write. </li>
+<li><code>offset</code> First byte, from the start of the block. </li>
+<li><code>data</code> <code>length</code> bytes, opaque to the application. </li>
+<li><code>length</code> Bytes. </li>
 <li><code>user_data</code> <a href="../structx430__device__config/#variable-user_data"><strong>x430_device_config::user_data</strong></a>. </li>
 </ul>
 <p><strong>Return value:</strong></p>
 <ul>
-<li><code>0</code> Stored. </li>
-<li><code>&lt;0</code> Failure, reported to the host as Result Fail. </li>
+<li><code>0</code> Written. </li>
+<li><code>&lt;0</code> Failure: the remaining parts are not written, the host gets Result Fail. </li>
 </ul>
 <hr>
 
@@ -1784,7 +1758,7 @@
 
 <h3 id="define-x430_device_bytes">define X430_DEVICE_BYTES<a class="headerlink" href="#define-x430_device_bytes" title="Permanent link">&para;</a></h3>
 <p><em>Private state of a device in bytes; x430_device.c checks it at compile time.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>#define X430_DEVICE_BYTES `((3U * X430_POINTER_BYTES ) + 17U + X430_TABLE_SIZE + X430_REG_WRITE_SIZE_U + \ X430_NVM_BUFFER_SIZE )`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>#define X430_DEVICE_BYTES `((3U * X430_POINTER_BYTES ) + 17U + X430_IMAGE_SIZE + X430_REG_WRITE_SIZE_U)`
 </code></pre></div></p>
 <hr>
 
@@ -1801,45 +1775,33 @@
 <p>Plain arithmetic so that the instance size needs no sizeof (static analysis); x430_bus.c checks it at compile time. </p>
 <hr>
 
-<h3 id="define-x430_fast_read_bytes">define X430_FAST_READ_BYTES<a class="headerlink" href="#define-x430_fast_read_bytes" title="Permanent link">&para;</a></h3>
-<p><em>Bytes of the Fast Sync/Bulk Read response buffer of a bus.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>#define X430_FAST_READ_BYTES `DXL2_MAX_PACKET_SIZE`
-</code></pre></div></p>
-<hr>
-
 <h3 id="define-x430_nvm_backup_size">define X430_NVM_BACKUP_SIZE<a class="headerlink" href="#define-x430_nvm_backup_size" title="Permanent link">&para;</a></h3>
-<p><em>Size of the persistent Control Table backup block.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>#define X430_NVM_BACKUP_SIZE `( X430_NVM_HEADER_SIZE + X430_TABLE_SIZE + 2U)`
-</code></pre></div></p>
-<hr>
-
-<h3 id="define-x430_nvm_buffer_size">define X430_NVM_BUFFER_SIZE<a class="headerlink" href="#define-x430_nvm_buffer_size" title="Permanent link">&para;</a></h3>
-<p><em>Bytes of the persistent block buffer inside each device.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>#define X430_NVM_BUFFER_SIZE `X430_NVM_BACKUP_SIZE`
+<p><em>Size of the persistent Control Table backup block (the compact image).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>#define X430_NVM_BACKUP_SIZE `( X430_NVM_HEADER_SIZE + X430_IMAGE_SIZE + 2U)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_nvm_eeprom_size">define X430_NVM_EEPROM_SIZE<a class="headerlink" href="#define-x430_nvm_eeprom_size" title="Permanent link">&para;</a></h3>
-<p><em>Size of the persistent EEPROM block (nvm_load / nvm_store).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>#define X430_NVM_EEPROM_SIZE `( X430_NVM_HEADER_SIZE + X430_RAM_START + 2U)`
+<p><em>Size of the persistent EEPROM block (nvm_read / nvm_write).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>#define X430_NVM_EEPROM_SIZE `( X430_NVM_HEADER_SIZE + X430_RAM_START + 2U)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_pointer_bytes">define X430_POINTER_BYTES<a class="headerlink" href="#define-x430_pointer_bytes" title="Permanent link">&para;</a></h3>
 <p><em>Size of a pointer and of size_t: 8 on 64-bit hosts, 4 on Cortex-M.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>#define X430_POINTER_BYTES `4U`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>#define X430_POINTER_BYTES `4U`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_sim_bytes">define X430_SIM_BYTES<a class="headerlink" href="#define-x430_sim_bytes" title="Permanent link">&para;</a></h3>
 <p><em>Private state of a simulator in bytes; x430_sim.c checks it at compile time.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>#define X430_SIM_BYTES `(24U + X430_POINTER_BYTES )`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>#define X430_SIM_BYTES `(24U + X430_POINTER_BYTES )`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_sim_words">define X430_SIM_WORDS<a class="headerlink" href="#define-x430_sim_words" title="Permanent link">&para;</a></h3>
 <p><em>Size of</em> <a href="../structx430__sim/"><em><strong>x430_sim</strong></em></a> <em>in 64-bit words.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>#define X430_SIM_WORDS `(( X430_SIM_BYTES + 7U) / 8U)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>#define X430_SIM_WORDS `(( X430_SIM_BYTES + 7U) / 8U)`
 </code></pre></div></p>
 <hr>
 

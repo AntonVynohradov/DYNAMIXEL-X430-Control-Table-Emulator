@@ -242,16 +242,16 @@
         </inbodydescription>
         <location file="inc/x430_types.h" line="145" column="9" bodyfile="inc/x430_types.h" bodystart="145" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="typedef" id="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" prot="public" static="no">
+      <memberdef kind="typedef" id="group__x430__types_1ga9146fe322468686c662aa285ccba5aa7" prot="public" static="no">
         <type>int(*</type>
-        <definition>typedef int(* x430_nvm_load_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint8_t *data, uint16_t size, void *user_data)</definition>
-        <argsstring>)(struct x430_device *device, enum x430_nvm_slot slot, uint8_t *data, uint16_t size, void *user_data)</argsstring>
-        <name>x430_nvm_load_hook</name>
+        <definition>typedef int(* x430_nvm_read_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint16_t offset, uint8_t *data, uint16_t length, void *user_data)</definition>
+        <argsstring>)(struct x430_device *device, enum x430_nvm_slot slot, uint16_t offset, uint8_t *data, uint16_t length, void *user_data)</argsstring>
+        <name>x430_nvm_read_hook</name>
         <briefdescription>
-<para>Load a persistent block (<ref refid="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" kindref="member">x430_hooks::nvm_load</ref>). </para>
+<para>Read part of a persistent block (<ref refid="structx430__hooks_1a5a7339c6c85d02ce552efd0088bb36aa" kindref="member">x430_hooks::nvm_read</ref>). </para>
         </briefdescription>
         <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
+<para>The device reads a block in parts, so that it needs no buffer of its own: first the whole block in chunks (header, payload and CRC are checked), then the registers it takes from it. Return the stored bytes; where they live is up to the application. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>device</parametername>
 </parameternamelist>
@@ -264,7 +264,15 @@
 <parametername>slot</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Block to load. </para>
+<para>Block to read. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First byte, from the start of the block. </para>
 </parameterdescription>
 </parameteritem>
 <parameteritem>
@@ -272,15 +280,15 @@
 <parametername>data</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Destination of <computeroutput>size</computeroutput> bytes. </para>
+<para>Destination of <computeroutput>length</computeroutput> bytes. </para>
 </parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
-<parametername>size</parametername>
+<parametername>length</parametername>
 </parameternamelist>
 <parameterdescription>
-<para><ref refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kindref="member">X430_NVM_EEPROM_SIZE</ref> or <ref refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kindref="member">X430_NVM_BACKUP_SIZE</ref>. </para>
+<para>Bytes; offset + length is at most <ref refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kindref="member">X430_NVM_EEPROM_SIZE</ref> or <ref refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kindref="member">X430_NVM_BACKUP_SIZE</ref>. </para>
 </parameterdescription>
 </parameteritem>
 <parameteritem>
@@ -297,7 +305,7 @@
 <parametername>0</parametername>
 </parameternamelist>
 <parameterdescription>
-<para><computeroutput>size</computeroutput> bytes were read. </para>
+<para><computeroutput>length</computeroutput> bytes were read. </para>
 </parameterdescription>
 </parameteritem>
 <parameteritem>
@@ -305,7 +313,7 @@
 <parametername>&lt;0</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>No data (the factory values stay). </para>
+<para>No data: the device treats the block as missing (factory values stay). </para>
 </parameterdescription>
 </parameteritem>
 </parameterlist>
@@ -313,18 +321,18 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="158" column="9" bodyfile="inc/x430_types.h" bodystart="158" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="164" column="9" bodyfile="inc/x430_types.h" bodystart="164" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="typedef" id="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" prot="public" static="no">
+      <memberdef kind="typedef" id="group__x430__types_1gaa07179a5b4e38a94c05bac2880ecc738" prot="public" static="no">
         <type>int(*</type>
-        <definition>typedef int(* x430_nvm_store_hook) (struct x430_device *device, enum x430_nvm_slot slot, const uint8_t *data, uint16_t size, void *user_data)</definition>
-        <argsstring>)(struct x430_device *device, enum x430_nvm_slot slot, const uint8_t *data, uint16_t size, void *user_data)</argsstring>
-        <name>x430_nvm_store_hook</name>
+        <definition>typedef int(* x430_nvm_write_hook) (struct x430_device *device, enum x430_nvm_slot slot, uint16_t offset, const uint8_t *data, uint16_t length, void *user_data)</definition>
+        <argsstring>)(struct x430_device *device, enum x430_nvm_slot slot, uint16_t offset, const uint8_t *data, uint16_t length, void *user_data)</argsstring>
+        <name>x430_nvm_write_hook</name>
         <briefdescription>
-<para>Store a persistent block (<ref refid="structx430__hooks_1a9fd99af3afec213a15c791489e535336" kindref="member">x430_hooks::nvm_store</ref>), after the change; may be slow. </para>
+<para>Write part of a persistent block (<ref refid="structx430__hooks_1ad8b7dc1964e5ea54939219f0b5b8872e" kindref="member">x430_hooks::nvm_write</ref>), after the change; may be slow. </para>
         </briefdescription>
         <detaileddescription>
-<para><parameterlist kind="param"><parameteritem>
+<para>A block is written in parts with increasing offsets, from 0 to its end (<ref refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kindref="member">X430_NVM_EEPROM_SIZE</ref> or <ref refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kindref="member">X430_NVM_BACKUP_SIZE</ref>): header, payload (straight from the Control Table image of the device) and CRC. Start a new block at offset 0 (for example erase the flash page) and commit it when offset + length reaches the size. A block that is not written to its end fails the CRC check when it is read. <parameterlist kind="param"><parameteritem>
 <parameternamelist>
 <parametername>device</parametername>
 </parameternamelist>
@@ -337,7 +345,15 @@
 <parametername>slot</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Block to store. </para>
+<para>Block to write. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>offset</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>First byte, from the start of the block. </para>
 </parameterdescription>
 </parameteritem>
 <parameteritem>
@@ -345,15 +361,15 @@
 <parametername>data</parametername>
 </parameternamelist>
 <parameterdescription>
-<para><computeroutput>size</computeroutput> bytes: header, payload and CRC, opaque to the application. </para>
+<para><computeroutput>length</computeroutput> bytes, opaque to the application. </para>
 </parameterdescription>
 </parameteritem>
 <parameteritem>
 <parameternamelist>
-<parametername>size</parametername>
+<parametername>length</parametername>
 </parameternamelist>
 <parameterdescription>
-<para><ref refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kindref="member">X430_NVM_EEPROM_SIZE</ref> or <ref refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kindref="member">X430_NVM_BACKUP_SIZE</ref>. </para>
+<para>Bytes. </para>
 </parameterdescription>
 </parameteritem>
 <parameteritem>
@@ -370,7 +386,7 @@
 <parametername>0</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Stored. </para>
+<para>Written. </para>
 </parameterdescription>
 </parameteritem>
 <parameteritem>
@@ -378,7 +394,7 @@
 <parametername>&lt;0</parametername>
 </parameternamelist>
 <parameterdescription>
-<para>Failure, reported to the host as Result Fail. </para>
+<para>Failure: the remaining parts are not written, the host gets Result Fail. </para>
 </parameterdescription>
 </parameteritem>
 </parameterlist>
@@ -386,7 +402,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="171" column="9" bodyfile="inc/x430_types.h" bodystart="171" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="185" column="9" bodyfile="inc/x430_types.h" bodystart="185" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="define">
@@ -394,37 +410,25 @@
         <name>X430_NVM_EEPROM_SIZE</name>
         <initializer>(<ref refid="group__x430__defs_1gabd497cf3105b7e7a9b2a534eeaf415bb" kindref="member">X430_NVM_HEADER_SIZE</ref> + <ref refid="group__x430__defs_1gaab54a7d40320e028f2958ee828d7447b" kindref="member">X430_RAM_START</ref> + 2U)</initializer>
         <briefdescription>
-<para>Size of the persistent EEPROM block (nvm_load / nvm_store). </para>
+<para>Size of the persistent EEPROM block (nvm_read / nvm_write). </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="229" column="9" bodyfile="inc/x430_types.h" bodystart="229" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="244" column="9" bodyfile="inc/x430_types.h" bodystart="244" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" prot="public" static="no">
         <name>X430_NVM_BACKUP_SIZE</name>
-        <initializer>(<ref refid="group__x430__defs_1gabd497cf3105b7e7a9b2a534eeaf415bb" kindref="member">X430_NVM_HEADER_SIZE</ref> + X430_TABLE_SIZE + 2U)</initializer>
+        <initializer>(<ref refid="group__x430__defs_1gabd497cf3105b7e7a9b2a534eeaf415bb" kindref="member">X430_NVM_HEADER_SIZE</ref> + X430_IMAGE_SIZE + 2U)</initializer>
         <briefdescription>
-<para>Size of the persistent Control Table backup block. </para>
+<para>Size of the persistent Control Table backup block (the compact image). </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="231" column="9" bodyfile="inc/x430_types.h" bodystart="231" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="define" id="group__x430__types_1gaaf9d59e50846d139c38e2d80e697ff83" prot="public" static="no">
-        <name>X430_NVM_BUFFER_SIZE</name>
-        <initializer><ref refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kindref="member">X430_NVM_BACKUP_SIZE</ref></initializer>
-        <briefdescription>
-<para>Bytes of the persistent block buffer inside each device. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/x430_types.h" line="235" column="9" bodyfile="inc/x430_types.h" bodystart="235" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="246" column="9" bodyfile="inc/x430_types.h" bodystart="246" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" prot="public" static="no">
         <name>X430_POINTER_BYTES</name>
@@ -436,7 +440,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="244" column="10" bodyfile="inc/x430_types.h" bodystart="244" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="252" column="10" bodyfile="inc/x430_types.h" bodystart="252" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" prot="public" static="no">
         <name>X430_ALIGN_UP</name>
@@ -450,7 +454,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="248" column="9" bodyfile="inc/x430_types.h" bodystart="248" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="256" column="9" bodyfile="inc/x430_types.h" bodystart="256" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" prot="public" static="no">
         <name>X430_DXL2_LINK_BYTES</name>
@@ -466,25 +470,12 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="256" column="9" bodyfile="inc/x430_types.h" bodystart="256" bodyend="260"/>
-      </memberdef>
-      <memberdef kind="define" id="group__x430__types_1ga08d07441b61ab12ae1c227cd60604e9c" prot="public" static="no">
-        <name>X430_FAST_READ_BYTES</name>
-        <initializer><ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref></initializer>
-        <briefdescription>
-<para>Bytes of the Fast Sync/Bulk Read response buffer of a bus. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="inc/x430_types.h" line="264" column="9" bodyfile="inc/x430_types.h" bodystart="264" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="264" column="9" bodyfile="inc/x430_types.h" bodystart="264" bodyend="268"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" prot="public" static="no">
         <name>X430_BUS_BYTES</name>
-        <initializer>    (<ref refid="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" kindref="member">X430_DXL2_LINK_BYTES</ref> + (3U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) +                          \
-     (X430_MAX_DEVICES_U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 10U + DXL2_MAX_PARAMETER_SIZE + \
-     <ref refid="group__x430__types_1ga08d07441b61ab12ae1c227cd60604e9c" kindref="member">X430_FAST_READ_BYTES</ref>)</initializer>
+        <initializer>    (<ref refid="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" kindref="member">X430_DXL2_LINK_BYTES</ref> + (3U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + \
+     (X430_MAX_DEVICES_U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 10U + <ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref>)</initializer>
         <briefdescription>
 <para>Private state of a bus in bytes; x430_bus.c checks it at compile time. </para>
         </briefdescription>
@@ -492,12 +483,11 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="270" column="9" bodyfile="inc/x430_types.h" bodystart="270" bodyend="273"/>
+        <location file="inc/x430_types.h" line="271" column="9" bodyfile="inc/x430_types.h" bodystart="271" bodyend="273"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1ga337bba376411a5f61828f9084937ce16" prot="public" static="no">
         <name>X430_DEVICE_BYTES</name>
-        <initializer>    ((3U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 17U + X430_TABLE_SIZE + X430_REG_WRITE_SIZE_U + \
-     <ref refid="group__x430__types_1gaaf9d59e50846d139c38e2d80e697ff83" kindref="member">X430_NVM_BUFFER_SIZE</ref>)</initializer>
+        <initializer>    ((3U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 17U + X430_IMAGE_SIZE + X430_REG_WRITE_SIZE_U)</initializer>
         <briefdescription>
 <para>Private state of a device in bytes; x430_device.c checks it at compile time. </para>
         </briefdescription>
@@ -505,7 +495,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="276" column="9" bodyfile="inc/x430_types.h" bodystart="276" bodyend="278"/>
+        <location file="inc/x430_types.h" line="276" column="9" bodyfile="inc/x430_types.h" bodystart="276" bodyend="277"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1ga05d03ef884f780932e87d617f55d722c" prot="public" static="no">
         <name>X430_SIM_BYTES</name>
@@ -517,7 +507,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="281" column="9" bodyfile="inc/x430_types.h" bodystart="281" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="280" column="9" bodyfile="inc/x430_types.h" bodystart="280" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gafb28dc0de5a6f66dd81ca05716f253d9" prot="public" static="no">
         <name>X430_BUS_WORDS</name>
@@ -529,7 +519,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="284" column="9" bodyfile="inc/x430_types.h" bodystart="284" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="283" column="9" bodyfile="inc/x430_types.h" bodystart="283" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gafd96c5c9e3da83eddd8f8d676a38f483" prot="public" static="no">
         <name>X430_DEVICE_WORDS</name>
@@ -541,7 +531,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="286" column="9" bodyfile="inc/x430_types.h" bodystart="286" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="285" column="9" bodyfile="inc/x430_types.h" bodystart="285" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gadff3011c00dcc31eccda490f0b50a70d" prot="public" static="no">
         <name>X430_SIM_WORDS</name>
@@ -553,7 +543,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="288" column="9" bodyfile="inc/x430_types.h" bodystart="288" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="287" column="9" bodyfile="inc/x430_types.h" bodystart="287" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>

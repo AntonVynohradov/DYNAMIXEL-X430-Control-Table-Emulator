@@ -40,7 +40,7 @@
     <member refid="structx430__bus__ctx_1a9338dca83eb34400921ad0766ede907a" kind="variable"><name>last_rx_ms</name></member>
     <member refid="structx430__bus__ctx_1a3567e9f6cea6cb8b22256b66af0bc155" kind="variable"><name>device_count</name></member>
     <member refid="structx430__bus__ctx_1aba4811f98053200b9a6f434c20a3bd54" kind="variable"><name>write_failed</name></member>
-    <member refid="structx430__bus__ctx_1aad3a33fc4e7f69054334ee423e4e52f3" kind="variable"><name>data</name></member>
+    <member refid="structx430__bus__ctx_1a92a51a4a4fb1e85c7c47771a09b4c08f" kind="variable"><name>tx</name></member>
   </compound>
   <compound refid="structx430__device" kind="struct"><name>x430_device</name>
     <member refid="structx430__device_1ab70f8f6af34ff801830a73ea7d74d89f" kind="variable"><name>opaque</name></member>
@@ -59,16 +59,15 @@
     <member refid="structx430__device__ctx_1ae0ed1b5d1ba8061a21599d46fe075c27" kind="variable"><name>reg_address</name></member>
     <member refid="structx430__device__ctx_1ae0caafb85d52b6c7813049fbfc48c2a6" kind="variable"><name>reg_length</name></member>
     <member refid="structx430__device__ctx_1ad7deb45ce7e70d0f1ebfec880c503528" kind="variable"><name>baud_changed</name></member>
-    <member refid="structx430__device__ctx_1ae6f58c2014442892fcd3412072209398" kind="variable"><name>table</name></member>
+    <member refid="structx430__device__ctx_1aa1be39f1d91847090bdce99700094639" kind="variable"><name>table</name></member>
     <member refid="structx430__device__ctx_1a7b621a06b6cec711ed063f91a9c4e7a9" kind="variable"><name>reg_data</name></member>
-    <member refid="structx430__device__ctx_1a34677fb86c2a8bded50aeb34b341a36d" kind="variable"><name>nvm</name></member>
   </compound>
   <compound refid="structx430__hooks" kind="struct"><name>x430_hooks</name>
     <member refid="structx430__hooks_1ac8c1160f5c88e21a95f68b4bd2627b55" kind="variable"><name>write</name></member>
     <member refid="structx430__hooks_1aca48905169e4ee844638f12b46d3b0b6" kind="variable"><name>read</name></member>
     <member refid="structx430__hooks_1aa88bdb1b64a0a2e289c6de118f3a0c79" kind="variable"><name>event</name></member>
-    <member refid="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" kind="variable"><name>nvm_load</name></member>
-    <member refid="structx430__hooks_1a9fd99af3afec213a15c791489e535336" kind="variable"><name>nvm_store</name></member>
+    <member refid="structx430__hooks_1a5a7339c6c85d02ce552efd0088bb36aa" kind="variable"><name>nvm_read</name></member>
+    <member refid="structx430__hooks_1ad8b7dc1964e5ea54939219f0b5b8872e" kind="variable"><name>nvm_write</name></member>
   </compound>
   <compound refid="structx430__indirect__block" kind="struct"><name>x430_indirect_block</name>
     <member refid="structx430__indirect__block_1a3ff980446e115601cf58577706805f71" kind="variable"><name>address</name></member>
@@ -77,15 +76,16 @@
   </compound>
   <compound refid="structx430__model" kind="struct"><name>x430_model</name>
     <member refid="structx430__model_1ae2acac0be05efede9109e541bc6c0314" kind="variable"><name>name</name></member>
+    <member refid="structx430__model_1afad2937147abc466a5504e100226c86b" kind="variable"><name>registers</name></member>
+    <member refid="structx430__model_1abd1d0ed5fe61e34a0621c1ba875ec9e8" kind="variable"><name>indirect</name></member>
+    <member refid="structx430__model_1a9a13e1fbbb2ffa8dea1b21f44a7fc656" kind="variable"><name>segments</name></member>
+    <member refid="structx430__model_1a7e50f852a0c49b0f0bcc7a6025dd9dbd" kind="variable"><name>operating_modes</name></member>
     <member refid="structx430__model_1a7d9ab7ff622b3ca3cfa8bf5cad4b56bf" kind="variable"><name>model_number</name></member>
     <member refid="structx430__model_1ad9fe827ee9343a22093f7234e78e92b8" kind="variable"><name>table_size</name></member>
-    <member refid="structx430__model_1afad2937147abc466a5504e100226c86b" kind="variable"><name>registers</name></member>
     <member refid="structx430__model_1a4ff782c6969de63e2d83f324a750bded" kind="variable"><name>register_count</name></member>
-    <member refid="structx430__model_1acadb9fdf8e61b94054213eeeec9dd6a6" kind="variable"><name>register_map</name></member>
-    <member refid="structx430__model_1abd1d0ed5fe61e34a0621c1ba875ec9e8" kind="variable"><name>indirect</name></member>
-    <member refid="structx430__model_1a66c2604dc610250d138c1d8476093158" kind="variable"><name>indirect_count</name></member>
-    <member refid="structx430__model_1a7e50f852a0c49b0f0bcc7a6025dd9dbd" kind="variable"><name>operating_modes</name></member>
     <member refid="structx430__model_1a54a442067ecb9189a11e8025c5925dfb" kind="variable"><name>current_unit_ua</name></member>
+    <member refid="structx430__model_1a66c2604dc610250d138c1d8476093158" kind="variable"><name>indirect_count</name></member>
+    <member refid="structx430__model_1a3561253c1f2365ff3811cffd76a60492" kind="variable"><name>segment_count</name></member>
     <member refid="structx430__model_1acf3b993bf3fa237758281f6d89015cdf" kind="variable"><name>axes</name></member>
   </compound>
   <compound refid="structx430__port" kind="struct"><name>x430_port</name>
@@ -99,11 +99,14 @@
     <member refid="structx430__reg_1a26fc0e9e1f63a8b0a9e3c1d3c46409fc" kind="variable"><name>address</name></member>
     <member refid="structx430__reg_1a03f9ab97cbf85c05e99ae6fb29bd9896" kind="variable"><name>size</name></member>
     <member refid="structx430__reg_1a899b6166832f57956e7b22710396a5de" kind="variable"><name>flags</name></member>
-    <member refid="structx430__reg_1a692a3f1397d01fe3fbb1d08f7bccdf93" kind="variable"><name>check</name></member>
-    <member refid="structx430__reg_1a2b860d19c20800ea417307e0bef9ce5b" kind="variable"><name>ref</name></member>
     <member refid="structx430__reg_1a2358093f952a98065cb2cd64cb5cca09" kind="variable"><name>initial</name></member>
     <member refid="structx430__reg_1aa389881c9b434b4fa0d3835582b2dd18" kind="variable"><name>min</name></member>
     <member refid="structx430__reg_1a4277a146fd8274b902f1c0454d109126" kind="variable"><name>max</name></member>
+  </compound>
+  <compound refid="structx430__segment" kind="struct"><name>x430_segment</name>
+    <member refid="structx430__segment_1a9d5a09e53e273f9f985f1760b28848e5" kind="variable"><name>address</name></member>
+    <member refid="structx430__segment_1a3580b02a8720ee43c00f3a965c97de46" kind="variable"><name>length</name></member>
+    <member refid="structx430__segment_1a83d4fd2dfec7240919b2d256238dc7c0" kind="variable"><name>offset</name></member>
   </compound>
   <compound refid="structx430__sim" kind="struct"><name>x430_sim</name>
     <member refid="structx430__sim_1a275be47249c6c9a2e97b4ebd1fcf5d81" kind="variable"><name>opaque</name></member>
@@ -242,17 +245,17 @@
     <member refid="group__x430__model_1gad3097be267f5fb22c139faf3344b961a" kind="define"><name>X430_REG_EEPROM</name></member>
     <member refid="group__x430__model_1gab57ab6403b1656cdfa8fae302e8d0800" kind="define"><name>X430_REG_SIGNED</name></member>
     <member refid="group__x430__model_1gaf16aa0d65a906b57b57365337b5977f8" kind="define"><name>X430_REG_GOAL</name></member>
+    <member refid="group__x430__model_1ga3980b93adba8bfb3226938195b150c74" kind="define"><name>X430_REG_CHECK_SHIFT</name></member>
+    <member refid="group__x430__model_1ga9185bc08e42a97292ca1c343cb65a7ee" kind="define"><name>X430_REG_CHECK</name></member>
     <member refid="group__x430__model_1gac5fe48b7eb39461dc3a600cbc835e395" kind="enum"><name>x430_check</name></member>
     <member refid="group__x430__model_1ga1d4a98550ebd1ae429b59b487c6e57b2" kind="variable"><name>x430_model_active</name></member>
   </compound>
   <compound refid="x430__types_8h" kind="file"><name>x430_types.h</name>
     <member refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kind="define"><name>X430_NVM_EEPROM_SIZE</name></member>
     <member refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kind="define"><name>X430_NVM_BACKUP_SIZE</name></member>
-    <member refid="group__x430__types_1gaaf9d59e50846d139c38e2d80e697ff83" kind="define"><name>X430_NVM_BUFFER_SIZE</name></member>
     <member refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kind="define"><name>X430_POINTER_BYTES</name></member>
     <member refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kind="define"><name>X430_ALIGN_UP</name></member>
     <member refid="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" kind="define"><name>X430_DXL2_LINK_BYTES</name></member>
-    <member refid="group__x430__types_1ga08d07441b61ab12ae1c227cd60604e9c" kind="define"><name>X430_FAST_READ_BYTES</name></member>
     <member refid="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" kind="define"><name>X430_BUS_BYTES</name></member>
     <member refid="group__x430__types_1ga337bba376411a5f61828f9084937ce16" kind="define"><name>X430_DEVICE_BYTES</name></member>
     <member refid="group__x430__types_1ga05d03ef884f780932e87d617f55d722c" kind="define"><name>X430_SIM_BYTES</name></member>
@@ -265,8 +268,8 @@
     <member refid="group__x430__types_1gaff2ec3c355910b93f8d5c5edf59d3040" kind="typedef"><name>x430_write_hook</name></member>
     <member refid="group__x430__types_1ga1618e2f9c05567bc41339e0fb98845b3" kind="typedef"><name>x430_read_hook</name></member>
     <member refid="group__x430__types_1ga63594ce085fa44faa322668f28dfe54e" kind="typedef"><name>x430_event_hook</name></member>
-    <member refid="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" kind="typedef"><name>x430_nvm_load_hook</name></member>
-    <member refid="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" kind="typedef"><name>x430_nvm_store_hook</name></member>
+    <member refid="group__x430__types_1ga9146fe322468686c662aa285ccba5aa7" kind="typedef"><name>x430_nvm_read_hook</name></member>
+    <member refid="group__x430__types_1gaa07179a5b4e38a94c05bac2880ecc738" kind="typedef"><name>x430_nvm_write_hook</name></member>
   </compound>
   <compound refid="x430__bus_8c" kind="file"><name>x430_bus.c</name>
     <member refid="x430__bus_8c_1a99e6a68c79d29b16a1cade274d2018ce" kind="define"><name>X430_READ_PARAMS</name></member>
@@ -276,6 +279,11 @@
     <member refid="x430__bus_8c_1ae6a039019b76a3d45493122bbc0932e7" kind="define"><name>X430_FAST_SEGMENT_OVERHEAD</name></member>
     <member refid="x430__bus_8c_1a7cc938a241814abc14b3e175d6cd0f1f" kind="define"><name>X430_FAST_HEADER</name></member>
     <member refid="x430__bus_8c_1ac0f699f09b4e1c9fd7fa5114f57a9776" kind="define"><name>X430_STATUS_DATA_MAX</name></member>
+    <member refid="x430__bus_8c_1a6d1e7d06874de7350c96086e32e26d96" kind="define"><name>X430_TX_BODY</name></member>
+    <member refid="x430__bus_8c_1ad23ac66993c35ea408764ad4974a035c" kind="define"><name>X430_TX_ERROR</name></member>
+    <member refid="x430__bus_8c_1ae39806da68035785b64f7cdcd682200d" kind="define"><name>X430_TX_DATA</name></member>
+    <member refid="x430__bus_8c_1a4806c20caccd267732d6a2b0d8b1876a" kind="define"><name>X430_TX_LENGTH</name></member>
+    <member refid="x430__bus_8c_1a0c3e558fd71ce8e15757af72ebf196a4" kind="define"><name>X430_STUFFING</name></member>
     <member refid="x430__bus_8c_1a2b5f7386ae171bf0ec82a6fa8a0dedce" kind="define"><name>X430_LEVEL_PING</name></member>
     <member refid="x430__bus_8c_1a68e919c79587d386141fab3c3415b3dd" kind="define"><name>X430_LEVEL_READ</name></member>
     <member refid="x430__bus_8c_1a5a41175d628640abc4beecc588564acf" kind="define"><name>X430_LEVEL_ALL</name></member>
@@ -286,7 +294,8 @@
     <member refid="x430__bus_8c_1a2199af4ef19e0a15b84b28963cfd0cd3" kind="function"><name>x430_millis</name></member>
     <member refid="x430__bus_8c_1a0285e306ee278fefd0fd85320e20947e" kind="function"><name>x430_lock</name></member>
     <member refid="x430__bus_8c_1a9d037b7482e9cd6d3ec251eb73d1196a" kind="function"><name>x430_unlock</name></member>
-    <member refid="x430__bus_8c_1af8a2f651b466da203849c759e52cfa13" kind="function"><name>x430_writer</name></member>
+    <member refid="x430__bus_8c_1ae15abfdbffc5b999428cd8aaba945a8f" kind="function"><name>x430_stuffed_at</name></member>
+    <member refid="x430__bus_8c_1a0395caf37c478af5a28550a04d147d95" kind="function"><name>x430_write_tx</name></member>
     <member refid="x430__bus_8c_1ae1535b342c3bb976eb788b624c460d45" kind="function"><name>x430_delay_status</name></member>
     <member refid="x430__bus_8c_1ac34f53eb0969d0e64229ddf965e0acde" kind="function"><name>x430_answers</name></member>
     <member refid="x430__bus_8c_1ae62ef74d648708e176598b0c84a4c589" kind="function"><name>x430_send_status</name></member>
@@ -305,6 +314,7 @@
     <member refid="x430__bus_8c_1aae00d96a1b4af379f51d725b3b569a8b" kind="function"><name>x430_handler</name></member>
     <member refid="x430__bus_8c_1ac45af62539254385a1428c14fb23a2d7" kind="function"><name>x430_check</name></member>
     <member refid="x430__bus_8c_1a360f6f24e96baec82955804c87efae66" kind="function"><name>x430_take_write_result</name></member>
+    <member refid="x430__bus_8c_1aeacd2bc8e6b53ce837d1afd7e1859a4c" kind="function"><name>x430_frame_status</name></member>
     <member refid="x430__bus_8c_1a218c47ed90581f53e723dcec0998be9c" kind="function"><name>x430_bus_id_taken</name></member>
     <member refid="x430__bus_8c_1af2b9eb374d8526313b407df185db6a70" kind="function"><name>x430_bus_millis</name></member>
     <member refid="group__x430_1ga818bc6a25d661e75c6700e7924feada3" kind="function"><name>x430_bus_init</name></member>
@@ -318,23 +328,34 @@
   </compound>
   <compound refid="x430__device_8c" kind="file"><name>x430_device.c</name>
     <member refid="x430__device_8c_1aa6860b02290f77497d12000f675b219d" kind="define"><name>X430_NVM_FORMAT</name></member>
+    <member refid="x430__device_8c_1a20ab20810568bf8571bfb83b51316d84" kind="define"><name>X430_NVM_CHUNK</name></member>
+    <member refid="x430__device_8c_1acfd027556eab124172626c980204222c" kind="define"><name>X430_CRC_POLYNOMIAL</name></member>
     <member refid="x430__device_8c_1a8f6516323f310f4a43aa8fd9ff95d344" kind="define"><name>X430_TOUCHED_BYTES</name></member>
     <member refid="x430__device_8c_1ae2089e74ca41cffcae0b489889b8482c" kind="define"><name>X430_PULSES_PER_TURN</name></member>
     <member refid="x430__device_8c_1a28b231419dabd8d294472c46f26620cd" kind="define"><name>X430_ID_MAX</name></member>
+    <member refid="x430__device_8c_1afc70152aee13a61a18ceb1f5496d3f94" kind="function"><name>x430_slot</name></member>
+    <member refid="x430__device_8c_1a0900fdc53a145a9d10bcea0b4703ea45" kind="function"><name>x430_peek</name></member>
     <member refid="x430__device_8c_1af515803a0dcd6770c3586fef2251fdf5" kind="function"><name>x430_raw_get</name></member>
     <member refid="x430__device_8c_1a4e64f147c5d7ae45fe163a5b31cecb60" kind="function"><name>x430_raw_put</name></member>
     <member refid="x430__device_8c_1a2f33852fa705315e01d17882b68b25c6" kind="function"><name>x430_to_value</name></member>
-    <member refid="x430__device_8c_1a82cbbe8c6ec855b03a36461d8fb9a6c7" kind="function"><name>x430_reg_at</name></member>
-    <member refid="x430__device_8c_1ae554207aee102d10d9726020890bef10" kind="function"><name>x430_reg_start</name></member>
+    <member refid="x430__device_8c_1a3f0e9791fc4e2d79c666abd7420e0da2" kind="function"><name>x430_indirect_reg</name></member>
+    <member refid="x430__device_8c_1a061983189c054aba3bf9bcbdabd74144" kind="function"><name>x430_reg_by_index</name></member>
+    <member refid="x430__device_8c_1acdb9fd0aaf056abb1b521968cc0b3d30" kind="function"><name>x430_reg_find</name></member>
+    <member refid="x430__device_8c_1a5f1e49d8fe0570c3c141bdf4aa789327" kind="function"><name>x430_reg_start</name></member>
+    <member refid="x430__device_8c_1a13b54590cdda51ec514c3961c1e9ecfa" kind="function"><name>x430_reg_value</name></member>
+    <member refid="x430__device_8c_1a38403fa522ccaa730fff1e23fd6721b1" kind="function"><name>x430_reg_store</name></member>
     <member refid="x430__device_8c_1aa532417df5d0abb114a0acc623dcdb74" kind="function"><name>x430_get</name></member>
     <member refid="x430__device_8c_1a5678ff77dafb9351951512c098972bc9" kind="function"><name>x430_put</name></member>
     <member refid="x430__device_8c_1aeac1f4650ea810fc85b0769a1a3ad0d9" kind="function"><name>x430_resolve</name></member>
     <member refid="x430__device_8c_1aad9d2f6b2b9188a252e99cf9d933eebc" kind="function"><name>x430_touches_indirect</name></member>
     <member refid="x430__device_8c_1a76481394336866f2547d49fabce39e14" kind="function"><name>x430_event</name></member>
-    <member refid="x430__device_8c_1a227e5605456cfe42fcc26164e6bd5ca9" kind="function"><name>x430_nvm_pack</name></member>
-    <member refid="x430__device_8c_1aa0b07569b9232715d2b80b7944f35320" kind="function"><name>x430_nvm_load</name></member>
+    <member refid="x430__device_8c_1ac4def57ad16bcb0750166d5f5071194f" kind="function"><name>x430_crc16</name></member>
+    <member refid="x430__device_8c_1ab3d4d76d1f5c3fd38219c0b70e16375e" kind="function"><name>x430_nvm_header</name></member>
+    <member refid="x430__device_8c_1a06136d0d4bfdca023c31e56cad1629cd" kind="function"><name>x430_nvm_read</name></member>
+    <member refid="x430__device_8c_1af260abcf07447075239309dd5af17be9" kind="function"><name>x430_nvm_valid</name></member>
+    <member refid="x430__device_8c_1a1629b480ce5a25fa5b0670aec80b8f8a" kind="function"><name>x430_nvm_apply</name></member>
     <member refid="x430__device_8c_1ad9c366bf9a43f7c50f94383e3713e5d4" kind="function"><name>x430_nvm_store</name></member>
-    <member refid="x430__device_8c_1a27937a9c6c34bb12cda3e8f92f262a1a" kind="function"><name>x430_apply_eeprom</name></member>
+    <member refid="x430__device_8c_1acbda630d640fe29b8458fd3393056ab2" kind="function"><name>x430_apply_eeprom</name></member>
     <member refid="x430__device_8c_1a83117e9c9998ec82f2d8448f2f5cbd91" kind="function"><name>x430_torque_on</name></member>
     <member refid="x430__device_8c_1a6ced2a0e25b38799ccbd41e9e1f47e71" kind="function"><name>x430_abs</name></member>
     <member refid="x430__device_8c_1a0d28baa0ad0acf7cc2cc9d60c8323836" kind="function"><name>x430_check_value</name></member>
@@ -385,6 +406,7 @@
     <member refid="x430__internal_8h_1ac30418a10a33fdc27745eafaa168e8ca" kind="function"><name>x430_sim_ctx_of</name></member>
     <member refid="x430__internal_8h_1a218c47ed90581f53e723dcec0998be9c" kind="function"><name>x430_bus_id_taken</name></member>
     <member refid="x430__internal_8h_1af2b9eb374d8526313b407df185db6a70" kind="function"><name>x430_bus_millis</name></member>
+    <member refid="x430__internal_8h_1aeacd2bc8e6b53ce837d1afd7e1859a4c" kind="function"><name>x430_frame_status</name></member>
     <member refid="x430__internal_8h_1aecdb8b5af6d2ffd2f9c05dff31cc2f7a" kind="function"><name>x430_device_value</name></member>
     <member refid="x430__internal_8h_1a412babbb8aae19911abcaacb666994b0" kind="function"><name>x430_device_store</name></member>
     <member refid="x430__internal_8h_1a173cfad0ca3b848f85f3bc1750e3b19e" kind="function"><name>x430_device_byte</name></member>
@@ -600,6 +622,8 @@
     <member refid="group__x430__model_1gad3097be267f5fb22c139faf3344b961a" kind="define"><name>X430_REG_EEPROM</name></member>
     <member refid="group__x430__model_1gab57ab6403b1656cdfa8fae302e8d0800" kind="define"><name>X430_REG_SIGNED</name></member>
     <member refid="group__x430__model_1gaf16aa0d65a906b57b57365337b5977f8" kind="define"><name>X430_REG_GOAL</name></member>
+    <member refid="group__x430__model_1ga3980b93adba8bfb3226938195b150c74" kind="define"><name>X430_REG_CHECK_SHIFT</name></member>
+    <member refid="group__x430__model_1ga9185bc08e42a97292ca1c343cb65a7ee" kind="define"><name>X430_REG_CHECK</name></member>
   </compound>
   <compound refid="group__x430__types" kind="group"><name>x430_types</name>
     <member refid="group__x430__types_1ga9e8e20f327e4238a4fd09d90e9c4483a" kind="typedef"><name>x430_lock_fn</name></member>
@@ -608,15 +632,13 @@
     <member refid="group__x430__types_1gaff2ec3c355910b93f8d5c5edf59d3040" kind="typedef"><name>x430_write_hook</name></member>
     <member refid="group__x430__types_1ga1618e2f9c05567bc41339e0fb98845b3" kind="typedef"><name>x430_read_hook</name></member>
     <member refid="group__x430__types_1ga63594ce085fa44faa322668f28dfe54e" kind="typedef"><name>x430_event_hook</name></member>
-    <member refid="group__x430__types_1gab0c9598f1aef7be79d8a40a37ded510a" kind="typedef"><name>x430_nvm_load_hook</name></member>
-    <member refid="group__x430__types_1ga706d1c9897c185f86b3fbe0f1739e312" kind="typedef"><name>x430_nvm_store_hook</name></member>
+    <member refid="group__x430__types_1ga9146fe322468686c662aa285ccba5aa7" kind="typedef"><name>x430_nvm_read_hook</name></member>
+    <member refid="group__x430__types_1gaa07179a5b4e38a94c05bac2880ecc738" kind="typedef"><name>x430_nvm_write_hook</name></member>
     <member refid="group__x430__types_1ga7a4fa58fa1180c51322a90b3b0df9e5f" kind="define"><name>X430_NVM_EEPROM_SIZE</name></member>
     <member refid="group__x430__types_1ga28c3665c1d2857bcfa630c5c4b5d708b" kind="define"><name>X430_NVM_BACKUP_SIZE</name></member>
-    <member refid="group__x430__types_1gaaf9d59e50846d139c38e2d80e697ff83" kind="define"><name>X430_NVM_BUFFER_SIZE</name></member>
     <member refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kind="define"><name>X430_POINTER_BYTES</name></member>
     <member refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kind="define"><name>X430_ALIGN_UP</name></member>
     <member refid="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" kind="define"><name>X430_DXL2_LINK_BYTES</name></member>
-    <member refid="group__x430__types_1ga08d07441b61ab12ae1c227cd60604e9c" kind="define"><name>X430_FAST_READ_BYTES</name></member>
     <member refid="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" kind="define"><name>X430_BUS_BYTES</name></member>
     <member refid="group__x430__types_1ga337bba376411a5f61828f9084937ce16" kind="define"><name>X430_DEVICE_BYTES</name></member>
     <member refid="group__x430__types_1ga05d03ef884f780932e87d617f55d722c" kind="define"><name>X430_SIM_BYTES</name></member>

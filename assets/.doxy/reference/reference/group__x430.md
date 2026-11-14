@@ -79,7 +79,7 @@ _Device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0: the firmwa
 |  int | [**x430\_device\_flush\_events**](#function-x430_device_flush_events) (struct [**x430\_device**](structx430__device.md) \* device) <br>_Deliver deferred events (_ X430\_EVENT\_BAUD\_RATE _) after the status packet._ |
 |  int | [**x430\_device\_get**](#function-x430_device_get) (const struct [**x430\_device**](structx430__device.md) \* device, uint16\_t address, int32\_t \* value) <br>_Value of the register that starts at_ `address` _(lock-free)._ |
 |  int | [**x430\_device\_id**](#function-x430_device_id) (const struct [**x430\_device**](structx430__device.md) \* device, uint8\_t \* id) <br>_Current ID (7) of the device (lock-free)._  |
-|  int | [**x430\_device\_init**](#function-x430_device_init) (struct [**x430\_device**](structx430__device.md) \* device, const struct [**x430\_device\_config**](structx430__device__config.md) \* config) <br>_Initialize a device: factory values, stored EEPROM area (nvm\_load), the RAM area and the Startup Configuration (which may call the write hook)._  |
+|  int | [**x430\_device\_init**](#function-x430_device_init) (struct [**x430\_device**](structx430__device.md) \* device, const struct [**x430\_device\_config**](structx430__device__config.md) \* config) <br>_Initialize a device: factory values, stored EEPROM area (nvm\_read), the RAM area and the Startup Configuration (which may call the write hook)._  |
 |  int | [**x430\_device\_raise\_hardware\_error**](#function-x430_device_raise_hardware_error) (struct [**x430\_device**](structx430__device.md) \* device, uint8\_t bits) <br>_Report hardware errors (Hardware Error Status bits, lock-free)._  |
 |  int | [**x430\_device\_read**](#function-x430_device_read) (struct [**x430\_device**](structx430__device.md) \* device, uint16\_t address, uint16\_t length, uint8\_t \* data, uint8\_t \* error) <br>_READ semantics: read hook, Indirect Data, Realtime Tick._  |
 |  int | [**x430\_device\_reboot**](#function-x430_device_reboot) (struct [**x430\_device**](structx430__device.md) \* device) <br>_REBOOT: RAM area reset, errors cleared, Startup Configuration applied, event_ X430\_EVENT\_REBOOT _._ |
@@ -714,7 +714,7 @@ int x430_device_id (
 
 ### function x430\_device\_init 
 
-_Initialize a device: factory values, stored EEPROM area (nvm\_load), the RAM area and the Startup Configuration (which may call the write hook)._ 
+_Initialize a device: factory values, stored EEPROM area (nvm\_read), the RAM area and the Startup Configuration (which may call the write hook)._ 
 ```
 int x430_device_init (
     struct x430_device * device,

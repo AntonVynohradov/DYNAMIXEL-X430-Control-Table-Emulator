@@ -1213,17 +1213,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-check" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        variable check
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#variable-flags" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1268,17 +1257,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-ref" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        variable ref
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#variable-size" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1313,7 +1291,7 @@
 
 <h1 id="struct-x430_reg">Struct x430_reg<a class="headerlink" href="#struct-x430_reg" title="Permanent link">&para;</a></h1>
 <p><a href="../annotated/"><strong>ClassList</strong></a> <strong>&gt;</strong> <a href="./"><strong>x430_reg</strong></a></p>
-<p><em>One Control Table item.</em> </p>
+<p><em>One Control Table item (16 bytes of flash).</em> </p>
 <ul>
 <li><code>#include &lt;x430_model.h&gt;</code></li>
 </ul>
@@ -1332,11 +1310,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint8_t</td>
-<td style="text-align: left;"><a href="#variable-check"><strong>check</strong></a>  <br><em>enum x430_check.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">uint8_t</td>
-<td style="text-align: left;"><a href="#variable-flags"><strong>flags</strong></a>  <br><em>X430_REG_* bits.</em></td>
+<td style="text-align: left;"><a href="#variable-flags"><strong>flags</strong></a>  <br><em>X430_REG_* bits,</em> <a href="../group__x430__model/#define-x430_reg_check"><em><strong>X430_REG_CHECK()</strong></em></a> <em>of the write check.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int32_t</td>
@@ -1344,15 +1318,11 @@
 </tr>
 <tr>
 <td style="text-align: right;">int32_t</td>
-<td style="text-align: left;"><a href="#variable-max"><strong>max</strong></a>  <br><em>RANGE/INDIRECT upper bound, MASK allowed bits.</em></td>
+<td style="text-align: left;"><a href="#variable-max"><strong>max</strong></a>  <br><em>RANGE/INDIRECT upper bound, MASK allowed bits, SYMMETRIC limit address.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int32_t</td>
 <td style="text-align: left;"><a href="#variable-min"><strong>min</strong></a>  <br><em>RANGE/INDIRECT lower bound.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">uint16_t</td>
-<td style="text-align: left;"><a href="#variable-ref"><strong>ref</strong></a>  <br><em>Limit register address for SYMMETRIC.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint8_t</td>
@@ -1367,45 +1337,33 @@
 </code></pre></div></p>
 <hr>
 
-<h3 id="variable-check">variable check<a class="headerlink" href="#variable-check" title="Permanent link">&para;</a></h3>
-<p><em>enum x430_check.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">check</span><span class="p">;</span>
-</code></pre></div></p>
-<hr>
-
 <h3 id="variable-flags">variable flags<a class="headerlink" href="#variable-flags" title="Permanent link">&para;</a></h3>
-<p><em>X430_REG_* bits.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">flags</span><span class="p">;</span>
+<p><em>X430_REG_* bits,</em> <a href="../group__x430__model/#define-x430_reg_check"><em><strong>X430_REG_CHECK()</strong></em></a> <em>of the write check.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">flags</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-initial">variable initial<a class="headerlink" href="#variable-initial" title="Permanent link">&para;</a></h3>
 <p><em>Value after a factory reset.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">initial</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">initial</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-max">variable max<a class="headerlink" href="#variable-max" title="Permanent link">&para;</a></h3>
-<p><em>RANGE/INDIRECT upper bound, MASK allowed bits.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">max</span><span class="p">;</span>
+<p><em>RANGE/INDIRECT upper bound, MASK allowed bits, SYMMETRIC limit address.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">max</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-min">variable min<a class="headerlink" href="#variable-min" title="Permanent link">&para;</a></h3>
 <p><em>RANGE/INDIRECT lower bound.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">min</span><span class="p">;</span>
-</code></pre></div></p>
-<hr>
-
-<h3 id="variable-ref">variable ref<a class="headerlink" href="#variable-ref" title="Permanent link">&para;</a></h3>
-<p><em>Limit register address for SYMMETRIC.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">ref</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">min</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-size">variable size<a class="headerlink" href="#variable-size" title="Permanent link">&para;</a></h3>
 <p><em>1, 2 or 4 bytes.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">size</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_reg</span><span class="o">::</span><span class="n">size</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

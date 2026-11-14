@@ -98,7 +98,7 @@
           </detaileddescription>
         </enumvalue>
         <briefdescription>
-<para>Persistent storage slots (<ref refid="structx430__hooks_1a8700a8b79716bccfbc6c4a38d4add76d" kindref="member">x430_hooks::nvm_load</ref>, <ref refid="structx430__hooks_1a9fd99af3afec213a15c791489e535336" kindref="member">x430_hooks::nvm_store</ref>). </para>
+<para>Persistent storage slots (<ref refid="structx430__hooks_1a5a7339c6c85d02ce552efd0088bb36aa" kindref="member">x430_hooks::nvm_read</ref>, <ref refid="structx430__hooks_1ad8b7dc1964e5ea54939219f0b5b8872e" kindref="member">x430_hooks::nvm_write</ref>). </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>

@@ -37,8 +37,8 @@ _Application hooks of a device._ [More...](#detailed-description)
 | Type | Name |
 | ---: | :--- |
 |  [**x430\_event\_hook**](group__x430__types.md#typedef-x430_event_hook) | [**event**](#variable-event)  <br>_Reboot, factory reset, watchdog, ..._  |
-|  [**x430\_nvm\_load\_hook**](group__x430__types.md#typedef-x430_nvm_load_hook) | [**nvm\_load**](#variable-nvm_load)  <br>_Load the EEPROM area or the backup._  |
-|  [**x430\_nvm\_store\_hook**](group__x430__types.md#typedef-x430_nvm_store_hook) | [**nvm\_store**](#variable-nvm_store)  <br>_Store the EEPROM area or the backup._  |
+|  [**x430\_nvm\_read\_hook**](group__x430__types.md#typedef-x430_nvm_read_hook) | [**nvm\_read**](#variable-nvm_read)  <br>_Read part of the EEPROM block or of the backup._  |
+|  [**x430\_nvm\_write\_hook**](group__x430__types.md#typedef-x430_nvm_write_hook) | [**nvm\_write**](#variable-nvm_write)  <br>_Write part of the EEPROM block or of the backup._  |
 |  [**x430\_read\_hook**](group__x430__types.md#typedef-x430_read_hook) | [**read**](#variable-read)  <br>_Before data is read._  |
 |  [**x430\_write\_hook**](group__x430__types.md#typedef-x430_write_hook) | [**write**](#variable-write)  <br>_Every accepted register write._  |
 
@@ -114,11 +114,11 @@ x430_event_hook x430_hooks::event;
 
 
 
-### variable nvm\_load 
+### variable nvm\_read 
 
-_Load the EEPROM area or the backup._ 
+_Read part of the EEPROM block or of the backup._ 
 ```C++
-x430_nvm_load_hook x430_hooks::nvm_load;
+x430_nvm_read_hook x430_hooks::nvm_read;
 ```
 
 
@@ -128,11 +128,11 @@ x430_nvm_load_hook x430_hooks::nvm_load;
 
 
 
-### variable nvm\_store 
+### variable nvm\_write 
 
-_Store the EEPROM area or the backup._ 
+_Write part of the EEPROM block or of the backup._ 
 ```C++
-x430_nvm_store_hook x430_hooks::nvm_store;
+x430_nvm_write_hook x430_hooks::nvm_write;
 ```
 
 

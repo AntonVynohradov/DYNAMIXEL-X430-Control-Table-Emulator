@@ -1190,6 +1190,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#detailed-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detailed Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#public-attributes-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1290,10 +1301,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-register_map" class="md-nav__link">
+  <a href="#variable-registers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        variable register_map
+        variable registers
       
     </span>
   </a>
@@ -1301,10 +1312,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-registers" class="md-nav__link">
+  <a href="#variable-segment_count" class="md-nav__link">
     <span class="md-ellipsis">
       
-        variable registers
+        variable segment_count
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-segments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable segments
       
     </span>
   </a>
@@ -1346,7 +1368,7 @@
 
 <h1 id="struct-x430_model">Struct x430_model<a class="headerlink" href="#struct-x430_model" title="Permanent link">&para;</a></h1>
 <p><a href="../annotated/"><strong>ClassList</strong></a> <strong>&gt;</strong> <a href="./"><strong>x430_model</strong></a></p>
-<p><em>Control Table and capabilities of one model.</em> </p>
+<p><em>Control Table and capabilities of one model.</em> <a href="#detailed-description">More...</a></p>
 <ul>
 <li><code>#include &lt;x430_model.h&gt;</code></li>
 </ul>
@@ -1369,7 +1391,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">const struct <a href="../structx430__indirect__block/"><strong>x430_indirect_block</strong></a> *</td>
-<td style="text-align: left;"><a href="#variable-indirect"><strong>indirect</strong></a>  <br><em>Indirect blocks.</em></td>
+<td style="text-align: left;"><a href="#variable-indirect"><strong>indirect</strong></a>  <br><em>Indirect blocks, sorted by address.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint8_t</td>
@@ -1392,12 +1414,16 @@
 <td style="text-align: left;"><a href="#variable-register_count"><strong>register_count</strong></a>  <br><em>Entries in registers.</em></td>
 </tr>
 <tr>
-<td style="text-align: right;">const uint8_t *</td>
-<td style="text-align: left;"><a href="#variable-register_map"><strong>register_map</strong></a>  <br><em>Index + 1 per address, 0 = reserved.</em></td>
+<td style="text-align: right;">const struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> *</td>
+<td style="text-align: left;"><a href="#variable-registers"><strong>registers</strong></a>  <br><em>Sorted by address, no Indirect Address.</em></td>
 </tr>
 <tr>
-<td style="text-align: right;">const struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> *</td>
-<td style="text-align: left;"><a href="#variable-registers"><strong>registers</strong></a>  <br><em>Sorted by address.</em></td>
+<td style="text-align: right;">uint8_t</td>
+<td style="text-align: left;"><a href="#variable-segment_count"><strong>segment_count</strong></a>  <br><em>Entries in segments.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">const struct <a href="../structx430__segment/"><strong>x430_segment</strong></a> *</td>
+<td style="text-align: left;"><a href="#variable-segments"><strong>segments</strong></a>  <br><em>Image segments; the first starts at 0.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint16_t</td>
@@ -1405,6 +1431,8 @@
 </tr>
 </tbody>
 </table>
+<h2 id="detailed-description">Detailed Description<a class="headerlink" href="#detailed-description" title="Permanent link">&para;</a></h2>
+<p>The Indirect Address registers are not in x430_model::registers: the library generates them from the blocks (2 bytes, RW, initial value Indirect Data n, range 64 .. table_size - 1) and numbers them after the table registers, which all lie below the first block. </p>
 <h2 id="public-attributes-documentation">Public Attributes Documentation<a class="headerlink" href="#public-attributes-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="variable-axes">variable axes<a class="headerlink" href="#variable-axes" title="Permanent link">&para;</a></h3>
 <p><em>2 for 2XL430/2XC430.</em> 
@@ -1419,7 +1447,7 @@
 <hr>
 
 <h3 id="variable-indirect">variable indirect<a class="headerlink" href="#variable-indirect" title="Permanent link">&para;</a></h3>
-<p><em>Indirect blocks.</em> 
+<p><em>Indirect blocks, sorted by address.</em> 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_indirect_block</span><span class="o">*</span><span class="w"> </span><span class="n">x430_model</span><span class="o">::</span><span class="n">indirect</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
@@ -1455,21 +1483,27 @@
 </code></pre></div></p>
 <hr>
 
-<h3 id="variable-register_map">variable register_map<a class="headerlink" href="#variable-register_map" title="Permanent link">&para;</a></h3>
-<p><em>Index + 1 per address, 0 = reserved.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">x430_model</span><span class="o">::</span><span class="n">register_map</span><span class="p">;</span>
+<h3 id="variable-registers">variable registers<a class="headerlink" href="#variable-registers" title="Permanent link">&para;</a></h3>
+<p><em>Sorted by address, no Indirect Address.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="o">*</span><span class="w"> </span><span class="n">x430_model</span><span class="o">::</span><span class="n">registers</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
-<h3 id="variable-registers">variable registers<a class="headerlink" href="#variable-registers" title="Permanent link">&para;</a></h3>
-<p><em>Sorted by address.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="o">*</span><span class="w"> </span><span class="n">x430_model</span><span class="o">::</span><span class="n">registers</span><span class="p">;</span>
+<h3 id="variable-segment_count">variable segment_count<a class="headerlink" href="#variable-segment_count" title="Permanent link">&para;</a></h3>
+<p><em>Entries in segments.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_model</span><span class="o">::</span><span class="n">segment_count</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-segments">variable segments<a class="headerlink" href="#variable-segments" title="Permanent link">&para;</a></h3>
+<p><em>Image segments; the first starts at 0.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_segment</span><span class="o">*</span><span class="w"> </span><span class="n">x430_model</span><span class="o">::</span><span class="n">segments</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-table_size">variable table_size<a class="headerlink" href="#variable-table_size" title="Permanent link">&para;</a></h3>
 <p><em>Addresses 0 .</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_model</span><span class="o">::</span><span class="n">table_size</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_model</span><span class="o">::</span><span class="n">table_size</span><span class="p">;</span>
 </code></pre></div></p>
 <p>. table_size - 1. </p>
 <hr>

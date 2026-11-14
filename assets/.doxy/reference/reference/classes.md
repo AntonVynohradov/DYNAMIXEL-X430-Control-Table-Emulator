@@ -21,6 +21,7 @@
 * [**x430\_model**](structx430__model.md)
 * [**x430\_port**](structx430__port.md)
 * [**x430\_reg**](structx430__reg.md)
+* [**x430\_segment**](structx430__segment.md)
 * [**x430\_sim**](structx430__sim.md)
 * [**x430\_sim\_config**](structx430__sim__config.md)
 * [**x430\_sim\_ctx**](structx430__sim__ctx.md)

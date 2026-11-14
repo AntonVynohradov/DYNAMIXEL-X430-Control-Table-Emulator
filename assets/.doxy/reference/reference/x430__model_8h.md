@@ -32,7 +32,8 @@ _Model descriptor: the Control Table of the emulated model._ [More...](#detailed
 | ---: | :--- |
 | struct | [**x430\_indirect\_block**](structx430__indirect__block.md) <br>_Indirect Address block: count addresses of 2 bytes and count data bytes._  |
 | struct | [**x430\_model**](structx430__model.md) <br>_Control Table and capabilities of one model._  |
-| struct | [**x430\_reg**](structx430__reg.md) <br>_One Control Table item._  |
+| struct | [**x430\_reg**](structx430__reg.md) <br>_One Control Table item (16 bytes of flash)._  |
+| struct | [**x430\_segment**](structx430__segment.md) <br>_Segment of the compact Control Table image of a device: Control Table addresses address ._  |
 
 
 

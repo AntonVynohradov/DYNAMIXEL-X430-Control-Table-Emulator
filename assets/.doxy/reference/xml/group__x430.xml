@@ -80,7 +80,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="123" column="5" bodyfile="src/x430_bus.c" bodystart="838" bodyend="870" declfile="x430.h" declline="123" declcolumn="5"/>
+        <location file="x430.h" line="123" column="5" bodyfile="src/x430_bus.c" bodystart="902" bodyend="936" declfile="x430.h" declline="123" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga1895c0c496df5f7a87a5a09775c78fba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -153,7 +153,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="134" column="5" bodyfile="src/x430_bus.c" bodystart="872" bodyend="907" declfile="x430.h" declline="134" declcolumn="5"/>
+        <location file="x430.h" line="134" column="5" bodyfile="src/x430_bus.c" bodystart="938" bodyend="973" declfile="x430.h" declline="134" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1gadc885585e82ec93ba1d024ef5cbf12ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -238,7 +238,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="147" column="5" bodyfile="src/x430_bus.c" bodystart="909" bodyend="931" declfile="x430.h" declline="147" declcolumn="5"/>
+        <location file="x430.h" line="147" column="5" bodyfile="src/x430_bus.c" bodystart="975" bodyend="997" declfile="x430.h" declline="147" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga5503808f804bb6271cd416f793968bbd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -288,7 +288,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="157" column="5" bodyfile="src/x430_bus.c" bodystart="933" bodyend="955" declfile="x430.h" declline="157" declcolumn="5"/>
+        <location file="x430.h" line="157" column="5" bodyfile="src/x430_bus.c" bodystart="999" bodyend="1021" declfile="x430.h" declline="157" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga61b01ca03462e144a91e766ba51bd108" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -326,7 +326,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="165" column="5" bodyfile="src/x430_bus.c" bodystart="957" bodyend="975" declfile="x430.h" declline="165" declcolumn="5"/>
+        <location file="x430.h" line="165" column="5" bodyfile="src/x430_bus.c" bodystart="1023" bodyend="1041" declfile="x430.h" declline="165" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga09a4b2189e9671cd26e940e4e25e6192" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -364,7 +364,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="173" column="5" bodyfile="src/x430_bus.c" bodystart="977" bodyend="986" declfile="x430.h" declline="173" declcolumn="5"/>
+        <location file="x430.h" line="173" column="5" bodyfile="src/x430_bus.c" bodystart="1043" bodyend="1052" declfile="x430.h" declline="173" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1gac5310cd2074b249861e901477cffefab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -402,7 +402,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="180" column="5" bodyfile="src/x430_bus.c" bodystart="988" bodyend="997" declfile="x430.h" declline="180" declcolumn="5"/>
+        <location file="x430.h" line="180" column="5" bodyfile="src/x430_bus.c" bodystart="1054" bodyend="1063" declfile="x430.h" declline="180" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga6c9e8903722ebe552c74f43197769fde" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -479,7 +479,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="191" column="5" bodyfile="src/x430_bus.c" bodystart="999" bodyend="1020" declfile="x430.h" declline="191" declcolumn="5"/>
+        <location file="x430.h" line="191" column="5" bodyfile="src/x430_bus.c" bodystart="1065" bodyend="1086" declfile="x430.h" declline="191" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga63afa6e92da99a8b5a7850091dee360e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -495,7 +495,7 @@
           <declname>config</declname>
         </param>
         <briefdescription>
-<para>Initialize a device: factory values, stored EEPROM area (nvm_load), the RAM area and the Startup Configuration (which may call the write hook). </para>
+<para>Initialize a device: factory values, stored EEPROM area (nvm_read), the RAM area and the Startup Configuration (which may call the write hook). </para>
         </briefdescription>
         <detaileddescription>
 <para>Initialize a device before <ref refid="group__x430_1ga1895c0c496df5f7a87a5a09775c78fba" kindref="member">x430_bus_attach()</ref>, never while a bus serves it: the content of the instance before the call is not trusted (it may be the garbage of a stack instance), so an attachment cannot be detected. <parameterlist kind="param"><parameteritem>
@@ -536,7 +536,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="208" column="5" bodyfile="src/x430_device.c" bodystart="768" bodyend="803" declfile="x430.h" declline="208" declcolumn="5"/>
+        <location file="x430.h" line="208" column="5" bodyfile="src/x430_device.c" bodystart="970" bodyend="1005" declfile="x430.h" declline="208" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1gaea1c26465555bcd3d5b7fd49078d8440" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -613,7 +613,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="219" column="5" bodyfile="src/x430_device.c" bodystart="805" bodyend="823" declfile="x430.h" declline="219" declcolumn="5"/>
+        <location file="x430.h" line="219" column="5" bodyfile="src/x430_device.c" bodystart="1007" bodyend="1025" declfile="x430.h" declline="219" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1gaf7a2c5ffac2a155fd4c7afe4aa0cee8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -690,7 +690,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="232" column="5" bodyfile="src/x430_device.c" bodystart="825" bodyend="841" declfile="x430.h" declline="232" declcolumn="5"/>
+        <location file="x430.h" line="232" column="5" bodyfile="src/x430_device.c" bodystart="1027" bodyend="1045" declfile="x430.h" declline="232" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga723d7f0be186727e19a077e7f41718d8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -740,7 +740,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="240" column="5" bodyfile="src/x430_device.c" bodystart="843" bodyend="852" declfile="x430.h" declline="240" declcolumn="5"/>
+        <location file="x430.h" line="240" column="5" bodyfile="src/x430_device.c" bodystart="1047" bodyend="1056" declfile="x430.h" declline="240" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga2da15cacd4c4b35fa33c58a656e4263c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -790,7 +790,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="250" column="5" bodyfile="src/x430_device.c" bodystart="854" bodyend="870" declfile="x430.h" declline="250" declcolumn="5"/>
+        <location file="x430.h" line="250" column="5" bodyfile="src/x430_device.c" bodystart="1058" bodyend="1074" declfile="x430.h" declline="250" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga53155abcdf8945a8e2be12be44d8ae46" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -828,7 +828,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="258" column="5" bodyfile="src/x430_device.c" bodystart="872" bodyend="887" declfile="x430.h" declline="258" declcolumn="5"/>
+        <location file="x430.h" line="258" column="5" bodyfile="src/x430_device.c" bodystart="1076" bodyend="1091" declfile="x430.h" declline="258" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga46054fa62816febc02449a2bf8452808" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -914,7 +914,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="274" column="5" bodyfile="src/x430_device.c" bodystart="893" bodyend="948" declfile="x430.h" declline="274" declcolumn="5"/>
+        <location file="x430.h" line="274" column="5" bodyfile="src/x430_device.c" bodystart="1097" bodyend="1152" declfile="x430.h" declline="274" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1gafcdd49c16d5f66b8502aa07b061adf93" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -1012,7 +1012,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="288" column="5" bodyfile="src/x430_device.c" bodystart="1056" bodyend="1066" declfile="x430.h" declline="288" declcolumn="5"/>
+        <location file="x430.h" line="288" column="5" bodyfile="src/x430_device.c" bodystart="1261" bodyend="1271" declfile="x430.h" declline="288" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1gaca0e3b2178ab20349a4187126b861bbf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -1110,7 +1110,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="301" column="5" bodyfile="src/x430_device.c" bodystart="1068" bodyend="1095" declfile="x430.h" declline="301" declcolumn="5"/>
+        <location file="x430.h" line="301" column="5" bodyfile="src/x430_device.c" bodystart="1273" bodyend="1300" declfile="x430.h" declline="301" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1gabddfe42e95e7d13d16b8d1e3c38f288d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -1160,7 +1160,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="310" column="5" bodyfile="src/x430_device.c" bodystart="1097" bodyend="1116" declfile="x430.h" declline="310" declcolumn="5"/>
+        <location file="x430.h" line="310" column="5" bodyfile="src/x430_device.c" bodystart="1302" bodyend="1321" declfile="x430.h" declline="310" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1gad5ff40132c48f8da06ee7c1e71251450" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -1198,7 +1198,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="318" column="5" bodyfile="src/x430_device.c" bodystart="1118" bodyend="1128" declfile="x430.h" declline="318" declcolumn="5"/>
+        <location file="x430.h" line="318" column="5" bodyfile="src/x430_device.c" bodystart="1323" bodyend="1333" declfile="x430.h" declline="318" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga14c199a31203ecb73ed1a0fcba0e59f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -1260,7 +1260,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="328" column="5" bodyfile="src/x430_device.c" bodystart="1130" bodyend="1170" declfile="x430.h" declline="328" declcolumn="5"/>
+        <location file="x430.h" line="328" column="5" bodyfile="src/x430_device.c" bodystart="1335" bodyend="1375" declfile="x430.h" declline="328" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1gaaaaaf6e8d20efbf059d7a6d0b691f94c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -1322,7 +1322,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="338" column="5" bodyfile="src/x430_device.c" bodystart="1172" bodyend="1206" declfile="x430.h" declline="338" declcolumn="5"/>
+        <location file="x430.h" line="338" column="5" bodyfile="src/x430_device.c" bodystart="1377" bodyend="1411" declfile="x430.h" declline="338" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga183c66e278cc6246b8f22fca5651ded5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
@@ -1384,7 +1384,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="x430.h" line="348" column="5" bodyfile="src/x430_device.c" bodystart="1208" bodyend="1257" declfile="x430.h" declline="348" declcolumn="5"/>
+        <location file="x430.h" line="348" column="5" bodyfile="src/x430_device.c" bodystart="1413" bodyend="1462" declfile="x430.h" declline="348" declcolumn="5"/>
       </memberdef>
       <memberdef kind="function" id="group__x430_1ga9e6f35869f8631cbb30b49b11e7107b2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>

@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="62" column="20" bodyfile="src/x430_internal.h" bodystart="62" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="63" column="20" bodyfile="src/x430_internal.h" bodystart="63" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__bus__ctx_1a01298f7dacf86fb1aefaa03ded29e5d2" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structx430__bus__config" kindref="compound">x430_bus_config</ref></type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="63" column="26" bodyfile="src/x430_internal.h" bodystart="63" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="64" column="26" bodyfile="src/x430_internal.h" bodystart="64" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__bus__ctx_1a9be780070949cbfcfc28e3ec6b51e5eb" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
@@ -47,7 +47,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="64" column="23" bodyfile="src/x430_internal.h" bodystart="64" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="65" column="23" bodyfile="src/x430_internal.h" bodystart="65" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__bus__ctx_1a3a44d57ff33972258471fb43ecd94a33" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -62,7 +62,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="65" column="14" bodyfile="src/x430_internal.h" bodystart="65" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="66" column="14" bodyfile="src/x430_internal.h" bodystart="66" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__bus__ctx_1a9338dca83eb34400921ad0766ede907a" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -77,7 +77,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="66" column="14" bodyfile="src/x430_internal.h" bodystart="66" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="67" column="14" bodyfile="src/x430_internal.h" bodystart="67" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__bus__ctx_1a3567e9f6cea6cb8b22256b66af0bc155" prot="public" static="no" mutable="no">
         <type>uint8_t</type>
@@ -92,7 +92,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="67" column="13" bodyfile="src/x430_internal.h" bodystart="67" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="68" column="13" bodyfile="src/x430_internal.h" bodystart="68" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__bus__ctx_1aba4811f98053200b9a6f434c20a3bd54" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -107,22 +107,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="68" column="10" bodyfile="src/x430_internal.h" bodystart="68" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="69" column="10" bodyfile="src/x430_internal.h" bodystart="69" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structx430__bus__ctx_1aad3a33fc4e7f69054334ee423e4e52f3" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structx430__bus__ctx_1a92a51a4a4fb1e85c7c47771a09b4c08f" prot="public" static="no" mutable="no">
         <type>uint8_t</type>
-        <definition>uint8_t x430_bus_ctx::data[DXL2_MAX_PARAMETER_SIZE]</definition>
-        <argsstring>[DXL2_MAX_PARAMETER_SIZE]</argsstring>
-        <name>data</name>
-        <qualifiedname>x430_bus_ctx::data</qualifiedname>
+        <definition>uint8_t x430_bus_ctx::tx[DXL2_MAX_PACKET_SIZE]</definition>
+        <argsstring>[DXL2_MAX_PACKET_SIZE]</argsstring>
+        <name>tx</name>
+        <qualifiedname>x430_bus_ctx::tx</qualifiedname>
         <briefdescription>
-<para>Status data scratch buffer. </para>
+<para>Status packet, built and framed in place. </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="69" column="13" bodyfile="src/x430_internal.h" bodystart="69" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="70" column="13" bodyfile="src/x430_internal.h" bodystart="70" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -158,15 +158,15 @@
         <link refid="structx430__port"/>
       </node>
     </collaborationgraph>
-    <location file="src/x430_internal.h" line="60" column="1" bodyfile="src/x430_internal.h" bodystart="61" bodyend="73"/>
+    <location file="src/x430_internal.h" line="61" column="1" bodyfile="src/x430_internal.h" bodystart="62" bodyend="71"/>
     <listofallmembers>
       <member refid="structx430__bus__ctx_1a01298f7dacf86fb1aefaa03ded29e5d2" prot="public" virt="non-virtual"><scope>x430_bus_ctx</scope><name>config</name></member>
-      <member refid="structx430__bus__ctx_1aad3a33fc4e7f69054334ee423e4e52f3" prot="public" virt="non-virtual"><scope>x430_bus_ctx</scope><name>data</name></member>
       <member refid="structx430__bus__ctx_1a3567e9f6cea6cb8b22256b66af0bc155" prot="public" virt="non-virtual"><scope>x430_bus_ctx</scope><name>device_count</name></member>
       <member refid="structx430__bus__ctx_1a9be780070949cbfcfc28e3ec6b51e5eb" prot="public" virt="non-virtual"><scope>x430_bus_ctx</scope><name>devices</name></member>
       <member refid="structx430__bus__ctx_1a9338dca83eb34400921ad0766ede907a" prot="public" virt="non-virtual"><scope>x430_bus_ctx</scope><name>last_rx_ms</name></member>
       <member refid="structx430__bus__ctx_1a3a9e4c2afb777bcd66182e7cd3528009" prot="public" virt="non-virtual"><scope>x430_bus_ctx</scope><name>link</name></member>
       <member refid="structx430__bus__ctx_1a3a44d57ff33972258471fb43ecd94a33" prot="public" virt="non-virtual"><scope>x430_bus_ctx</scope><name>ready</name></member>
+      <member refid="structx430__bus__ctx_1a92a51a4a4fb1e85c7c47771a09b4c08f" prot="public" virt="non-virtual"><scope>x430_bus_ctx</scope><name>tx</name></member>
       <member refid="structx430__bus__ctx_1aba4811f98053200b9a6f434c20a3bd54" prot="public" virt="non-virtual"><scope>x430_bus_ctx</scope><name>write_failed</name></member>
     </listofallmembers>
   </compounddef>

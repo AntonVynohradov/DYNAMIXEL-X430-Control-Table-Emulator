@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="78" column="29" bodyfile="src/x430_internal.h" bodystart="78" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="76" column="29" bodyfile="src/x430_internal.h" bodystart="76" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__device__ctx_1ac22e7c3f465eb05e82f28e763bf501e5" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref> *</type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="79" column="20" bodyfile="src/x430_internal.h" bodystart="79" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="77" column="20" bodyfile="src/x430_internal.h" bodystart="77" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__device__ctx_1ab9affdc2a23b39baeb484bfc92e41b82" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -47,7 +47,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="80" column="14" bodyfile="src/x430_internal.h" bodystart="80" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="78" column="14" bodyfile="src/x430_internal.h" bodystart="78" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__device__ctx_1ae0ed1b5d1ba8061a21599d46fe075c27" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -62,7 +62,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="81" column="14" bodyfile="src/x430_internal.h" bodystart="81" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="79" column="14" bodyfile="src/x430_internal.h" bodystart="79" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__device__ctx_1ae0caafb85d52b6c7813049fbfc48c2a6" prot="public" static="no" mutable="no">
         <type>uint16_t</type>
@@ -77,7 +77,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="82" column="14" bodyfile="src/x430_internal.h" bodystart="82" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="80" column="14" bodyfile="src/x430_internal.h" bodystart="80" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__device__ctx_1ad7deb45ce7e70d0f1ebfec880c503528" prot="public" static="no" mutable="no">
         <type>bool</type>
@@ -92,22 +92,22 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="83" column="10" bodyfile="src/x430_internal.h" bodystart="83" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="81" column="10" bodyfile="src/x430_internal.h" bodystart="81" bodyend="-1"/>
       </memberdef>
-      <memberdef kind="variable" id="structx430__device__ctx_1ae6f58c2014442892fcd3412072209398" prot="public" static="no" mutable="no">
+      <memberdef kind="variable" id="structx430__device__ctx_1aa1be39f1d91847090bdce99700094639" prot="public" static="no" mutable="no">
         <type>uint8_t</type>
-        <definition>uint8_t x430_device_ctx::table[X430_TABLE_SIZE]</definition>
-        <argsstring>[X430_TABLE_SIZE]</argsstring>
+        <definition>uint8_t x430_device_ctx::table[X430_IMAGE_SIZE]</definition>
+        <argsstring>[X430_IMAGE_SIZE]</argsstring>
         <name>table</name>
         <qualifiedname>x430_device_ctx::table</qualifiedname>
         <briefdescription>
-<para>Control Table image, little endian. </para>
+<para>Compact Control Table image, little endian. </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="84" column="13" bodyfile="src/x430_internal.h" bodystart="84" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="82" column="13" bodyfile="src/x430_internal.h" bodystart="82" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__device__ctx_1a7b621a06b6cec711ed063f91a9c4e7a9" prot="public" static="no" mutable="no">
         <type>uint8_t</type>
@@ -122,22 +122,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="85" column="13" bodyfile="src/x430_internal.h" bodystart="85" bodyend="-1"/>
-      </memberdef>
-      <memberdef kind="variable" id="structx430__device__ctx_1a34677fb86c2a8bded50aeb34b341a36d" prot="public" static="no" mutable="no">
-        <type>uint8_t</type>
-        <definition>uint8_t x430_device_ctx::nvm[X430_NVM_BUFFER_SIZE]</definition>
-        <argsstring>[X430_NVM_BUFFER_SIZE]</argsstring>
-        <name>nvm</name>
-        <qualifiedname>x430_device_ctx::nvm</qualifiedname>
-        <briefdescription>
-<para>Persistent block buffer. </para>
-        </briefdescription>
-        <detaileddescription>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="src/x430_internal.h" line="86" column="13" bodyfile="src/x430_internal.h" bodystart="86" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="83" column="13" bodyfile="src/x430_internal.h" bodystart="83" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -177,24 +162,23 @@
         <link refid="structx430__hooks"/>
         <childnode refid="4" relation="usage">
           <edgelabel>event</edgelabel>
-          <edgelabel>nvm_load</edgelabel>
-          <edgelabel>nvm_store</edgelabel>
+          <edgelabel>nvm_read</edgelabel>
+          <edgelabel>nvm_write</edgelabel>
           <edgelabel>read</edgelabel>
           <edgelabel>write</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="src/x430_internal.h" line="76" column="1" bodyfile="src/x430_internal.h" bodystart="77" bodyend="87"/>
+    <location file="src/x430_internal.h" line="74" column="1" bodyfile="src/x430_internal.h" bodystart="75" bodyend="84"/>
     <listofallmembers>
       <member refid="structx430__device__ctx_1ad7deb45ce7e70d0f1ebfec880c503528" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>baud_changed</name></member>
       <member refid="structx430__device__ctx_1ac22e7c3f465eb05e82f28e763bf501e5" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>bus</name></member>
       <member refid="structx430__device__ctx_1ac07ff92399b724712fc11e63a1cc8364" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>config</name></member>
-      <member refid="structx430__device__ctx_1a34677fb86c2a8bded50aeb34b341a36d" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>nvm</name></member>
       <member refid="structx430__device__ctx_1ab9affdc2a23b39baeb484bfc92e41b82" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>ready</name></member>
       <member refid="structx430__device__ctx_1ae0ed1b5d1ba8061a21599d46fe075c27" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>reg_address</name></member>
       <member refid="structx430__device__ctx_1a7b621a06b6cec711ed063f91a9c4e7a9" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>reg_data</name></member>
       <member refid="structx430__device__ctx_1ae0caafb85d52b6c7813049fbfc48c2a6" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>reg_length</name></member>
-      <member refid="structx430__device__ctx_1ae6f58c2014442892fcd3412072209398" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>table</name></member>
+      <member refid="structx430__device__ctx_1aa1be39f1d91847090bdce99700094639" prot="public" virt="non-virtual"><scope>x430_device_ctx</scope><name>table</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

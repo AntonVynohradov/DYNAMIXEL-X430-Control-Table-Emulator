@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_device.c" line="63" column="10" bodyfile="src/x430_device.c" bodystart="63" bodyend="-1"/>
+        <location file="src/x430_device.c" line="67" column="10" bodyfile="src/x430_device.c" bodystart="67" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__align__device__ctx_1a093b3841eea5af7d77f726972433ac76" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structx430__device__ctx" kindref="compound">x430_device_ctx</ref></type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_device.c" line="64" column="26" bodyfile="src/x430_device.c" bodystart="64" bodyend="-1"/>
+        <location file="src/x430_device.c" line="68" column="26" bodyfile="src/x430_device.c" bodystart="68" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -74,14 +74,14 @@
         <link refid="structx430__hooks"/>
         <childnode refid="5" relation="usage">
           <edgelabel>event</edgelabel>
-          <edgelabel>nvm_load</edgelabel>
-          <edgelabel>nvm_store</edgelabel>
+          <edgelabel>nvm_read</edgelabel>
+          <edgelabel>nvm_write</edgelabel>
           <edgelabel>read</edgelabel>
           <edgelabel>write</edgelabel>
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="src/x430_device.c" line="61" column="1" bodyfile="src/x430_device.c" bodystart="62" bodyend="65"/>
+    <location file="src/x430_device.c" line="65" column="1" bodyfile="src/x430_device.c" bodystart="66" bodyend="69"/>
     <listofallmembers>
       <member refid="structx430__align__device__ctx_1a43a2e3ecdb553618639c84c8cbe58b19" prot="public" virt="non-virtual"><scope>x430_align_device_ctx</scope><name>c</name></member>
       <member refid="structx430__align__device__ctx_1a093b3841eea5af7d77f726972433ac76" prot="public" virt="non-virtual"><scope>x430_align_device_ctx</scope><name>x</name></member>

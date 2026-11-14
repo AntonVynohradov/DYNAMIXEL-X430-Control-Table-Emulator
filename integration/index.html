@@ -1545,7 +1545,7 @@
 </tr>
 <tr>
 <td>Stack of the bus context</td>
-<td>1,796 B (768-byte packets, the default) or 772 B (256-byte packets) on Cortex-M4 <code>-Os</code>, plus the hooks (<a href="../configuration/#stack-usage">Configuration</a>)</td>
+<td>424 B on Cortex-M4 <code>-Os</code> (with any packet size), plus the hooks (<a href="../configuration/#stack-usage">Configuration</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -1639,28 +1639,46 @@ Baud Rate (8), so the answer leaves at the old rate:</p>
 <a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="p">}</span>
 </code></pre></div>
 <h2 id="persistent-storage">Persistent storage<a class="headerlink" href="#persistent-storage" title="Permanent link">&para;</a></h2>
-<p>The EEPROM area (76-byte block) and the backup (674-byte block) are opaque byte blocks with
-a header and a CRC (<a href="../theory/#persistent-blocks">format</a>); store them where your flash
-allows:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">nvm_load</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">                    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">user_data</span><span class="p">)</span>
+<p>The EEPROM area (76-byte block) and the backup (328-byte block) are opaque byte blocks with
+a header and a CRC (<a href="../theory/#persistent-blocks">format</a>). The device keeps no copy of
+them: it reads and writes them in parts at an offset, so the hooks map directly onto a
+memory-mapped flash page or an I²C EEPROM:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">nvm_read</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">                    </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">user_data</span><span class="p">)</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">{</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">user_data</span><span class="p">;</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">flash_read</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 0, or negative without data */</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">flash_read</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 0, or negative without data */</span>
 <a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">}</span>
 <a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">nvm_store</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">                     </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">user_data</span><span class="p">)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">nvm_write</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">                     </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">user_data</span><span class="p">)</span>
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="p">{</span>
 <a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">device</span><span class="p">;</span>
 <a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">user_data</span><span class="p">;</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">flash_write</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 0, or negative: Result Fail */</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="p">}</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">offset</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0U</span><span class="p">)</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">        </span><span class="n">flash_erase</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">slot</span><span class="p">);</span><span class="w"> </span><span class="cm">/* a new block starts at offset 0 */</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">flash_write</span><span class="p">((</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">slot</span><span class="p">,</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">length</span><span class="p">);</span><span class="w"> </span><span class="cm">/* 0, or negative: Result Fail */</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="p">}</span>
 </code></pre></div>
-<p><code>nvm_store</code> is called from the bus context after the change. On an MCU with one flash bank
-an erase stalls the CPU: refuse the store (return a negative value, the host gets Result
-Fail) while the power stage runs, or copy the block and write it from another thread.</p>
+<p>A block is read as header, payload in chunks of 16 bytes and CRC (checked before anything
+is taken from it), then once per register the device takes. It is written as three parts
+with increasing offsets — header, payload, CRC — so the last part ends at
+<code>X430_NVM_EEPROM_SIZE</code> or <code>X430_NVM_BACKUP_SIZE</code>; a block cut short by a reset fails its CRC
+and the device starts with factory values. To keep the previous block until the new one
+is complete, write into a second page and switch pages when the last part arrives.</p>
+<p>A key-value store that keeps whole records only (Zephyr NVS or settings, for example)
+needs one buffer of <code>X430_NVM_BACKUP_SIZE</code> bytes (<code>X430_NVM_EEPROM_SIZE</code> without BACKUP)
+in the application: collect the parts there and store the record when the last part
+arrives; for <code>nvm_read</code>, load the record into it at offset 0 and copy from it. All
+devices can share that buffer when they are initialized and served from one context: a
+device finishes one block (it always starts at offset 0) before it or another device
+touches the next.</p>
+<p><code>nvm_write</code> is called from the bus context after the change. On an MCU with one flash bank
+an erase stalls the CPU: refuse the write (return a negative value, the host gets Result
+Fail) while the power stage runs, or copy the parts and write them from another thread.</p>
 <h2 id="adding-the-library-to-a-cmake-build">Adding the library to a CMake build<a class="headerlink" href="#adding-the-library-to-a-cmake-build" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">set</span><span class="p">(</span><span class="s">X430_MODEL</span><span class="w"> </span><span class="s">xm430_w350</span><span class="p">)</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">set</span><span class="p">(</span><span class="s">COMPILE_DEFINITIONS</span><span class="w"> </span><span class="s">X430_MAX_DEVICES=2U</span><span class="p">)</span><span class="w">  </span><span class="c"># options of x430_config.h</span>
@@ -1725,7 +1743,7 @@ pseudo-terminal (Linux, macOS, WSL):</p>
    Present Position.</li>
 <li>Move in Position mode: Present Position and Moving follow the motor.</li>
 <li>Write an EEPROM register (Return Delay Time) with the torque off, power-cycle: the value
-   survives (<code>nvm_store</code> / <code>nvm_load</code>).</li>
+   survives (<code>nvm_write</code> / <code>nvm_read</code>).</li>
 <li>Set Bus Watchdog to 10 and stop the host: after 200 ms the motor stops and Bus Watchdog
    reads −1.</li>
 <li>Raise a hardware error with its Shutdown bit: the torque goes off, statuses carry the

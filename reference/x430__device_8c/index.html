@@ -1428,6 +1428,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#function-x430_crc16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_crc16
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#function-x430_enable_torque" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1454,6 +1465,17 @@
     <span class="md-ellipsis">
       
         function x430_get
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-x430_indirect_reg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_indirect_reg
       
     </span>
   </a>
@@ -1516,10 +1538,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#function-x430_nvm_load" class="md-nav__link">
+  <a href="#function-x430_nvm_apply" class="md-nav__link">
     <span class="md-ellipsis">
       
-        function x430_nvm_load
+        function x430_nvm_apply
       
     </span>
   </a>
@@ -1527,10 +1549,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#function-x430_nvm_pack" class="md-nav__link">
+  <a href="#function-x430_nvm_header" class="md-nav__link">
     <span class="md-ellipsis">
       
-        function x430_nvm_pack
+        function x430_nvm_header
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-x430_nvm_read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_nvm_read
       
     </span>
   </a>
@@ -1542,6 +1575,28 @@
     <span class="md-ellipsis">
       
         function x430_nvm_store
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-x430_nvm_valid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_nvm_valid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-x430_peek" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_peek
       
     </span>
   </a>
@@ -1582,10 +1637,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#function-x430_reg_at" class="md-nav__link">
+  <a href="#function-x430_reg_by_index" class="md-nav__link">
     <span class="md-ellipsis">
       
-        function x430_reg_at
+        function x430_reg_by_index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-x430_reg_find" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_reg_find
       
     </span>
   </a>
@@ -1604,10 +1670,43 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#function-x430_reg_store" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_reg_store
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-x430_reg_value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_reg_value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#function-x430_resolve" class="md-nav__link">
     <span class="md-ellipsis">
       
         function x430_resolve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-x430_slot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_slot
       
     </span>
   </a>
@@ -1709,10 +1808,32 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#define-x430_crc_polynomial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_CRC_POLYNOMIAL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#define-x430_id_max" class="md-nav__link">
     <span class="md-ellipsis">
       
         define X430_ID_MAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#define-x430_nvm_chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_NVM_CHUNK
       
     </span>
   </a>
@@ -1830,7 +1951,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint8_t</td>
-<td style="text-align: left;"><a href="#function-x430_device_byte"><strong>x430_device_byte</strong></a> (const struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, uint16_t address) <br><em>One byte of the Control Table image.</em></td>
+<td style="text-align: left;"><a href="#function-x430_device_byte"><strong>x430_device_byte</strong></a> (const struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, uint16_t address) <br><em>Control Table byte</em> <code>address</code> <em>, below ::X430_IMAGE_DIRECT (stored at its own index).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">bool</td>
@@ -1869,7 +1990,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">void</td>
-<td style="text-align: left;"><a href="#function-x430_apply_eeprom"><strong>x430_apply_eeprom</strong></a> (struct <a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a> * m) <br><em>Copies the writable EEPROM registers of a valid EEPROM block (nvm buffer) into the table.</em></td>
+<td style="text-align: left;"><a href="#function-x430_apply_eeprom"><strong>x430_apply_eeprom</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device) <br><em>Takes the writable EEPROM registers from the valid EEPROM block.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">int</td>
@@ -1888,6 +2009,10 @@
 <td style="text-align: left;"><a href="#function-x430_check_write"><strong>x430_check_write</strong></a> (const struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, const struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> * reg, int32_t value, uint8_t options) <br><em>Error code for writing</em> <code>value</code> <em>to</em><code>reg</code> <em>, DXL2_ERR_NONE when allowed.</em></td>
 </tr>
 <tr>
+<td style="text-align: right;">uint16_t</td>
+<td style="text-align: left;"><a href="#function-x430_crc16"><strong>x430_crc16</strong></a> (uint16_t crc, const uint8_t * data, uint16_t length) <br><em>CRC-16</em> <code>crc</code> <em>continued over</em><code>length</code> <em>bytes, bit by bit (no table in flash).</em></td>
+</tr>
+<tr>
 <td style="text-align: right;">uint8_t</td>
 <td style="text-align: left;"><a href="#function-x430_enable_torque"><strong>x430_enable_torque</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, bool sync_goal) <br><em>Torque Enable = 1 through the write hook (startup, Drive Mode bit 3).</em></td>
 </tr>
@@ -1898,6 +2023,10 @@
 <tr>
 <td style="text-align: right;">int32_t</td>
 <td style="text-align: left;"><a href="#function-x430_get"><strong>x430_get</strong></a> (const struct <a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a> * m, uint16_t address) <br></td>
+</tr>
+<tr>
+<td style="text-align: right;">void</td>
+<td style="text-align: left;"><a href="#function-x430_indirect_reg"><strong>x430_indirect_reg</strong></a> (const struct <a href="../structx430__indirect__block/"><strong>x430_indirect_block</strong></a> * block, uint32_t entry, struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> * reg) <br><em>Indirect Address register</em> <code>entry</code> <em>of</em><code>block</code> <em>(generated, not in the model table).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">bool</td>
@@ -1920,16 +2049,28 @@
 <td style="text-align: left;"><a href="#function-x430_merge"><strong>x430_merge</strong></a> (const struct <a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a> * m, const struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> * reg, uint16_t address, uint16_t length, const uint8_t * data, bool indirect) <br><em>New raw value of</em> <code>reg</code> <em>after writing</em><code>data</code> <em>at</em><code>address:</code> <em>the bytes of the write that land in the register replace the current bytes.</em></td>
 </tr>
 <tr>
-<td style="text-align: right;">bool</td>
-<td style="text-align: left;"><a href="#function-x430_nvm_load"><strong>x430_nvm_load</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, enum <a href="../group__x430__defs/#enum-x430_nvm_slot"><strong>x430_nvm_slot</strong></a> slot, uint16_t size) <br><em>Loads a block into the nvm buffer; true when it is valid for this model.</em></td>
+<td style="text-align: right;">void</td>
+<td style="text-align: left;"><a href="#function-x430_nvm_apply"><strong>x430_nvm_apply</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, enum <a href="../group__x430__defs/#enum-x430_nvm_slot"><strong>x430_nvm_slot</strong></a> slot, const struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> * reg) <br><em>Register</em> <code>reg</code> <em>from the valid block</em><code>slot</code> <em>into the image (unchanged if the read fails).</em></td>
 </tr>
 <tr>
-<td style="text-align: right;">uint16_t</td>
-<td style="text-align: left;"><a href="#function-x430_nvm_pack"><strong>x430_nvm_pack</strong></a> (struct <a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a> * m, enum <a href="../group__x430__defs/#enum-x430_nvm_slot"><strong>x430_nvm_slot</strong></a> slot, uint16_t size) <br><em>Builds a block from</em> <code>size</code> <em>bytes of the table in the nvm buffer; returns its size.</em></td>
+<td style="text-align: right;">void</td>
+<td style="text-align: left;"><a href="#function-x430_nvm_header"><strong>x430_nvm_header</strong></a> (uint8_t * header, enum <a href="../group__x430__defs/#enum-x430_nvm_slot"><strong>x430_nvm_slot</strong></a> slot, uint16_t size) <br><em>Header of a block: magic "X430", model number, format, slot, payload size.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">bool</td>
+<td style="text-align: left;"><a href="#function-x430_nvm_read"><strong>x430_nvm_read</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, enum <a href="../group__x430__defs/#enum-x430_nvm_slot"><strong>x430_nvm_slot</strong></a> slot, uint16_t offset, uint8_t * data, uint16_t length) <br><em>Part of block</em> <code>slot</code> <em>through the read hook (the caller checked that there is one).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint8_t</td>
-<td style="text-align: left;"><a href="#function-x430_nvm_store"><strong>x430_nvm_store</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, enum <a href="../group__x430__defs/#enum-x430_nvm_slot"><strong>x430_nvm_slot</strong></a> slot, uint16_t size) <br></td>
+<td style="text-align: left;"><a href="#function-x430_nvm_store"><strong>x430_nvm_store</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, enum <a href="../group__x430__defs/#enum-x430_nvm_slot"><strong>x430_nvm_slot</strong></a> slot, uint16_t size) <br><em>Writes block</em> <code>slot:</code> <em>header, the first</em><code>size</code> <em>bytes of the image, CRC, in three parts with increasing offsets.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">bool</td>
+<td style="text-align: left;"><a href="#function-x430_nvm_valid"><strong>x430_nvm_valid</strong></a> (struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, enum <a href="../group__x430__defs/#enum-x430_nvm_slot"><strong>x430_nvm_slot</strong></a> slot, uint16_t size) <br><em>True when block</em> <code>slot</code> <em>with a payload of</em><code>size</code> <em>bytes is stored and valid for this model: header and CRC are checked in chunks of X430_NVM_CHUNK bytes on the stack.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint8_t</td>
+<td style="text-align: left;"><a href="#function-x430_peek"><strong>x430_peek</strong></a> (const struct <a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a> * m, uint16_t address) <br><em>Control Table byte</em> <code>address</code> <em>; 0 for a reserved address.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">void</td>
@@ -1944,16 +2085,32 @@
 <td style="text-align: left;"><a href="#function-x430_raw_put"><strong>x430_raw_put</strong></a> (uint8_t * table, uint16_t address, uint8_t size, uint32_t value) <br></td>
 </tr>
 <tr>
-<td style="text-align: right;">const struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> *</td>
-<td style="text-align: left;"><a href="#function-x430_reg_at"><strong>x430_reg_at</strong></a> (uint16_t address) <br><em>Register that contains</em> <code>address</code> <em>, NULL for a reserved address.</em></td>
+<td style="text-align: right;">struct <a href="../structx430__reg/"><strong>x430_reg</strong></a></td>
+<td style="text-align: left;"><a href="#function-x430_reg_by_index"><strong>x430_reg_by_index</strong></a> (uint16_t index) <br><em>Register number</em> <code>index</code> <em>(below X430_REGISTER_COUNT).</em></td>
 </tr>
 <tr>
-<td style="text-align: right;">const struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> *</td>
-<td style="text-align: left;"><a href="#function-x430_reg_start"><strong>x430_reg_start</strong></a> (uint16_t address) <br><em>Register that starts at</em> <code>address</code> <em>, NULL when none does.</em></td>
+<td style="text-align: right;">uint16_t</td>
+<td style="text-align: left;"><a href="#function-x430_reg_find"><strong>x430_reg_find</strong></a> (uint16_t address, struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> * reg) <br><em>Register that contains</em> <code>address</code> <em>, in</em><code>reg</code> <em>; returns its number, X430_REGISTER_COUNT for a reserved address.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">bool</td>
+<td style="text-align: left;"><a href="#function-x430_reg_start"><strong>x430_reg_start</strong></a> (uint16_t address, struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> * reg) <br><em>Register that starts at</em> <code>address:</code> <em>true with the register, false when none does.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">void</td>
+<td style="text-align: left;"><a href="#function-x430_reg_store"><strong>x430_reg_store</strong></a> (struct <a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a> * m, const struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> * reg, int32_t value) <br><em>Stores</em> <code>value</code> <em>into register</em><code>reg</code> <em>(truncated to its size).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">int32_t</td>
+<td style="text-align: left;"><a href="#function-x430_reg_value"><strong>x430_reg_value</strong></a> (const struct <a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a> * m, const struct <a href="../structx430__reg/"><strong>x430_reg</strong></a> * reg) <br><em>Value of register</em> <code>reg</code> <em>(sign-extended).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">uint16_t</td>
 <td style="text-align: left;"><a href="#function-x430_resolve"><strong>x430_resolve</strong></a> (const struct <a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a> * m, uint16_t address) <br><em>Address that</em> <code>address</code> <em>really accesses (Indirect Data resolved).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint16_t</td>
+<td style="text-align: left;"><a href="#function-x430_slot"><strong>x430_slot</strong></a> (uint16_t address) <br><em>Index of Control Table byte</em> <code>address</code> <em>in the compact image, X430_IMAGE_SIZE for a reserved address outside every segment.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">void</td>
@@ -1996,7 +2153,15 @@
 <tbody>
 <tr>
 <td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_crc_polynomial"><strong>X430_CRC_POLYNOMIAL</strong></a>  <code>0x8005U</code><br><em>CRC-16 of the persistent blocks: polynomial 0x8005, initial value 0, as dxl2_crc16().</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
 <td style="text-align: left;"><a href="./#define-x430_id_max"><strong>X430_ID_MAX</strong></a>  <code>252U</code><br><em>Highest DYNAMIXEL ID a device may have (253 is reserved, 254 is broadcast).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_nvm_chunk"><strong>X430_NVM_CHUNK</strong></a>  <code>16U</code><br><em>Bytes read per hook call while a persistent block is checked (at least the header).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -2008,7 +2173,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-x430_touched_bytes"><strong>X430_TOUCHED_BYTES</strong></a>  <code>32U</code><br><em>Bytes of the register-touched bit set (one bit per register index, max 255).</em></td>
+<td style="text-align: left;"><a href="./#define-x430_touched_bytes"><strong>X430_TOUCHED_BYTES</strong></a>  <code>((X430\_REGISTER\_COUNT + 7U) / 8U)</code><br><em>Bytes of the register-touched bit set (one bit per register number).</em></td>
 </tr>
 </tbody>
 </table>
@@ -2049,7 +2214,7 @@
 <hr>
 
 <h3 id="function-x430_device_byte">function x430_device_byte<a class="headerlink" href="#function-x430_device_byte" title="Permanent link">&para;</a></h3>
-<p><em>One byte of the Control Table image.</em> 
+<p><em>Control Table byte</em> <code>address</code> <em>, below ::X430_IMAGE_DIRECT (stored at its own index).</em>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_device_byte</span><span class="w"> </span><span class="p">(</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
@@ -2111,9 +2276,9 @@
 <hr>
 
 <h3 id="function-x430_apply_eeprom">function x430_apply_eeprom<a class="headerlink" href="#function-x430_apply_eeprom" title="Permanent link">&para;</a></h3>
-<p><em>Copies the writable EEPROM registers of a valid EEPROM block (nvm buffer) into the table.</em> 
+<p><em>Takes the writable EEPROM registers from the valid EEPROM block.</em> 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_apply_eeprom</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
@@ -2156,248 +2321,354 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="function-x430_crc16">function x430_crc16<a class="headerlink" href="#function-x430_crc16" title="Permanent link">&para;</a></h3>
+<p><em>CRC-16</em> <code>crc</code> <em>continued over</em><code>length</code> <em>bytes, bit by bit (no table in flash).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_crc16</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">crc</span><span class="p">,</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p>Started from 0 over a whole block it equals dxl2_crc16() of the block. </p>
+<hr>
+
 <h3 id="function-x430_enable_torque">function x430_enable_torque<a class="headerlink" href="#function-x430_enable_torque" title="Permanent link">&para;</a></h3>
 <p><em>Torque Enable = 1 through the write hook (startup, Drive Mode bit 3).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_enable_torque</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">sync_goal</span>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_enable_torque</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">sync_goal</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_event">function x430_event<a class="headerlink" href="#function-x430_event" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_event</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_event</span><span class="w"> </span><span class="n">event</span>
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">)</span><span class="w"> </span>
-</code></pre></div>
-<hr>
-
-<h3 id="function-x430_get">function x430_get<a class="headerlink" href="#function-x430_get" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_get</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_event</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_event</span><span class="w"> </span><span class="n">event</span>
 <a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div>
 <hr>
 
+<h3 id="function-x430_get">function x430_get<a class="headerlink" href="#function-x430_get" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_get</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div>
+<hr>
+
+<h3 id="function-x430_indirect_reg">function x430_indirect_reg<a class="headerlink" href="#function-x430_indirect_reg" title="Permanent link">&para;</a></h3>
+<p><em>Indirect Address register</em> <code>entry</code> <em>of</em><code>block</code> <em>(generated, not in the model table).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_indirect_reg</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_indirect_block</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">block</span><span class="p">,</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">entry</span><span class="p">,</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<hr>
+
 <h3 id="function-x430_is_touched">function x430_is_touched<a class="headerlink" href="#function-x430_is_touched" title="Permanent link">&para;</a></h3>
 <p><em>True when register</em> <code>index</code> <em>is marked in</em><code>touched</code> <em>.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_is_touched</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">touched</span><span class="p">,</span>
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">index</span>
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_is_touched</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">touched</span><span class="p">,</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">index</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_load_factory">function x430_load_factory<a class="headerlink" href="#function-x430_load_factory" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_load_factory</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">first</span><span class="p">,</span>
-<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">last</span>
-<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_load_factory</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">first</span><span class="p">,</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">last</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div>
 <hr>
 
 <h3 id="function-x430_load_identity">function x430_load_identity<a class="headerlink" href="#function-x430_load_identity" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_load_identity</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
-<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_load_identity</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div>
 <hr>
 
 <h3 id="function-x430_mark_touched">function x430_mark_touched<a class="headerlink" href="#function-x430_mark_touched" title="Permanent link">&para;</a></h3>
 <p><em>Marks every register touched by the write (bit = register index).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_mark_touched</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
-<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
-<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">touched</span><span class="p">,</span>
-<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">indirect</span>
-<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_mark_touched</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">touched</span><span class="p">,</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">indirect</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_merge">function x430_merge<a class="headerlink" href="#function-x430_merge" title="Permanent link">&para;</a></h3>
 <p><em>New raw value of</em> <code>reg</code> <em>after writing</em><code>data</code> <em>at</em><code>address:</code> <em>the bytes of the write that land in the register replace the current bytes.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_merge</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span><span class="p">,</span>
-<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
-<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
-<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
-<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">indirect</span>
-<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_merge</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span><span class="p">,</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">indirect</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
-<h3 id="function-x430_nvm_load">function x430_nvm_load<a class="headerlink" href="#function-x430_nvm_load" title="Permanent link">&para;</a></h3>
-<p><em>Loads a block into the nvm buffer; true when it is valid for this model.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_nvm_load</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
-<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span>
-<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">size</span>
-<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="p">)</span><span class="w"> </span>
+<h3 id="function-x430_nvm_apply">function x430_nvm_apply<a class="headerlink" href="#function-x430_nvm_apply" title="Permanent link">&para;</a></h3>
+<p><em>Register</em> <code>reg</code> <em>from the valid block</em><code>slot</code> <em>into the image (unchanged if the read fails).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_nvm_apply</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
-<h3 id="function-x430_nvm_pack">function x430_nvm_pack<a class="headerlink" href="#function-x430_nvm_pack" title="Permanent link">&para;</a></h3>
-<p><em>Builds a block from</em> <code>size</code> <em>bytes of the table in the nvm buffer; returns its size.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_nvm_pack</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span>
-<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">size</span>
-<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="p">)</span><span class="w"> </span>
+<h3 id="function-x430_nvm_header">function x430_nvm_header<a class="headerlink" href="#function-x430_nvm_header" title="Permanent link">&para;</a></h3>
+<p><em>Header of a block: magic "X430", model number, format, slot, payload size.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_nvm_header</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">header</span><span class="p">,</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">size</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-x430_nvm_read">function x430_nvm_read<a class="headerlink" href="#function-x430_nvm_read" title="Permanent link">&para;</a></h3>
+<p><em>Part of block</em> <code>slot</code> <em>through the read hook (the caller checked that there is one).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_nvm_read</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_nvm_store">function x430_nvm_store<a class="headerlink" href="#function-x430_nvm_store" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_nvm_store</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
-<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span>
-<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">size</span>
-<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="p">)</span><span class="w"> </span>
-</code></pre></div>
+<p><em>Writes block</em> <code>slot:</code> <em>header, the first</em><code>size</code> <em>bytes of the image, CRC, in three parts with increasing offsets.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_nvm_store</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">size</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p>Result Fail when a part fails (the rest is not written). </p>
+<hr>
+
+<h3 id="function-x430_nvm_valid">function x430_nvm_valid<a class="headerlink" href="#function-x430_nvm_valid" title="Permanent link">&para;</a></h3>
+<p><em>True when block</em> <code>slot</code> <em>with a payload of</em><code>size</code> <em>bytes is stored and valid for this model: header and CRC are checked in chunks of X430_NVM_CHUNK bytes on the stack.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_nvm_valid</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">    </span><span class="k">enum</span><span class="w"> </span><span class="nc">x430_nvm_slot</span><span class="w"> </span><span class="n">slot</span><span class="p">,</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">size</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-x430_peek">function x430_peek<a class="headerlink" href="#function-x430_peek" title="Permanent link">&para;</a></h3>
+<p><em>Control Table byte</em> <code>address</code> <em>; 0 for a reserved address.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_peek</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_put">function x430_put<a class="headerlink" href="#function-x430_put" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_put</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
-<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">value</span>
-<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_put</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">value</span>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div>
 <hr>
 
 <h3 id="function-x430_raw_get">function x430_raw_get<a class="headerlink" href="#function-x430_raw_get" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_raw_get</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="p">,</span>
-<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
-<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">size</span>
-<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_raw_get</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="p">,</span>
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">size</span>
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div>
 <hr>
 
 <h3 id="function-x430_raw_put">function x430_raw_put<a class="headerlink" href="#function-x430_raw_put" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_raw_put</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="p">,</span>
-<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
-<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span>
-<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value</span>
-<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_raw_put</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">table</span><span class="p">,</span>
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span>
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">value</span>
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div>
 <hr>
 
-<h3 id="function-x430_reg_at">function x430_reg_at<a class="headerlink" href="#function-x430_reg_at" title="Permanent link">&para;</a></h3>
-<p><em>Register that contains</em> <code>address</code> <em>, NULL for a reserved address.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_reg_at</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
-<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="p">)</span><span class="w"> </span>
+<h3 id="function-x430_reg_by_index">function x430_reg_by_index<a class="headerlink" href="#function-x430_reg_by_index" title="Permanent link">&para;</a></h3>
+<p><em>Register number</em> <code>index</code> <em>(below X430_REGISTER_COUNT).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="k">static</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="n">x430_reg_by_index</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">index</span>
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
+<p>The registers are numbered in address order: the model table, then the Indirect Address registers of each block. </p>
+<hr>
+
+<h3 id="function-x430_reg_find">function x430_reg_find<a class="headerlink" href="#function-x430_reg_find" title="Permanent link">&para;</a></h3>
+<p><em>Register that contains</em> <code>address</code> <em>, in</em><code>reg</code> <em>; returns its number, X430_REGISTER_COUNT for a reserved address.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_reg_find</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span>
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p>Binary search in the model table (its first register starts at 0), arithmetic in the Indirect Address blocks: bounded by log2(register_count) + indirect_count steps. </p>
 <hr>
 
 <h3 id="function-x430_reg_start">function x430_reg_start<a class="headerlink" href="#function-x430_reg_start" title="Permanent link">&para;</a></h3>
-<p><em>Register that starts at</em> <code>address</code> <em>, NULL when none does.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_reg_start</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
-<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="p">)</span><span class="w"> </span>
+<p><em>Register that starts at</em> <code>address:</code> <em>true with the register, false when none does.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_reg_start</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span>
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-x430_reg_store">function x430_reg_store<a class="headerlink" href="#function-x430_reg_store" title="Permanent link">&para;</a></h3>
+<p><em>Stores</em> <code>value</code> <em>into register</em><code>reg</code> <em>(truncated to its size).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_reg_store</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span><span class="p">,</span>
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">value</span>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="function-x430_reg_value">function x430_reg_value<a class="headerlink" href="#function-x430_reg_value" title="Permanent link">&para;</a></h3>
+<p><em>Value of register</em> <code>reg</code> <em>(sign-extended).</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_reg_value</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span>
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_resolve">function x430_resolve<a class="headerlink" href="#function-x430_resolve" title="Permanent link">&para;</a></h3>
 <p><em>Address that</em> <code>address</code> <em>really accesses (Indirect Data resolved).</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_resolve</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
-<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_resolve</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
+<hr>
+
+<h3 id="function-x430_slot">function x430_slot<a class="headerlink" href="#function-x430_slot" title="Permanent link">&para;</a></h3>
+<p><em>Index of Control Table byte</em> <code>address</code> <em>in the compact image, X430_IMAGE_SIZE for a reserved address outside every segment.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">x430_slot</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p>Bounded: segment_count steps. </p>
 <hr>
 
 <h3 id="function-x430_startup">function x430_startup<a class="headerlink" href="#function-x430_startup" title="Permanent link">&para;</a></h3>
 <p><em>RAM area to its startup state, then the Startup Configuration.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_startup</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span>
-<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_startup</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span>
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_store_raw_bytes">function x430_store_raw_bytes<a class="headerlink" href="#function-x430_store_raw_bytes" title="Permanent link">&para;</a></h3>
 <p><em>Bytes of a write through Indirect Data whose Indirect Address points at Indirect Data storage itself: they are kept as plain bytes.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_store_raw_bytes</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
-<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
-<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
-<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data</span>
-<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_store_raw_bytes</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span><span class="p">,</span>
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data</span>
+<a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_sync_goal">function x430_sync_goal<a class="headerlink" href="#function-x430_sync_goal" title="Permanent link">&para;</a></h3>
 <p><em>Torque on: Goal Position takes the Present Position, so the actuator holds where it is instead of jumping to an old goal (behaviour of the X series).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_sync_goal</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span>
-<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">x430_sync_goal</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span>
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_to_value">function x430_to_value<a class="headerlink" href="#function-x430_to_value" title="Permanent link">&para;</a></h3>
 <p><em>Sign-extends a raw register value.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_to_value</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span><span class="p">,</span>
-<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">raw</span>
-<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">x430_to_value</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_reg</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">reg</span><span class="p">,</span>
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">raw</span>
+<a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_torque_on">function x430_torque_on<a class="headerlink" href="#function-x430_torque_on" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_torque_on</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
-<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_torque_on</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m</span>
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div>
 <hr>
 
 <h3 id="function-x430_touches_indirect">function x430_touches_indirect<a class="headerlink" href="#function-x430_touches_indirect" title="Permanent link">&para;</a></h3>
 <p><em>True when [address, address + length) overlaps an Indirect Data block.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_touches_indirect</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
-<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span>
-<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">x430_touches_indirect</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span>
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_write">function x430_write<a class="headerlink" href="#function-x430_write" title="Permanent link">&para;</a></h3>
 <p><em>WRITE without the argument checks (</em> <a href="../group__x430/#function-x430_device_write"><em><strong>x430_device_write()</strong></em></a> <em>, REG_WRITE, ACTION).</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_write</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
-<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
-<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
-<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
-<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">options</span>
-<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_write</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span><span class="p">,</span>
+<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
+<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">data</span><span class="p">,</span>
+<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">options</span>
+<a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
+<h3 id="define-x430_crc_polynomial">define X430_CRC_POLYNOMIAL<a class="headerlink" href="#define-x430_crc_polynomial" title="Permanent link">&para;</a></h3>
+<p><em>CRC-16 of the persistent blocks: polynomial 0x8005, initial value 0, as dxl2_crc16().</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="cp">#define X430_CRC_POLYNOMIAL `0x8005U`</span>
+</code></pre></div></p>
+<hr>
+
 <h3 id="define-x430_id_max">define X430_ID_MAX<a class="headerlink" href="#define-x430_id_max" title="Permanent link">&para;</a></h3>
 <p><em>Highest DYNAMIXEL ID a device may have (253 is reserved, 254 is broadcast).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="cp">#define X430_ID_MAX `252U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="cp">#define X430_ID_MAX `252U`</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="define-x430_nvm_chunk">define X430_NVM_CHUNK<a class="headerlink" href="#define-x430_nvm_chunk" title="Permanent link">&para;</a></h3>
+<p><em>Bytes read per hook call while a persistent block is checked (at least the header).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="cp">#define X430_NVM_CHUNK `16U`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_nvm_format">define X430_NVM_FORMAT<a class="headerlink" href="#define-x430_nvm_format" title="Permanent link">&para;</a></h3>
 <p><em>Persistent block format version.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="cp">#define X430_NVM_FORMAT `1U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="cp">#define X430_NVM_FORMAT `1U`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_pulses_per_turn">define X430_PULSES_PER_TURN<a class="headerlink" href="#define-x430_pulses_per_turn" title="Permanent link">&para;</a></h3>
 <p><em>Turn size of Present Position in pulses.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="cp">#define X430_PULSES_PER_TURN `4096`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="cp">#define X430_PULSES_PER_TURN `4096`</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_touched_bytes">define X430_TOUCHED_BYTES<a class="headerlink" href="#define-x430_touched_bytes" title="Permanent link">&para;</a></h3>
-<p><em>Bytes of the register-touched bit set (one bit per register index, max 255).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="cp">#define X430_TOUCHED_BYTES `32U`</span>
+<p><em>Bytes of the register-touched bit set (one bit per register number).</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="cp">#define X430_TOUCHED_BYTES `((X430_REGISTER_COUNT + 7U) / 8U)`</span>
 </code></pre></div></p>
 <hr>
 

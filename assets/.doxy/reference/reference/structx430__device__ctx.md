@@ -39,12 +39,11 @@ _State behind the opaque_ [_**x430\_device**_](structx430__device.md) _._[More..
 |  bool | [**baud\_changed**](#variable-baud_changed)  <br>_Deferred_ X430\_EVENT\_BAUD\_RATE _._ |
 |  struct [**x430\_bus**](structx430__bus.md) \* | [**bus**](#variable-bus)  <br>_Owning bus, NULL before attach._  |
 |  struct [**x430\_device\_config**](structx430__device__config.md) | [**config**](#variable-config)  <br>_Copy of the configuration._  |
-|  uint8\_t | [**nvm**](#variable-nvm)  <br>_Persistent block buffer._  |
 |  uint32\_t | [**ready**](#variable-ready)  <br>_X430\_READY after_ [_**x430\_device\_init()**_](group__x430.md#function-x430_device_init) _._ |
 |  uint16\_t | [**reg\_address**](#variable-reg_address)  <br>_REG\_WRITE address._  |
 |  uint8\_t | [**reg\_data**](#variable-reg_data)  <br>_REG\_WRITE data._  |
 |  uint16\_t | [**reg\_length**](#variable-reg_length)  <br>_REG\_WRITE length, 0 = none._  |
-|  uint8\_t | [**table**](#variable-table)  <br>_Control Table image, little endian._  |
+|  uint8\_t | [**table**](#variable-table)  <br>_Compact Control Table image, little endian._  |
 
 
 
@@ -143,20 +142,6 @@ struct x430_device_config x430_device_ctx::config;
 
 
 
-### variable nvm 
-
-_Persistent block buffer._ 
-```C++
-uint8_t x430_device_ctx::nvm[X430_NVM_BUFFER_SIZE];
-```
-
-
-
-
-<hr>
-
-
-
 ### variable ready 
 
 _X430\_READY after_ [_**x430\_device\_init()**_](group__x430.md#function-x430_device_init) _._
@@ -215,9 +200,9 @@ uint16_t x430_device_ctx::reg_length;
 
 ### variable table 
 
-_Control Table image, little endian._ 
+_Compact Control Table image, little endian._ 
 ```C++
-uint8_t x430_device_ctx::table[X430_TABLE_SIZE];
+uint8_t x430_device_ctx::table[X430_IMAGE_SIZE];
 ```
 
 

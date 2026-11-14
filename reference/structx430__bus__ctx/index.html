@@ -1224,17 +1224,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        variable data
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#variable-device_count" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1283,6 +1272,17 @@
     <span class="md-ellipsis">
       
         variable ready
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-tx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable tx
       
     </span>
   </a>
@@ -1343,10 +1343,6 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint8_t</td>
-<td style="text-align: left;"><a href="#variable-data"><strong>data</strong></a>  <br><em>Status data scratch buffer.</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">uint8_t</td>
 <td style="text-align: left;"><a href="#variable-device_count"><strong>device_count</strong></a>  <br><em>Entries in devices.</em></td>
 </tr>
 <tr>
@@ -1366,6 +1362,10 @@
 <td style="text-align: left;"><a href="#variable-ready"><strong>ready</strong></a>  <br><em>X430_READY after</em> <a href="../group__x430/#function-x430_bus_init"><em><strong>x430_bus_init()</strong></em></a> <em>.</em></td>
 </tr>
 <tr>
+<td style="text-align: right;">uint8_t</td>
+<td style="text-align: left;"><a href="#variable-tx"><strong>tx</strong></a>  <br><em>Status packet, built and framed in place.</em></td>
+</tr>
+<tr>
 <td style="text-align: right;">bool</td>
 <td style="text-align: left;"><a href="#variable-write_failed"><strong>write_failed</strong></a>  <br><em>The writer failed since the last call.</em></td>
 </tr>
@@ -1380,39 +1380,39 @@
 </code></pre></div></p>
 <hr>
 
-<h3 id="variable-data">variable data<a class="headerlink" href="#variable-data" title="Permanent link">&para;</a></h3>
-<p><em>Status data scratch buffer.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">data</span><span class="p">[</span><span class="n">DXL2_MAX_PARAMETER_SIZE</span><span class="p">];</span>
-</code></pre></div></p>
-<hr>
-
 <h3 id="variable-device_count">variable device_count<a class="headerlink" href="#variable-device_count" title="Permanent link">&para;</a></h3>
 <p><em>Entries in devices.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">device_count</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">device_count</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-devices">variable devices<a class="headerlink" href="#variable-devices" title="Permanent link">&para;</a></h3>
 <p><em>Attached devices.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="o">*</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">devices</span><span class="p">[</span><span class="n">X430_MAX_DEVICES</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="o">*</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">devices</span><span class="p">[</span><span class="n">X430_MAX_DEVICES</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-last_rx_ms">variable last_rx_ms<a class="headerlink" href="#variable-last_rx_ms" title="Permanent link">&para;</a></h3>
 <p><em>Time of the last instruction packet.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">last_rx_ms</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">last_rx_ms</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-link">variable link<a class="headerlink" href="#variable-link" title="Permanent link">&para;</a></h3>
 <p><em>DXL2-C parser/encoder.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">dxl2_link</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">link</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">dxl2_link</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">link</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-ready">variable ready<a class="headerlink" href="#variable-ready" title="Permanent link">&para;</a></h3>
 <p><em>X430_READY after</em> <a href="../group__x430/#function-x430_bus_init"><em><strong>x430_bus_init()</strong></em></a> <em>.</em>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">ready</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">ready</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-tx">variable tx<a class="headerlink" href="#variable-tx" title="Permanent link">&para;</a></h3>
+<p><em>Status packet, built and framed in place.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">tx</span><span class="p">[</span><span class="n">DXL2_MAX_PACKET_SIZE</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 

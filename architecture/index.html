@@ -1562,13 +1562,13 @@ post to an application queue from the hook.</p>
 <tr>
 <td><code>struct x430_bus</code></td>
 <td>Application (static, stack or pool)</td>
-<td>3,128 B (768-byte packets, the default), 1,080 B (256-byte packets)</td>
+<td>2,368 B (768-byte packets, the default), 832 B (256-byte packets)</td>
 <td>From <code>x430_bus_init()</code></td>
 </tr>
 <tr>
 <td><code>struct x430_device</code></td>
 <td>Application</td>
-<td>1,400 B (all features), 800 B (no backup)</td>
+<td>384 B (with every feature and without)</td>
 <td>From <code>x430_device_init()</code></td>
 </tr>
 <tr>
@@ -1592,15 +1592,17 @@ post to an application queue from the hook.</p>
 <tr>
 <td>Model table</td>
 <td>Library (<code>const</code>, flash)</td>
-<td>2,901 B</td>
+<td>921 B</td>
 <td>Static</td>
 </tr>
 </tbody>
 </table>
-<p>A device holds its Control Table image (662 bytes), the REG_WRITE data
-(<code>X430_REG_WRITE_SIZE</code>) and the buffer of one persistent block (674 bytes with BACKUP,
-76 bytes without). A bus holds the DXL2-C link (two packet-sized buffers), a status data
-buffer and, with Fast reads, one more packet buffer. There is no heap, no global or static
+<p>A device holds the compact image of its Control Table (316 bytes: the 662 addresses
+without their long reserved runs, <a href="../theory/#persistent-blocks">theory</a>) and the
+REG_WRITE data (<code>X430_REG_WRITE_SIZE</code>); it keeps no copy of a persistent block, the hooks
+read and write blocks in parts. A bus holds the DXL2-C link (receive buffer and decoded
+packet) and one packet buffer in which it builds and byte-stuffs every status packet, Fast
+Sync/Bulk Read answers included. There is no heap, no global or static
 mutable variable and no hidden buffer: the sizes are fixed at compile time by
 <code>X430_BUS_WORDS</code>, <code>X430_DEVICE_WORDS</code> and <code>X430_SIM_WORDS</code> (plain arithmetic of the
 configuration macros, which static analysis can evaluate) and checked against the private

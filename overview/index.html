@@ -1428,7 +1428,7 @@ DYNAMIXEL ecosystem (DynamixelSDK, DYNAMIXEL Wizard 2.0, ROS 2
 </tr>
 <tr>
 <td>Flash or EEPROM drivers</td>
-<td>The library hands opaque blocks to <code>nvm_load</code> / <code>nvm_store</code>; where they live is up to the application.</td>
+<td>The library reads and writes opaque blocks in parts through <code>nvm_read</code> / <code>nvm_write</code>; where they live is up to the application.</td>
 </tr>
 <tr>
 <td>Threads, queues, interrupts</td>
@@ -1471,15 +1471,15 @@ DYNAMIXEL ecosystem (DynamixelSDK, DYNAMIXEL Wizard 2.0, ROS 2
 </tr>
 <tr>
 <td>RAM</td>
-<td>1,400 B per device, 3,128 B per bus, 32 B per simulator (Cortex-M4, default options; <a href="../configuration/#memory-footprint">details</a>)</td>
+<td>384 B per device, 2,368 B per bus, 32 B per simulator (Cortex-M4, default options; <a href="../configuration/#memory-footprint">details</a>)</td>
 </tr>
 <tr>
 <td>Flash</td>
-<td>11,185 B with the model table, plus 850 B of DXL2-C (Cortex-M4, <code>-Os</code>, all features)</td>
+<td>9,921 B with the model table, plus 850 B of DXL2-C (Cortex-M4, <code>-Os</code>, all features)</td>
 </tr>
 <tr>
 <td>Stack</td>
-<td>1,796 B worst case, <code>x430_bus_receive()</code> with 768-byte packets (Cortex-M4 <code>-Os</code>, <a href="../configuration/#stack-usage">details</a>)</td>
+<td>424 B worst case, <code>x430_bus_receive()</code>, with any packet size (Cortex-M4 <code>-Os</code>, <a href="../configuration/#stack-usage">details</a>)</td>
 </tr>
 <tr>
 <td>Coding standard</td>
@@ -1487,7 +1487,7 @@ DYNAMIXEL ecosystem (DynamixelSDK, DYNAMIXEL Wizard 2.0, ROS 2
 </tr>
 <tr>
 <td>Tests</td>
-<td>100 % line and branch coverage of <code>src/</code> in both unit test presets (125 and 94 GoogleTest cases); model data against the e-Manual; 52 checks end to end with the official DynamixelSDK</td>
+<td>100 % line and branch coverage of <code>src/</code> in both unit test presets (131 and 100 GoogleTest cases); model data against the e-Manual; 52 checks end to end with the official DynamixelSDK</td>
 </tr>
 <tr>
 <td>Thread safety</td>
@@ -1515,7 +1515,7 @@ Zephyr) with DYNAMIXEL Wizard 2.0; the screenshots in the
 <dd>The register image of a device: EEPROM area (addresses 0–63, persistent, locked
 while the torque is on) and RAM area (64–661).</dd>
 <dt>Hook</dt>
-<dd>An application function the device calls: write, read, event, nvm_load, nvm_store.</dd>
+<dd>An application function the device calls: write, read, event, nvm_read, nvm_write.</dd>
 <dt>Live register</dt>
 <dd>A read-only RAM register the application keeps current: Present Position, Present
 Velocity, Moving and the others.</dd>

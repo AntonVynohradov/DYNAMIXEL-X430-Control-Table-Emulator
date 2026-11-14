@@ -1366,6 +1366,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#function-x430_frame_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        function x430_frame_status
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1493,6 +1504,7 @@
 <p><a href="../x430__internal_8h_source/">Go to the source code of this file</a></p>
 <ul>
 <li><code>#include &lt;stdbool.h&gt;</code></li>
+<li><code>#include &lt;stddef.h&gt;</code></li>
 <li><code>#include &lt;stdint.h&gt;</code></li>
 <li><code>#include "x430.h"</code></li>
 </ul>
@@ -1554,7 +1566,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint8_t</td>
-<td style="text-align: left;"><a href="#function-x430_device_byte"><strong>x430_device_byte</strong></a> (const struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, uint16_t address) <br><em>One byte of the Control Table image.</em></td>
+<td style="text-align: left;"><a href="#function-x430_device_byte"><strong>x430_device_byte</strong></a> (const struct <a href="../structx430__device/"><strong>x430_device</strong></a> * device, uint16_t address) <br><em>Control Table byte</em> <code>address</code> <em>, below ::X430_IMAGE_DIRECT (stored at its own index).</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">bool</td>
@@ -1575,6 +1587,10 @@
 <tr>
 <td style="text-align: right;">void</td>
 <td style="text-align: left;"><a href="#function-x430_fill"><strong>x430_fill</strong></a> (uint8_t * destination, uint8_t value, uint16_t length) <br><em>Sets</em> <code>length</code> <em>bytes to</em><code>value</code> <em>(no &lt;string.h&gt;).</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">size_t</td>
+<td style="text-align: left;"><a href="#function-x430_frame_status"><strong>x430_frame_status</strong></a> (uint8_t * tx, size_t capacity, uint8_t id, uint16_t count) <br><em>Completes a status packet in place (no second buffer): header,</em> <code>id</code> <em>, the byte stuffing of instruction, error and data, the length field and the CRC.</em></td>
 </tr>
 </tbody>
 </table>
@@ -1679,7 +1695,7 @@
 <hr>
 
 <h3 id="function-x430_device_byte">function x430_device_byte<a class="headerlink" href="#function-x430_device_byte" title="Permanent link">&para;</a></h3>
-<p><em>One byte of the Control Table image.</em> 
+<p><em>Control Table byte</em> <code>address</code> <em>, below ::X430_IMAGE_DIRECT (stored at its own index).</em>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_device_byte</span><span class="w"> </span><span class="p">(</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span><span class="p">,</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">address</span>
@@ -1732,12 +1748,33 @@
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
+
+<h3 id="function-x430_frame_status">function x430_frame_status<a class="headerlink" href="#function-x430_frame_status" title="Permanent link">&para;</a></h3>
+<p><em>Completes a status packet in place (no second buffer): header,</em> <code>id</code> <em>, the byte stuffing of instruction, error and data, the length field and the CRC.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">size_t</span><span class="w"> </span><span class="n">x430_frame_status</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">capacity</span><span class="p">,</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">id</span><span class="p">,</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">count</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">)</span><span class="w"> </span>
+</code></pre></div></p>
+<p>The result is byte for byte the packet of dxl2_encode(). A status whose stuffed form does not fit <code>capacity</code> becomes a Data Length Error without data (the alert bit is kept). </p>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>tx</code> Packet buffer: error byte at offset 8, <code>count</code> data bytes from 9. </li>
+<li><code>capacity</code> Size of <code>tx</code>, at least 9 + <code>count</code> and at least 11 bytes. </li>
+<li><code>id</code> ID of the answering device. </li>
+<li><code>count</code> Status data bytes. </li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p>Packet length (at least 11). </p>
+<hr>
 <h2 id="public-static-functions-documentation">Public Static Functions Documentation<a class="headerlink" href="#public-static-functions-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="function-x430_bus_ctx_of">function x430_bus_ctx_of<a class="headerlink" href="#function-x430_bus_ctx_of" title="Permanent link">&para;</a></h3>
 <p><em>State of a bus.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_bus_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_bus_ctx_of</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_bus</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">bus</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_bus_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_bus_ctx_of</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_bus</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">bus</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <p><strong>Note:</strong></p>
 <p>MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md): <a href="../structx430__bus/"><strong>x430_bus</strong></a> is the opaque storage of <a href="../structx430__bus__ctx/"><strong>x430_bus_ctx</strong></a>; size and alignment are checked in x430_bus.c. </p>
@@ -1745,17 +1782,17 @@
 
 <h3 id="function-x430_bus_ctx_of_const">function x430_bus_ctx_of_const<a class="headerlink" href="#function-x430_bus_ctx_of_const" title="Permanent link">&para;</a></h3>
 <p><em>Read-only variant of x430_bus_ctx_of().</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_bus_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_bus_ctx_of_const</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_bus</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">bus</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_bus_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_bus_ctx_of_const</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_bus</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">bus</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_device_ctx_of">function x430_device_ctx_of<a class="headerlink" href="#function-x430_device_ctx_of" title="Permanent link">&para;</a></h3>
 <p><em>State of a device.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_device_ctx_of</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_device_ctx_of</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <p><strong>Note:</strong></p>
 <p>MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md); checked in x430_device.c. </p>
@@ -1763,17 +1800,17 @@
 
 <h3 id="function-x430_device_ctx_of_const">function x430_device_ctx_of_const<a class="headerlink" href="#function-x430_device_ctx_of_const" title="Permanent link">&para;</a></h3>
 <p><em>Read-only variant of x430_device_ctx_of().</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_device_ctx_of_const</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_device_ctx_of_const</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_device</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">device</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="function-x430_sim_ctx_of">function x430_sim_ctx_of<a class="headerlink" href="#function-x430_sim_ctx_of" title="Permanent link">&para;</a></h3>
 <p><em>State of a simulator.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_sim_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_sim_ctx_of</span><span class="w"> </span><span class="p">(</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_sim</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sim</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">)</span><span class="w"> </span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_sim_ctx</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x430_sim_ctx_of</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">x430_sim</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sim</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="p">)</span><span class="w"> </span>
 </code></pre></div></p>
 <p><strong>Note:</strong></p>
 <p>MISRA C:2012 Rule 11.3, deviation DEV-01 (docs/misra.md); checked in x430_sim.c. </p>
@@ -1781,7 +1818,7 @@
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
 <h3 id="define-x430_ready">define X430_READY<a class="headerlink" href="#define-x430_ready" title="Permanent link">&para;</a></h3>
 <p><em>Value of the ready field after a successful initialization.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cp">#define X430_READY `0x58343330U`</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">#define X430_READY `0x58343330U`</span>
 </code></pre></div></p>
 <p>A zeroed or never initialized instance holds another value: every function but the *_init() functions then returns <a href="../group__x430__defs/#define-x430_err_state"><strong>X430_ERR_STATE</strong></a>. </p>
 <hr>

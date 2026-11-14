@@ -1418,7 +1418,7 @@
 <h1 id="class-member-variables">Class Member Variables<a class="headerlink" href="#class-member-variables" title="Permanent link">&para;</a></h1>
 <h2 id="a">a<a class="headerlink" href="#a" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>address</strong> (<a href="../structx430__indirect__block/"><strong>x430_indirect_block</strong></a>, <a href="../structx430__reg/"><strong>x430_reg</strong></a>)</li>
+<li><strong>address</strong> (<a href="../structx430__indirect__block/"><strong>x430_indirect_block</strong></a>, <a href="../structx430__reg/"><strong>x430_reg</strong></a>, <a href="../structx430__segment/"><strong>x430_segment</strong></a>)</li>
 <li><strong>axes</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
 </ul>
 <h2 id="b">b<a class="headerlink" href="#b" title="Permanent link">&para;</a></h2>
@@ -1433,13 +1433,12 @@
 <li><strong>count</strong> (<a href="../structx430__indirect__block/"><strong>x430_indirect_block</strong></a>)</li>
 <li><strong>current_unit_ua</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
 <li><strong>context</strong> (<a href="../structx430__port/"><strong>x430_port</strong></a>)</li>
-<li><strong>check</strong> (<a href="../structx430__reg/"><strong>x430_reg</strong></a>)</li>
 </ul>
 <h2 id="d">d<a class="headerlink" href="#d" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>data</strong> (<a href="../structx430__bus__ctx/"><strong>x430_bus_ctx</strong></a>, <a href="../structx430__indirect__block/"><strong>x430_indirect_block</strong></a>)</li>
 <li><strong>device_count</strong> (<a href="../structx430__bus__ctx/"><strong>x430_bus_ctx</strong></a>)</li>
 <li><strong>devices</strong> (<a href="../structx430__bus__ctx/"><strong>x430_bus_ctx</strong></a>)</li>
+<li><strong>data</strong> (<a href="../structx430__indirect__block/"><strong>x430_indirect_block</strong></a>)</li>
 <li><strong>delay_us</strong> (<a href="../structx430__port/"><strong>x430_port</strong></a>)</li>
 <li><strong>device</strong> (<a href="../structx430__sim__ctx/"><strong>x430_sim_ctx</strong></a>)</li>
 </ul>
@@ -1469,6 +1468,7 @@
 <li><strong>last_rx_ms</strong> (<a href="../structx430__bus__ctx/"><strong>x430_bus_ctx</strong></a>)</li>
 <li><strong>link</strong> (<a href="../structx430__bus__ctx/"><strong>x430_bus_ctx</strong></a>)</li>
 <li><strong>lock</strong> (<a href="../structx430__port/"><strong>x430_port</strong></a>)</li>
+<li><strong>length</strong> (<a href="../structx430__segment/"><strong>x430_segment</strong></a>)</li>
 </ul>
 <h2 id="m">m<a class="headerlink" href="#m" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1480,15 +1480,15 @@
 </ul>
 <h2 id="n">n<a class="headerlink" href="#n" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>nvm</strong> (<a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a>)</li>
-<li><strong>nvm_load</strong> (<a href="../structx430__hooks/"><strong>x430_hooks</strong></a>)</li>
-<li><strong>nvm_store</strong> (<a href="../structx430__hooks/"><strong>x430_hooks</strong></a>)</li>
+<li><strong>nvm_read</strong> (<a href="../structx430__hooks/"><strong>x430_hooks</strong></a>)</li>
+<li><strong>nvm_write</strong> (<a href="../structx430__hooks/"><strong>x430_hooks</strong></a>)</li>
 <li><strong>name</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
 </ul>
 <h2 id="o">o<a class="headerlink" href="#o" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>opaque</strong> (<a href="../structx430__bus/"><strong>x430_bus</strong></a>, <a href="../structx430__device/"><strong>x430_device</strong></a>, <a href="../structx430__sim/"><strong>x430_sim</strong></a>)</li>
 <li><strong>operating_modes</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
+<li><strong>offset</strong> (<a href="../structx430__segment/"><strong>x430_segment</strong></a>)</li>
 </ul>
 <h2 id="p">p<a class="headerlink" href="#p" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1502,17 +1502,18 @@
 <li><strong>reg_length</strong> (<a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a>)</li>
 <li><strong>read</strong> (<a href="../structx430__hooks/"><strong>x430_hooks</strong></a>)</li>
 <li><strong>register_count</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
-<li><strong>register_map</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
 <li><strong>registers</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
-<li><strong>ref</strong> (<a href="../structx430__reg/"><strong>x430_reg</strong></a>)</li>
 </ul>
 <h2 id="s">s<a class="headerlink" href="#s" title="Permanent link">&para;</a></h2>
 <ul>
+<li><strong>segment_count</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
+<li><strong>segments</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
 <li><strong>size</strong> (<a href="../structx430__reg/"><strong>x430_reg</strong></a>)</li>
 <li><strong>shaft_mpulse</strong> (<a href="../structx430__sim__ctx/"><strong>x430_sim_ctx</strong></a>)</li>
 </ul>
 <h2 id="t">t<a class="headerlink" href="#t" title="Permanent link">&para;</a></h2>
 <ul>
+<li><strong>tx</strong> (<a href="../structx430__bus__ctx/"><strong>x430_bus_ctx</strong></a>)</li>
 <li><strong>table</strong> (<a href="../structx430__device__ctx/"><strong>x430_device_ctx</strong></a>)</li>
 <li><strong>table_size</strong> (<a href="../structx430__model/"><strong>x430_model</strong></a>)</li>
 <li><strong>temperature</strong> (<a href="../structx430__sim__config/"><strong>x430_sim_config</strong></a>)</li>

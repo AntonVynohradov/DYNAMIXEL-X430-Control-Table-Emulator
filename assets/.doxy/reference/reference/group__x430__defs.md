@@ -32,7 +32,7 @@ _Status codes, options, events and the addresses, operating modes and bit fields
 | Type | Name |
 | ---: | :--- |
 | enum  | [**x430\_event**](#enum-x430_event)  <br>_Notifications from a device to the application (_ [_**x430\_hooks::event**_](structx430__hooks.md#variable-event) _)._ |
-| enum  | [**x430\_nvm\_slot**](#enum-x430_nvm_slot)  <br>_Persistent storage slots (_ [_**x430\_hooks::nvm\_load**_](structx430__hooks.md#variable-nvm_load) _,_[_**x430\_hooks::nvm\_store**_](structx430__hooks.md#variable-nvm_store) _)._ |
+| enum  | [**x430\_nvm\_slot**](#enum-x430_nvm_slot)  <br>_Persistent storage slots (_ [_**x430\_hooks::nvm\_read**_](structx430__hooks.md#variable-nvm_read) _,_[_**x430\_hooks::nvm\_write**_](structx430__hooks.md#variable-nvm_write) _)._ |
 
 
 
@@ -220,7 +220,7 @@ enum x430_event {
 
 ### enum x430\_nvm\_slot 
 
-_Persistent storage slots (_ [_**x430\_hooks::nvm\_load**_](structx430__hooks.md#variable-nvm_load) _,_[_**x430\_hooks::nvm\_store**_](structx430__hooks.md#variable-nvm_store) _)._
+_Persistent storage slots (_ [_**x430\_hooks::nvm\_read**_](structx430__hooks.md#variable-nvm_read) _,_[_**x430\_hooks::nvm\_write**_](structx430__hooks.md#variable-nvm_write) _)._
 ```
 enum x430_nvm_slot {
     X430_NVM_EEPROM = 0,

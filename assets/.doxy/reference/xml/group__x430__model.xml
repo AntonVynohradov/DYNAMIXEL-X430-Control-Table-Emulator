@@ -5,6 +5,7 @@
     <title>Model descriptor</title>
     <innerclass refid="structx430__reg" prot="public">x430_reg</innerclass>
     <innerclass refid="structx430__indirect__block" prot="public">x430_indirect_block</innerclass>
+    <innerclass refid="structx430__segment" prot="public">x430_segment</innerclass>
     <innerclass refid="structx430__model" prot="public">x430_model</innerclass>
     <sectiondef kind="user-defined">
       <header>Type definitions</header>
@@ -47,7 +48,7 @@
         <enumvalue id="group__x430__model_1ggac5fe48b7eb39461dc3a600cbc835e395a13df5dd2b997b2d3e6f5b65c80b44884" prot="public">
           <name>X430_CHECK_SYMMETRIC</name>
           <briefdescription>
-<para>-ref &lt;= value &lt;= ref; ref = limit register address. </para>
+<para>-limit &lt;= value &lt;= limit; max = limit register address. </para>
           </briefdescription>
           <detaileddescription>
           </detaileddescription>
@@ -69,13 +70,13 @@
           </detaileddescription>
         </enumvalue>
         <briefdescription>
-<para>Write check of a register (<ref refid="structx430__reg_1a692a3f1397d01fe3fbb1d08f7bccdf93" kindref="member">x430_reg::check</ref>). </para>
+<para>Write check of a register (upper four bits of <ref refid="structx430__reg_1a899b6166832f57956e7b22710396a5de" kindref="member">x430_reg::flags</ref>). </para>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="58" column="1" bodyfile="inc/x430_model.h" bodystart="59" bodyend="67"/>
+        <location file="inc/x430_model.h" line="62" column="1" bodyfile="inc/x430_model.h" bodystart="63" bodyend="71"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="user-defined">
@@ -92,7 +93,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_model.h" line="112" column="30" declfile="inc/x430_model.h" declline="112" declcolumn="30"/>
+        <location file="inc/x430_model.h" line="134" column="30" declfile="inc/x430_model.h" declline="134" declcolumn="30"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="user-defined">
@@ -144,6 +145,31 @@
         <inbodydescription>
         </inbodydescription>
         <location file="inc/x430_model.h" line="50" column="9" bodyfile="inc/x430_model.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__model_1ga3980b93adba8bfb3226938195b150c74" prot="public" static="no">
+        <name>X430_REG_CHECK_SHIFT</name>
+        <initializer>4U</initializer>
+        <briefdescription>
+<para>Shift of the write check (enum x430_check) in the upper four bits of <ref refid="structx430__reg_1a899b6166832f57956e7b22710396a5de" kindref="member">x430_reg::flags</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="52" column="9" bodyfile="inc/x430_model.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__model_1ga9185bc08e42a97292ca1c343cb65a7ee" prot="public" static="no">
+        <name>X430_REG_CHECK</name>
+        <param><defname>check</defname></param>
+        <initializer>((uint32_t)(check) &lt;&lt; <ref refid="group__x430__model_1ga3980b93adba8bfb3226938195b150c74" kindref="member">X430_REG_CHECK_SHIFT</ref>)</initializer>
+        <briefdescription>
+<para>Write check <computeroutput>check</computeroutput> as <ref refid="structx430__reg_1a899b6166832f57956e7b22710396a5de" kindref="member">x430_reg::flags</ref> bits. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_model.h" line="54" column="9" bodyfile="inc/x430_model.h" bodystart="54" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>

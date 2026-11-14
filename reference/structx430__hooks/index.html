@@ -1224,10 +1224,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-nvm_load" class="md-nav__link">
+  <a href="#variable-nvm_read" class="md-nav__link">
     <span class="md-ellipsis">
       
-        variable nvm_load
+        variable nvm_read
       
     </span>
   </a>
@@ -1235,10 +1235,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#variable-nvm_store" class="md-nav__link">
+  <a href="#variable-nvm_write" class="md-nav__link">
     <span class="md-ellipsis">
       
-        variable nvm_store
+        variable nvm_write
       
     </span>
   </a>
@@ -1309,12 +1309,12 @@
 <td style="text-align: left;"><a href="#variable-event"><strong>event</strong></a>  <br><em>Reboot, factory reset, watchdog, ...</em></td>
 </tr>
 <tr>
-<td style="text-align: right;"><a href="../group__x430__types/#typedef-x430_nvm_load_hook"><strong>x430_nvm_load_hook</strong></a></td>
-<td style="text-align: left;"><a href="#variable-nvm_load"><strong>nvm_load</strong></a>  <br><em>Load the EEPROM area or the backup.</em></td>
+<td style="text-align: right;"><a href="../group__x430__types/#typedef-x430_nvm_read_hook"><strong>x430_nvm_read_hook</strong></a></td>
+<td style="text-align: left;"><a href="#variable-nvm_read"><strong>nvm_read</strong></a>  <br><em>Read part of the EEPROM block or of the backup.</em></td>
 </tr>
 <tr>
-<td style="text-align: right;"><a href="../group__x430__types/#typedef-x430_nvm_store_hook"><strong>x430_nvm_store_hook</strong></a></td>
-<td style="text-align: left;"><a href="#variable-nvm_store"><strong>nvm_store</strong></a>  <br><em>Store the EEPROM area or the backup.</em></td>
+<td style="text-align: right;"><a href="../group__x430__types/#typedef-x430_nvm_write_hook"><strong>x430_nvm_write_hook</strong></a></td>
+<td style="text-align: left;"><a href="#variable-nvm_write"><strong>nvm_write</strong></a>  <br><em>Write part of the EEPROM block or of the backup.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;"><a href="../group__x430__types/#typedef-x430_read_hook"><strong>x430_read_hook</strong></a></td>
@@ -1336,15 +1336,15 @@
 </code></pre></div></p>
 <hr>
 
-<h3 id="variable-nvm_load">variable nvm_load<a class="headerlink" href="#variable-nvm_load" title="Permanent link">&para;</a></h3>
-<p><em>Load the EEPROM area or the backup.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">x430_nvm_load_hook</span><span class="w"> </span><span class="n">x430_hooks</span><span class="o">::</span><span class="n">nvm_load</span><span class="p">;</span>
+<h3 id="variable-nvm_read">variable nvm_read<a class="headerlink" href="#variable-nvm_read" title="Permanent link">&para;</a></h3>
+<p><em>Read part of the EEPROM block or of the backup.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">x430_nvm_read_hook</span><span class="w"> </span><span class="n">x430_hooks</span><span class="o">::</span><span class="n">nvm_read</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 
-<h3 id="variable-nvm_store">variable nvm_store<a class="headerlink" href="#variable-nvm_store" title="Permanent link">&para;</a></h3>
-<p><em>Store the EEPROM area or the backup.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">x430_nvm_store_hook</span><span class="w"> </span><span class="n">x430_hooks</span><span class="o">::</span><span class="n">nvm_store</span><span class="p">;</span>
+<h3 id="variable-nvm_write">variable nvm_write<a class="headerlink" href="#variable-nvm_write" title="Permanent link">&para;</a></h3>
+<p><em>Write part of the EEPROM block or of the backup.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">x430_nvm_write_hook</span><span class="w"> </span><span class="n">x430_hooks</span><span class="o">::</span><span class="n">nvm_write</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

@@ -15,7 +15,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_bus.c" line="82" column="10" bodyfile="src/x430_bus.c" bodystart="82" bodyend="-1"/>
+        <location file="src/x430_bus.c" line="92" column="10" bodyfile="src/x430_bus.c" bodystart="92" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__align__bus_1a799ebe9632003a9c457a069934b06b1e" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structx430__bus" kindref="compound">x430_bus</ref></type>
@@ -29,7 +29,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_bus.c" line="83" column="19" bodyfile="src/x430_bus.c" bodystart="83" bodyend="-1"/>
+        <location file="src/x430_bus.c" line="93" column="19" bodyfile="src/x430_bus.c" bodystart="93" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -49,7 +49,7 @@
         <link refid="structx430__bus"/>
       </node>
     </collaborationgraph>
-    <location file="src/x430_bus.c" line="80" column="1" bodyfile="src/x430_bus.c" bodystart="81" bodyend="84"/>
+    <location file="src/x430_bus.c" line="90" column="1" bodyfile="src/x430_bus.c" bodystart="91" bodyend="94"/>
     <listofallmembers>
       <member refid="structx430__align__bus_1aa645491458505102459e02ab99635790" prot="public" virt="non-virtual"><scope>x430_align_bus</scope><name>c</name></member>
       <member refid="structx430__align__bus_1a799ebe9632003a9c457a069934b06b1e" prot="public" virt="non-virtual"><scope>x430_align_bus</scope><name>x</name></member>
