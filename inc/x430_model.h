@@ -32,8 +32,7 @@
 #include <stdint.h>
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /** @} */
@@ -63,7 +62,6 @@ enum x430_check
     X430_CHECK_MASK,          /**< Only the bits of max may be set. */
     X430_CHECK_OPMODE,        /**< One of x430_model::operating_modes. */
     X430_CHECK_SYMMETRIC,     /**< -ref <= value <= ref; ref = limit register address. */
-    X430_CHECK_UPTO,          /**< 0 <= value <= ref; ref = limit register address. */
     X430_CHECK_GOAL_POSITION, /**< Position limits in mode 3, +-1,048,575 otherwise. */
     X430_CHECK_INDIRECT       /**< Indirect Address: RAM address min..max. */
 };
@@ -75,7 +73,7 @@ struct x430_reg
     uint8_t size;     /**< 1, 2 or 4 bytes. */
     uint8_t flags;    /**< X430_REG_* bits. */
     uint8_t check;    /**< enum x430_check. */
-    uint16_t ref;     /**< Limit register address for SYMMETRIC and UPTO. */
+    uint16_t ref;     /**< Limit register address for SYMMETRIC. */
     int32_t initial;  /**< Value after a factory reset. */
     int32_t min;      /**< RANGE/INDIRECT lower bound. */
     int32_t max;      /**< RANGE/INDIRECT upper bound, MASK allowed bits. */

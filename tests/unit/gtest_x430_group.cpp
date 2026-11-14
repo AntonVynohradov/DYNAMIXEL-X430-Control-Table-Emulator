@@ -32,7 +32,7 @@ TEST_F(X430Test, IndirectWriteReachesTargetRegister)
     EXPECT_EQ(write(1, kIndirectAddress1, indirect_map(X430_ADDR_PROFILE_VELOCITY, 4)), 0);
     env.writes.clear();
     EXPECT_EQ(write32(1, kIndirectData1, 345), 0);
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 345);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 345);
     ASSERT_EQ(env.writes.size(), 1U);
     EXPECT_EQ(env.writes[0].address, X430_ADDR_PROFILE_VELOCITY);
     EXPECT_EQ(env.writes[0].value, 345);
@@ -87,12 +87,12 @@ TEST_F(X430Test, RegWriteThenAction)
     auto status = transact(1, DXL2_INST_REG_WRITE, cat(le16(X430_ADDR_PROFILE_VELOCITY), le32(50)));
     ASSERT_EQ(status.size(), 1U);
     EXPECT_EQ(status[0].error, 0);
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 0);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 0);
     EXPECT_EQ(read(1, X430_ADDR_REGISTERED_INSTRUCTION, 1).data[0], 1);
     status = transact(1, DXL2_INST_ACTION, {});
     ASSERT_EQ(status.size(), 1U);
     EXPECT_EQ(status[0].error, 0);
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 50);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 50);
     EXPECT_EQ(read(1, X430_ADDR_REGISTERED_INSTRUCTION, 1).data[0], 0);
     /* ACTION without REG_WRITE is an Instruction Error. */
     EXPECT_EQ(transact(1, DXL2_INST_ACTION, {})[0].error, DXL2_ERR_INSTRUCTION);
@@ -114,19 +114,19 @@ TEST_F(X430Test, RegWriteIsValidatedWhenRegistered)
 TEST_F(X430Test, BroadcastActionExecutesAllDevices)
 {
     add_device(1, 2U);
-    (void) transact(1, DXL2_INST_REG_WRITE, cat(le16(X430_ADDR_PROFILE_VELOCITY), le32(11)));
-    (void) transact(2, DXL2_INST_REG_WRITE, cat(le16(X430_ADDR_PROFILE_VELOCITY), le32(22)));
+    (void)transact(1, DXL2_INST_REG_WRITE, cat(le16(X430_ADDR_PROFILE_VELOCITY), le32(11)));
+    (void)transact(2, DXL2_INST_REG_WRITE, cat(le16(X430_ADDR_PROFILE_VELOCITY), le32(22)));
     EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_ACTION, {}).empty());
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 11);
-    EXPECT_EQ(x430_device_get(&dev[1], X430_ADDR_PROFILE_VELOCITY), 22);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 11);
+    EXPECT_EQ(reg(&dev[1], X430_ADDR_PROFILE_VELOCITY), 22);
 }
 
 TEST_F(X430Test, SyncReadAnswersInRequestOrder)
 {
     add_device(1, 2U);
     add_device(2, 3U);
-    (void) x430_device_set(&dev[2], X430_ADDR_PRESENT_POSITION, 300);
-    (void) x430_device_set(&dev[0], X430_ADDR_PRESENT_POSITION, 100);
+    (void)x430_device_set(&dev[2], X430_ADDR_PRESENT_POSITION, 300);
+    (void)x430_device_set(&dev[0], X430_ADDR_PRESENT_POSITION, 100);
     auto status = transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_READ,
                            cat(cat(le16(X430_ADDR_PRESENT_POSITION), le16(4)), {3, 9, 1}));
     ASSERT_EQ(status.size(), 2U); /* ID 9 is not hosted: skipped */
@@ -152,13 +152,13 @@ TEST_F(X430Test, SyncWrite)
                       cat(cat({1}, le32(5)), cat({2}, le32(6))));
     params = cat(params, cat({8}, le32(7))); /* ID 8 is not hosted */
     EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_WRITE, params).empty());
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 5);
-    EXPECT_EQ(x430_device_get(&dev[1], X430_ADDR_PROFILE_VELOCITY), 6);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 5);
+    EXPECT_EQ(reg(&dev[1], X430_ADDR_PROFILE_VELOCITY), 6);
     /* Length that does not divide the entries: ignored. */
     params = cat(cat(le16(X430_ADDR_PROFILE_VELOCITY), le16(4)), cat({1}, le16(9)));
-    (void) transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_WRITE, params);
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 5);
-    (void) transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_WRITE, le16(0));
+    (void)transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_WRITE, params);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 5);
+    (void)transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_WRITE, le16(0));
 }
 
 #if X430_FEATURE_BULK
@@ -171,7 +171,7 @@ TEST_F(X430Test, BulkReadAndWrite)
     auto bulk_write = cat(cat(cat({2}, le16(X430_ADDR_PROFILE_VELOCITY)), le16(4)), le32(66));
     bulk_write = cat(bulk_write, cat(cat(cat({7}, le16(X430_ADDR_LED)), le16(1)), {1}));
     EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_WRITE, bulk_write).empty());
-    EXPECT_EQ(x430_device_get(&dev[1], X430_ADDR_PROFILE_VELOCITY), 66);
+    EXPECT_EQ(reg(&dev[1], X430_ADDR_PROFILE_VELOCITY), 66);
 
     auto status = transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_READ, params);
     ASSERT_EQ(status.size(), 2U);
@@ -183,10 +183,10 @@ TEST_F(X430Test, BulkReadAndWrite)
     /* Truncated bulk write: nothing is written. */
     auto broken = cat(cat(cat({2}, le16(X430_ADDR_PROFILE_VELOCITY)), le16(4)), le32(1));
     broken = cat(broken, {1, 0});
-    (void) transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_WRITE, broken);
-    EXPECT_EQ(x430_device_get(&dev[1], X430_ADDR_PROFILE_VELOCITY), 66);
+    (void)transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_WRITE, broken);
+    EXPECT_EQ(reg(&dev[1], X430_ADDR_PROFILE_VELOCITY), 66);
     broken = cat(cat({2}, le16(X430_ADDR_PROFILE_VELOCITY)), le16(0));
-    (void) transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_WRITE, broken);
+    (void)transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_WRITE, broken);
     EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_READ, {1, 2}).empty());
 }
 #endif
@@ -206,16 +206,16 @@ std::vector<Status> parse_fast(const std::vector<uint8_t>& raw,
     EXPECT_EQ(raw[2], 0xFD);
     EXPECT_EQ(raw[4], DXL2_BROADCAST_ID);
     EXPECT_EQ(raw[7], DXL2_INST_STATUS);
-    EXPECT_EQ((size_t) (raw[5] | (raw[6] << 8)) + 7U, raw.size());
+    EXPECT_EQ((size_t)(raw[5] | (raw[6] << 8)) + 7U, raw.size());
     size_t index = 8;
     for (uint16_t length : lengths)
     {
         Status status;
         status.error = raw[index];
         status.id = raw[index + 1];
-        status.data.assign(raw.begin() + (long) index + 2, raw.begin() + (long) index + 2 + length);
+        status.data.assign(raw.begin() + (long)index + 2, raw.begin() + (long)index + 2 + length);
         const size_t end = index + 2 + length;
-        const uint16_t crc = (uint16_t) (raw[end] | (raw[end + 1] << 8));
+        const uint16_t crc = (uint16_t)(raw[end] | (raw[end + 1] << 8));
         EXPECT_EQ(crc, dxl2_crc16(raw.data(), end)) << "segment CRC";
         result.push_back(status);
         index += length + 4U;
@@ -228,8 +228,8 @@ std::vector<Status> parse_fast(const std::vector<uint8_t>& raw,
 TEST_F(X430Test, FastSyncReadIsOnePacket)
 {
     add_device(1, 2U);
-    (void) x430_device_set(&dev[0], X430_ADDR_PRESENT_POSITION, 11);
-    (void) x430_device_set(&dev[1], X430_ADDR_PRESENT_POSITION, 22);
+    (void)x430_device_set(&dev[0], X430_ADDR_PRESENT_POSITION, 11);
+    (void)x430_device_set(&dev[1], X430_ADDR_PRESENT_POSITION, 22);
     env.wire.clear();
     send(DXL2_BROADCAST_ID, DXL2_INST_FAST_SYNC_READ,
          cat(cat(le16(X430_ADDR_PRESENT_POSITION), le16(4)), {2, 1}));

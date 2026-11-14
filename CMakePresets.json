@@ -4,34 +4,61 @@
         {
             "name": "default",
             "hidden": true,
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/${presetName}"
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "X430_MODEL": "xm430_w350"
+            }
         },
         {
             "name": "X430[Debug]",
             "inherits": "default",
-            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
         },
         {
             "name": "X430[Release]",
             "inherits": "default",
-            "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
         },
         {
             "name": "X430[UnitTests]",
             "inherits": "default",
-            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "X430_UNIT_TESTS": "ON" }
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "UNIT_TESTS": "ON"
+            }
+        },
+        {
+            "name": "X430[UnitTestsMinimal]",
+            "inherits": "default",
+            "description": "Unit tests with every optional feature left out",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "UNIT_TESTS": "ON",
+                "COMPILE_DEFINITIONS": "X430_FEATURE_BULK=0;X430_FEATURE_FAST_READ=0;X430_FEATURE_BACKUP=0;X430_FEATURE_SIMULATOR=0"
+            }
+        },
+        {
+            "name": "X430[Kconfig]",
+            "inherits": "default",
+            "description": "Kconfig (Kconfiglib) with configs/defconfig; target menuconfig",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "X430_KCONFIG": "ON"
+            }
         },
         {
             "name": "X430[Examples]",
             "inherits": "default",
-            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "X430_EXAMPLES": "ON" }
-        },
-        {
-            "name": "X430[NoKconfig]",
-            "inherits": "default",
-            "description": "Build without Kconfiglib; choose the model with -DX430_MODEL=<model>",
-            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "X430_KCONFIG": "OFF", "X430_MODEL": "xm430_w350" }
+            "description": "POSIX host simulator x430_host_sim",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "X430_EXAMPLES": "ON"
+            }
         }
     ]
 }

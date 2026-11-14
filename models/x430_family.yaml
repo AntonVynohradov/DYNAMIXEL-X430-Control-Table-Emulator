@@ -19,7 +19,6 @@
 #               mask         value & ~mask == 0
 #               opmode       one of the model's operating_modes
 #               symmetric    -ref .. +ref (ref = address of the limit register)
-#               upto         0 .. ref
 #               goal_position  Min/Max Position Limit in mode 3, +-1,048,575 otherwise
 #               indirect     Indirect Address: RAM address, 64 .. table end
 #               none         no value check (read-only registers)

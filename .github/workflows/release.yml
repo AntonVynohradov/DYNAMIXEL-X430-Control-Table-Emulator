@@ -1,0 +1,116 @@
+#******************************************************************************
+# DYNAMIXEL-X430-Control-Table-Emulator: DYNAMIXEL X430 Control Table Emulator
+#
+# Project:     DYNAMIXEL-X430-Control-Table-Emulator
+# Description: Release on a vX.Y.Z tag: check the version, run every quality
+#              gate, publish the static library, headers, MISRA report and PDF
+#              user manual as a GitHub Release.
+#
+# Author:      Anton Vynohradov
+# Email:       avynohradov@systemfromscratch.com
+#
+# License:     Apache License 2.0
+# Copyright (c) 2026 Anton Vynohradov
+#
+# SPDX-License-Identifier: Apache-2.0
+#*****************************************************************************
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-24.04' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # The tag is the only source of the version; the packaged header gets it here
+      - name: Check the changelog and stamp the version
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          grep -q "^## \[$VERSION\]" CHANGELOG.md \
+            || { echo "CHANGELOG.md has no [$VERSION] section"; exit 1; }
+          IFS=. read -r MAJOR MINOR PATCH <<< "$VERSION"
+          sed -i -E \
+            -e "s/(#define X430_VERSION_MAJOR) .*/\1 $MAJOR/" \
+            -e "s/(#define X430_VERSION_MINOR) .*/\1 $MINOR/" \
+            -e "s/(#define X430_VERSION_PATCH) .*/\1 $PATCH/" \
+            -e "s/(#define X430_VERSION) \".*\"/\1 \"$VERSION\"/" x430.h
+          grep -q "#define X430_VERSION \"$VERSION\"" x430.h \
+            || { echo "x430.h: could not stamp X430_VERSION"; exit 1; }
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtest-dev gcovr cppcheck libpango-1.0-0 libpangoft2-1.0-0
+          python -m pip install -r requirements-dev.txt
+
+      # every configure preset with [UnitTests in its name, as in google-unit-tests.yml
+      - name: Unit tests and coverage gate (every unit test preset)
+        run: |
+          for P in $(jq -r '.configurePresets[].name | select(contains("[UnitTests"))' CMakePresets.json); do
+            cmake --preset "$P" -B "build/$P"
+            cmake --build "build/$P" --target coverage
+          done
+
+      - name: MISRA C:2012 gate
+        run: |
+          cmake --preset "X430[Debug]" -B "build/X430[Debug]"
+          cmake --build "build/X430[Debug]" --target misra-analyze
+
+      - name: Build release library
+        run: |
+          cmake --preset "X430[Release]" -B "build/X430[Release]"
+          cmake --build "build/X430[Release]"
+
+      - name: Package
+        run: |
+          PKG="dynamixel-x430-control-table-emulator-$VERSION-linux-x86_64"
+          mkdir -p "$PKG/lib" "$PKG/include"
+          cp "build/X430[Release]/libx430.a" "$PKG/lib/"
+          cp x430.h inc/*.h "$PKG/include/"
+          # Project-specific (differs from the sfs-static-library template on purpose):
+          # x430.h includes DXL2-C and the generated model header, and libx430.a needs
+          # libdxl2.a, so the package carries them (XM430-W350, default options).
+          cp "build/X430[Release]/libdxl2.a" "$PKG/lib/"
+          cp "build/X430[Release]/x430/analysis-include/"*.h "$PKG/include/"
+          cp LICENSE README.md CHANGELOG.md "$PKG/"
+          tar -czf "$PKG.tar.gz" "$PKG"
+          cp "build/X430[Debug]/misra.txt" "dynamixel-x430-control-table-emulator-$VERSION-misra.txt"
+          echo "PKG=$PKG" >> "$GITHUB_ENV"
+
+      - name: PDF manual
+        run: python tools/docs/build_manual.py --output "dynamixel-x430-control-table-emulator-$VERSION-user-manual.pdf"
+
+      - name: Release notes from CHANGELOG
+        run: |
+          awk -v h="## [$VERSION]" '
+            index($0, h) == 1 { found = 1; next }
+            found && (index($0, "## [") == 1 || index($0, "[Unreleased]:") == 1) { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "DYNAMIXEL-X430-Control-Table-Emulator $VERSION" \
+            --notes-file release-notes.md \
+            "$PKG.tar.gz" "dynamixel-x430-control-table-emulator-$VERSION-misra.txt" "dynamixel-x430-control-table-emulator-$VERSION-user-manual.pdf"

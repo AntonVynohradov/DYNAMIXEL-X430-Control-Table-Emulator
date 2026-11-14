@@ -1,109 +1,69 @@
-# sfs-dynamixel-x430: DYNAMIXEL X430 Control Table Emulator
+<p align="center">
+  <img src="docs/assets/images/hero-3d.svg" alt="A host sends DYNAMIXEL Protocol 2.0 packets to a controller board; the X430 emulator answers as an X430 and drives a stepper motor" width="720">
+</p>
 
-Device-side emulation of ROBOTIS DYNAMIXEL **X430** actuators over **Protocol 2.0**,
-in portable C11. Your firmware drives any motor (a stepper, a BLDC, a simulation) and
-the host sees a genuine X430: DynamixelSDK, DYNAMIXEL Wizard and ROS 2
-`dynamixel_hardware_interface` work unchanged.
+# DYNAMIXEL-X430-Control-Table-Emulator
 
-The Protocol 2.0 wire format comes from [DXL2-C](https://github.com/AntonVynohradov/DXL2-C)
-(fetched with CMake FetchContent). This library adds what sits above it: the
-Control Table of the selected model and the rules a real device enforces.
+**Any motor as a DYNAMIXEL X430 — device-side emulation of the X430 Control Table over
+Protocol 2.0, in portable C11.** Your firmware drives a stepper, a BLDC or a simulation;
+DynamixelSDK, DYNAMIXEL Wizard 2.0 and ROS 2 `dynamixel_hardware_interface` see a genuine
+X430.
 
-> DYNAMIXEL and ROBOTIS are trademarks of ROBOTIS Co., Ltd. This is an independent
-> implementation and is not affiliated with or endorsed by ROBOTIS.
+[![Google Unit Tests](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/google-unit-tests.yml/badge.svg)](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/google-unit-tests.yml)
+[![Static Analysis](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/static-analysis.yml)
+[![Models, Kconfig and DynamixelSDK](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/models-and-sdk.yml/badge.svg)](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/models-and-sdk.yml)
+[![Documentation](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/actions/workflows/documentation.yml/badge.svg)](https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-## Highlights
+[Documentation](https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/) ·
+[PDF manual](https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/downloads/DYNAMIXEL-X430-Control-Table-Emulator_User_Manual.pdf) ·
+[API reference](https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/api/) ·
+[Changelog](CHANGELOG.md)
 
-- **All 17 X430 models**, one model per build, chosen with Kconfig or a CMake variable.
-  Control Tables are data (`models/*.yaml`), generated into C and checked against the
-  e-Manual tables by the test suite.
-- **Table and protocol only.** Motion is yours: the library calls your hooks for every
-  accepted write and lets you update live registers (Present Position, ...).
-- **Every instruction a host uses**: PING, READ, WRITE, REG_WRITE, ACTION,
-  FACTORY_RESET, REBOOT, CLEAR, BACKUP, SYNC_READ/WRITE, BULK_READ/WRITE,
-  FAST_SYNC_READ, FAST_BULK_READ.
-- **Device rules**: access rights, value ranges and limit registers, EEPROM lock while
-  torque is on, Indirect Address/Data, Secondary ID, Status Return Level, Return Delay
-  Time, Bus Watchdog, hardware error shutdown and alert bit, Startup Configuration,
-  Control Table backup, Goal Position := Present Position on torque on.
-- **No heap, no RTOS, no drivers.** Optional port for a mutex, a millisecond clock and a
-  delay. Persistent storage through two hooks; the library adds header and CRC.
-- **Simulator** (`x430_sim`) that makes the devices move without hardware, and a POSIX
-  host example that serves them on a pseudo-terminal or a serial port.
-- Verified end to end with the official ROBOTIS **DynamixelSDK** (C++), including Fast
-  Sync/Bulk Read and Indirect Address as used by ROS 2.
+## Overview
 
-## Supported models
+| Capability | What the library does |
+| --- | --- |
+| Models | All 17 X430 models (XM, XH, XD, XW, XL, XC, 2XL, 2XC430), one per build; Control Tables generated from `models/*.yaml` and checked against the ROBOTIS e-Manual tables |
+| Instructions | PING, READ, WRITE, REG_WRITE, ACTION, FACTORY_RESET, REBOOT, CLEAR, BACKUP, SYNC_READ/WRITE, BULK_READ/WRITE, FAST_SYNC_READ, FAST_BULK_READ; broadcast and Secondary ID |
+| Device rules | Access rights, ranges and limit registers, EEPROM lock while the torque is on, Indirect Address/Data, Status Return Level, Return Delay Time, Bus Watchdog, hardware error shutdown and alert bit, Startup Configuration, Drive Mode "torque on by goal update" |
+| Your motor | Five hooks per device (write, read, event, nvm_load, nvm_store); live registers updated with `x430_device_set()` |
+| Platform | One byte writer and an optional port (lock, millisecond clock, delay); bare metal, Zephyr, FreeRTOS, POSIX |
+| Simulator | Optional kinematic model with the X430 profiles, and a POSIX host simulator on a pseudo-terminal |
+| Configuration | Kconfig (Kconfiglib) or plain compiler definitions; application overrides of the model data |
 
-| Model | Kconfig / `X430_MODEL` | Model Number | Operating modes | Current Limit (38) | Velocity Limit (44) | Notes |
-|---|---|---:|---|---:|---:|---|
-| XM430-W350 | `xm430_w350` | 1020 | 0, 1, 3, 4, 5, 16 | 1193 × 2.69 mA | 200 |  |
-| XM430-W210 | `xm430_w210` | 1030 | 0, 1, 3, 4, 5, 16 | 1193 × 2.69 mA | 330 |  |
-| XH430-W350 | `xh430_w350` | 1000 | 0, 1, 3, 4, 5, 16 | 648 × 2.69 mA | 130 |  |
-| XH430-W210 | `xh430_w210` | 1010 | 0, 1, 3, 4, 5, 16 | 648 × 2.69 mA | 210 |  |
-| XH430-V350 | `xh430_v350` | 1040 | 0, 1, 3, 4, 5, 16 | 689 × 1.34 mA | 135 |  |
-| XH430-V210 | `xh430_v210` | 1050 | 0, 1, 3, 4, 5, 16 | 689 × 1.34 mA | 230 |  |
-| XD430-T350 | `xd430_t350` | 1001 | 0, 1, 3, 4, 5, 16 | 648 × 2.69 mA | 130 |  |
-| XD430-T210 | `xd430_t210` | 1011 | 0, 1, 3, 4, 5, 16 | 648 × 2.69 mA | 210 |  |
-| XW430-T333 | `xw430_t333` | 1270 | 0, 1, 3, 4, 5, 16 | 648 × 2.69 mA | 139 | no LED |
-| XW430-T200 | `xw430_t200` | 1280 | 0, 1, 3, 4, 5, 16 | 648 × 2.69 mA | 235 | no LED; see [models](docs/models.md) |
-| XL430-W250 | `xl430_w250` | 1060 | 1, 3, 4, 16 | – (Present Load) | 265 |  |
-| 2XL430-W250 | `2xl430_w250` | 1090 | 1, 3, 4, 16 | – (Present Load) | 250 | dual axis: 2 devices |
-| XC430-W150 | `xc430_w150` | 1070 | 1, 3, 4, 16 | – (Present Load) | 460 |  |
-| XC430-W240 | `xc430_w240` | 1080 | 1, 3, 4, 16 | – (Present Load) | 306 |  |
-| XC430-T150BB | `xc430_t150bb` | 1070 | 1, 3, 4, 16 | – (Present Load) | 460 | same number as XC430-W150 |
-| XC430-T240BB | `xc430_t240bb` | 1080 | 1, 3, 4, 16 | – (Present Load) | 306 | same number as XC430-W240 |
-| 2XC430-W250 | `2xc430_w250` | 1160 | 1, 3, 4, 16 | – (Present Load) | 275 | dual axis: 2 devices |
+### Measured figures
 
-Operating modes: 0 current, 1 velocity, 3 position, 4 extended position,
-5 current-based position, 16 PWM.
+Cortex-M4, `arm-none-eabi-gcc` 13.2.1, XM430-W350, default options (768-byte packets:
+a READ of the whole Control Table, as DYNAMIXEL Wizard does it)
+([details](https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/configuration/#memory-footprint)):
 
-## Architecture
+| Figure | Value |
+| --- | --- |
+| RAM per device / per bus / per simulator | 1,400 B / 3,128 B / 32 B (bus: 1,080 B with 256-byte packets) |
+| Flash, `-Os`, with the model table | 11,185 B (+ 850 B DXL2-C); 8,053 B without the optional features |
+| `.data` + `.bss` | 0 B |
+| Worst-case stack, `x430_bus_receive()`, `-Os` | 1,796 B (772 B with 256-byte packets) |
+| MISRA C:2012 (Cppcheck 2.13) | 0 violations, 2 documented deviations |
+| Unit tests | 125 GoogleTest cases, 100 % line and branch coverage of `src/` (94 cases and 100 % without the optional features) |
+| End to end | 52 checks with the official ROBOTIS DynamixelSDK pass |
 
-```
- host (ROS 2, DynamixelSDK, Wizard)
-        │  Protocol 2.0 bytes
- ┌──────▼──────────────────────────────────────────────────────────┐
- │ x430_bus      DXL2-C link (parser/encoder) + instruction decoding │
- │               PING READ WRITE REG_WRITE ACTION REBOOT CLEAR ...    │
- │               SYNC/BULK/FAST group instructions, Bus Watchdog       │
- ├───────────────┬──────────────────┬──────────────────────────────┤
- │ x430_device   │ x430_device      │ ... up to X430_MAX_DEVICES     │
- │ Control Table image + rules of the generated model (x430_model)    │
- └──────┬────────┴──────────────────┴──────────────────────────────┘
-        │ hooks: write / read / event / nvm_load / nvm_store
- ┌──────▼─────────────────────────┐   ┌──────────────────────────────┐
- │ your motor backend             │ or│ x430_sim (simulated actuator) │
- └────────────────────────────────┘   └──────────────────────────────┘
-        optional x430_port: lock/unlock, millis, delay_us
-```
+The simulator follows the X430 profiles: a one-turn move with Profile Velocity 100 and
+Profile Acceleration 20 takes 2,920 ms, the closed-form trapezoid 2,940.3 ms (−0.69 %).
+
+## Project status
+
+**Version 1.0.0** — the first release; the public API (`x430.h`, `inc/`) is stable within
+major version 1. Verified on hardware in a stepper joint firmware (STM32G431, Zephyr) with
+DYNAMIXEL Wizard 2.0.
+
+- [x] All X430 models, all Protocol 2.0 instructions a host uses
+- [x] Persistence, backup, Bus Watchdog, shutdown, Indirect Address
+- [x] Simulator and POSIX host simulator; DynamixelSDK end-to-end check
+- [x] MISRA C:2012, 100 % coverage, sanitizers, documentation and PDF manual
+- [ ] Other DYNAMIXEL families (X330, X540) as model data
 
 ## Quick start
-
-### Build
-
-```bash
-python3 -m pip install -r requirements.txt     # PyYAML, Kconfiglib
-cmake --preset "X430[Debug]"
-cmake --build "build/X430[Debug]"
-cmake --build "build/X430[Debug]" --target menuconfig   # choose the model, features
-```
-
-| Preset             | Purpose                                                        |
-|--------------------|----------------------------------------------------------------|
-| `X430[Debug]`      | Static library, Kconfig with `configs/defconfig`               |
-| `X430[Release]`    | Optimized static library                                       |
-| `X430[UnitTests]`  | GoogleTest suite, model checks; `--target coverage`            |
-| `X430[Examples]`   | `x430_host_sim` (POSIX)                                        |
-| `X430[NoKconfig]`  | No Kconfiglib needed; `-DX430_MODEL=<model>`                   |
-
-### Use it in your project
-
-```cmake
-set(X430_CONF_FILES "${CMAKE_SOURCE_DIR}/x430.conf")   # or -DX430_KCONFIG=OFF -DX430_MODEL=xl430_w250
-include(path/to/sfs-dynamixel-x430/x430.cmake)
-target_link_libraries(app PRIVATE x430)
-```
 
 ```c
 #include "x430.h"
@@ -113,20 +73,19 @@ static struct x430_device joint;
 
 static int uart_write(void* context, const uint8_t* data, size_t length)
 {
-    (void) context;
-    return board_uart_write(data, length);             /* 0 on success */
+    (void)context;
+    return board_uart_write(data, length); /* 0 on success */
 }
 
-static uint8_t on_write(struct x430_device* dev, uint16_t address, uint8_t size, int32_t value,
-                        void* user)
+static uint8_t on_write(struct x430_device* device, uint16_t address, uint8_t size,
+                        int32_t value, void* user_data)
 {
+    (void)device;
+    (void)size;
+    (void)user_data;
     if (address == X430_ADDR_GOAL_POSITION)
     {
-        motor_move_to(value);                           /* your motion control */
-    }
-    else if (address == X430_ADDR_TORQUE_ENABLE)
-    {
-        return motor_enable(value != 0) ? DXL2_ERR_NONE : DXL2_ERR_RESULT_FAIL;
+        motor_move_to(value); /* your motion control */
     }
     return DXL2_ERR_NONE;
 }
@@ -138,84 +97,125 @@ int main(void)
     const struct x430_bus_config bus_config = {.write = uart_write};
     const struct x430_device_config joint_config = {.id = 1U, .hooks = &hooks};
 
-    x430_bus_init(&bus, &bus_config);
-    x430_device_init(&joint, &joint_config);
-    x430_bus_attach(&bus, &joint);
-
+    (void)x430_bus_init(&bus, &bus_config);
+    (void)x430_device_init(&joint, &joint_config);
+    (void)x430_bus_attach(&bus, &joint);
     for (;;)
     {
         uint8_t bytes[64];
-        size_t count = board_uart_read(bytes, sizeof(bytes));
+        const size_t count = board_uart_read(bytes, sizeof(bytes));
 
-        x430_bus_receive(&bus, bytes, count);
-
-        x430_bus_lock(&bus);                            /* live values from the motor */
-        x430_device_set(&joint, X430_ADDR_PRESENT_POSITION, motor_position());
-        x430_device_set(&joint, X430_ADDR_MOVING, motor_moving());
-        x430_bus_unlock(&bus);
-
-        x430_bus_poll(&bus);                            /* Bus Watchdog */
+        (void)x430_bus_receive(&bus, bytes, count); /* parse, check, hooks, answer */
+        (void)x430_bus_lock(&bus);
+        (void)x430_device_set(&joint, X430_ADDR_PRESENT_POSITION, motor_position());
+        (void)x430_bus_unlock(&bus);
+        (void)x430_bus_poll(&bus); /* Bus Watchdog */
     }
 }
 ```
 
-### Simulate instead of a real motor
+The `board_…` and `motor_…` functions stand for your UART and motor code.
 
-```c
-static struct x430_sim joint_sim;
+## Building
 
-x430_sim_init(&joint_sim, &joint, NULL);
-const struct x430_device_config cfg = {.id = 1U, .hooks = &x430_sim_hooks, .user_data = &joint_sim};
-x430_device_init(&joint, &cfg);
-/* every millisecond: */ x430_sim_step(&joint_sim, 1U);
-```
+Requirements: a C11 compiler, CMake 3.20+, Python 3. Optional: GoogleTest and gcovr,
+Cppcheck 2.13, clang-format 18, Kconfiglib, `requirements-dev.txt` for the documentation.
 
-On a PC (Linux, macOS, WSL):
+| Preset | Purpose |
+| --- | --- |
+| `X430[Debug]`, `X430[Release]` | Static library (XM430-W350) |
+| `X430[UnitTests]` | GoogleTest suite; target `coverage` (100 % gate) |
+| `X430[UnitTestsMinimal]` | The same without the optional features |
+| `X430[Kconfig]` | Kconfiglib with `configs/defconfig`; target `menuconfig` |
+| `X430[Examples]` | POSIX host simulator `x430_host_sim` |
 
 ```bash
-cmake --preset "X430[Examples]" && cmake --build "build/X430[Examples]"
-build/X430[Examples]/examples/x430_host_sim --pty --link /tmp/ttyDXL --ids 1,2,3
-# point DynamixelSDK / DYNAMIXEL Wizard / ROS 2 at /tmp/ttyDXL
+cmake --preset "X430[Debug]" -DX430_MODEL=xl430_w250
+cmake --build "build/X430[Debug]"
+cmake --preset "X430[UnitTests]" && cmake --build "build/X430[UnitTests]" --target coverage
+cmake --build "build/X430[Debug]" --target misra-analyze
+```
+
+In your CMake project:
+
+```cmake
+set(X430_MODEL xm430_w350)
+set(COMPILE_DEFINITIONS X430_MAX_DEVICES=2U)   # options of x430_config.h
+set(COMPILE_OPTIONS -Os)                       # flags of the library sources
+include(path/to/DYNAMIXEL-X430-Control-Table-Emulator/x430.cmake)
+target_link_libraries(app PRIVATE x430)
+```
+
+Main options: `COMPILE_DEFINITIONS`, `COMPILE_OPTIONS`, `UNIT_TESTS` (also builds the unit
+tests of this library when it is a submodule), `X430_KCONFIG` (off by default),
+`X430_CONF_FILES`, `X430_MODEL`, `X430_MODEL_OVERRIDES`, `X430_DXL2_MAX_PACKET_SIZE` (768),
+`FETCHCONTENT_SOURCE_DIR_DXL2` — see
+[Configuration](https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/configuration/).
+
+## Project structure
+
+```text
+DYNAMIXEL-X430-Control-Table-Emulator/
+├── x430.h, x430.cmake        public API; library target (include() it)
+├── inc/                      public types, definitions, configuration, model descriptor
+├── src/                      x430_bus.c, x430_device.c, x430_sim.c, x430_internal.h
+├── models/                   Control Tables: x430_family.yaml + x430/<model>.yaml
+├── Kconfig, Kconfig.x430     Kconfig tree; configs/defconfig
+├── tools/                    x430_gen_model.py, x430_kconfig.py, x430_measure.sh, docs/
+├── cmake/                    version, unit tests, MISRA, Kconfig
+├── examples/host_sim/        POSIX serial/pty simulator
+├── tests/                    unit/ (GoogleTest), compile/, models/, sdk/ (DynamixelSDK)
+└── docs/, overrides/         MkDocs website and PDF manual sources
 ```
 
 ## Documentation
 
-- [Configuration](docs/configuration.md): Kconfig symbols, fragments, menuconfig, building without Kconfig
-- [Integration](docs/integration.md): hooks, live registers, persistent storage, RTOS port, ROS 2
-- [Models](docs/models.md): model data, adding a model, documented deviations
-- [Behaviour](docs/behaviour.md): what the emulator enforces, instruction by instruction
-- [Migration](docs/migration.md): from the SmartManipulator-X `dynamixel_x430.c`
+The [documentation website](https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/)
+and the [PDF user manual](https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/downloads/DYNAMIXEL-X430-Control-Table-Emulator_User_Manual.pdf)
+are built from `docs/`: `mkdocs serve`, `mkdocs build`, `python tools/docs/build_manual.py`.
 
-## Testing
+## Author
 
-```bash
-cmake --preset "X430[UnitTests]" && cmake --build "build/X430[UnitTests]"
-ctest --test-dir "build/X430[UnitTests]" --output-on-failure
-tests/sdk/run_sdk_check.sh "build/X430[Examples]"      # ROBOTIS DynamixelSDK end to end
-```
+**Anton Vynohradov** — Embedded Systems Engineer · Secure Product Architect · Founder of
+SystemFromScratch®
 
-CI runs the unit tests for every model, the coverage target, a minimal-feature build,
-the DynamixelSDK check and clang-format.
+[systemfromscratch.com](https://systemfromscratch.com) ·
+[GitHub](https://github.com/AntonVynohradov) ·
+[LinkedIn](https://www.linkedin.com/in/vynohradov) ·
+[ORCID 0009-0005-6965-0911](https://orcid.org/0009-0005-6965-0911) ·
+[contact@systemfromscratch.com](mailto:contact@systemfromscratch.com)
 
-## Project structure
+## Releases and versioning
 
-```
-sfs-dynamixel-x430/
-├── x430.h, x430.cmake        umbrella header, library target (include() it)
-├── Kconfig, Kconfig.x430     Kconfig tree (Kconfig.x430 can be sourced by a project)
-├── configs/defconfig         default configuration fragment
-├── models/                   Control Tables: x430_family.yaml + x430/<model>.yaml
-├── inc/                      public headers
-├── src/                      x430_device.c, x430_bus.c, x430_sim.c
-├── tools/                    x430_gen_model.py (YAML -> C), x430_kconfig.py (Kconfiglib)
-├── cmake/                    version, Kconfig, unit tests, MISRA helpers
-├── examples/host_sim/        POSIX serial/pty simulator
-├── tests/unit/               GoogleTest suite
-├── tests/models/             model data vs. e-Manual snapshot
-├── tests/sdk/                DynamixelSDK end-to-end check
-└── docs/                     documentation (MkDocs)
-```
+[Semantic Versioning](https://semver.org); the version comes only from the `vX.Y.Z` Git
+tag. Each [GitHub Release](https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/releases)
+contains the static libraries for Linux x86-64 built with the default options (XM430-W350,
+every feature) — `libx430.a` and `libdxl2.a` with all headers they need, including the
+generated model header — the MISRA report and the PDF manual. MCU firmware and
+other models build the library from source.
+
+## Contributing
+
+Issues and pull requests are welcome. Keep the rules of
+[Extending the Library](https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/extending/#contributing-to-the-library):
+100 % coverage in both unit test presets, 0 MISRA violations, `clang-format` 18, measured
+figures and `CHANGELOG.md` up to date.
 
 ## License
 
-Copyright © 2026 Anton Vynohradov. Licensed under the Apache License 2.0. See [LICENSE](LICENSE).
+Copyright © 2026 Anton Vynohradov. Licensed under the [Apache License 2.0](LICENSE).
+
+SystemFromScratch® is a registered trademark. The Apache License 2.0 grants no rights to use
+the SystemFromScratch® name or logo; they may not be used to endorse or promote products
+derived from DYNAMIXEL-X430-Control-Table-Emulator without prior written permission.
+
+DYNAMIXEL and ROBOTIS are trademarks of ROBOTIS Co., Ltd.; STM32 is a registered trademark
+of STMicroelectronics International N.V. This is an independent implementation and is not
+affiliated with or endorsed by ROBOTIS or STMicroelectronics.
+
+## References
+
+- [DYNAMIXEL Protocol 2.0](https://emanual.robotis.com/docs/en/dxl/protocol2/) — ROBOTIS e-Manual
+- [DYNAMIXEL X series](https://emanual.robotis.com/docs/en/dxl/x/) — Control Tables of the X430 models
+- [DXL2-C](https://github.com/AntonVynohradov/DXL2-C) — the Protocol 2.0 codec this library uses
+- [MISRA C:2012](https://misra.org.uk/) — Guidelines for the use of the C language in critical systems

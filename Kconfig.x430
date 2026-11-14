@@ -145,7 +145,7 @@ config X430_BAUD_RATE_CODE_MAX
 
 config X430_DXL2_MAX_PACKET_SIZE
 	int "DXL2-C maximum packet size (bytes)"
-	default 256
+	default 768
 	range 64 4096
 	help
 	  DXL2_MAX_PACKET_SIZE of the DXL2-C link. It limits the data of one

@@ -25,7 +25,7 @@
  *
  *          The example uses one thread: it polls the line every millisecond,
  *          feeds the bus and steps the simulators. With threads, give the
- *          bus a port with a recursive mutex (see x430_port.h).
+ *          bus a port with a recursive mutex (struct x430_port).
  */
 
 #define _DEFAULT_SOURCE
@@ -35,6 +35,7 @@
 #include <fcntl.h>
 #include <poll.h>
 #include <signal.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -61,7 +62,7 @@ static volatile sig_atomic_t g_running = 1;
 
 static void on_signal(int signal_number)
 {
-    (void) signal_number;
+    (void)signal_number;
     g_running = 0;
 }
 
@@ -71,22 +72,22 @@ static uint32_t host_millis(void* context)
 {
     struct timespec now;
 
-    (void) context;
-    (void) clock_gettime(CLOCK_MONOTONIC, &now);
-    return (uint32_t) ((uint64_t) now.tv_sec * 1000U + (uint64_t) now.tv_nsec / 1000000U);
+    (void)context;
+    (void)clock_gettime(CLOCK_MONOTONIC, &now);
+    return (uint32_t)((uint64_t)now.tv_sec * 1000U + (uint64_t)now.tv_nsec / 1000000U);
 }
 
 static void host_delay_us(void* context, uint32_t us)
 {
-    const struct timespec delay = {(time_t) (us / 1000000U), (long) (us % 1000000U) * 1000L};
+    const struct timespec delay = {(time_t)(us / 1000000U), (long)(us % 1000000U) * 1000L};
 
-    (void) context;
-    (void) nanosleep(&delay, NULL);
+    (void)context;
+    (void)nanosleep(&delay, NULL);
 }
 
 static int host_write(void* context, const uint8_t* data, size_t length)
 {
-    struct host* host = (struct host*) context;
+    struct host* host = (struct host*)context;
     size_t done = 0;
 
     while (done < length)
@@ -101,7 +102,7 @@ static int host_write(void* context, const uint8_t* data, size_t length)
             }
             return -1;
         }
-        done += (size_t) written;
+        done += (size_t)written;
     }
     return 0;
 }
@@ -113,8 +114,8 @@ static void nvm_path(const struct host* host, const struct x430_device* device,
 {
     const ptrdiff_t index = device - host->devices;
 
-    (void) snprintf(path, size, "%s/x430_dev%td_%s.bin", host->nvm_dir, index,
-                    slot == X430_NVM_EEPROM ? "eeprom" : "backup");
+    (void)snprintf(path, size, "%s/x430_dev%td_%s.bin", host->nvm_dir, index,
+                   slot == X430_NVM_EEPROM ? "eeprom" : "backup");
 }
 
 static struct host* g_host = NULL;
@@ -126,7 +127,7 @@ static int file_nvm_load(struct x430_device* device, enum x430_nvm_slot slot, ui
     FILE* file;
     size_t got;
 
-    (void) user_data;
+    (void)user_data;
     nvm_path(g_host, device, slot, path, sizeof(path));
     file = fopen(path, "rb");
     if (file == NULL)
@@ -134,7 +135,7 @@ static int file_nvm_load(struct x430_device* device, enum x430_nvm_slot slot, ui
         return -1;
     }
     got = fread(data, 1U, size, file);
-    (void) fclose(file);
+    (void)fclose(file);
     return (got == size) ? 0 : -1;
 }
 
@@ -145,7 +146,7 @@ static int file_nvm_store(struct x430_device* device, enum x430_nvm_slot slot, c
     FILE* file;
     size_t put;
 
-    (void) user_data;
+    (void)user_data;
     nvm_path(g_host, device, slot, path, sizeof(path));
     file = fopen(path, "wb");
     if (file == NULL)
@@ -153,7 +154,7 @@ static int file_nvm_store(struct x430_device* device, enum x430_nvm_slot slot, c
         return -1;
     }
     put = fwrite(data, 1U, size, file);
-    (void) fclose(file);
+    (void)fclose(file);
     return (put == size) ? 0 : -1;
 }
 
@@ -162,9 +163,10 @@ static uint8_t host_event(struct x430_device* device, enum x430_event event, voi
     static const char* const names[] = {"reboot",         "factory reset", "clear multi-turn",
                                         "bus watchdog",   "baud rate",     "torque shutdown",
                                         "backup restored"};
+    uint8_t id = 0U;
 
-    (void) fprintf(stderr, "[ID %u] event: %s\n", (unsigned) x430_device_id(device),
-                   names[(int) event]);
+    (void)x430_device_id(device, &id);
+    (void)fprintf(stderr, "[ID %u] event: %s\n", (unsigned)id, names[(int)event]);
     return x430_sim_hooks.event(device, event, user_data);
 }
 
@@ -225,11 +227,11 @@ static int make_raw(int fd, long baud)
 
         if (speed == B0)
         {
-            (void) fprintf(stderr, "unsupported baud rate %ld\n", baud);
+            (void)fprintf(stderr, "unsupported baud rate %ld\n", baud);
             return -1;
         }
-        (void) cfsetispeed(&tio, speed);
-        (void) cfsetospeed(&tio, speed);
+        (void)cfsetispeed(&tio, speed);
+        (void)cfsetospeed(&tio, speed);
     }
     return tcsetattr(fd, TCSANOW, &tio);
 }
@@ -250,21 +252,21 @@ static int open_pty(const char* link)
 
         if (slave >= 0)
         {
-            (void) make_raw(slave, 0);
-            (void) close(slave);
+            (void)make_raw(slave, 0);
+            (void)close(slave);
         }
     }
-    (void) make_raw(fd, 0);
+    (void)make_raw(fd, 0);
     if (link != NULL)
     {
-        (void) unlink(link);
+        (void)unlink(link);
         if (symlink(name, link) != 0)
         {
             perror("symlink");
         }
     }
-    (void) printf("x430_host_sim: serving on %s%s%s\n", name, link ? " -> " : "", link ? link : "");
-    (void) fflush(stdout);
+    (void)printf("x430_host_sim: serving on %s%s%s\n", name, link ? " -> " : "", link ? link : "");
+    (void)fflush(stdout);
     return fd;
 }
 
@@ -272,12 +274,12 @@ static int open_pty(const char* link)
 
 static void usage(const char* program)
 {
-    (void) fprintf(stderr,
-                   "usage: %s (--pty [--link PATH] | --port DEVICE [--baud N]) [--ids 1,2,...]\n"
-                   "          [--nvm DIR]\n"
-                   "model: %s (Model Number %u), up to %u devices\n",
-                   program, X430_MODEL_NAME, (unsigned) X430_MODEL_NUMBER,
-                   (unsigned) HOST_MAX_DEVICES);
+    (void)fprintf(stderr,
+                  "usage: %s (--pty [--link PATH] | --port DEVICE [--baud N]) [--ids 1,2,...]\n"
+                  "          [--nvm DIR]\n"
+                  "model: %s (Model Number %u), up to %u devices\n",
+                  program, X430_MODEL_NAME, (unsigned)X430_MODEL_NUMBER,
+                  (unsigned)HOST_MAX_DEVICES);
 }
 
 int main(int argc, char** argv)
@@ -347,30 +349,34 @@ int main(int argc, char** argv)
     {
         const struct x430_bus_config config = {host_write, &host, &port};
 
-        (void) x430_bus_init(&host.bus, &config);
+        (void)x430_bus_init(&host.bus, &config);
     }
-    for (char* token = strtok((char*) ids, ","); (token != NULL) && (host.count < HOST_MAX_DEVICES);
+    for (char* token = strtok((char*)ids, ","); (token != NULL) && (host.count < HOST_MAX_DEVICES);
          token = strtok(NULL, ","))
     {
         struct x430_device* device = &host.devices[host.count];
         struct x430_sim* sim = &host.sims[host.count];
-        const struct x430_device_config config = {(uint8_t) atoi(token), 0U, 0U, &host.hooks, sim};
+        const struct x430_device_config config = {(uint8_t)atoi(token), 0U, 0U, &host.hooks, sim};
 
-        if ((x430_sim_init(sim, device, NULL) != X430_OK)
-            || (x430_device_init(device, &config) != X430_OK)
-            || (x430_bus_attach(&host.bus, device) != X430_OK))
+        if ((x430_sim_init(sim, device, NULL) != X430_OK) ||
+            (x430_device_init(device, &config) != X430_OK) ||
+            (x430_bus_attach(&host.bus, device) != X430_OK))
         {
-            (void) fprintf(stderr, "cannot create device ID %s (duplicate or invalid)\n", token);
+            (void)fprintf(stderr, "cannot create device ID %s (duplicate or invalid)\n", token);
             return 1;
         }
-        (void) printf("x430_host_sim: %s ID %u\n", X430_MODEL_NAME,
-                      (unsigned) x430_device_id(device));
+        {
+            uint8_t id = 0U;
+
+            (void)x430_device_id(device, &id);
+            (void)printf("x430_host_sim: %s ID %u\n", X430_MODEL_NAME, (unsigned)id);
+        }
         host.count++;
     }
-    (void) fflush(stdout);
+    (void)fflush(stdout);
 
-    (void) signal(SIGINT, on_signal);
-    (void) signal(SIGTERM, on_signal);
+    (void)signal(SIGINT, on_signal);
+    (void)signal(SIGTERM, on_signal);
 
     {
         uint32_t last = host_millis(NULL);
@@ -386,7 +392,7 @@ int main(int argc, char** argv)
 
                 if (got > 0)
                 {
-                    x430_bus_receive(&host.bus, buffer, (size_t) got);
+                    (void)x430_bus_receive(&host.bus, buffer, (size_t)got);
                 }
                 else if ((got < 0) && (errno != EAGAIN) && (errno != EIO))
                 {
@@ -396,7 +402,7 @@ int main(int argc, char** argv)
                 else if ((got < 0) && (errno == EIO))
                 {
                     /* pty without a client yet */
-                    (void) usleep(1000);
+                    (void)usleep(1000);
                 }
             }
             {
@@ -406,9 +412,9 @@ int main(int argc, char** argv)
                 {
                     for (uint8_t index = 0; index < host.count; index++)
                     {
-                        x430_sim_step(&host.sims[index], now - last);
+                        (void)x430_sim_step(&host.sims[index], now - last);
                     }
-                    x430_bus_poll(&host.bus);
+                    (void)x430_bus_poll(&host.bus);
                     last = now;
                 }
             }
@@ -416,8 +422,8 @@ int main(int argc, char** argv)
     }
     if (link != NULL)
     {
-        (void) unlink(link);
+        (void)unlink(link);
     }
-    (void) close(host.fd);
+    (void)close(host.fd);
     return 0;
 }

@@ -15,6 +15,10 @@ TestEnv* g_env = nullptr;
 int test_write(void* context, const uint8_t* data, size_t length)
 {
     auto* env = static_cast<TestEnv*>(context);
+    if (env->write_fails)
+    {
+        return -1;
+    }
     env->wire.insert(env->wire.end(), data, data + length);
     return 0;
 }
@@ -144,7 +148,7 @@ void X430Test::send(uint8_t id, uint8_t instruction, const std::vector<uint8_t>&
     size_t length = 0;
 
     ASSERT_EQ(dxl2_encode(id, instruction, params.empty() ? nullptr : params.data(),
-                          (uint16_t) params.size(), raw, sizeof(raw), &length),
+                          (uint16_t)params.size(), raw, sizeof(raw), &length),
               0);
     x430_bus_receive(&bus, raw, length);
 }
@@ -176,23 +180,36 @@ uint8_t X430Test::write8(uint8_t id, uint16_t address, uint8_t value)
 
 uint8_t X430Test::write16(uint8_t id, uint16_t address, int32_t value)
 {
-    return write(id, address, le16((uint32_t) value));
+    return write(id, address, le16((uint32_t)value));
 }
 
 uint8_t X430Test::write32(uint8_t id, uint16_t address, int32_t value)
 {
-    return write(id, address, le32((uint32_t) value));
+    return write(id, address, le32((uint32_t)value));
+}
+
+int32_t reg(const struct x430_device* device, uint16_t address)
+{
+    int32_t value = 0;
+    EXPECT_EQ(x430_device_get(device, address, &value), X430_OK);
+    return value;
+}
+
+uint8_t id_of(const struct x430_device* device)
+{
+    uint8_t id = 0;
+    EXPECT_EQ(x430_device_id(device, &id), X430_OK);
+    return id;
 }
 
 std::vector<uint8_t> le16(uint32_t value)
 {
-    return {(uint8_t) value, (uint8_t) (value >> 8)};
+    return {(uint8_t)value, (uint8_t)(value >> 8)};
 }
 
 std::vector<uint8_t> le32(uint32_t value)
 {
-    return {(uint8_t) value, (uint8_t) (value >> 8), (uint8_t) (value >> 16),
-            (uint8_t) (value >> 24)};
+    return {(uint8_t)value, (uint8_t)(value >> 8), (uint8_t)(value >> 16), (uint8_t)(value >> 24)};
 }
 
 std::vector<uint8_t> cat(std::vector<uint8_t> a, const std::vector<uint8_t>& b)
@@ -203,6 +220,6 @@ std::vector<uint8_t> cat(std::vector<uint8_t> a, const std::vector<uint8_t>& b)
 
 int32_t get_i32(const std::vector<uint8_t>& data, size_t offset)
 {
-    return (int32_t) ((uint32_t) data[offset] | ((uint32_t) data[offset + 1] << 8)
-                      | ((uint32_t) data[offset + 2] << 16) | ((uint32_t) data[offset + 3] << 24));
+    return (int32_t)((uint32_t)data[offset] | ((uint32_t)data[offset + 1] << 8) |
+                     ((uint32_t)data[offset + 2] << 16) | ((uint32_t)data[offset + 3] << 24));
 }

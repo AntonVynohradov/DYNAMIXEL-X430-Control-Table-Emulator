@@ -1,5 +1,5 @@
 ---
-# Clang-Format Configuration for sfs-dynamixel-x430
+# Clang-Format Configuration for DYNAMIXEL-X430-Control-Table-Emulator
 # Based on LLVM style with embedded systems customizations
 
 BasedOnStyle: LLVM
@@ -27,17 +27,17 @@ AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: InlineOnly
 
 # Braces - Allman style
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Custom
 BraceWrapping:
   AfterCaseLabel: false
   AfterClass: false
   AfterControlStatement: Always
-  AfterEnum: false
+  AfterEnum: true
   AfterFunction: true
-  AfterNamespace: false
+  AfterNamespace: true
   AfterObjCDeclaration: false
-  AfterStruct: false
-  AfterUnion: false
+  AfterStruct: true
+  AfterUnion: true
   AfterExternBlock: false
   BeforeCatch: true
   BeforeElse: true
@@ -46,7 +46,7 @@ BraceWrapping:
   SplitEmptyNamespace: false
 
 # Spacing
-SpaceAfterCStyleCast: true
+SpaceAfterCStyleCast: false
 SpaceAfterLogicalNot: false
 SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
@@ -57,7 +57,7 @@ SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 
 # Line breaks
-BreakBeforeBinaryOperators: NonAssignment
+BreakBeforeBinaryOperators: None
 BreakStringLiterals: true
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
@@ -77,7 +77,7 @@ ContinuationIndentWidth: 4
 SortIncludes: Never
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex: '^"(x430|dxl2)'
+  - Regex: '^"x430'
     Priority: 1
   - Regex: '^<'
     Priority: 2
@@ -85,7 +85,7 @@ IncludeCategories:
     Priority: 3
 
 # Comments
-ReflowComments: true
+ReflowComments: false
 CommentPragmas: '^ IWYU pragma:'
 
 # Declarations

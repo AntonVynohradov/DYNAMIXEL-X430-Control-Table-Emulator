@@ -1,4 +1,22 @@
+# Python packages for development: model generator, Kconfig, coverage, documentation
+# website and PDF manual. Install into the project virtual environment (VS Code task
+# "Python: Setup venv"):
+#   python -m pip install -r requirements-dev.txt
+# Documentation also needs Doxygen in PATH (used by mkdoxy).
+
+# Build: model generator (PyYAML, optional: tools/x430_gen_model.py has a reader for
+# the model files) and Kconfig (Kconfiglib, preset X430[Kconfig])
 -r requirements.txt
-# Coverage report and documentation
+
+# Coverage report and gate (target 'coverage')
 gcovr>=7.0
-mkdocs-material>=9.5
+
+# Documentation (mkdocs.yml)
+mkdocs>=1.6
+mkdocs-material
+mkdoxy
+mkdocs-autorefs
+
+# PDF manual (tools/docs/build_manual.py); needs the Pango library, see docs/guide.md
+weasyprint>=62
+ziamath>=0.13     # formulas as SVG in the PDF (WeasyPrint runs no JavaScript)

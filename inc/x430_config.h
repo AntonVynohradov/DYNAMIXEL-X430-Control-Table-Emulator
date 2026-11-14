@@ -36,6 +36,8 @@
 /** @name Includes */
 /** @{ */
 
+#include <stdint.h>
+
 #if defined(X430_HAS_AUTOCONF)
 #include "x430_autoconf.h"
 #endif
@@ -46,6 +48,23 @@
 
 /** @name Device and bus sizing */
 /** @{ */
+
+/**
+ * @def DXL2_MAX_PACKET_SIZE
+ * @brief Largest packet of the DXL2-C link, in bytes (default 768: a READ of the whole
+ *        Control Table, as DYNAMIXEL Wizard does it).
+ * @details Defined here, before dxl2.h is included, so that every translation unit that
+ *          includes x430.h sees the size the library was built with (the instance size
+ *          of a bus depends on it). DXL2-C itself must be compiled with the same value;
+ *          x430.cmake passes it to DXL2-C.
+ */
+#ifndef DXL2_MAX_PACKET_SIZE
+#if defined(CONFIG_X430_DXL2_MAX_PACKET_SIZE)
+#define DXL2_MAX_PACKET_SIZE (CONFIG_X430_DXL2_MAX_PACKET_SIZE)
+#else
+#define DXL2_MAX_PACKET_SIZE 768U
+#endif
+#endif
 
 /**
  * @def X430_MAX_DEVICES
@@ -160,6 +179,20 @@
 #define X430_FEATURE_SIMULATOR 0
 #endif
 #endif
+
+/** @} */
+
+/**
+ * @name Options as unsigned constants
+ * @details A definition on the compiler command line may be a plain (signed)
+ *          literal; the library uses these copies in expressions (MISRA C:2012
+ *          Rule 10.4).
+ */
+/** @{ */
+
+#define X430_MAX_DEVICES_U ((uint32_t)(X430_MAX_DEVICES))
+#define X430_REG_WRITE_SIZE_U ((uint32_t)(X430_REG_WRITE_SIZE))
+#define X430_BAUD_RATE_CODE_MAX_U ((uint32_t)(X430_BAUD_RATE_CODE_MAX))
 
 /** @} */
 

@@ -1,0 +1,79 @@
+#******************************************************************************
+# DYNAMIXEL-X430-Control-Table-Emulator: DYNAMIXEL X430 Control Table Emulator
+#
+# Project:     DYNAMIXEL-X430-Control-Table-Emulator
+# Description: Checks of this library only (the generic workflows stay identical
+#              to the family): unit tests for every emulated model, the Kconfig
+#              build with a minimal fragment, and the end-to-end check with the
+#              official ROBOTIS DynamixelSDK.
+#
+# Author:      Anton Vynohradov
+# Email:       avynohradov@systemfromscratch.com
+#
+# License:     Apache License 2.0
+# Copyright (c) 2026 Anton Vynohradov
+#
+# SPDX-License-Identifier: Apache-2.0
+#*****************************************************************************
+
+name: Models, Kconfig and DynamixelSDK
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  models:
+    name: Unit tests (${{ matrix.model }})
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-24.04' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        model: [xm430_w350, xm430_w210, xh430_w350, xh430_w210, xh430_v350, xh430_v210,
+                xd430_t350, xd430_t210, xw430_t333, xw430_t200, xl430_w250, 2xl430_w250,
+                xc430_w150, xc430_w240, xc430_t150bb, xc430_t240bb, 2xc430_w250]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Google Test
+        run: sudo apt-get update && sudo apt-get install -y libgtest-dev
+
+      - name: Configure, build and test
+        run: |
+          cmake --preset "X430[UnitTests]" -B build/model -DX430_MODEL=${{ matrix.model }}
+          cmake --build build/model
+          ctest --test-dir build/model --output-on-failure
+
+  kconfig-and-sdk:
+    name: Kconfig build and DynamixelSDK end to end
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-24.04' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          python3 -m pip install -r requirements.txt
+
+      - name: Kconfig with configs/defconfig
+        run: |
+          cmake --preset "X430[Kconfig]"
+          cmake --build "build/X430[Kconfig]"
+
+      - name: Kconfig with a minimal fragment
+        run: |
+          printf 'CONFIG_X430_MODEL_XW430_T333=y\nCONFIG_X430_FAST_READ=n\nCONFIG_X430_BULK=n\nCONFIG_X430_BACKUP=n\nCONFIG_X430_SIMULATOR=n\n' > min.conf
+          cmake -S . -B build/min -DCMAKE_BUILD_TYPE=Release -DX430_KCONFIG=ON -DX430_CONF_FILES="$PWD/min.conf"
+          cmake --build build/min
+
+      - name: Host simulator and DynamixelSDK check
+        run: |
+          cmake --preset "X430[Examples]"
+          cmake --build "build/X430[Examples]"
+          tests/sdk/run_sdk_check.sh "build/X430[Examples]"

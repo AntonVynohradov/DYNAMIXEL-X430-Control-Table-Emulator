@@ -1,161 +1,249 @@
-# Integration
+# Integration Guide
 
-## Objects
+The X430 emulator does not touch hardware. An integration has four parts:
 
-| Object | One per | Owns |
-|---|---|---|
-| `struct x430_bus` | serial line | DXL2-C link, list of devices, port |
-| `struct x430_device` | DYNAMIXEL ID | Control Table image, hooks |
-| `struct x430_sim` | simulated device | kinematic state |
+1. **Input:** the bytes received on the DYNAMIXEL line (TTL half duplex or RS-485), passed
+   to `x430_bus_receive()` in any chunking.
+2. **Output:** the byte writer of `struct x430_bus_config`, which sends one complete status
+   packet (and switches the direction of a half-duplex line).
+3. **The motor:** the hooks of each device and the live register updates.
+4. **Contexts and storage:** the port (lock, millisecond clock, delay) and the persistent
+   blocks.
 
-All objects are caller-owned (static or on a long-lived stack); the library has no heap.
+![Integration on a microcontroller](assets/images/integration.svg)
 
-```c
-x430_bus_init(&bus, &(struct x430_bus_config){.write = uart_write, .port = &port});
-x430_device_init(&axis[i], &(struct x430_device_config){.id = 11U + i, .hooks = &hooks, .user_data = &motor[i]});
-x430_bus_attach(&bus, &axis[i]);
-```
+## Timing
 
-`x430_device_config::id` is the **factory ID** of that device: it is used when no
-EEPROM block is stored yet, and again after FACTORY_RESET 0xFF. A stored ID wins at
-startup. For the dual-axis 2XL430/2XC430 create two devices (factory IDs 1 and 2).
+| Item | Requirement |
+| --- | --- |
+| `x430_bus_receive()` | As soon as bytes arrive; a status packet is sent from inside the call |
+| Return Delay Time (9) | Waited through `x430_port::delay_us` (default 250 × 2 µs = 500 µs) |
+| `x430_bus_poll()` | Every 5–20 ms (Bus Watchdog unit 20 ms) |
+| Live register updates | At the rate of the control loop, between `x430_bus_lock()` and `x430_bus_unlock()` |
+| Interrupts | Never call a library function from an interrupt handler: the UART interrupt only stores bytes |
+| Stack of the bus context | 1,796 B (768-byte packets, the default) or 772 B (256-byte packets) on Cortex-M4 `-Os`, plus the hooks ([Configuration](configuration.md#stack-usage)) |
 
-## Hooks: the motor side
-
-```c
-static const struct x430_hooks hooks = {
-    .write = on_write,         /* accepted register write, before it is stored */
-    .read = on_read,           /* data is about to be read */
-    .event = on_event,         /* reboot, factory reset, clear, watchdog, baud, shutdown */
-    .nvm_load = flash_load,    /* EEPROM area and backup */
-    .nvm_store = flash_store,
-};
-```
-
-### write
-
-Called for every register a WRITE/SYNC_WRITE/BULK_WRITE/ACTION touches, in address
-order, **after** the library validated all of them (access, range, EEPROM lock, Bus
-Watchdog) and **before** the value is stored. Return `DXL2_ERR_NONE` to accept or a
-`DXL2_ERR_*` code to refuse; the instruction stops at that register and the code goes
-into the status packet. Indirect Data writes arrive with the real address.
-
-Typical reactions:
-
-| Register | Reaction |
-|---|---|
-| Torque Enable (64) | enable/disable the driver; refuse with Result Fail if it fails |
-| Goal Position (116), Goal Velocity (104), Goal PWM (100), Goal Current (102) | new set point |
-| Profile Velocity/Acceleration (112/108) | new ramp |
-| Operating Mode (11), Drive Mode (10), Homing Offset (20) | change scaling (torque is off) |
-| Current Limit (38), Velocity Limit (44), PWM Limit (36) | driver limits |
-
-On Torque Enable 0 → 1 the library copies Present Position into Goal Position (as an
-X430 does), so refresh Present Position before or let the read hook do it.
-
-### read and live registers
-
-The device does not know the motor state. Keep these registers current with
-`x430_device_set()`: Present Position (132), Present Velocity (128), Present
-Current/Load (126), Present PWM (124), Moving (122), Moving Status (123),
-Velocity/Position Trajectory (136/140), Present Input Voltage (144), Present
-Temperature (146). Either
-
-- periodically from the control loop, between `x430_bus_lock()` and `x430_bus_unlock()`, or
-- on demand in the `read` hook (called with the real address ranges, also for
-  Indirect Data), where the lock is already held.
-
-Report hardware faults with `x430_device_raise_hardware_error()`; bits enabled in
-Shutdown (63) switch the torque off until REBOOT and every status carries the alert bit.
-
-### event
-
-| Event | When | Your reaction |
-|---|---|---|
-| `X430_EVENT_REBOOT` | after REBOOT | reset the motor state (RAM is at defaults, errors cleared) |
-| `X430_EVENT_FACTORY_RESET` | after FACTORY_RESET | as reboot; EEPROM is at factory values |
-| `X430_EVENT_CLEAR_MULTI_TURN` | CLEAR, not moving | bring Present Position into one turn; return an error to refuse |
-| `X430_EVENT_BUS_WATCHDOG` | watchdog expired (torque on) | stop the motor |
-| `X430_EVENT_BAUD_RATE` | after the status of a Baud Rate change | switch the UART |
-| `X430_EVENT_TORQUE_SHUTDOWN` | hardware error in Shutdown mask | power stage off |
-| `X430_EVENT_BACKUP_RESTORED` | BACKUP restore | re-read limits |
-
-### Persistent storage
-
-The library stores opaque blocks: `X430_NVM_EEPROM_SIZE` (76 bytes) for the EEPROM
-area and `X430_NVM_BACKUP_SIZE` (674 bytes) for the Control Table backup. Each block
-carries a header (magic, model number, format, slot) and a CRC-16; a block that does
-not match is ignored and the device starts with factory values. `nvm_store` is called
-after the change from the bus context; when your flash is slow, copy the block and
-write it from another thread.
-
-## Port: RTOS or bare metal
+## Bare metal
 
 ```c
-static const struct x430_port port = {
-    .context = &bus_mutex,
-    .lock = mutex_lock, .unlock = mutex_unlock,   /* recursive mutex */
-    .millis = uptime_ms,                          /* Realtime Tick, Bus Watchdog */
-    .delay_us = busy_wait_us,                     /* Return Delay Time */
-};
-```
-
-Every member may be NULL. The bus takes the lock in `x430_bus_receive`,
-`x430_bus_handle_packet`, `x430_bus_poll` and `x430_sim_step`; hooks run with it
-held. Use a recursive mutex if a hook calls into code that locks again.
-
-Queues are not needed by the library. Typical RTOS layout:
-
-```
-UART ISR ──bytes──▶ queue ──▶ RX thread: x430_bus_receive()      (bus context, lock held inside)
-                                  └─ hooks ──commands──▶ queue ──▶ motor thread
-motor thread: x430_bus_lock(); x430_device_set(Present...); x430_bus_unlock();
-timer: x430_bus_poll() every 5-20 ms
-```
-
-Do not call `x430_bus_receive` from an interrupt handler: it parses, answers and calls
-hooks.
-
-### Zephyr
-
-```c
-K_MUTEX_DEFINE(x430_mutex);
-static void lock(void* c) { k_mutex_lock(c, K_FOREVER); }     /* Zephyr mutexes are recursive */
-static void unlock(void* c) { k_mutex_unlock(c); }
-static uint32_t millis(void* c) { (void) c; return k_uptime_get_32(); }
-static void delay(void* c, uint32_t us) { (void) c; k_busy_wait(us); }
-static const struct x430_port port = {&x430_mutex, lock, unlock, millis, delay};
-```
-
-Without the library's Kconfig inside Zephyr, build with `X430_KCONFIG=OFF` and pass
-the options as definitions, or source `Kconfig.x430` from the application Kconfig and
-pass Zephyr's `autoconf.h` directory with `X430_HAS_AUTOCONF`.
-
-## Several transports or custom devices on the same line
-
-If the application already runs its own DXL2-C link (for example to host extra,
-non-X430 devices), route packets itself and hand the rest to the bus:
-
-```c
-static void on_packet(const struct dxl2_packet* packet, void* context)
+static int uart_write(void* context, const uint8_t* data, size_t length)
 {
-    if (packet->id == MY_CONTROLLER_ID) { my_controller_handle(packet); }
-    else { x430_bus_handle_packet(packet, &bus); }
+    (void)context;
+    return board_uart_write(data, length);
+}
+
+static uint32_t millis(void* context)
+{
+    (void)context;
+    return board_millis();
+}
+
+static void delay_us(void* context, uint32_t us)
+{
+    (void)context;
+    board_delay_us(us);
+}
+
+static const struct x430_port port = {
+    .context = NULL, .lock = NULL, .unlock = NULL, .millis = millis, .delay_us = delay_us};
+
+void serve_forever(void)
+{
+    for (;;)
+    {
+        uint8_t bytes[64];
+        const size_t count = board_uart_read(bytes, sizeof(bytes)); /* from the RX ring */
+
+        (void)x430_bus_receive(&bus, bytes, count);
+        if (board_tick_1ms())
+        {
+            (void)x430_device_set(&joint, X430_ADDR_PRESENT_POSITION, motor_position());
+            (void)x430_bus_poll(&bus);
+        }
+    }
 }
 ```
 
-The bus sends its answers through the writer given in `x430_bus_config`.
+`bus` and `joint` are set up as in [Using the Library](usage.md#setting-up-a-bus-and-its-devices)
+with `.port = &port`. Without a lock everything runs in the main loop.
 
-## ROS 2 (`dynamixel_hardware_interface`)
+## RTOS
 
-The interface pings each ID, loads the model file by Model Number, writes
-Torque Enable / Operating Mode, programs Indirect Address blocks and reads them with
-Fast Sync Read (falling back to Sync Read). All of this is emulated. Points to check:
+```text
+UART ISR --bytes--> ring buffer --> RX thread: x430_bus_receive()   (lock held inside)
+                                        `- hooks --commands--> queue --> motor thread
+motor thread: x430_bus_lock(); x430_device_set(Present ...); x430_bus_unlock();
+timer or RX thread: x430_bus_poll() every 5-20 ms
+```
 
-- The Model Number must exist in its `param/dxl_model/dynamixel.model`. XW430-T200
-  (1280) is not listed there; use `CONFIG_X430_MODEL_NUMBER_OVERRIDE=1270` or add a
-  model file.
-- Fast reads answer for the IDs hosted on this bus only. Keep all IDs of one ROS 2
-  hardware component on the same emulator bus.
-- Set `X430_DXL2_MAX_PACKET_SIZE` large enough for the Fast Sync Read answer:
-  `10 + devices × (bytes + 4)`.
+The lock must be recursive if a hook can lead to code that takes it again. Zephyr mutexes
+are recursive:
+
+```c
+static void lock(void* context)
+{
+    mutex_lock(context); /* Zephyr: k_mutex_lock(context, K_FOREVER) */
+}
+
+static void unlock(void* context)
+{
+    mutex_unlock(context); /* Zephyr: k_mutex_unlock(context) */
+}
+
+static const struct x430_port rtos_port = {
+    .context = &bus_mutex, .lock = lock, .unlock = unlock, .millis = port_millis,
+    .delay_us = port_delay_us};
+```
+
+FreeRTOS: `xSemaphoreTakeRecursive` / `xSemaphoreGiveRecursive`, `xTaskGetTickCount`
+converted to milliseconds. POSIX: a `pthread_mutex_t` of type `PTHREAD_MUTEX_RECURSIVE`
+(see `examples/host_sim/x430_host_sim.c`).
+
+## Events
+
+The event `X430_EVENT_BAUD_RATE` arrives after the status packet of the write that changed
+Baud Rate (8), so the answer leaves at the old rate:
+
+```c
+static uint8_t on_event(struct x430_device* device, enum x430_event event, void* user_data)
+{
+    int32_t code = 0;
+
+    (void)user_data;
+    if ((event == X430_EVENT_BAUD_RATE) || (event == X430_EVENT_FACTORY_RESET))
+    {
+        (void)x430_device_get(device, X430_ADDR_BAUD_RATE, &code);
+        board_uart_set_baud((uint8_t)code); /* code 1 = 57600 bps, 3 = 1 Mbps */
+    }
+    else if ((event == X430_EVENT_BUS_WATCHDOG) || (event == X430_EVENT_TORQUE_SHUTDOWN))
+    {
+        motor_stop();
+    }
+    else
+    {
+        /* reboot, clear, backup restored */
+    }
+    return DXL2_ERR_NONE;
+}
+```
+
+## Persistent storage
+
+The EEPROM area (76-byte block) and the backup (674-byte block) are opaque byte blocks with
+a header and a CRC ([format](theory.md#persistent-blocks)); store them where your flash
+allows:
+
+```c
+static int nvm_load(struct x430_device* device, enum x430_nvm_slot slot, uint8_t* data,
+                    uint16_t size, void* user_data)
+{
+    (void)device;
+    (void)user_data;
+    return flash_read((uint32_t)slot, data, size); /* 0, or negative without data */
+}
+
+static int nvm_store(struct x430_device* device, enum x430_nvm_slot slot, const uint8_t* data,
+                     uint16_t size, void* user_data)
+{
+    (void)device;
+    (void)user_data;
+    return flash_write((uint32_t)slot, data, size); /* 0, or negative: Result Fail */
+}
+```
+
+`nvm_store` is called from the bus context after the change. On an MCU with one flash bank
+an erase stalls the CPU: refuse the store (return a negative value, the host gets Result
+Fail) while the power stage runs, or copy the block and write it from another thread.
+
+## Adding the library to a CMake build
+
+```cmake
+set(X430_MODEL xm430_w350)
+set(COMPILE_DEFINITIONS X430_MAX_DEVICES=2U)  # options of x430_config.h
+set(COMPILE_OPTIONS -Os)                      # flags of the library sources
+include(path/to/DYNAMIXEL-X430-Control-Table-Emulator/x430.cmake)
+target_link_libraries(app PRIVATE x430)
+target_link_libraries(x430 PUBLIC zephyr_interface)   # Zephyr applications only
+```
+
+With `UNIT_TESTS=ON` in the project, the unit tests of this library are built too
+(`x430_gtest`) and run with the project's CTest (`ctest -L x430`); the `x430` library
+itself never contains them.
+
+In a Zephyr module, take DXL2-C from a west project instead of FetchContent with
+`FETCHCONTENT_SOURCE_DIR_DXL2`, pin it to the tag `x430.cmake` expects
+(`X430_DXL2_GIT_TAG`), and put DXL2-C's `cmake/` folder first on `CMAKE_MODULE_PATH`
+(Zephyr has a `version.cmake` of its own).
+
+## Host tools
+
+### ROS 2 (`dynamixel_hardware_interface`)
+
+The interface pings each ID, loads the model file by Model Number, writes Torque Enable and
+Operating Mode, programs Indirect Address blocks and reads them with Fast Sync Read (falling
+back to Sync Read). All of this is emulated. Points to check:
+
+- The Model Number must exist in its `param/dxl_model/dynamixel.model`. The XW430-T200
+  (1,280) is not listed there: use `CONFIG_X430_MODEL_NUMBER_OVERRIDE=1270` or add a model
+  file.
+- Fast reads answer for the IDs of this bus only: keep all IDs of one hardware component on
+  the same emulator bus.
+- The Fast Sync Read answer must fit `DXL2_MAX_PACKET_SIZE`: `10 + devices × (bytes + 4)`.
+
+### DYNAMIXEL Wizard 2.0
+
+The factory baud rate is 57,600 bps, as on an X430, so the default scan finds the device.
+After the scan the Dashboard and the Control Table tab read the whole Control Table
+(addresses 0–661) in one READ of 662 bytes, which the default `DXL2_MAX_PACKET_SIZE` of 768
+allows; below that the Wizard shows TIME OUT ([Packet size](configuration.md#packet-size)).
+
+The screenshots below were taken with DYNAMIXEL Wizard 2.0 (v2.16.4.7) and a stepper joint
+firmware built on this library (an STM32G431 board with a 17HS19-2004S1 stepper motor at
+24 V, emulating an XM430-W350, Model Information = firmware version, voltage limits raised
+with an [application override](configuration.md#application-overrides-of-the-model)):
+
+![DYNAMIXEL Wizard, Dashboard in Velocity mode: 234.3 rev/min at the Velocity Limit, 1.29 A, PWM 50.6 %, 24.0 V within the 10.0–28.0 V limits](assets/images/wizard/wizard-velocity.png)
+
+*Velocity mode at the Velocity Limit. Present Current and Present PWM are written by the
+firmware from its current measurement and duty cycle.*
+
+![DYNAMIXEL Wizard, Dashboard in Position mode during a move: Present Velocity −234.3 rev/min, PWM −52.7 %](assets/images/wizard/wizard-position.png)
+
+*Position mode during a move: the sign of Present Velocity and Present PWM follows the
+direction.*
+
+![DYNAMIXEL Wizard, Control Table tab: the EEPROM area with Model Number 1020, Model Information, Baud Rate 57600 bps, voltage limits 28.0 and 10.0 V](assets/images/wizard/wizard-control-table.png)
+
+*Control Table: the EEPROM area (pink addresses) is locked while the torque is on, as on an
+XM430.*
+
+![DYNAMIXEL Wizard, Limit Settings: position 0.0 to 359.9 degrees, velocity 234.3 rev/min, current 1998 mA, PWM 100 %](assets/images/wizard/wizard-limit.png){ width="320" }
+
+*Limit Settings with the factory values of that firmware.*
+
+### Without hardware: the host simulator
+
+`examples/host_sim/x430_host_sim.c` serves simulated devices on a POSIX serial port or
+pseudo-terminal (Linux, macOS, WSL):
+
+```bash
+cmake --preset "X430[Examples]" && cmake --build "build/X430[Examples]"
+"build/X430[Examples]/examples/x430_host_sim" --pty --link /tmp/ttyDXL --ids 1,2,3
+# point DynamixelSDK or ROS 2 at /tmp/ttyDXL
+```
+
+## Bring-up checklist
+
+1. PING with DynamixelSDK or the Wizard at 57,600 bps: the Model Number and Firmware
+   Version come back.
+2. READ the whole table (Wizard Control Table tab): no TIME OUT.
+3. WRITE Torque Enable 1 and 0: the write hook switches the motor; Goal Position takes
+   Present Position.
+4. Move in Position mode: Present Position and Moving follow the motor.
+5. Write an EEPROM register (Return Delay Time) with the torque off, power-cycle: the value
+   survives (`nvm_store` / `nvm_load`).
+6. Set Bus Watchdog to 10 and stop the host: after 200 ms the motor stops and Bus Watchdog
+   reads −1.
+7. Raise a hardware error with its Shutdown bit: the torque goes off, statuses carry the
+   alert bit, REBOOT clears it.
+8. Change Baud Rate: the answer comes at the old rate, the next packet at the new one.

@@ -18,8 +18,7 @@
 #include <map>
 #include <vector>
 
-extern "C"
-{
+extern "C" {
 #include "x430.h"
 }
 
@@ -52,6 +51,7 @@ struct TestEnv
     uint16_t refuse_address = 0xFFFF; /* ...with this error */
     uint8_t event_result = DXL2_ERR_NONE;
     bool nvm_store_fails = false;
+    bool write_fails = false; /* the bus writer returns -1 */
     uint32_t now = 1000;
     uint32_t delay_total = 0;
     int locks = 0;
@@ -68,8 +68,7 @@ extern const struct x430_port test_port;
 std::vector<Status> take_status(TestEnv& env);
 
 /** Fixture with one bus and up to three devices (IDs 1, 2, 3 unless changed). */
-class X430Test : public ::testing::Test
-{
+class X430Test : public ::testing::Test {
   protected:
     TestEnv env;
     struct x430_bus bus;
@@ -97,6 +96,12 @@ class X430Test : public ::testing::Test
     uint8_t write16(uint8_t id, uint16_t address, int32_t value);
     uint8_t write32(uint8_t id, uint16_t address, int32_t value);
 };
+
+/** Register value through x430_device_get(); fails the test on an error status. */
+int32_t reg(const struct x430_device* device, uint16_t address);
+
+/** ID through x430_device_id(); fails the test on an error status. */
+uint8_t id_of(const struct x430_device* device);
 
 std::vector<uint8_t> le16(uint32_t value);
 std::vector<uint8_t> le32(uint32_t value);

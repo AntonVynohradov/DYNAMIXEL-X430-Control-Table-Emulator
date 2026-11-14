@@ -1,0 +1,27 @@
+name: Build Static Library
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-24.04' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure (Release preset)
+        run: cmake --preset "X430[Release]" -B "build/X430[Release]"
+
+      - name: Build
+        run: cmake --build "build/X430[Release]"
+
+      - name: Upload static library
+        uses: actions/upload-artifact@v4
+        with:
+          name: x430-static-lib
+          path: build/X430\[Release\]/libx430.a

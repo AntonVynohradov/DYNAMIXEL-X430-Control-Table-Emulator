@@ -30,14 +30,126 @@ from __future__ import annotations
 
 import argparse
 import pathlib
+import re
 import sys
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 try:
     import yaml
-except ImportError:  # pragma: no cover - reported to the user
-    sys.exit("x430_gen_model.py: PyYAML is required (pip install pyyaml)")
+except ImportError:  # the built-in reader below handles the model files
+    yaml = None
+
+
+# ------------------------------------------------------------------------------
+# YAML subset reader (used when PyYAML is not installed)
+#
+# The model files use a small part of YAML only: comments, block mappings
+# indented by spaces, block lists whose items are flow mappings, flow mappings
+# {k: v, ...}, flow lists [a, b] and plain or quoted scalars (decimal and hex
+# integers, true/false, null, strings). tests/models checks that this reader
+# returns the same data as PyYAML for every file in models/.
+# ------------------------------------------------------------------------------
+
+def _scalar(text: str) -> Any:
+    text = text.strip()
+    if len(text) >= 2 and text[0] == text[-1] and text[0] in "'\"":
+        return text[1:-1]
+    lowered = text.lower()
+    if lowered in ("true", "yes", "on"):
+        return True
+    if lowered in ("false", "no", "off"):
+        return False
+    if lowered in ("", "~", "null"):
+        return None
+    if re.fullmatch(r"[-+]?\d+", text):
+        return int(text)
+    if re.fullmatch(r"[-+]?0x[0-9a-fA-F]+", text):
+        return int(text, 16)
+    return text
+
+
+def _split_flow(text: str) -> List[str]:
+    """Items of a flow collection body, split at top-level commas."""
+    items, depth, start, quote = [], 0, 0, ""
+    for index, char in enumerate(text):
+        if quote:
+            quote = "" if char == quote else quote
+        elif char in "'\"":
+            quote = char
+        elif char in "[{":
+            depth += 1
+        elif char in "]}":
+            depth -= 1
+        elif char == "," and depth == 0:
+            items.append(text[start:index])
+            start = index + 1
+    items.append(text[start:])
+    return [item for item in items if item.strip()]
+
+
+def _flow(text: str) -> Any:
+    text = text.strip()
+    if text.startswith("{") and text.endswith("}"):
+        result = {}
+        for item in _split_flow(text[1:-1]):
+            key, _, value = item.partition(":")
+            result[key.strip()] = _flow(value)
+        return result
+    if text.startswith("[") and text.endswith("]"):
+        return [_flow(item) for item in _split_flow(text[1:-1])]
+    return _scalar(text)
+
+
+def _strip_comment(line: str) -> str:
+    quote = ""
+    for index, char in enumerate(line):
+        if quote:
+            quote = "" if char == quote else quote
+        elif char in "'\"":
+            quote = char
+        elif char == "#" and (index == 0 or line[index - 1] in " \t"):
+            return line[:index]
+    return line
+
+
+def read_yaml_subset(text: str) -> Any:
+    """Parse the YAML subset of the model files (see above)."""
+    lines = []
+    for raw in text.splitlines():
+        line = _strip_comment(raw).rstrip()
+        if line.strip():
+            lines.append((len(line) - len(line.lstrip(" ")), line.strip()))
+
+    def block(position: int, indent: int):
+        if lines[position][1].startswith("- "):
+            items = []
+            while position < len(lines) and lines[position][0] == indent \
+                    and lines[position][1].startswith("- "):
+                items.append(_flow(lines[position][1][2:]))
+                position += 1
+            return items, position
+        mapping: Dict[str, Any] = {}
+        while position < len(lines) and lines[position][0] == indent:
+            key, _, value = lines[position][1].partition(":")
+            position += 1
+            if value.strip():
+                mapping[key.strip()] = _flow(value)
+            elif position < len(lines) and lines[position][0] > indent:
+                mapping[key.strip()], position = block(position, lines[position][0])
+            elif position < len(lines) and lines[position][0] == indent \
+                    and lines[position][1].startswith("- "):
+                mapping[key.strip()], position = block(position, indent)
+            else:
+                mapping[key.strip()] = None
+        return mapping, position
+
+    if not lines:
+        return None
+    data, position = block(0, lines[0][0])
+    if position != len(lines):
+        raise ValueError(f"unexpected indentation: {lines[position][1]!r}")
+    return data
 
 CHECKS = {
     "none": "X430_CHECK_NONE",
@@ -45,7 +157,6 @@ CHECKS = {
     "mask": "X430_CHECK_MASK",
     "opmode": "X430_CHECK_OPMODE",
     "symmetric": "X430_CHECK_SYMMETRIC",
-    "upto": "X430_CHECK_UPTO",
     "goal_position": "X430_CHECK_GOAL_POSITION",
     "indirect": "X430_CHECK_INDIRECT",
 }
@@ -107,8 +218,11 @@ class ModelError(Exception):
 
 
 def _load_yaml(path: pathlib.Path) -> dict:
-    with path.open(encoding="utf-8") as handle:
-        data = yaml.safe_load(handle)
+    text = path.read_text(encoding="utf-8")
+    try:
+        data = yaml.safe_load(text) if yaml is not None else read_yaml_subset(text)
+    except ValueError as error:
+        raise ModelError(f"{path}: {error}") from error
     if not isinstance(data, dict):
         raise ModelError(f"{path}: expected a mapping")
     return data
@@ -267,7 +381,7 @@ def _validate(model: Model) -> None:
             raise ModelError(f"{model.key}: {reg.name}: writable register without a check")
         if reg.check == "range" and reg.minimum > reg.maximum:
             raise ModelError(f"{model.key}: {reg.name}: min > max")
-        if reg.check in ("symmetric", "upto"):
+        if reg.check == "symmetric":
             if reg.ref not in by_address:
                 raise ModelError(f"{model.key}: {reg.name}: ref {reg.ref} is not a register")
         for offset in range(reg.size):

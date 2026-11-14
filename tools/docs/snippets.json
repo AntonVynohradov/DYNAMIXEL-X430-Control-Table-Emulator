@@ -1,0 +1,39 @@
+{
+  "stubs": "tools/docs/snippet_stubs.h",
+  "include": [
+    ".",
+    "inc",
+    "build/X430[Debug]/x430/analysis-include"
+  ],
+  "variants": [
+    []
+  ],
+  "fragment_marker": "/* fragment */",
+  "optional": [
+    {
+      "name": "bus",
+      "pattern": "^\\s*(static\\s+)?struct x430_bus bus\\b",
+      "code": "static struct x430_bus bus;"
+    },
+    {
+      "name": "joint",
+      "pattern": "^\\s*(static\\s+)?struct x430_device joint\\b",
+      "code": "static struct x430_device joint;"
+    },
+    {
+      "name": "joint_sim",
+      "pattern": "^\\s*(static\\s+)?struct x430_sim joint_sim\\b",
+      "code": "static struct x430_sim joint_sim;"
+    },
+    {
+      "name": "hooks",
+      "pattern": "^\\s*(static\\s+)?(const\\s+)?struct x430_hooks hooks\\b",
+      "code": "extern const struct x430_hooks hooks;"
+    },
+    {
+      "name": "port",
+      "pattern": "^\\s*(static\\s+)?(const\\s+)?struct x430_port port\\b",
+      "code": "extern const struct x430_port port;"
+    }
+  ]
+}

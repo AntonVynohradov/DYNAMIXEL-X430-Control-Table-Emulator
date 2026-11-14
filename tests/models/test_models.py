@@ -74,6 +74,23 @@ class ModelData(unittest.TestCase):
                     with self.subTest(model=key, extra=reg.name):
                         self.assertIn(address, rows)
 
+    @unittest.skipIf(gen.yaml is None, "PyYAML not installed")
+    def test_builtin_reader_matches_pyyaml(self):
+        files = sorted(MODELS.rglob("*.yaml")) + sorted(ROOT.glob("configs/*.yaml"))
+        self.assertGreaterEqual(len(files), 18)
+        for path in files:
+            with self.subTest(file=path.name):
+                text = path.read_text(encoding="utf-8")
+                self.assertEqual(gen.read_yaml_subset(text), gen.yaml.safe_load(text))
+
+    def test_builtin_reader_overrides(self):
+        text = "# product\noverrides:\n  Max Voltage Limit: {min: 95, max: 300}  # 30 V\n" \
+               "  Drive Mode: {mask: 0x0D, name: 'a: b'}\nlist: [1, -2]\nempty:\n"
+        self.assertEqual(gen.read_yaml_subset(text), {
+            "overrides": {"Max Voltage Limit": {"min": 95, "max": 300},
+                          "Drive Mode": {"mask": 13, "name": "a: b"}},
+            "list": [1, -2], "empty": None})
+
     def test_bad_model_is_reported(self):
         self.assertEqual(gen.main(["--models-dir", str(MODELS), "--model", "xx999", "--out-dir", "/tmp"]), 1)
 

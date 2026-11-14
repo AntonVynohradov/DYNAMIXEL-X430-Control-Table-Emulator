@@ -1,9 +1,19 @@
 #******************************************************************************
-# sfs-dynamixel-x430: files and directories ignored by Git.
+# DYNAMIXEL-X430-Control-Table-Emulator: DYNAMIXEL X430 Control Table Emulator
+#
+# Project:     DYNAMIXEL-X430-Control-Table-Emulator
+# Description: Files and directories ignored by Git.
+#
+# Author:      Anton Vynohradov
+# Email:       avynohradov@systemfromscratch.com
+#
+# License:     Apache License 2.0
+# Copyright (c) 2026 Anton Vynohradov
+#
 # SPDX-License-Identifier: Apache-2.0
 #*****************************************************************************
 
-# Build trees (CMake presets build into build/<preset>)
+# The build directory is ignored to prevent committing build artifacts
 build/
 out/
 
@@ -11,14 +21,16 @@ out/
 *.dump
 *.ctu-info
 
-# Python caches and virtual environments
+# The PyTest cache, Python bytecode cache and virtual environments
 __pycache__/
 *.pyc
+.pytest_cache/
 .venv/
+
+# MkDocs output and the PDF manual copied into the site by CI
+site/
+docs/downloads/
 
 # Kconfig outputs written outside the build tree by hand-run tools
 .config
 .config.old
-
-# MkDocs output
-site/

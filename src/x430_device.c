@@ -1,47 +1,85 @@
-/**
- * @file x430_device.c
- * @brief Control Table engine of one emulated DYNAMIXEL X430.
+/*******************************************************************************
+ * DYNAMIXEL-X430-Control-Table-Emulator: DYNAMIXEL X430 Control Table Emulator
  *
- * Project: sfs-dynamixel-x430 - DYNAMIXEL X430 Control Table Emulator
- * Author: Anton Vynohradov
- * Email: avynohradov@systemfromscratch.com
+ * Project:     DYNAMIXEL-X430-Control-Table-Emulator
+ * Description: One emulated actuator: Control Table image, the rules of the real
+ *              device and the instruction semantics.
  *
- * @copyright Copyright (c) 2026 Anton Vynohradov
- * @license Apache License 2.0
+ * Author:      Anton Vynohradov
+ * Email:       avynohradov@systemfromscratch.com
+ *
+ * License:     Apache License 2.0
+ *
+ * Copyright (c) 2026 Anton Vynohradov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  * SPDX-License-Identifier: Apache-2.0
- */
+ ******************************************************************************/
 
-/** @name Includes */
-/** @{ */
+/* ==============================================================================
+ * INCLUDES
+ * =============================================================================*/
 
-#include "x430_device.h"
+#include "x430.h"
 
+#include <stdbool.h>
 #include <stddef.h>
-#include <string.h>
+#include <stdint.h>
 
-#include "dxl2.h"
 #include "x430_internal.h"
 
-/** @} */
-
-/** @name Private definitions */
-/** @{ */
+/* ==============================================================================
+ * DEFINES & MACROS
+ * =============================================================================*/
 
 /** Persistent block format version. */
 #define X430_NVM_FORMAT 1U
-/** Bytes of the register-touched bit set (one bit per register index, max 254). */
+/** Bytes of the register-touched bit set (one bit per register index, max 255). */
 #define X430_TOUCHED_BYTES 32U
 /** Turn size of Present Position in pulses. */
 #define X430_PULSES_PER_TURN 4096
+/** Highest DYNAMIXEL ID a device may have (253 is reserved, 254 is broadcast). */
+#define X430_ID_MAX 252U
 
-/** Scratch buffer for persistent blocks; used with the bus lock held. */
-static uint8_t x430_nvm_buffer[X430_NVM_BACKUP_SIZE];
+/* ==============================================================================
+ * PRIVATE TYPE DEFINITIONS
+ * =============================================================================*/
 
-/** @} */
+/* Alignment probes: sizeof(probe) - sizeof(x) is the alignment of the type of x
+   (no _Alignof, Rule 1.4; no offsetof, which the static analysis cannot resolve) */
+struct x430_align_device_ctx
+{
+    char c;
+    struct x430_device_ctx x;
+};
 
-/** @name Private helpers: raw access */
-/** @{ */
+struct x430_align_device
+{
+    char c;
+    struct x430_device x;
+};
+
+/* The opaque public instance must hold the private state */
+_Static_assert(sizeof(struct x430_device_ctx) <= sizeof(struct x430_device),
+               "X430_DEVICE_BYTES in x430_types.h is too small for this ABI");
+_Static_assert((sizeof(struct x430_align_device_ctx) - sizeof(struct x430_device_ctx)) <=
+                   (sizeof(struct x430_align_device) - sizeof(struct x430_device)),
+               "struct x430_device is not aligned for struct x430_device_ctx");
+
+/* ==============================================================================
+ * PRIVATE FUNCTION IMPLEMENTATIONS: RAW ACCESS
+ * =============================================================================*/
 
 static uint32_t x430_raw_get(const uint8_t* table, uint16_t address, uint8_t size)
 {
@@ -51,7 +89,7 @@ static uint32_t x430_raw_get(const uint8_t* table, uint16_t address, uint8_t siz
     while (index > 0U)
     {
         index--;
-        value = (value << 8) | (uint32_t) table[address + index];
+        value = (value << 8) | (uint32_t)table[address + index];
     }
     return value;
 }
@@ -62,7 +100,7 @@ static void x430_raw_put(uint8_t* table, uint16_t address, uint8_t size, uint32_
 
     for (uint8_t index = 0U; index < size; index++)
     {
-        table[address + index] = (uint8_t) (remaining & 0xFFU);
+        table[address + index] = (uint8_t)(remaining & 0xFFU);
         remaining >>= 8;
     }
 }
@@ -74,19 +112,21 @@ static int32_t x430_to_value(const struct x430_reg* reg, uint32_t raw)
 
     if (((reg->flags & X430_REG_SIGNED) != 0U) && (reg->size < 4U))
     {
-        const uint32_t sign = (uint32_t) 1U << ((reg->size * 8U) - 1U);
+        const uint32_t bits = (uint32_t)reg->size * 8U;
+        const uint32_t sign = (uint32_t)1U << (bits - 1U);
 
         if ((raw & sign) != 0U)
         {
             extended = raw | ~((sign << 1) - 1U);
         }
     }
-    return (int32_t) extended;
+    return (int32_t)extended;
 }
 
 /** Register that contains @p address, NULL for a reserved address. */
-static const struct x430_reg* x430_reg_at(const struct x430_model* model, uint16_t address)
+static const struct x430_reg* x430_reg_at(uint16_t address)
 {
+    const struct x430_model* model = &x430_model_active;
     const struct x430_reg* reg = NULL;
 
     if (address < model->table_size)
@@ -101,45 +141,60 @@ static const struct x430_reg* x430_reg_at(const struct x430_model* model, uint16
     return reg;
 }
 
-static int32_t x430_get(const struct x430_device* device, uint16_t address)
+/** Register that starts at @p address, NULL when none does. */
+static const struct x430_reg* x430_reg_start(uint16_t address)
 {
-    const struct x430_reg* reg = x430_reg_at(device->model, address);
-    int32_t value = 0;
+    const struct x430_reg* reg = x430_reg_at(address);
+    const struct x430_reg* start = NULL;
 
     if ((reg != NULL) && (reg->address == address))
     {
-        value = x430_to_value(reg, x430_raw_get(device->table, reg->address, reg->size));
+        start = reg;
+    }
+    return start;
+}
+
+static int32_t x430_get(const struct x430_device_ctx* m, uint16_t address)
+{
+    const struct x430_reg* reg = x430_reg_start(address);
+    int32_t value = 0;
+
+    if (reg != NULL)
+    {
+        value = x430_to_value(reg, x430_raw_get(m->table, reg->address, reg->size));
     }
     return value;
 }
 
-static void x430_put(struct x430_device* device, uint16_t address, int32_t value)
+static void x430_put(struct x430_device_ctx* m, uint16_t address, int32_t value)
 {
-    const struct x430_reg* reg = x430_reg_at(device->model, address);
+    const struct x430_reg* reg = x430_reg_start(address);
 
-    if ((reg != NULL) && (reg->address == address))
+    if (reg != NULL)
     {
-        x430_raw_put(device->table, reg->address, reg->size, (uint32_t) value);
+        x430_raw_put(m->table, reg->address, reg->size, (uint32_t)value);
     }
 }
 
 /** Address that @p address really accesses (Indirect Data resolved). */
-static uint16_t x430_resolve(const struct x430_device* device, uint16_t address)
+static uint16_t x430_resolve(const struct x430_device_ctx* m, uint16_t address)
 {
-    const struct x430_model* model = device->model;
+    const struct x430_model* model = &x430_model_active;
     uint16_t resolved = address;
 
     for (uint8_t block = 0U; block < model->indirect_count; block++)
     {
         const struct x430_indirect_block* entry = &model->indirect[block];
+        const uint32_t end = (uint32_t)entry->data + entry->count;
 
-        if ((address >= entry->data) && (address < (entry->data + entry->count)))
+        if ((address >= entry->data) && ((uint32_t)address < end))
         {
-            const uint16_t slot = (uint16_t) (entry->address + (2U * (address - entry->data)));
-            const uint16_t target = (uint16_t) x430_raw_get(device->table, slot, 2U);
+            const uint32_t offset = 2U * ((uint32_t)address - entry->data);
+            const uint16_t slot = (uint16_t)((uint32_t)entry->address + offset);
+            const uint16_t target = (uint16_t)x430_raw_get(m->table, slot, 2U);
 
-            /* Indirect Address values are validated on write; keep the guard anyway. */
-            if (target < model->table_size)
+            /* Writes are range checked (X430_CHECK_INDIRECT), x430_device_set() is not. */
+            if (target < X430_TABLE_SIZE)
             {
                 resolved = target;
             }
@@ -149,16 +204,18 @@ static uint16_t x430_resolve(const struct x430_device* device, uint16_t address)
 }
 
 /** True when [address, address + length) overlaps an Indirect Data block. */
-static bool x430_touches_indirect(const struct x430_model* model, uint16_t address, uint16_t length)
+static bool x430_touches_indirect(uint16_t address, uint16_t length)
 {
+    const struct x430_model* model = &x430_model_active;
     bool touches = false;
-    const uint32_t end = (uint32_t) address + length;
+    const uint32_t end = (uint32_t)address + length;
 
     for (uint8_t block = 0U; block < model->indirect_count; block++)
     {
         const struct x430_indirect_block* entry = &model->indirect[block];
+        const uint32_t block_end = (uint32_t)entry->data + entry->count;
 
-        if ((address < (entry->data + entry->count)) && (end > entry->data))
+        if (((uint32_t)address < block_end) && (end > entry->data))
         {
             touches = true;
         }
@@ -166,78 +223,77 @@ static bool x430_touches_indirect(const struct x430_model* model, uint16_t addre
     return touches;
 }
 
-static const struct x430_hooks* x430_hooks_of(const struct x430_device* device)
-{
-    return device->config.hooks;
-}
-
 static uint8_t x430_event(struct x430_device* device, enum x430_event event)
 {
-    const struct x430_hooks* hooks = x430_hooks_of(device);
+    const struct x430_device_ctx* m = x430_device_ctx_of_const(device);
+    const struct x430_hooks* hooks = m->config.hooks;
     uint8_t result = DXL2_ERR_NONE;
 
     if ((hooks != NULL) && (hooks->event != NULL))
     {
-        result = hooks->event(device, event, device->config.user_data);
+        result = hooks->event(device, event, m->config.user_data);
     }
     return result;
 }
 
-/** @} */
+/* ==============================================================================
+ * PRIVATE FUNCTION IMPLEMENTATIONS: PERSISTENCE
+ * =============================================================================*/
 
-/** @name Private helpers: persistence */
-/** @{ */
-
-static uint16_t x430_nvm_pack(enum x430_nvm_slot slot, const uint8_t* payload, uint16_t size)
+/** Builds a block from @p size bytes of the table in the nvm buffer; returns its size. */
+static uint16_t x430_nvm_pack(struct x430_device_ctx* m, enum x430_nvm_slot slot, uint16_t size)
 {
-    const uint16_t total = (uint16_t) (X430_NVM_HEADER_SIZE + size + 2U);
+    const uint16_t total = (uint16_t)(X430_NVM_HEADER_SIZE + size + 2U);
+    const uint16_t crc_at = (uint16_t)(X430_NVM_HEADER_SIZE + size);
 
-    x430_nvm_buffer[0] = (uint8_t) 'X';
-    x430_nvm_buffer[1] = (uint8_t) '4';
-    x430_nvm_buffer[2] = (uint8_t) '3';
-    x430_nvm_buffer[3] = (uint8_t) '0';
-    dxl2_put_u16(&x430_nvm_buffer[4], x430_model_active.model_number);
-    x430_nvm_buffer[6] = (uint8_t) X430_NVM_FORMAT;
-    x430_nvm_buffer[7] = (uint8_t) slot;
-    dxl2_put_u16(&x430_nvm_buffer[8], size);
-    (void) memcpy(&x430_nvm_buffer[X430_NVM_HEADER_SIZE], payload, size);
-    dxl2_put_u16(&x430_nvm_buffer[X430_NVM_HEADER_SIZE + size],
-                 dxl2_crc16(x430_nvm_buffer, (size_t) X430_NVM_HEADER_SIZE + size));
+    m->nvm[0] = (uint8_t)'X';
+    m->nvm[1] = (uint8_t)'4';
+    m->nvm[2] = (uint8_t)'3';
+    m->nvm[3] = (uint8_t)'0';
+    dxl2_put_u16(&m->nvm[4], x430_model_active.model_number);
+    m->nvm[6] = (uint8_t)X430_NVM_FORMAT;
+    m->nvm[7] = (uint8_t)slot;
+    dxl2_put_u16(&m->nvm[8], size);
+    x430_copy(&m->nvm[X430_NVM_HEADER_SIZE], m->table, size);
+    dxl2_put_u16(&m->nvm[crc_at], dxl2_crc16(m->nvm, (size_t)crc_at));
     return total;
 }
 
-/** Loads a block into x430_nvm_buffer; true when it is valid for this model. */
+/** Loads a block into the nvm buffer; true when it is valid for this model. */
 static bool x430_nvm_load(struct x430_device* device, enum x430_nvm_slot slot, uint16_t size)
 {
-    const struct x430_hooks* hooks = x430_hooks_of(device);
-    const uint16_t total = (uint16_t) (X430_NVM_HEADER_SIZE + size + 2U);
+    struct x430_device_ctx* m = x430_device_ctx_of(device);
+    const struct x430_hooks* hooks = m->config.hooks;
+    const uint16_t total = (uint16_t)(X430_NVM_HEADER_SIZE + size + 2U);
+    const uint16_t crc_at = (uint16_t)(X430_NVM_HEADER_SIZE + size);
     bool valid = false;
 
-    if ((hooks != NULL) && (hooks->nvm_load != NULL)
-        && (hooks->nvm_load(device, slot, x430_nvm_buffer, total, device->config.user_data) == 0))
+    if ((hooks != NULL) && (hooks->nvm_load != NULL))
     {
-        valid = (x430_nvm_buffer[0] == (uint8_t) 'X') && (x430_nvm_buffer[1] == (uint8_t) '4')
-                && (x430_nvm_buffer[2] == (uint8_t) '3') && (x430_nvm_buffer[3] == (uint8_t) '0')
-                && (dxl2_get_u16(&x430_nvm_buffer[4]) == x430_model_active.model_number)
-                && (x430_nvm_buffer[6] == (uint8_t) X430_NVM_FORMAT)
-                && (x430_nvm_buffer[7] == (uint8_t) slot)
-                && (dxl2_get_u16(&x430_nvm_buffer[8]) == size)
-                && (dxl2_get_u16(&x430_nvm_buffer[X430_NVM_HEADER_SIZE + size])
-                    == dxl2_crc16(x430_nvm_buffer, (size_t) X430_NVM_HEADER_SIZE + size));
+        if (hooks->nvm_load(device, slot, m->nvm, total, m->config.user_data) == 0)
+        {
+            valid = (m->nvm[0] == (uint8_t)'X') && (m->nvm[1] == (uint8_t)'4') &&
+                    (m->nvm[2] == (uint8_t)'3') && (m->nvm[3] == (uint8_t)'0') &&
+                    (dxl2_get_u16(&m->nvm[4]) == x430_model_active.model_number) &&
+                    (m->nvm[6] == (uint8_t)X430_NVM_FORMAT) && (m->nvm[7] == (uint8_t)slot) &&
+                    (dxl2_get_u16(&m->nvm[8]) == size) &&
+                    (dxl2_get_u16(&m->nvm[crc_at]) == dxl2_crc16(m->nvm, (size_t)crc_at));
+        }
     }
     return valid;
 }
 
 static uint8_t x430_nvm_store(struct x430_device* device, enum x430_nvm_slot slot, uint16_t size)
 {
-    const struct x430_hooks* hooks = x430_hooks_of(device);
+    struct x430_device_ctx* m = x430_device_ctx_of(device);
+    const struct x430_hooks* hooks = m->config.hooks;
     uint8_t result = DXL2_ERR_NONE;
 
     if ((hooks != NULL) && (hooks->nvm_store != NULL))
     {
-        const uint16_t total = x430_nvm_pack(slot, device->table, size);
+        const uint16_t total = x430_nvm_pack(m, slot, size);
 
-        if (hooks->nvm_store(device, slot, x430_nvm_buffer, total, device->config.user_data) != 0)
+        if (hooks->nvm_store(device, slot, m->nvm, total, m->config.user_data) != 0)
         {
             result = DXL2_ERR_RESULT_FAIL;
         }
@@ -245,79 +301,101 @@ static uint8_t x430_nvm_store(struct x430_device* device, enum x430_nvm_slot slo
     return result;
 }
 
-/**
- * Copies writable registers of a valid block (x430_nvm_buffer) into the table.
- * @param first,last Address window to copy.
- * @param keep_identity Leave ID, Baud Rate and Protocol Type untouched.
- */
-static void x430_apply_block(struct x430_device* device, uint16_t first, uint16_t last,
-                             bool keep_identity)
+/** Copies the writable EEPROM registers of a valid EEPROM block (nvm buffer) into the table. */
+static void x430_apply_eeprom(struct x430_device_ctx* m)
 {
-    const struct x430_model* model = device->model;
+    const struct x430_model* model = &x430_model_active;
 
     for (uint16_t index = 0U; index < model->register_count; index++)
     {
         const struct x430_reg* reg = &model->registers[index];
-        const bool identity = (reg->address == X430_ADDR_ID)
-                              || (reg->address == X430_ADDR_BAUD_RATE)
-                              || (reg->address == X430_ADDR_PROTOCOL_TYPE);
-        const bool runtime =
-            (reg->address == X430_ADDR_TORQUE_ENABLE) || (reg->address == X430_ADDR_BUS_WATCHDOG);
 
-        if (((reg->flags & X430_REG_WRITABLE) != 0U) && (reg->address >= first)
-            && (reg->address <= last) && !runtime && !(keep_identity && identity))
+        if (((reg->flags & X430_REG_WRITABLE) != 0U) && ((reg->flags & X430_REG_EEPROM) != 0U))
         {
-            (void) memcpy(&device->table[reg->address],
-                          &x430_nvm_buffer[X430_NVM_HEADER_SIZE + reg->address], reg->size);
+            x430_copy(&m->table[reg->address], &m->nvm[X430_NVM_HEADER_SIZE + reg->address],
+                      reg->size);
         }
     }
 }
 
-/** @} */
-
-/** @name Private helpers: checks */
-/** @{ */
-
-static bool x430_torque_on(const struct x430_device* device)
+#if X430_FEATURE_BACKUP
+/**
+ * Copies the writable registers of a valid backup block (nvm buffer) into the table,
+ * except ID, Baud Rate, Protocol Type (the identity on the bus) and Torque Enable,
+ * Bus Watchdog (run-time state).
+ * @param ram_only Only the RAM area (Startup Configuration "RAM Restore").
+ */
+static void x430_apply_backup(struct x430_device_ctx* m, bool ram_only)
 {
-    return device->table[X430_ADDR_TORQUE_ENABLE] != 0U;
+    const struct x430_model* model = &x430_model_active;
+
+    for (uint16_t index = 0U; index < model->register_count; index++)
+    {
+        const struct x430_reg* reg = &model->registers[index];
+        const bool identity = (reg->address == X430_ADDR_ID) ||
+                              (reg->address == X430_ADDR_BAUD_RATE) ||
+                              (reg->address == X430_ADDR_PROTOCOL_TYPE);
+        const bool runtime =
+            (reg->address == X430_ADDR_TORQUE_ENABLE) || (reg->address == X430_ADDR_BUS_WATCHDOG);
+        const bool eeprom = (reg->flags & X430_REG_EEPROM) != 0U;
+
+        if (((reg->flags & X430_REG_WRITABLE) != 0U) && !runtime && !identity &&
+            (!ram_only || !eeprom))
+        {
+            x430_copy(&m->table[reg->address], &m->nvm[X430_NVM_HEADER_SIZE + reg->address],
+                      reg->size);
+        }
+    }
+}
+#endif
+
+/* ==============================================================================
+ * PRIVATE FUNCTION IMPLEMENTATIONS: CHECKS
+ * =============================================================================*/
+
+static bool x430_torque_on(const struct x430_device_ctx* m)
+{
+    return m->table[X430_ADDR_TORQUE_ENABLE] != 0U;
 }
 
 static int32_t x430_abs(int32_t value)
 {
-    return (value < 0) ? -value : value;
+    int32_t magnitude = value;
+
+    if (value < 0)
+    {
+        magnitude = -value;
+    }
+    return magnitude;
 }
 
-static bool x430_check_value(const struct x430_device* device, const struct x430_reg* reg,
+static bool x430_check_value(const struct x430_device_ctx* m, const struct x430_reg* reg,
                              int32_t value)
 {
-    const struct x430_model* model = device->model;
+    const struct x430_model* model = &x430_model_active;
     bool valid = false;
 
+    /* tools/x430_gen_model.py gives every writable register a check other than NONE */
     switch (reg->check)
     {
-        case X430_CHECK_RANGE:
-        case X430_CHECK_INDIRECT:
-            valid = (value >= reg->min) && (value <= reg->max);
+        case (uint8_t)X430_CHECK_MASK:
+            valid = (((uint32_t)value) & ~((uint32_t)reg->max)) == 0U;
             break;
-        case X430_CHECK_MASK:
-            valid = (((uint32_t) value) & ~((uint32_t) reg->max)) == 0U;
-            break;
-        case X430_CHECK_OPMODE:
-            valid = (value >= 0) && (value < 32)
-                    && ((model->operating_modes & ((uint32_t) 1U << (uint32_t) value)) != 0U);
-            break;
-        case X430_CHECK_SYMMETRIC:
-            valid = x430_abs(value) <= x430_get(device, reg->ref);
-            break;
-        case X430_CHECK_UPTO:
-            valid = (value >= 0) && (value <= x430_get(device, reg->ref));
-            break;
-        case X430_CHECK_GOAL_POSITION:
-            if (device->table[X430_ADDR_OPERATING_MODE] == X430_MODE_POSITION)
+        case (uint8_t)X430_CHECK_OPMODE:
+            /* Operating Mode is one unsigned byte: value is 0..255 */
+            if ((uint32_t)value < 32U)
             {
-                valid = (value >= x430_get(device, X430_ADDR_MIN_POSITION_LIMIT))
-                        && (value <= x430_get(device, X430_ADDR_MAX_POSITION_LIMIT));
+                valid = (model->operating_modes & ((uint32_t)1U << (uint32_t)value)) != 0U;
+            }
+            break;
+        case (uint8_t)X430_CHECK_SYMMETRIC:
+            valid = x430_abs(value) <= x430_get(m, reg->ref);
+            break;
+        case (uint8_t)X430_CHECK_GOAL_POSITION:
+            if (m->table[X430_ADDR_OPERATING_MODE] == X430_MODE_POSITION)
+            {
+                valid = (value >= x430_get(m, X430_ADDR_MIN_POSITION_LIMIT)) &&
+                        (value <= x430_get(m, X430_ADDR_MAX_POSITION_LIMIT));
             }
             else
             {
@@ -325,7 +403,8 @@ static bool x430_check_value(const struct x430_device* device, const struct x430
             }
             break;
         default:
-            valid = false;
+            /* X430_CHECK_RANGE and X430_CHECK_INDIRECT */
+            valid = (value >= reg->min) && (value <= reg->max);
             break;
     }
     return valid;
@@ -335,42 +414,42 @@ static bool x430_check_value(const struct x430_device* device, const struct x430
 static uint8_t x430_check_write(const struct x430_device* device, const struct x430_reg* reg,
                                 int32_t value, uint8_t options)
 {
+    const struct x430_device_ctx* m = x430_device_ctx_of_const(device);
     uint8_t result = DXL2_ERR_NONE;
 
     if ((reg->flags & X430_REG_WRITABLE) == 0U)
     {
         result = DXL2_ERR_ACCESS;
     }
-    else if (((reg->flags & X430_REG_EEPROM) != 0U)
-             && (x430_torque_on(device) || ((options & X430_WRITE_SECONDARY) != 0U)))
+    else if (((reg->flags & X430_REG_EEPROM) != 0U) &&
+             (x430_torque_on(m) || ((options & X430_WRITE_SECONDARY) != 0U)))
     {
         result = DXL2_ERR_ACCESS;
     }
-    else if (((reg->flags & X430_REG_GOAL) != 0U)
-             && (device->table[X430_ADDR_BUS_WATCHDOG] == X430_BUS_WATCHDOG_ERROR))
+    else if (((reg->flags & X430_REG_GOAL) != 0U) &&
+             (m->table[X430_ADDR_BUS_WATCHDOG] == X430_BUS_WATCHDOG_ERROR))
     {
         result = DXL2_ERR_DATA_RANGE;
     }
     else if (reg->address == X430_ADDR_BAUD_RATE)
     {
-        /* The model table says 0..7; applications may allow their own codes. */
-        result = ((value >= 0) && (value <= (int32_t) X430_BAUD_RATE_CODE_MAX)) ?
-                     DXL2_ERR_NONE :
-                     DXL2_ERR_DATA_RANGE;
+        /* The model table says 0..7; applications may allow their own codes. Baud Rate
+           is one unsigned byte: value is 0..255. */
+        if ((uint32_t)value > X430_BAUD_RATE_CODE_MAX_U)
+        {
+            result = DXL2_ERR_DATA_RANGE;
+        }
     }
-    else if (!x430_check_value(device, reg, value))
+    else if (!x430_check_value(m, reg, value))
     {
         result = DXL2_ERR_DATA_RANGE;
     }
-    else if ((reg->address == X430_ADDR_ID)
-             && x430_bus_id_taken(device->bus, device, (uint8_t) value))
+    else if ((reg->address == X430_ADDR_ID) && x430_bus_id_taken(m->bus, device, (uint8_t)value))
     {
         result = DXL2_ERR_DATA_RANGE;
     }
-    else if ((reg->address == X430_ADDR_TORQUE_ENABLE) && (value != 0)
-             && ((device->table[X430_ADDR_HARDWARE_ERROR_STATUS]
-                  & device->table[X430_ADDR_SHUTDOWN])
-                 != 0U))
+    else if ((reg->address == X430_ADDR_TORQUE_ENABLE) && (value != 0) &&
+             ((m->table[X430_ADDR_HARDWARE_ERROR_STATUS] & m->table[X430_ADDR_SHUTDOWN]) != 0U))
     {
         /* After a shutdown only REBOOT re-enables the torque. */
         result = DXL2_ERR_RESULT_FAIL;
@@ -386,19 +465,21 @@ static uint8_t x430_check_write(const struct x430_device* device, const struct x
  * New raw value of @p reg after writing @p data at @p address: the bytes of the
  * write that land in the register replace the current bytes.
  */
-static uint32_t x430_merge(const struct x430_device* device, const struct x430_reg* reg,
+static uint32_t x430_merge(const struct x430_device_ctx* m, const struct x430_reg* reg,
                            uint16_t address, uint16_t length, const uint8_t* data, bool indirect)
 {
-    uint8_t bytes[4];
+    uint8_t bytes[4] = {0U, 0U, 0U, 0U};
+    const uint32_t end = (uint32_t)address + length;
+    const uint32_t reg_end = (uint32_t)reg->address + reg->size;
 
-    (void) memcpy(bytes, &device->table[reg->address], reg->size);
+    x430_copy(bytes, &m->table[reg->address], reg->size);
     if (!indirect)
     {
         for (uint8_t offset = 0U; offset < reg->size; offset++)
         {
-            const uint16_t target = (uint16_t) (reg->address + offset);
+            const uint32_t target = (uint32_t)reg->address + offset;
 
-            if ((target >= address) && (target < (address + length)))
+            if ((target >= address) && (target < end))
             {
                 bytes[offset] = data[target - address];
             }
@@ -408,9 +489,9 @@ static uint32_t x430_merge(const struct x430_device* device, const struct x430_r
     {
         for (uint16_t index = 0U; index < length; index++)
         {
-            const uint16_t target = x430_resolve(device, (uint16_t) (address + index));
+            const uint16_t target = x430_resolve(m, (uint16_t)((uint32_t)address + index));
 
-            if ((target >= reg->address) && (target < (reg->address + reg->size)))
+            if ((target >= reg->address) && ((uint32_t)target < reg_end))
             {
                 bytes[target - reg->address] = data[index];
             }
@@ -420,39 +501,56 @@ static uint32_t x430_merge(const struct x430_device* device, const struct x430_r
 }
 
 /** Marks every register touched by the write (bit = register index). */
-static void x430_mark_touched(const struct x430_device* device, uint16_t address, uint16_t length,
+static void x430_mark_touched(const struct x430_device_ctx* m, uint16_t address, uint16_t length,
                               uint8_t* touched, bool indirect)
 {
     for (uint16_t index = 0U; index < length; index++)
     {
-        const uint16_t raw = (uint16_t) (address + index);
-        const uint16_t target = indirect ? x430_resolve(device, raw) : raw;
-        const uint8_t entry = device->model->register_map[target];
+        const uint16_t raw = (uint16_t)((uint32_t)address + index);
+        uint16_t target = raw;
+        uint8_t entry = 0U;
 
+        if (indirect)
+        {
+            target = x430_resolve(m, raw);
+        }
+        entry = x430_model_active.register_map[target];
         if (entry != 0U)
         {
-            const uint8_t bit = (uint8_t) (entry - 1U);
+            const uint8_t bit = (uint8_t)(entry - 1U);
+            const uint8_t byte = bit / 8U;
+            const uint8_t shift = bit % 8U;
+            const uint8_t mask = (uint8_t)((uint32_t)1U << shift);
 
-            touched[bit / 8U] |= (uint8_t) (1U << (bit % 8U));
+            touched[byte] |= mask;
         }
     }
+}
+
+/** True when register @p index is marked in @p touched. */
+static bool x430_is_touched(const uint8_t* touched, uint16_t index)
+{
+    const uint16_t byte = index / 8U;
+    const uint16_t shift = index % 8U;
+    const uint8_t mask = (uint8_t)((uint32_t)1U << shift);
+
+    return (touched[byte] & mask) != 0U;
 }
 
 /**
  * Bytes of a write through Indirect Data whose Indirect Address points at
  * Indirect Data storage itself: they are kept as plain bytes.
  */
-static void x430_store_raw_bytes(struct x430_device* device, uint16_t address, uint16_t length,
+static void x430_store_raw_bytes(struct x430_device_ctx* m, uint16_t address, uint16_t length,
                                  const uint8_t* data)
 {
     for (uint16_t index = 0U; index < length; index++)
     {
-        const uint16_t target = x430_resolve(device, (uint16_t) (address + index));
+        const uint16_t target = x430_resolve(m, (uint16_t)((uint32_t)address + index));
 
-        if ((device->model->register_map[target] == 0U)
-            && x430_touches_indirect(device->model, target, 1U))
+        if ((x430_model_active.register_map[target] == 0U) && x430_touches_indirect(target, 1U))
         {
-            device->table[target] = data[index];
+            m->table[target] = data[index];
         }
     }
 }
@@ -463,29 +561,30 @@ static void x430_store_raw_bytes(struct x430_device* device, uint16_t address, u
  */
 static void x430_sync_goal(struct x430_device* device)
 {
-    const struct x430_hooks* hooks = x430_hooks_of(device);
+    struct x430_device_ctx* m = x430_device_ctx_of(device);
+    const struct x430_hooks* hooks = m->config.hooks;
 
     if ((hooks != NULL) && (hooks->read != NULL))
     {
-        hooks->read(device, X430_ADDR_PRESENT_POSITION, 4U, device->config.user_data);
+        hooks->read(device, X430_ADDR_PRESENT_POSITION, 4U, m->config.user_data);
     }
-    (void) memcpy(&device->table[X430_ADDR_GOAL_POSITION],
-                  &device->table[X430_ADDR_PRESENT_POSITION], 4U);
+    x430_copy(&m->table[X430_ADDR_GOAL_POSITION], &m->table[X430_ADDR_PRESENT_POSITION], 4U);
 }
 
 /** Torque Enable = 1 through the write hook (startup, Drive Mode bit 3). */
 static uint8_t x430_enable_torque(struct x430_device* device, bool sync_goal)
 {
-    const struct x430_hooks* hooks = x430_hooks_of(device);
+    struct x430_device_ctx* m = x430_device_ctx_of(device);
+    const struct x430_hooks* hooks = m->config.hooks;
     uint8_t result = DXL2_ERR_NONE;
 
     if ((hooks != NULL) && (hooks->write != NULL))
     {
-        result = hooks->write(device, X430_ADDR_TORQUE_ENABLE, 1U, 1, device->config.user_data);
+        result = hooks->write(device, X430_ADDR_TORQUE_ENABLE, 1U, 1, m->config.user_data);
     }
-    if ((result == DXL2_ERR_NONE) && !x430_torque_on(device))
+    if (result == DXL2_ERR_NONE)
     {
-        device->table[X430_ADDR_TORQUE_ENABLE] = 1U;
+        m->table[X430_ADDR_TORQUE_ENABLE] = 1U;
         if (sync_goal)
         {
             x430_sync_goal(device);
@@ -494,14 +593,13 @@ static uint8_t x430_enable_torque(struct x430_device* device, bool sync_goal)
     return result;
 }
 
-/** @} */
+/* ==============================================================================
+ * PRIVATE FUNCTION IMPLEMENTATIONS: STARTUP
+ * =============================================================================*/
 
-/** @name Private helpers: startup */
-/** @{ */
-
-static void x430_load_factory(struct x430_device* device, uint16_t first, uint16_t last)
+static void x430_load_factory(struct x430_device_ctx* m, uint16_t first, uint16_t last)
 {
-    const struct x430_model* model = device->model;
+    const struct x430_model* model = &x430_model_active;
 
     for (uint16_t index = 0U; index < model->register_count; index++)
     {
@@ -509,205 +607,382 @@ static void x430_load_factory(struct x430_device* device, uint16_t first, uint16
 
         if ((reg->address >= first) && (reg->address <= last))
         {
-            x430_raw_put(device->table, reg->address, reg->size, (uint32_t) reg->initial);
+            x430_raw_put(m->table, reg->address, reg->size, (uint32_t)reg->initial);
         }
     }
 }
 
-static void x430_load_identity(struct x430_device* device)
+static void x430_load_identity(struct x430_device_ctx* m)
 {
-    x430_put(device, X430_ADDR_MODEL_NUMBER, (int32_t) X430_MODEL_NUMBER);
-    x430_put(device, X430_ADDR_FIRMWARE_VERSION,
-             (int32_t) ((device->config.firmware_version != 0U) ? device->config.firmware_version :
-                                                                  X430_FIRMWARE_VERSION));
-    x430_raw_put(device->table, X430_ADDR_MODEL_INFORMATION, 4U, device->config.model_information);
+    uint8_t firmware = (uint8_t)X430_FIRMWARE_VERSION;
+
+    if (m->config.firmware_version != 0U)
+    {
+        firmware = m->config.firmware_version;
+    }
+    x430_put(m, X430_ADDR_MODEL_NUMBER, (int32_t)X430_MODEL_NUMBER);
+    m->table[X430_ADDR_FIRMWARE_VERSION] = firmware;
+    x430_raw_put(m->table, X430_ADDR_MODEL_INFORMATION, 4U, m->config.model_information);
 }
 
 /** RAM area to its startup state, then the Startup Configuration. */
 static void x430_startup(struct x430_device* device)
 {
-    const uint8_t startup = device->table[X430_ADDR_STARTUP_CONFIGURATION];
+    struct x430_device_ctx* m = x430_device_ctx_of(device);
+    const uint8_t startup = m->table[X430_ADDR_STARTUP_CONFIGURATION];
+    const uint16_t last = (uint16_t)(X430_TABLE_SIZE - 1U);
 
-    (void) memset(&device->table[X430_RAM_START], 0,
-                  (size_t) device->model->table_size - X430_RAM_START);
-    x430_load_factory(device, X430_RAM_START, (uint16_t) (device->model->table_size - 1U));
-    device->reg_length = 0U;
-    device->baud_changed = false;
+    x430_fill(&m->table[X430_RAM_START], 0U, (uint16_t)(X430_TABLE_SIZE - X430_RAM_START));
+    x430_load_factory(m, X430_RAM_START, last);
+    m->reg_length = 0U;
+    m->baud_changed = false;
 
 #if X430_FEATURE_BACKUP
-    if (x430_nvm_load(device, X430_NVM_BACKUP, device->model->table_size))
+    if (x430_nvm_load(device, X430_NVM_BACKUP, X430_TABLE_SIZE))
     {
-        device->table[X430_ADDR_BACKUP_READY] = 1U;
+        m->table[X430_ADDR_BACKUP_READY] = 1U;
         if ((startup & X430_STARTUP_RAM_RESTORE) != 0U)
         {
-            x430_apply_block(device, X430_RAM_START, (uint16_t) (device->model->table_size - 1U),
-                             true);
+            x430_apply_backup(m, true);
         }
     }
 #endif
 
     if ((startup & X430_STARTUP_TORQUE_ON) != 0U)
     {
-        (void) x430_enable_torque(device, true);
+        (void)x430_enable_torque(device, true);
     }
 }
 
-/** @} */
-
-/** @name Public functions: lifecycle and lock-free access */
-/** @{ */
-
-int x430_device_init(struct x430_device* device, const struct x430_device_config* config)
+/** X430_OK for an initialized device, else the status code to return. */
+static int x430_check(const struct x430_device* device)
 {
-    int result = X430_EINVAL;
+    const struct x430_device_ctx* m = x430_device_ctx_of_const(device);
+    int result = X430_OK;
 
-    if ((device != NULL) && (config != NULL) && (config->id <= DXL2_MAX_ID))
+    if (m == NULL)
     {
-        (void) memset(device, 0, sizeof(*device));
-        device->model = &x430_model_active;
-        device->config = *config;
-
-        x430_load_factory(device, 0U, X430_RAM_START - 1U);
-        x430_load_identity(device);
-        if (config->id != 0U)
-        {
-            device->table[X430_ADDR_ID] = config->id;
-        }
-        if (x430_nvm_load(device, X430_NVM_EEPROM, X430_RAM_START))
-        {
-            x430_apply_block(device, 0U, X430_RAM_START - 1U, false);
-        }
-        x430_startup(device);
-        device->initialized = true;
-        result = X430_OK;
+        result = X430_ERR_PARAM;
+    }
+    else if (m->ready != X430_READY)
+    {
+        result = X430_ERR_STATE;
+    }
+    else
+    {
+        /* Ready. */
     }
     return result;
 }
 
-int32_t x430_device_get(const struct x430_device* device, uint16_t address)
+/** Like x430_check(), and @p a and @p b must not be NULL. */
+static int x430_check2(const struct x430_device* device, const void* a, const void* b)
 {
-    return x430_get(device, address);
+    int result = X430_ERR_PARAM;
+
+    if ((a != NULL) && (b != NULL))
+    {
+        result = x430_check(device);
+    }
+    return result;
+}
+
+/* ==============================================================================
+ * INTERNAL FUNCTIONS (x430_internal.h)
+ * =============================================================================*/
+
+void x430_copy(uint8_t* destination, const uint8_t* source, uint16_t length)
+{
+    for (uint16_t index = 0U; index < length; index++)
+    {
+        destination[index] = source[index];
+    }
+}
+
+void x430_fill(uint8_t* destination, uint8_t value, uint16_t length)
+{
+    for (uint16_t index = 0U; index < length; index++)
+    {
+        destination[index] = value;
+    }
+}
+
+int32_t x430_device_value(const struct x430_device* device, uint16_t address)
+{
+    return x430_get(x430_device_ctx_of_const(device), address);
+}
+
+void x430_device_store(struct x430_device* device, uint16_t address, int32_t value)
+{
+    x430_put(x430_device_ctx_of(device), address, value);
+}
+
+uint8_t x430_device_byte(const struct x430_device* device, uint16_t address)
+{
+    return x430_device_ctx_of_const(device)->table[address];
+}
+
+uint8_t x430_device_alert(const struct x430_device* device)
+{
+    uint8_t alert = DXL2_ERR_NONE;
+
+    if (x430_device_byte(device, X430_ADDR_HARDWARE_ERROR_STATUS) != 0U)
+    {
+        alert = DXL2_ERR_ALERT_BIT;
+    }
+    return alert;
+}
+
+void x430_device_watchdog(struct x430_device* device, uint32_t idle_ms)
+{
+    struct x430_device_ctx* m = x430_device_ctx_of(device);
+    const uint8_t timeout = m->table[X430_ADDR_BUS_WATCHDOG];
+
+    if ((timeout != 0U) && (timeout != X430_BUS_WATCHDOG_ERROR) && x430_torque_on(m) &&
+        (idle_ms > ((uint32_t)timeout * X430_BUS_WATCHDOG_UNIT_MS)))
+    {
+        m->table[X430_ADDR_BUS_WATCHDOG] = X430_BUS_WATCHDOG_ERROR;
+        (void)x430_event(device, X430_EVENT_BUS_WATCHDOG);
+    }
+}
+
+struct x430_bus* x430_device_bus(const struct x430_device* device)
+{
+    return x430_device_ctx_of_const(device)->bus;
+}
+
+void x430_device_attach(struct x430_device* device, struct x430_bus* bus)
+{
+    x430_device_ctx_of(device)->bus = bus;
+}
+
+bool x430_device_ready(const struct x430_device* device)
+{
+    return x430_check(device) == X430_OK;
+}
+
+/* ==============================================================================
+ * PUBLIC FUNCTION IMPLEMENTATIONS: LIFECYCLE AND LOCK-FREE ACCESS
+ * =============================================================================*/
+
+int x430_device_init(struct x430_device* device, const struct x430_device_config* config)
+{
+    struct x430_device_ctx* m = x430_device_ctx_of(device);
+    int result = X430_OK;
+
+    if ((m == NULL) || (config == NULL) || (config->id > X430_ID_MAX))
+    {
+        result = X430_ERR_PARAM;
+    }
+    else
+    {
+        /* Field by field (no temporary copy of the context, no memset() of the C library);
+           reg_data and nvm are written before they are read. */
+        m->config = *config;
+        m->bus = NULL;
+        m->reg_address = 0U;
+        m->reg_length = 0U;
+        m->baud_changed = false;
+        x430_fill(m->table, 0U, X430_TABLE_SIZE);
+        /* Nothing below can fail; hooks called from here may use the device. */
+        m->ready = X430_READY;
+
+        x430_load_factory(m, 0U, X430_RAM_START - 1U);
+        x430_load_identity(m);
+        if (config->id != 0U)
+        {
+            m->table[X430_ADDR_ID] = config->id;
+        }
+        if (x430_nvm_load(device, X430_NVM_EEPROM, X430_RAM_START))
+        {
+            x430_apply_eeprom(m);
+        }
+        x430_startup(device);
+    }
+    return result;
+}
+
+int x430_device_get(const struct x430_device* device, uint16_t address, int32_t* value)
+{
+    int result = x430_check2(device, value, value);
+
+    if (result == X430_OK)
+    {
+        const struct x430_reg* reg = x430_reg_start(address);
+
+        if (reg == NULL)
+        {
+            result = X430_ERR_PARAM;
+        }
+        else
+        {
+            *value = x430_get(x430_device_ctx_of_const(device), address);
+        }
+    }
+    return result;
 }
 
 int x430_device_set(struct x430_device* device, uint16_t address, int32_t value)
 {
-    const struct x430_reg* reg = x430_reg_at(device->model, address);
-    int result = X430_EINVAL;
+    int result = x430_check(device);
 
-    if ((reg != NULL) && (reg->address == address))
+    if (result == X430_OK)
     {
-        x430_raw_put(device->table, address, reg->size, (uint32_t) value);
-        result = X430_OK;
+        if (x430_reg_start(address) == NULL)
+        {
+            result = X430_ERR_PARAM;
+        }
+        else
+        {
+            x430_put(x430_device_ctx_of(device), address, value);
+        }
     }
     return result;
 }
 
-uint8_t x430_device_id(const struct x430_device* device)
+int x430_device_id(const struct x430_device* device, uint8_t* id)
 {
-    return device->table[X430_ADDR_ID];
+    int result = x430_check2(device, id, id);
+
+    if (result == X430_OK)
+    {
+        *id = x430_device_byte(device, X430_ADDR_ID);
+    }
+    return result;
 }
 
-void x430_device_raise_hardware_error(struct x430_device* device, uint8_t bits)
+int x430_device_raise_hardware_error(struct x430_device* device, uint8_t bits)
 {
-    device->table[X430_ADDR_HARDWARE_ERROR_STATUS] |= bits;
-    if (((bits & device->table[X430_ADDR_SHUTDOWN]) != 0U) && x430_torque_on(device))
+    int result = x430_check(device);
+
+    if (result == X430_OK)
     {
-        device->table[X430_ADDR_TORQUE_ENABLE] = 0U;
-        (void) x430_event(device, X430_EVENT_TORQUE_SHUTDOWN);
-    }
-}
+        struct x430_device_ctx* m = x430_device_ctx_of(device);
 
-/** @} */
-
-/** @name Public functions: instruction semantics */
-/** @{ */
-
-uint8_t x430_device_read(struct x430_device* device, uint16_t address, uint16_t length,
-                         uint8_t* data)
-{
-    const struct x430_hooks* hooks = x430_hooks_of(device);
-    uint8_t result = DXL2_ERR_NONE;
-
-    if (length == 0U)
-    {
-        result = DXL2_ERR_DATA_LENGTH;
-    }
-    else if (((uint32_t) address + length) > device->model->table_size)
-    {
-        result = DXL2_ERR_ACCESS;
-    }
-    else
-    {
-        const uint32_t tick = x430_bus_millis(device->bus) % X430_REALTIME_TICK_PERIOD;
-
-        x430_raw_put(device->table, X430_ADDR_REALTIME_TICK, 2U, tick);
-
-        if ((hooks != NULL) && (hooks->read != NULL))
+        m->table[X430_ADDR_HARDWARE_ERROR_STATUS] |= bits;
+        if (((bits & m->table[X430_ADDR_SHUTDOWN]) != 0U) && x430_torque_on(m))
         {
-            uint16_t run_start = x430_resolve(device, address);
-            uint16_t run_length = 1U;
+            m->table[X430_ADDR_TORQUE_ENABLE] = 0U;
+            (void)x430_event(device, X430_EVENT_TORQUE_SHUTDOWN);
+        }
+    }
+    return result;
+}
 
-            for (uint16_t index = 1U; index <= length; index++)
+int x430_device_flush_events(struct x430_device* device)
+{
+    int result = x430_check(device);
+
+    if (result == X430_OK)
+    {
+        struct x430_device_ctx* m = x430_device_ctx_of(device);
+
+        if (m->baud_changed)
+        {
+            m->baud_changed = false;
+            (void)x430_event(device, X430_EVENT_BAUD_RATE);
+        }
+    }
+    return result;
+}
+
+/* ==============================================================================
+ * PUBLIC FUNCTION IMPLEMENTATIONS: INSTRUCTION SEMANTICS
+ * =============================================================================*/
+
+int x430_device_read(struct x430_device* device, uint16_t address, uint16_t length, uint8_t* data,
+                     uint8_t* error)
+{
+    int result = x430_check2(device, data, error);
+
+    if (result == X430_OK)
+    {
+        struct x430_device_ctx* m = x430_device_ctx_of(device);
+        const struct x430_hooks* hooks = m->config.hooks;
+
+        *error = DXL2_ERR_NONE;
+        if (length == 0U)
+        {
+            *error = DXL2_ERR_DATA_LENGTH;
+        }
+        else if (((uint32_t)address + length) > X430_TABLE_SIZE)
+        {
+            *error = DXL2_ERR_ACCESS;
+        }
+        else
+        {
+            const uint32_t tick = x430_bus_millis(m->bus) % X430_REALTIME_TICK_PERIOD;
+
+            x430_raw_put(m->table, X430_ADDR_REALTIME_TICK, 2U, tick);
+
+            if ((hooks != NULL) && (hooks->read != NULL))
             {
-                const uint16_t target =
-                    (index < length) ? x430_resolve(device, (uint16_t) (address + index)) : 0U;
+                uint16_t run_start = x430_resolve(m, address);
+                uint16_t run_length = 1U;
 
-                if ((index < length) && (target == (run_start + run_length)))
+                for (uint16_t index = 1U; index < length; index++)
                 {
-                    run_length++;
+                    const uint16_t target = x430_resolve(m, (uint16_t)((uint32_t)address + index));
+
+                    if ((uint32_t)target == ((uint32_t)run_start + run_length))
+                    {
+                        run_length++;
+                    }
+                    else
+                    {
+                        hooks->read(device, run_start, run_length, m->config.user_data);
+                        run_start = target;
+                        run_length = 1U;
+                    }
                 }
-                else
-                {
-                    hooks->read(device, run_start, run_length, device->config.user_data);
-                    run_start = target;
-                    run_length = 1U;
-                }
+                hooks->read(device, run_start, run_length, m->config.user_data);
+            }
+
+            for (uint16_t index = 0U; index < length; index++)
+            {
+                data[index] = m->table[x430_resolve(m, (uint16_t)((uint32_t)address + index))];
             }
         }
-
-        for (uint16_t index = 0U; index < length; index++)
-        {
-            data[index] = device->table[x430_resolve(device, (uint16_t) (address + index))];
-        }
     }
     return result;
 }
 
-uint8_t x430_device_write(struct x430_device* device, uint16_t address, uint16_t length,
+/** WRITE without the argument checks (x430_device_write(), REG_WRITE, ACTION). */
+static uint8_t x430_write(struct x430_device* device, uint16_t address, uint16_t length,
                           const uint8_t* data, uint8_t options)
 {
-    const struct x430_model* model = device->model;
-    const struct x430_hooks* hooks = x430_hooks_of(device);
+    struct x430_device_ctx* m = x430_device_ctx_of(device);
+    const struct x430_model* model = &x430_model_active;
+    const struct x430_hooks* hooks = m->config.hooks;
     uint8_t touched[X430_TOUCHED_BYTES];
     uint8_t result = DXL2_ERR_NONE;
     bool indirect = false;
     bool goal_written = false;
     bool eeprom_written = false;
 
-    (void) memset(touched, 0, sizeof(touched));
+    x430_fill(touched, 0U, X430_TOUCHED_BYTES);
 
     if (length == 0U)
     {
         result = DXL2_ERR_DATA_LENGTH;
     }
-    else if (((uint32_t) address + length) > model->table_size)
+    else if (((uint32_t)address + length) > X430_TABLE_SIZE)
     {
         result = DXL2_ERR_ACCESS;
     }
     else
     {
-        indirect = x430_touches_indirect(model, address, length);
-        x430_mark_touched(device, address, length, touched, indirect);
+        indirect = x430_touches_indirect(address, length);
+        x430_mark_touched(m, address, length, touched, indirect);
 
         /* Pass 1: every touched register must accept its new value. */
-        for (uint16_t index = 0U; (index < model->register_count) && (result == DXL2_ERR_NONE);
-             index++)
+        for (uint16_t index = 0U; index < model->register_count; index++)
         {
-            if ((touched[index / 8U] & (uint8_t) (1U << (index % 8U))) != 0U)
+            if ((result == DXL2_ERR_NONE) && x430_is_touched(touched, index))
             {
                 const struct x430_reg* reg = &model->registers[index];
                 const int32_t value =
-                    x430_to_value(reg, x430_merge(device, reg, address, length, data, indirect));
+                    x430_to_value(reg, x430_merge(m, reg, address, length, data, indirect));
 
                 result = x430_check_write(device, reg, value, options);
             }
@@ -717,31 +992,36 @@ uint8_t x430_device_write(struct x430_device* device, uint16_t address, uint16_t
     if ((result == DXL2_ERR_NONE) && ((options & X430_WRITE_VALIDATE_ONLY) == 0U))
     {
         /* Pass 2: hooks and storage, in address order. */
-        for (uint16_t index = 0U; (index < model->register_count) && (result == DXL2_ERR_NONE);
-             index++)
+        for (uint16_t index = 0U; index < model->register_count; index++)
         {
-            if ((touched[index / 8U] & (uint8_t) (1U << (index % 8U))) != 0U)
+            if ((result == DXL2_ERR_NONE) && x430_is_touched(touched, index))
             {
                 const struct x430_reg* reg = &model->registers[index];
-                const uint32_t raw = x430_merge(device, reg, address, length, data, indirect);
-                const uint32_t previous = x430_raw_get(device->table, reg->address, reg->size);
+                const uint32_t raw = x430_merge(m, reg, address, length, data, indirect);
+                const uint32_t previous = x430_raw_get(m->table, reg->address, reg->size);
 
                 if ((hooks != NULL) && (hooks->write != NULL))
                 {
                     result = hooks->write(device, reg->address, reg->size, x430_to_value(reg, raw),
-                                          device->config.user_data);
+                                          m->config.user_data);
                 }
                 if (result == DXL2_ERR_NONE)
                 {
-                    x430_raw_put(device->table, reg->address, reg->size, raw);
-                    eeprom_written = eeprom_written || ((reg->flags & X430_REG_EEPROM) != 0U);
-                    goal_written = goal_written || ((reg->flags & X430_REG_GOAL) != 0U);
+                    x430_raw_put(m->table, reg->address, reg->size, raw);
+                    if ((reg->flags & X430_REG_EEPROM) != 0U)
+                    {
+                        eeprom_written = true;
+                    }
+                    if ((reg->flags & X430_REG_GOAL) != 0U)
+                    {
+                        goal_written = true;
+                    }
                     if ((reg->address == X430_ADDR_BAUD_RATE) && (raw != previous))
                     {
-                        device->baud_changed = true;
+                        m->baud_changed = true;
                     }
-                    if ((reg->address == X430_ADDR_TORQUE_ENABLE) && (raw != 0U)
-                        && (previous == 0U))
+                    if ((reg->address == X430_ADDR_TORQUE_ENABLE) && (raw != 0U) &&
+                        (previous == 0U))
                     {
                         x430_sync_goal(device);
                     }
@@ -750,19 +1030,22 @@ uint8_t x430_device_write(struct x430_device* device, uint16_t address, uint16_t
         }
         if (indirect)
         {
-            x430_store_raw_bytes(device, address, length, data);
+            x430_store_raw_bytes(m, address, length, data);
         }
 
         if (eeprom_written)
         {
             const uint8_t stored = x430_nvm_store(device, X430_NVM_EEPROM, X430_RAM_START);
 
-            result = (result == DXL2_ERR_NONE) ? stored : result;
+            if (result == DXL2_ERR_NONE)
+            {
+                result = stored;
+            }
         }
 
         /* Drive Mode bit 3: a goal value written with torque off enables the torque. */
-        if (goal_written && (result == DXL2_ERR_NONE) && !x430_torque_on(device)
-            && ((device->table[X430_ADDR_DRIVE_MODE] & X430_DRIVE_MODE_TORQUE_ON_BY_GOAL) != 0U))
+        if (goal_written && (result == DXL2_ERR_NONE) && !x430_torque_on(m) &&
+            ((m->table[X430_ADDR_DRIVE_MODE] & X430_DRIVE_MODE_TORQUE_ON_BY_GOAL) != 0U))
         {
             result = x430_enable_torque(device, false);
         }
@@ -770,187 +1053,205 @@ uint8_t x430_device_write(struct x430_device* device, uint16_t address, uint16_t
     return result;
 }
 
-uint8_t x430_device_reg_write(struct x430_device* device, uint16_t address, uint16_t length,
-                              const uint8_t* data, uint8_t options)
+int x430_device_write(struct x430_device* device, uint16_t address, uint16_t length,
+                      const uint8_t* data, uint8_t options, uint8_t* error)
 {
-    uint8_t result = DXL2_ERR_NONE;
+    int result = x430_check2(device, data, error);
 
-    if (length > X430_REG_WRITE_SIZE)
+    if (result == X430_OK)
     {
-        result = DXL2_ERR_DATA_LENGTH;
-    }
-    else
-    {
-        result = x430_device_write(device, address, length, data,
-                                   (uint8_t) (options | X430_WRITE_VALIDATE_ONLY));
-    }
-    if (result == DXL2_ERR_NONE)
-    {
-        (void) memcpy(device->reg_data, data, length);
-        device->reg_address = address;
-        device->reg_length = length;
-        device->table[X430_ADDR_REGISTERED_INSTRUCTION] = 1U;
+        *error = x430_write(device, address, length, data, options);
     }
     return result;
 }
 
-uint8_t x430_device_action(struct x430_device* device)
+int x430_device_reg_write(struct x430_device* device, uint16_t address, uint16_t length,
+                          const uint8_t* data, uint8_t options, uint8_t* error)
 {
-    uint8_t result = DXL2_ERR_INSTRUCTION;
+    int result = x430_check2(device, data, error);
 
-    if (device->reg_length != 0U)
+    if (result == X430_OK)
     {
-        const uint16_t length = device->reg_length;
+        struct x430_device_ctx* m = x430_device_ctx_of(device);
 
-        device->reg_length = 0U;
-        device->table[X430_ADDR_REGISTERED_INSTRUCTION] = 0U;
-        result = x430_device_write(device, device->reg_address, length, device->reg_data, 0U);
-    }
-    return result;
-}
-
-uint8_t x430_device_reboot(struct x430_device* device)
-{
-    x430_startup(device);
-    (void) x430_event(device, X430_EVENT_REBOOT);
-    return DXL2_ERR_NONE;
-}
-
-uint8_t x430_device_factory_reset(struct x430_device* device, uint8_t option)
-{
-    uint8_t result = DXL2_ERR_DATA_RANGE;
-
-    if ((option == X430_FACTORY_RESET_ALL) || (option == X430_FACTORY_RESET_EXCEPT_ID)
-        || (option == X430_FACTORY_RESET_EXCEPT_ID_BAUD))
-    {
-        const uint8_t id = device->table[X430_ADDR_ID];
-        const uint8_t baud = device->table[X430_ADDR_BAUD_RATE];
-
-        x430_load_factory(device, 0U, X430_RAM_START - 1U);
-        x430_load_identity(device);
-        if (option != X430_FACTORY_RESET_ALL)
+        if (length > X430_REG_WRITE_SIZE_U)
         {
-            device->table[X430_ADDR_ID] = id;
-        }
-        else if ((device->config.id != 0U)
-                 && !x430_bus_id_taken(device->bus, device, device->config.id))
-        {
-            device->table[X430_ADDR_ID] = device->config.id;
+            *error = DXL2_ERR_DATA_LENGTH;
         }
         else
         {
-            /* Factory ID from the model table (1). */
+            *error = x430_write(device, address, length, data,
+                                (uint8_t)(options | X430_WRITE_VALIDATE_ONLY));
         }
-        if (option == X430_FACTORY_RESET_EXCEPT_ID_BAUD)
+        if (*error == DXL2_ERR_NONE)
         {
-            device->table[X430_ADDR_BAUD_RATE] = baud;
+            x430_copy(m->reg_data, data, length);
+            m->reg_address = address;
+            m->reg_length = length;
+            m->table[X430_ADDR_REGISTERED_INSTRUCTION] = 1U;
         }
-        result = x430_nvm_store(device, X430_NVM_EEPROM, X430_RAM_START);
-        x430_startup(device);
-        device->baud_changed = device->table[X430_ADDR_BAUD_RATE] != baud;
-        (void) x430_event(device, X430_EVENT_FACTORY_RESET);
     }
     return result;
 }
 
-uint8_t x430_device_clear(struct x430_device* device, uint8_t option)
+int x430_device_action(struct x430_device* device, uint8_t* error)
 {
-    uint8_t result = DXL2_ERR_DATA_RANGE;
+    int result = x430_check2(device, error, error);
 
-    if (option == X430_CLEAR_MULTI_TURN)
+    if (result == X430_OK)
     {
-        const struct x430_hooks* hooks = x430_hooks_of(device);
+        struct x430_device_ctx* m = x430_device_ctx_of(device);
 
-        if (device->table[X430_ADDR_MOVING] != 0U)
+        *error = DXL2_ERR_INSTRUCTION;
+        if (m->reg_length != 0U)
         {
-            result = DXL2_ERR_RESULT_FAIL;
+            const uint16_t length = m->reg_length;
+
+            m->reg_length = 0U;
+            m->table[X430_ADDR_REGISTERED_INSTRUCTION] = 0U;
+            *error = x430_write(device, m->reg_address, length, m->reg_data, 0U);
+        }
+    }
+    return result;
+}
+
+int x430_device_reboot(struct x430_device* device)
+{
+    int result = x430_check(device);
+
+    if (result == X430_OK)
+    {
+        x430_startup(device);
+        (void)x430_event(device, X430_EVENT_REBOOT);
+    }
+    return result;
+}
+
+int x430_device_factory_reset(struct x430_device* device, uint8_t option, uint8_t* error)
+{
+    int result = x430_check2(device, error, error);
+
+    if (result == X430_OK)
+    {
+        struct x430_device_ctx* m = x430_device_ctx_of(device);
+
+        *error = DXL2_ERR_DATA_RANGE;
+        if ((option == X430_FACTORY_RESET_ALL) || (option == X430_FACTORY_RESET_EXCEPT_ID) ||
+            (option == X430_FACTORY_RESET_EXCEPT_ID_BAUD))
+        {
+            const uint8_t id = m->table[X430_ADDR_ID];
+            const uint8_t baud = m->table[X430_ADDR_BAUD_RATE];
+
+            x430_load_factory(m, 0U, X430_RAM_START - 1U);
+            x430_load_identity(m);
+            if (option != X430_FACTORY_RESET_ALL)
+            {
+                m->table[X430_ADDR_ID] = id;
+            }
+            else if ((m->config.id != 0U) && !x430_bus_id_taken(m->bus, device, m->config.id))
+            {
+                m->table[X430_ADDR_ID] = m->config.id;
+            }
+            else
+            {
+                /* Factory ID from the model table (1). */
+            }
+            if (option == X430_FACTORY_RESET_EXCEPT_ID_BAUD)
+            {
+                m->table[X430_ADDR_BAUD_RATE] = baud;
+            }
+            *error = x430_nvm_store(device, X430_NVM_EEPROM, X430_RAM_START);
+            x430_startup(device);
+            m->baud_changed = m->table[X430_ADDR_BAUD_RATE] != baud;
+            (void)x430_event(device, X430_EVENT_FACTORY_RESET);
+        }
+    }
+    return result;
+}
+
+int x430_device_clear(struct x430_device* device, uint8_t option, uint8_t* error)
+{
+    int result = x430_check2(device, error, error);
+
+    if (result == X430_OK)
+    {
+        struct x430_device_ctx* m = x430_device_ctx_of(device);
+        const struct x430_hooks* hooks = m->config.hooks;
+
+        if (option != X430_CLEAR_MULTI_TURN)
+        {
+            *error = DXL2_ERR_DATA_RANGE;
+        }
+        else if (m->table[X430_ADDR_MOVING] != 0U)
+        {
+            *error = DXL2_ERR_RESULT_FAIL;
         }
         else if ((hooks != NULL) && (hooks->event != NULL))
         {
-            result = hooks->event(device, X430_EVENT_CLEAR_MULTI_TURN, device->config.user_data);
+            *error = hooks->event(device, X430_EVENT_CLEAR_MULTI_TURN, m->config.user_data);
         }
         else
         {
-            int32_t position = x430_get(device, X430_ADDR_PRESENT_POSITION) % X430_PULSES_PER_TURN;
+            int32_t position = x430_get(m, X430_ADDR_PRESENT_POSITION) % X430_PULSES_PER_TURN;
 
             if (position < 0)
             {
                 position += X430_PULSES_PER_TURN;
             }
-            x430_put(device, X430_ADDR_PRESENT_POSITION, position);
-            result = DXL2_ERR_NONE;
+            x430_put(m, X430_ADDR_PRESENT_POSITION, position);
+            *error = DXL2_ERR_NONE;
         }
     }
     return result;
 }
 
-uint8_t x430_device_backup(struct x430_device* device, uint8_t option)
+int x430_device_backup(struct x430_device* device, uint8_t option, uint8_t* error)
 {
-    uint8_t result = DXL2_ERR_DATA_RANGE;
+    int result = x430_check2(device, error, error);
 
 #if X430_FEATURE_BACKUP
-    if (option == X430_BACKUP_STORE)
+    if (result == X430_OK)
     {
-        result = x430_nvm_store(device, X430_NVM_BACKUP, device->model->table_size);
-        if ((result == DXL2_ERR_NONE) && (x430_hooks_of(device) != NULL)
-            && (x430_hooks_of(device)->nvm_store != NULL))
+        struct x430_device_ctx* m = x430_device_ctx_of(device);
+        const struct x430_hooks* hooks = m->config.hooks;
+
+        *error = DXL2_ERR_DATA_RANGE;
+        if (option == X430_BACKUP_STORE)
         {
-            device->table[X430_ADDR_BACKUP_READY] = 1U;
+            *error = x430_nvm_store(device, X430_NVM_BACKUP, X430_TABLE_SIZE);
+            if ((*error == DXL2_ERR_NONE) && (hooks != NULL) && (hooks->nvm_store != NULL))
+            {
+                m->table[X430_ADDR_BACKUP_READY] = 1U;
+            }
         }
-    }
-    else if (option == X430_BACKUP_RESTORE)
-    {
-        if (x430_torque_on(device))
+        else if (option == X430_BACKUP_RESTORE)
         {
-            result = DXL2_ERR_ACCESS;
-        }
-        else if (!x430_nvm_load(device, X430_NVM_BACKUP, device->model->table_size))
-        {
-            result = DXL2_ERR_RESULT_FAIL;
+            if (x430_torque_on(m))
+            {
+                *error = DXL2_ERR_ACCESS;
+            }
+            else if (!x430_nvm_load(device, X430_NVM_BACKUP, X430_TABLE_SIZE))
+            {
+                *error = DXL2_ERR_RESULT_FAIL;
+            }
+            else
+            {
+                x430_apply_backup(m, false);
+                *error = x430_nvm_store(device, X430_NVM_EEPROM, X430_RAM_START);
+                (void)x430_event(device, X430_EVENT_BACKUP_RESTORED);
+            }
         }
         else
         {
-            x430_apply_block(device, 0U, (uint16_t) (device->model->table_size - 1U), true);
-            result = x430_nvm_store(device, X430_NVM_EEPROM, X430_RAM_START);
-            (void) x430_event(device, X430_EVENT_BACKUP_RESTORED);
+            /* Unknown option: Data Range Error. */
         }
     }
-    else
-    {
-        /* Unknown option: Data Range Error. */
-    }
 #else
-    (void) device;
-    (void) option;
+    (void)option;
+    if (result == X430_OK)
+    {
+        result = X430_ERR_UNSUPPORTED;
+    }
 #endif
     return result;
 }
-
-uint8_t x430_device_alert(const struct x430_device* device)
-{
-    return (device->table[X430_ADDR_HARDWARE_ERROR_STATUS] != 0U) ? DXL2_ERR_ALERT_BIT :
-                                                                    DXL2_ERR_NONE;
-}
-
-void x430_device_watchdog(struct x430_device* device, uint32_t idle_ms)
-{
-    const uint8_t timeout = device->table[X430_ADDR_BUS_WATCHDOG];
-
-    if ((timeout != 0U) && (timeout != X430_BUS_WATCHDOG_ERROR) && x430_torque_on(device)
-        && (idle_ms > ((uint32_t) timeout * X430_BUS_WATCHDOG_UNIT_MS)))
-    {
-        device->table[X430_ADDR_BUS_WATCHDOG] = X430_BUS_WATCHDOG_ERROR;
-        (void) x430_event(device, X430_EVENT_BUS_WATCHDOG);
-    }
-}
-
-void x430_device_flush_events(struct x430_device* device)
-{
-    if (device->baud_changed)
-    {
-        device->baud_changed = false;
-        (void) x430_event(device, X430_EVENT_BAUD_RATE);
-    }
-}
-
-/** @} */

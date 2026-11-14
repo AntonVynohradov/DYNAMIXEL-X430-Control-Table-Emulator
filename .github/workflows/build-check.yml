@@ -1,0 +1,31 @@
+name: Check Building Static Library
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+      - main
+
+jobs:
+  build:
+    runs-on: ${{ vars.CI_RUNNER || 'ubuntu-24.04' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure (Debug preset)
+        run: cmake --preset "X430[Debug]" -B "build/X430[Debug]"
+
+      - name: Build
+        run: cmake --build "build/X430[Debug]"
+
+      - name: Configure (Release preset)
+        run: cmake --preset "X430[Release]" -B "build/X430[Release]"
+
+      - name: Build
+        run: cmake --build "build/X430[Release]"

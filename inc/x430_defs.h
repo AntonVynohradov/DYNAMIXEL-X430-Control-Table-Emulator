@@ -1,25 +1,41 @@
-/**
- * @file x430_defs.h
- * @brief Control Table addresses and register values common to all X430 models.
+/*******************************************************************************
+ * DYNAMIXEL-X430-Control-Table-Emulator: DYNAMIXEL X430 Control Table Emulator
  *
- * Project: sfs-dynamixel-x430 - DYNAMIXEL X430 Control Table Emulator
- * Author: Anton Vynohradov
- * Email: avynohradov@systemfromscratch.com
+ * Project:     DYNAMIXEL-X430-Control-Table-Emulator
+ * Description: Constants of the public API: status codes, write options,
+ *              events, persistent slots, Control Table addresses and values.
  *
- * @copyright Copyright (c) 2026 Anton Vynohradov
- * @license Apache License 2.0
+ * Author:      Anton Vynohradov
+ * Email:       avynohradov@systemfromscratch.com
+ *
+ * License:     Apache License 2.0
+ *
+ * Copyright (c) 2026 Anton Vynohradov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  * SPDX-License-Identifier: Apache-2.0
- */
+ ******************************************************************************/
 
 /**
  * @defgroup x430_defs Definitions
  * @ingroup x430
- * @brief Addresses, operating modes and bit fields of the X430 Control Table.
+ * @brief Status codes, options, events and the addresses, operating modes and
+ *        bit fields of the X430 Control Table.
  *
- * @details Values come from the ROBOTIS e-Manual of the X430 models
- *          (https://emanual.robotis.com/docs/en/dxl/x/). Which registers a
- *          model really has is decided by its generated table: XL/XC models
+ * @details Control Table values come from the ROBOTIS e-Manual of the X430
+ *          models (https://emanual.robotis.com/docs/en/dxl/x/). Which registers
+ *          a model really has is decided by its generated table: XL/XC models
  *          have no Current Limit (38) and Goal Current (102) and report
  *          Present Load at 126; XW models have no LED (65).
  * @{
@@ -27,6 +43,72 @@
 
 #ifndef X430_DEFS_H
 #define X430_DEFS_H
+
+/** @name Status codes (return values of every x430_* function) */
+/** @{ */
+
+/** @brief Success. */
+#define X430_OK 0
+/** @brief NULL pointer or a value outside its documented range. */
+#define X430_ERR_PARAM (-1)
+/** @brief Call not allowed in the current state (instance not initialized, device attached). */
+#define X430_ERR_STATE (-2)
+/** @brief Values that are valid alone but not together (bus full, ID already used on the bus). */
+#define X430_ERR_CONFIG (-3)
+/** @brief The byte writer of the bus (x430_bus_config::write) returned an error. */
+#define X430_ERR_HAL (-4)
+/** @brief The function belongs to a feature that is not compiled in (X430_FEATURE_*). */
+#define X430_ERR_UNSUPPORTED (-5)
+
+/** @} */
+
+/** @name Options of x430_device_write() and x430_device_reg_write() */
+/** @{ */
+
+/** @brief Packet addressed by the Secondary ID: the EEPROM area is locked. */
+#define X430_WRITE_SECONDARY 0x01U
+/** @brief Validate only: change nothing and call no hook. */
+#define X430_WRITE_VALIDATE_ONLY 0x02U
+
+/** @} */
+
+/** @name Events and persistent storage */
+/** @{ */
+
+/** @brief Notifications from a device to the application (x430_hooks::event). */
+enum x430_event
+{
+    /** REBOOT executed: RAM area reset, hardware errors cleared. Reset the motor state. */
+    X430_EVENT_REBOOT = 0,
+    /** FACTORY_RESET executed: EEPROM back to factory values (then like REBOOT). */
+    X430_EVENT_FACTORY_RESET,
+    /**
+     * CLEAR (multi-turn) requested while the device is not moving. Return
+     * DXL2_ERR_NONE after bringing Present Position into one turn, or an error.
+     * Without an event hook the library wraps Present Position itself.
+     */
+    X430_EVENT_CLEAR_MULTI_TURN,
+    /** Bus Watchdog expired: stop the actuator (Bus Watchdog now reads -1). */
+    X430_EVENT_BUS_WATCHDOG,
+    /** Baud Rate (8) changed; delivered after the status packet was sent. */
+    X430_EVENT_BAUD_RATE,
+    /** A hardware error listed in Shutdown (63) switched the torque off. */
+    X430_EVENT_TORQUE_SHUTDOWN,
+    /** BACKUP restore copied the backup into the Control Table. */
+    X430_EVENT_BACKUP_RESTORED
+};
+
+/** @brief Persistent storage slots (x430_hooks::nvm_load, x430_hooks::nvm_store). */
+enum x430_nvm_slot
+{
+    X430_NVM_EEPROM = 0, /**< EEPROM area, ::X430_NVM_EEPROM_SIZE bytes. */
+    X430_NVM_BACKUP = 1  /**< Control Table backup, ::X430_NVM_BACKUP_SIZE bytes. */
+};
+
+/** @brief Size of the persistent block header: magic, model, format, slot, payload size. */
+#define X430_NVM_HEADER_SIZE 10U
+
+/** @} */
 
 /** @name Control Table: EEPROM area */
 /** @{ */

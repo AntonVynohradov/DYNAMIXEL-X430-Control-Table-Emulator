@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use DYNAMIXEL-X430-Control-Table-Emulator in your work, please cite it as below."
+type: software
+title: "DYNAMIXEL-X430-Control-Table-Emulator"
+abstract: >-
+  Device-side emulation of ROBOTIS DYNAMIXEL X430 actuators over Protocol 2.0 in portable
+  C11: the Control Tables of all 17 X430 models and the rules of the real devices, so that
+  firmware driving any motor appears to DynamixelSDK, DYNAMIXEL Wizard and ROS 2 as a
+  genuine X430. No heap, no RTOS, MISRA C:2012, 100 % test coverage.
+authors:
+  - family-names: Vynohradov
+    given-names: Anton
+    orcid: "https://orcid.org/0009-0005-6965-0911"
+    affiliation: SystemFromScratch
+    website: "https://systemfromscratch.com"
+repository-code: "https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator"
+url: "https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/"
+license: Apache-2.0
+keywords:
+  - embedded systems
+  - C11
+  - MISRA C
+  - DYNAMIXEL
+  - Protocol 2.0
+  - robotics
+  - servo emulation

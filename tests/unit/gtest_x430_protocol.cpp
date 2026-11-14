@@ -54,7 +54,7 @@ TEST_F(X430Test, ReadWholeTableInChunks)
 {
     for (uint16_t address = 0; address < X430_TABLE_SIZE; address += 200)
     {
-        const uint16_t length = (uint16_t) std::min<int>(200, X430_TABLE_SIZE - address);
+        const uint16_t length = (uint16_t)std::min<int>(200, X430_TABLE_SIZE - address);
         auto status = read(1, address, length);
         EXPECT_EQ(status.error, 0);
         EXPECT_EQ(status.data.size(), length);
@@ -75,7 +75,7 @@ TEST_F(X430Test, ReadErrors)
 TEST_F(X430Test, ReadHookSeesRequestedRange)
 {
     env.reads.clear();
-    (void) read(1, X430_ADDR_PRESENT_POSITION, 4);
+    (void)read(1, X430_ADDR_PRESENT_POSITION, 4);
     ASSERT_EQ(env.reads.size(), 1U);
     EXPECT_EQ(env.reads[0].first, X430_ADDR_PRESENT_POSITION);
     EXPECT_EQ(env.reads[0].second, 4);
@@ -129,7 +129,7 @@ TEST_F(X430Test, WriteRangeChecks)
 
 TEST_F(X430Test, SymmetricLimitFollowsLimitRegister)
 {
-    const int32_t limit = x430_device_get(&dev[0], X430_ADDR_VELOCITY_LIMIT);
+    const int32_t limit = reg(&dev[0], X430_ADDR_VELOCITY_LIMIT);
     EXPECT_EQ(write32(1, X430_ADDR_GOAL_VELOCITY, limit + 1), DXL2_ERR_DATA_RANGE);
     EXPECT_EQ(write32(1, X430_ADDR_GOAL_VELOCITY, -limit), 0);
     EXPECT_EQ(write32(1, X430_ADDR_VELOCITY_LIMIT, 50), 0);
@@ -163,7 +163,7 @@ TEST_F(X430Test, MultiRegisterWriteIsValidatedBeforeAnythingIsStored)
     /* Profile Acceleration (108) ok, Profile Velocity (112) out of range. */
     auto data = cat(le32(10), le32(40000));
     EXPECT_EQ(write(1, X430_ADDR_PROFILE_ACCELERATION, data), DXL2_ERR_DATA_RANGE);
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_ACCELERATION), 0);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_ACCELERATION), 0);
     data = cat(le32(10), le32(20));
     env.writes.clear();
     EXPECT_EQ(write(1, X430_ADDR_PROFILE_ACCELERATION, data), 0);
@@ -176,7 +176,7 @@ TEST_F(X430Test, PartialRegisterWriteMergesBytes)
 {
     EXPECT_EQ(write32(1, X430_ADDR_PROFILE_VELOCITY, 0x0102), 0);
     EXPECT_EQ(write8(1, X430_ADDR_PROFILE_VELOCITY + 1, 0x03), 0);
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 0x0302);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 0x0302);
 }
 
 TEST_F(X430Test, ReservedAddressesReadZeroAndIgnoreWrites)
@@ -191,7 +191,7 @@ TEST_F(X430Test, WriteHookCanRefuse)
     env.refuse_address = X430_ADDR_TORQUE_ENABLE;
     env.refuse_address_error = DXL2_ERR_RESULT_FAIL;
     EXPECT_EQ(write8(1, X430_ADDR_TORQUE_ENABLE, 1), DXL2_ERR_RESULT_FAIL);
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_TORQUE_ENABLE), 0);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_TORQUE_ENABLE), 0);
 }
 
 TEST_F(X430Test, IdChangeAnswersWithOldIdAndChecksUniqueness)
@@ -231,11 +231,11 @@ TEST_F(X430Test, StatusReturnLevel)
 TEST_F(X430Test, ReturnDelayTimeUsesPortDelay)
 {
     env.delay_total = 0;
-    (void) transact(1, DXL2_INST_PING, {});
+    (void)transact(1, DXL2_INST_PING, {});
     EXPECT_EQ(env.delay_total, 250U * 2U); /* default 250 x 2 us */
     EXPECT_EQ(write8(1, X430_ADDR_RETURN_DELAY_TIME, 0), 0);
     env.delay_total = 0;
-    (void) transact(1, DXL2_INST_PING, {});
+    (void)transact(1, DXL2_INST_PING, {});
     EXPECT_EQ(env.delay_total, 0U);
 }
 
@@ -253,8 +253,8 @@ TEST_F(X430Test, BroadcastWriteReachesAllWithoutStatus)
     add_device(1, 2U);
     send(DXL2_BROADCAST_ID, DXL2_INST_WRITE, cat(le16(X430_ADDR_PROFILE_VELOCITY), le32(77)));
     EXPECT_TRUE(take_status(env).empty());
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 77);
-    EXPECT_EQ(x430_device_get(&dev[1], X430_ADDR_PROFILE_VELOCITY), 77);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 77);
+    EXPECT_EQ(reg(&dev[1], X430_ADDR_PROFILE_VELOCITY), 77);
     EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_READ, cat(le16(0), le16(2))).empty());
     EXPECT_TRUE(transact(DXL2_BROADCAST_ID, 0x7F, {}).empty());
 }
@@ -266,20 +266,20 @@ TEST_F(X430Test, SecondaryIdActsSilentlyAndCannotWriteEeprom)
     EXPECT_EQ(write8(2, X430_ADDR_SECONDARY_ID, 20), 0);
     send(20, DXL2_INST_WRITE, cat(le16(X430_ADDR_PROFILE_VELOCITY), le32(9)));
     EXPECT_TRUE(take_status(env).empty());
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 9);
-    EXPECT_EQ(x430_device_get(&dev[1], X430_ADDR_PROFILE_VELOCITY), 9);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 9);
+    EXPECT_EQ(reg(&dev[1], X430_ADDR_PROFILE_VELOCITY), 9);
     send(20, DXL2_INST_WRITE, cat(le16(X430_ADDR_RETURN_DELAY_TIME), {3}));
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_RETURN_DELAY_TIME), 250);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_RETURN_DELAY_TIME), 250);
     /* Primary ID wins: ID 2 answers, ID 1 (secondary 2) acts silently. */
     EXPECT_EQ(write8(1, X430_ADDR_SECONDARY_ID, 2), 0);
     auto status = transact(2, DXL2_INST_WRITE, cat(le16(X430_ADDR_PROFILE_VELOCITY), le32(5)));
     ASSERT_EQ(status.size(), 1U);
     EXPECT_EQ(status[0].id, 2);
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 5);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 5);
     /* 253..255 disable the Secondary ID. */
     EXPECT_EQ(write8(1, X430_ADDR_SECONDARY_ID, 253), 0);
     send(253, DXL2_INST_WRITE, cat(le16(X430_ADDR_PROFILE_VELOCITY), le32(1)));
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_PROFILE_VELOCITY), 5);
+    EXPECT_EQ(reg(&dev[0], X430_ADDR_PROFILE_VELOCITY), 5);
 }
 
 TEST_F(X430Test, ExternalLinkEntryPoint)
@@ -288,10 +288,13 @@ TEST_F(X430Test, ExternalLinkEntryPoint)
     packet.id = 1;
     packet.instruction = DXL2_INST_PING;
     packet.parameter_length = 0;
-    x430_bus_handle_packet(&packet, &bus);
+    EXPECT_EQ(x430_bus_handle_packet(&bus, &packet), X430_OK);
     EXPECT_EQ(take_status(env).size(), 1U);
-    x430_bus_handle_packet(nullptr, &bus);
-    x430_bus_handle_packet(&packet, nullptr);
+    EXPECT_EQ(x430_bus_handle_packet(&bus, nullptr), X430_ERR_PARAM);
+    EXPECT_EQ(x430_bus_handle_packet(nullptr, &packet), X430_ERR_PARAM);
+    EXPECT_TRUE(take_status(env).empty());
+    packet.instruction = DXL2_INST_STATUS; /* status packets are ignored */
+    EXPECT_EQ(x430_bus_handle_packet(&bus, &packet), X430_OK);
     EXPECT_TRUE(take_status(env).empty());
 }
 
@@ -312,7 +315,7 @@ TEST_F(X430Test, NoLedOnThisModel)
 #if X430_MODEL_HAS_CURRENT
 TEST_F(X430Test, GoalCurrentWithinCurrentLimit)
 {
-    const int32_t limit = x430_device_get(&dev[0], X430_ADDR_CURRENT_LIMIT);
+    const int32_t limit = reg(&dev[0], X430_ADDR_CURRENT_LIMIT);
     EXPECT_GT(limit, 0);
     EXPECT_EQ(write16(1, X430_ADDR_GOAL_CURRENT, -limit), 0);
     EXPECT_EQ(write16(1, X430_ADDR_GOAL_CURRENT, limit + 1), DXL2_ERR_DATA_RANGE);
@@ -321,7 +324,8 @@ TEST_F(X430Test, GoalCurrentWithinCurrentLimit)
 TEST_F(X430Test, NoCurrentRegistersOnThisModel)
 {
     EXPECT_EQ(write16(1, X430_ADDR_CURRENT_LIMIT, 10), 0); /* reserved: ignored */
-    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_CURRENT_LIMIT), 0);
+    int32_t value = 0;
+    EXPECT_EQ(x430_device_get(&dev[0], X430_ADDR_CURRENT_LIMIT, &value), X430_ERR_PARAM);
     EXPECT_EQ(write16(1, X430_ADDR_PRESENT_LOAD, 1), DXL2_ERR_ACCESS);
 }
 #endif

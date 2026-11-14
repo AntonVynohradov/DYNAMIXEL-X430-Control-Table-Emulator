@@ -1,7 +1,7 @@
 ################################################################################
-# sfs-dynamixel-x430: DYNAMIXEL X430 device emulator
+# DYNAMIXEL-X430-Control-Table-Emulator: DYNAMIXEL X430 Control Table Emulator
 #
-# Project:     sfs-dynamixel-x430 - DYNAMIXEL X430 Control Table Emulator
+# Project:     DYNAMIXEL-X430-Control-Table-Emulator
 # Description: Top-level CMake file: compiler settings, library, tests,
 #              examples and static analysis targets.
 #
@@ -11,9 +11,8 @@
 # Copyright:   (c) 2026 Anton Vynohradov
 #
 # References:
-#   - DYNAMIXEL Protocol 2.0: https://docs.robotis.com/docs/dxl/protocol/protocol2/
-#   - DYNAMIXEL X series:     https://docs.robotis.com/docs/dxl/model_reference/x_series/
-#   - DXL2-C:                 https://github.com/AntonVynohradov/DXL2-C
+#   - MISRA C:2012 Guidelines for the use of the C language in critical systems
+#   - CMake Documentation: https://cmake.org/documentation/
 #
 # Last Updated: October 2026
 # SPDX-License-Identifier: Apache-2.0
@@ -26,10 +25,8 @@
 
 cmake_minimum_required(VERSION 3.20)
 
-list(APPEND CMAKE_MODULE_PATH
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake
-)
+# cmake/ is not put on CMAKE_MODULE_PATH: DXL2-C includes its own version.cmake by
+# name, so the modules of this library are included by absolute path.
 
 # ==============================================================================
 # PROJECT CONFIGURATION
@@ -38,7 +35,7 @@ list(APPEND CMAKE_MODULE_PATH
 project(X430
     DESCRIPTION "DYNAMIXEL X430 Control Table Emulator"
     LANGUAGES C
-)
+    )
 
 if(CMAKE_HOST_WIN32)
     set(CMAKE_COLOR_MAKEFILE OFF)
@@ -53,6 +50,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
+# Compiler warning flags
 set(CMAKE_C_FLAGS_DEBUG "-Wall -Wextra -Wpedantic -Wconversion -g")
 set(CMAKE_C_FLAGS_RELEASE "-Wall -Wextra -Wpedantic -Wconversion -O2 -DNDEBUG")
 
@@ -60,27 +58,27 @@ set(CMAKE_C_FLAGS_RELEASE "-Wall -Wextra -Wpedantic -Wconversion -O2 -DNDEBUG")
 # LIBRARY/EXECUTABLE TARGETS
 # ==============================================================================
 
-option(X430_UNIT_TESTS "Enable X430 unit tests (GoogleTest)" OFF)
-option(X430_EXAMPLES "Build the host examples (serial/pty simulator)" OFF)
-
-if(X430_UNIT_TESTS AND CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
-    # Coverage counters in the library objects, read by the 'coverage' target
-    set(X430_COMPILE_OPTIONS -O0 -g --coverage)
-endif()
+# Unit tests and the host example are optional and enabled with CMake options
+option(UNIT_TESTS "Build the unit tests (GoogleTest) of the libraries" OFF)
+option(X430_EXAMPLES "Build the host example (serial/pty simulator, POSIX)" OFF)
 
 # The static library target (and DXL2-C) is defined in x430.cmake
-include(x430)
-
-if(X430_UNIT_TESTS AND CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
-    target_link_options(x430 PUBLIC --coverage)
-endif()
+include(${CMAKE_CURRENT_SOURCE_DIR}/x430.cmake)
 
 # ==============================================================================
 # UNIT TESTS
 # ==============================================================================
 
-if(X430_UNIT_TESTS)
-    include(x430_unit_tests)
+if(UNIT_TESTS)
+    # GTest integration, test discovery and the coverage target
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/unit_tests.cmake)
+
+    # Model data against the ROBOTIS e-Manual tables (Python, standard library only)
+    add_test(NAME x430_models
+        COMMAND ${Python3_EXECUTABLE} -m unittest discover -s ${CMAKE_SOURCE_DIR}/tests/models -v
+    )
+    set_tests_properties(x430_models PROPERTIES LABELS "models"
+        ENVIRONMENT "X430_ROOT=${CMAKE_SOURCE_DIR}")
 endif()
 
 # ==============================================================================
@@ -92,38 +90,74 @@ if(X430_EXAMPLES)
     add_subdirectory(examples)
 endif()
 
+
+# ==============================================================================
+# HEADERS OF THE ANALYSIS AND OF THE DOCUMENTATION SNIPPETS
+# ==============================================================================
+
+# The sources include the generated model header and DXL2-C: one folder with copies
+# of them is the configuration folder (CONFIG_DIR) of the MISRA analysis and an
+# include folder of tools/docs/check_snippets.py.
+set(X430_MISRA_INCLUDE_DIR ${CMAKE_BINARY_DIR}/x430/analysis-include)
+file(GLOB X430_DXL2_HEADERS ${dxl2_SOURCE_DIR}/dxl2.h ${dxl2_SOURCE_DIR}/inc/*.h)
+file(COPY ${X430_GENERATED_DIR}/x430_model_info.h ${X430_DXL2_HEADERS}
+     DESTINATION ${X430_MISRA_INCLUDE_DIR})
+
 # ==============================================================================
 # STATIC ANALYSIS TARGETS
 # ==============================================================================
 
-# Cppcheck: all checks, report in <build>/cppcheck.txt
+# Cppcheck static analysis target
+# Runs Cppcheck with all checks enabled and writes the result to cppcheck.txt in
+# the build directory and to the console. Paths listed in 'cppcheck-excludes.txt'
+# are excluded. The target exists only if Cppcheck is found on the system.
+
 find_program(CPPCHECK_EXECUTABLE cppcheck)
 if(CPPCHECK_EXECUTABLE)
+
+
+    set(CPPCHECK_EXCLUDES)
+    if(EXISTS "${CMAKE_SOURCE_DIR}/cppcheck-excludes.txt")
+        file(STRINGS "${CMAKE_SOURCE_DIR}/cppcheck-excludes.txt" CPPCHECK_EXCLUDE_PATHS)
+        foreach(CPPCHECK_EXCLUDE_PATH IN LISTS CPPCHECK_EXCLUDE_PATHS)
+            # Absolute paths, because Cppcheck matches them against the absolute source paths below
+            if(NOT CPPCHECK_EXCLUDE_PATH STREQUAL "" AND NOT CPPCHECK_EXCLUDE_PATH MATCHES "^#")
+                list(APPEND CPPCHECK_EXCLUDES -i "${CMAKE_SOURCE_DIR}/${CPPCHECK_EXCLUDE_PATH}")
+            endif()
+        endforeach()
+    endif()
+
     add_custom_target(cppcheck-analyze
         COMMAND ${CPPCHECK_EXECUTABLE}
                 --enable=all
                 --check-level=exhaustive
                 --inconclusive
+                --verbose
                 --quiet
                 --std=c11
                 --force
                 --template=gcc
                 --suppress=missingIncludeSystem
-                --suppress=unusedFunction
+                --suppress=unusedFunction   # public library API is called by integrators, not by the library
+                --suppress=checkersReport
                 -I ${CMAKE_SOURCE_DIR}
                 -I ${CMAKE_SOURCE_DIR}/inc
-                -I ${X430_GENERATED_DIR}
-                -I ${dxl2_SOURCE_DIR}/inc
-                -I ${dxl2_SOURCE_DIR}
+                -I ${X430_MISRA_INCLUDE_DIR}
+                ${CPPCHECK_EXCLUDES}
                 --output-file=${CMAKE_BINARY_DIR}/cppcheck.txt
-                ${CMAKE_SOURCE_DIR}/src
+                ${CMAKE_SOURCE_DIR}
         COMMAND ${CMAKE_COMMAND} -E cat ${CMAKE_BINARY_DIR}/cppcheck.txt
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Running Cppcheck static analysis..."
         VERBATIM
     )
 
-    # MISRA C:2012 addon, same mechanism as DXL2-C (cmake/x430_misra_check.cmake)
+    # Cppcheck MISRA C:2012 addon target
+    # Runs the addon directly on Cppcheck dump files (see cmake/misra_check.cmake),
+    # because not every Cppcheck package can locate and launch its addons. Rule
+    # texts are licensed by MISRA and are not shipped with Cppcheck; pass them with
+    # -DX430_MISRA_RULE_TEXTS=<file> to get readable messages instead of rule numbers.
+
     set(X430_MISRA_RULE_TEXTS "" CACHE FILEPATH "Optional MISRA C:2012 rule texts file for Cppcheck")
     option(X430_MISRA_FAIL_ON_VIOLATION "Make 'misra-analyze' fail when the report has violations" ON)
 
@@ -133,10 +167,9 @@ if(CPPCHECK_EXECUTABLE)
               ${CPPCHECK_BIN_DIR}/../share/cppcheck/addons
               /usr/share/cppcheck/addons
               /usr/local/share/cppcheck/addons
-              /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}/cppcheck/addons
+              /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}/cppcheck/addons   # Debian/Ubuntu packages
         NO_DEFAULT_PATH)
-
-    if(X430_MISRA_SCRIPT)
+    if(X430_MISRA_SCRIPT AND Python3_Interpreter_FOUND)
         add_custom_target(misra-analyze
             COMMAND ${CMAKE_COMMAND}
                     -DCPPCHECK=${CPPCHECK_EXECUTABLE}
@@ -145,16 +178,58 @@ if(CPPCHECK_EXECUTABLE)
                     -DRULE_TEXTS=${X430_MISRA_RULE_TEXTS}
                     -DFAIL_ON_VIOLATION=${X430_MISRA_FAIL_ON_VIOLATION}
                     -DSOURCE_DIR=${CMAKE_SOURCE_DIR}
-                    "-DINCLUDE_DIRS=${CMAKE_SOURCE_DIR}/inc;${CMAKE_SOURCE_DIR};${X430_GENERATED_DIR};${X430_AUTOCONF_DIR};${dxl2_SOURCE_DIR}/inc;${dxl2_SOURCE_DIR}"
+                    -DCONFIG_DIR=${X430_MISRA_INCLUDE_DIR}
                     -DOUTPUT=${CMAKE_BINARY_DIR}/misra.txt
-                    -P ${CMAKE_SOURCE_DIR}/cmake/x430_misra_check.cmake
+                    -P ${CMAKE_SOURCE_DIR}/cmake/misra_check.cmake
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
             COMMENT "Running Cppcheck MISRA C:2012 analysis..."
             VERBATIM
         )
     else()
-        message(STATUS "Cppcheck misra.py addon not found. Target 'misra-analyze' will be unavailable.")
+        message(STATUS "Cppcheck misra.py addon or Python 3 not found. Target 'misra-analyze' will be unavailable.")
     endif()
 else()
     message(STATUS "Cppcheck not found. Static analysis targets 'cppcheck-analyze' and 'misra-analyze' will be unavailable.")
+endif()
+
+# CodeQL analysis target
+# Creates a CodeQL database in the build directory, runs the cpp-queries suite
+# and writes a SARIF report (codeql-report.sarif). The target exists only if the
+# CodeQL CLI is found on the system.
+
+find_program(CODEQL_EXECUTABLE codeql)
+if(CODEQL_EXECUTABLE)
+
+    # Note: This target intentionally builds only the core library; the tests are
+    # excluded to keep the analysis focused. Extend if needed.
+
+    if(WIN32)
+        set(CODEQL_BUILD_SCRIPT "${CMAKE_BINARY_DIR}/codeql_build.cmd")
+        file(WRITE "${CODEQL_BUILD_SCRIPT}" "\"${CMAKE_COMMAND}\" --build \"${CMAKE_BINARY_DIR}\" --target x430\r\n")
+        set(CODEQL_BUILD_COMMAND "${CODEQL_BUILD_SCRIPT}")
+    else()
+        set(CODEQL_BUILD_COMMAND "${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target x430")
+    endif()
+
+    add_custom_target(codeql-analyze
+        COMMAND ${CODEQL_EXECUTABLE} database create
+            ${CMAKE_BINARY_DIR}/codeql-db
+            --language=c
+            --overwrite
+            --source-root=${CMAKE_SOURCE_DIR}
+            --command "${CODEQL_BUILD_COMMAND}"
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMENT "Creating CodeQL database..."
+
+        COMMAND ${CODEQL_EXECUTABLE} database analyze
+                ${CMAKE_BINARY_DIR}/codeql-db
+                codeql/cpp-queries
+                --format=sarif-latest
+                --output=${CMAKE_BINARY_DIR}/codeql-report.sarif
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Running CodeQL analysis..."
+        VERBATIM
+    )
+else()
+    message(STATUS "CodeQL not found. Static analysis target 'codeql-analyze' will be unavailable.")
 endif()
