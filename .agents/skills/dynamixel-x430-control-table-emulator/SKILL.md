@@ -10,8 +10,8 @@ description: "Use when working on DYNAMIXEL-X430-Control-Table-Emulator (x430), 
 A portable C11 static library that answers on a DYNAMIXEL bus like a ROBOTIS X430
 actuator: it decodes Protocol 2.0 instruction packets (DXL2-C 1.0.0), keeps the Control
 Table of the model selected at build time (generated from `models/*.yaml`), enforces the
-rules of the real device and calls application hooks for the motor. Version 1.0.0 is the
-first release; the public API in `x430.h` and `inc/` is stable within major version 1.
+rules of the real device and calls application hooks for the motor. Version 1.1.0 lets several
+buses share one wire; the public API in `x430.h` and `inc/` is stable within major version 1.
 
 Not in the library: UART and flash drivers, motion and current control, threads and
 interrupts, Protocol 1.0. They belong to the firmware that uses it (verified downstream in

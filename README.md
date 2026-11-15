@@ -46,7 +46,7 @@ a READ of the whole Control Table, as DYNAMIXEL Wizard does it)
 | `.data` + `.bss` | 0 B |
 | Worst-case stack, `x430_bus_receive()`, `-Os` | 424 B (any packet size) |
 | MISRA C:2012 (Cppcheck 2.13) | 0 violations, 2 documented deviations |
-| Unit tests | 131 GoogleTest cases, 100 % line and branch coverage of `src/` (100 cases and 100 % without the optional features) |
+| Unit tests | 137 GoogleTest cases, 100 % line and branch coverage of `src/` (104 cases and 100 % without the optional features) |
 | End to end | 52 checks with the official ROBOTIS DynamixelSDK pass |
 
 The simulator follows the X430 profiles: a one-turn move with Profile Velocity 100 and
@@ -54,9 +54,9 @@ Profile Acceleration 20 takes 2,920 ms, the closed-form trapezoid 2,940.3 ms (�
 
 ## Project status
 
-**Version 1.0.0** — the first release; the public API (`x430.h`, `inc/`) is stable within
-major version 1. Verified on hardware in a stepper joint firmware (STM32G431, Zephyr) with
-DYNAMIXEL Wizard 2.0.
+**Version 1.1.0** — several emulator buses (one per MCU) share one DYNAMIXEL wire; the
+public API (`x430.h`, `inc/`) is stable within major version 1. Verified on hardware in a
+stepper joint firmware (STM32G431, Zephyr) with DYNAMIXEL Wizard 2.0.
 
 - [x] All X430 models, all Protocol 2.0 instructions a host uses
 - [x] Persistence, backup, Bus Watchdog, shutdown, Indirect Address

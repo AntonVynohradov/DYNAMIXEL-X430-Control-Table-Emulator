@@ -54,7 +54,7 @@ instructions ([points to check](integration.md#ros-2-dynamixel_hardware_interfac
 | Flash | 10,191 B with the model table, plus 850 B of DXL2-C (Cortex-M4, `-Os`, all features) |
 | Stack | 424 B worst case, `x430_bus_receive()`, with any packet size (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
 | Coding standard | MISRA C:2012, 0 Cppcheck 2.13 addon violations, [2 deviations](misra.md) |
-| Tests | 100 % line and branch coverage of `src/` in both unit test presets (131 and 100 GoogleTest cases); model data against the e-Manual; 52 checks end to end with the official DynamixelSDK |
+| Tests | 100 % line and branch coverage of `src/` in both unit test presets (137 and 104 GoogleTest cases); model data against the e-Manual; 52 checks end to end with the official DynamixelSDK |
 | Thread safety | One bus context per line, an optional lock for the live register updates; see [Threading](architecture.md#threading-and-reentrancy) |
 | License | [Apache License 2.0](LICENSE.md) |
 
