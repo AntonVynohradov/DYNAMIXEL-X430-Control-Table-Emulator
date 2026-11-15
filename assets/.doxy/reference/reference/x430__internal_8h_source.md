@@ -64,6 +64,16 @@ extern "C" {
  * TYPE DEFINITIONS
  * =============================================================================*/
 
+#define X430_TURN_NOW 0xFFU
+
+struct x430_turn
+{
+    struct x430_device* device; 
+    uint16_t address;           
+    uint16_t length;            
+    uint8_t after;              
+};
+
 struct x430_bus_ctx
 {
     struct dxl2_link link;                         
@@ -71,8 +81,12 @@ struct x430_bus_ctx
     struct x430_device* devices[X430_MAX_DEVICES]; 
     uint32_t ready;                                
     uint32_t last_rx_ms;                           
+    uint32_t turn_ms;                              
     uint8_t device_count;                          
     bool write_failed;                             
+    uint8_t turn_count;                            
+    uint8_t turn_next;                             
+    struct x430_turn turns[X430_MAX_DEVICES];      
     uint8_t tx[DXL2_MAX_PACKET_SIZE];              
 };
 

@@ -804,6 +804,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Group instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#several-buses-on-one-wire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Several buses on one wire
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1500,6 +1517,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Group instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#several-buses-on-one-wire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Several buses on one wire
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1841,19 +1875,44 @@ Position into 0..4095.</p>
 <h2 id="group-instructions">Group instructions<a class="headerlink" href="#group-instructions" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>SYNC_READ / BULK_READ:</strong> one status packet per hosted device, in the order of the
-  request; IDs that are not hosted are skipped.</li>
+  request, taking turns like X series actuators on one wire (below).</li>
 <li><strong>FAST_SYNC_READ / FAST_BULK_READ:</strong> one status packet with ID 0xFE. Per device it
   carries <code>[error, ID, data, CRC]</code>; each CRC covers the packet from the header up to that
   point, and the last one is the packet CRC. The packet is not byte-stuffed, as
-  DynamixelSDK expects.</li>
+  DynamixelSDK expects. If the request lists an ID that this bus does not host, the bus
+  stays silent (below).</li>
 </ul>
 <p><img alt="Fast Sync Read status packet" src="../assets/images/fast-read.svg" /></p>
 <ul>
 <li><strong>SYNC_WRITE / BULK_WRITE:</strong> applied to the hosted IDs without status; a malformed
   BULK_WRITE is ignored as a whole.</li>
 </ul>
-<p>A Fast read answers only for the IDs of this bus: keep all IDs of one ROS 2 hardware
-component on the same emulator bus.</p>
+<h3 id="several-buses-on-one-wire">Several buses on one wire<a class="headerlink" href="#several-buses-on-one-wire" title="Permanent link">&para;</a></h3>
+<p>A product may put one emulator bus on each MCU and connect the MCUs to one half-duplex
+wire, together with real actuators: each bus then hosts only some of the IDs of a
+request. Every bus hears the status packets of the others (the bus decodes them; it never
+answers one).</p>
+<ul>
+<li><strong>SYNC_READ / BULK_READ take turns.</strong> The device listed first answers at once. Every
+  later hosted device answers only after the status packet of the ID listed just before
+  it: at once after a device of the same bus, else when the status of that ID has been
+  received from the wire. So the answers never overlap, as on a bus of X series
+  actuators.</li>
+<li><strong>A missing device ends the read.</strong> If the status of the ID before does not arrive
+  within <code>X430_TURN_TIMEOUT_MS</code> (default 100 ms) of the last progress of the read, or the
+  host sends its next instruction first, the remaining hosted devices of the read stay
+  silent. DynamixelSDK stops at the first ID that does not answer anyway, and a late
+  answer could collide with the next instruction. A hosted device that does not answer
+  reads (Status Return Level 0) ends the read the same way. The timeout uses the
+  millisecond clock of the port; keep it longer than one status packet at the lowest baud
+  rate in use plus the Return Delay Time.</li>
+<li><strong>A Fast read of several buses is not answered.</strong> The answer to FAST_SYNC_READ and
+  FAST_BULK_READ is one packet whose segments come from all devices, chained by a running
+  CRC; a bus cannot build the part of another one. When the request lists an ID that this
+  bus does not host, it stays silent, and the ROBOTIS ROS 2 hardware interface falls back
+  to SYNC_READ after 10 attempts. With all IDs on one bus nothing changes: keep all IDs of
+  one ROS 2 hardware component on the same emulator bus to use the Fast read.</li>
+</ul>
 <h2 id="persistent-blocks">Persistent blocks<a class="headerlink" href="#persistent-blocks" title="Permanent link">&para;</a></h2>
 <p>The library hands the application opaque blocks; their layout is fixed so that a block of
 another model or a damaged flash page is detected:</p>

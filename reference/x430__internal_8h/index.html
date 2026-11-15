@@ -1477,6 +1477,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#define-x430_turn_now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        define X430_TURN_NOW
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1528,6 +1539,10 @@
 <tr>
 <td style="text-align: right;">struct</td>
 <td style="text-align: left;"><a href="../structx430__sim__ctx/"><strong>x430_sim_ctx</strong></a> <br><em>State behind the opaque</em> <a href="../structx430__sim/"><em><strong>x430_sim</strong></em></a> <em>.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct</td>
+<td style="text-align: left;"><a href="../structx430__turn/"><strong>x430_turn</strong></a> <br><em>One hosted device of a SYNC_READ or BULK_READ that has not answered yet.</em></td>
 </tr>
 </tbody>
 </table>
@@ -1637,6 +1652,10 @@
 <tr>
 <td style="text-align: right;">define</td>
 <td style="text-align: left;"><a href="./#define-x430_ready"><strong>X430_READY</strong></a>  <code>0x58343330U</code><br><em>Value of the ready field after a successful initialization.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">define</td>
+<td style="text-align: left;"><a href="./#define-x430_turn_now"><strong>X430_TURN_NOW</strong></a>  <code>0xFFU</code><br><a href="../structx430__turn/#variable-after"><em><strong>x430_turn::after</strong></em></a> <em>of an entry that may answer at once.</em></td>
 </tr>
 </tbody>
 </table>
@@ -1821,6 +1840,12 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">#define X430_READY `0x58343330U`</span>
 </code></pre></div></p>
 <p>A zeroed or never initialized instance holds another value: every function but the *_init() functions then returns <a href="../group__x430__defs/#define-x430_err_state"><strong>X430_ERR_STATE</strong></a>. </p>
+<hr>
+
+<h3 id="define-x430_turn_now">define X430_TURN_NOW<a class="headerlink" href="#define-x430_turn_now" title="Permanent link">&para;</a></h3>
+<p><a href="../structx430__turn/#variable-after"><em><strong>x430_turn::after</strong></em></a> <em>of an entry that may answer at once.</em>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="cp">#define X430_TURN_NOW `0xFFU`</span>
+</code></pre></div></p>
 <hr>
 
 <hr />

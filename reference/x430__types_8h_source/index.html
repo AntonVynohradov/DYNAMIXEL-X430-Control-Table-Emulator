@@ -1341,7 +1341,7 @@
 <a id="__codelineno-0-149" name="__codelineno-0-149" href="#__codelineno-0-149"></a>
 <a id="__codelineno-0-150" name="__codelineno-0-150" href="#__codelineno-0-150"></a><span class="cp">#define X430_BUS_BYTES                                  \</span>
 <a id="__codelineno-0-151" name="__codelineno-0-151" href="#__codelineno-0-151"></a><span class="cp">    (X430_DXL2_LINK_BYTES + (3U * X430_POINTER_BYTES) + \</span>
-<a id="__codelineno-0-152" name="__codelineno-0-152" href="#__codelineno-0-152"></a><span class="cp">     (X430_MAX_DEVICES_U * X430_POINTER_BYTES) + 10U + DXL2_MAX_PACKET_SIZE)</span>
+<a id="__codelineno-0-152" name="__codelineno-0-152" href="#__codelineno-0-152"></a><span class="cp">     (X430_MAX_DEVICES_U * ((2U * X430_POINTER_BYTES) + 8U)) + 16U + DXL2_MAX_PACKET_SIZE)</span>
 <a id="__codelineno-0-153" name="__codelineno-0-153" href="#__codelineno-0-153"></a>
 <a id="__codelineno-0-154" name="__codelineno-0-154" href="#__codelineno-0-154"></a><span class="cp">#define X430_DEVICE_BYTES \</span>
 <a id="__codelineno-0-155" name="__codelineno-0-155" href="#__codelineno-0-155"></a><span class="cp">    ((3U * X430_POINTER_BYTES) + 17U + X430_IMAGE_SIZE + X430_REG_WRITE_SIZE_U)</span>

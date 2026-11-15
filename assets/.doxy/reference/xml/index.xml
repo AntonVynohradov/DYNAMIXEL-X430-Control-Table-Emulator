@@ -38,8 +38,12 @@
     <member refid="structx430__bus__ctx_1a9be780070949cbfcfc28e3ec6b51e5eb" kind="variable"><name>devices</name></member>
     <member refid="structx430__bus__ctx_1a3a44d57ff33972258471fb43ecd94a33" kind="variable"><name>ready</name></member>
     <member refid="structx430__bus__ctx_1a9338dca83eb34400921ad0766ede907a" kind="variable"><name>last_rx_ms</name></member>
+    <member refid="structx430__bus__ctx_1aadd1db9cbaa7d88aa36b544be0f85183" kind="variable"><name>turn_ms</name></member>
     <member refid="structx430__bus__ctx_1a3567e9f6cea6cb8b22256b66af0bc155" kind="variable"><name>device_count</name></member>
     <member refid="structx430__bus__ctx_1aba4811f98053200b9a6f434c20a3bd54" kind="variable"><name>write_failed</name></member>
+    <member refid="structx430__bus__ctx_1a54b11e829bab12a33074bd401d27daff" kind="variable"><name>turn_count</name></member>
+    <member refid="structx430__bus__ctx_1a1ca5d9cb46cab6bd5e28c49ab881489e" kind="variable"><name>turn_next</name></member>
+    <member refid="structx430__bus__ctx_1ad57a972eacf0bc0a0b422819fa973dbc" kind="variable"><name>turns</name></member>
     <member refid="structx430__bus__ctx_1a92a51a4a4fb1e85c7c47771a09b4c08f" kind="variable"><name>tx</name></member>
   </compound>
   <compound refid="structx430__device" kind="struct"><name>x430_device</name>
@@ -122,10 +126,17 @@
     <member refid="structx430__sim__ctx_1a00580b45f6c8c18a448c91041263e1c9" kind="variable"><name>config</name></member>
     <member refid="structx430__sim__ctx_1af976265a6014b06d4174cd5b8cfd6339" kind="variable"><name>ready</name></member>
   </compound>
+  <compound refid="structx430__turn" kind="struct"><name>x430_turn</name>
+    <member refid="structx430__turn_1a7aa3b81474451af205d732cc597f138e" kind="variable"><name>device</name></member>
+    <member refid="structx430__turn_1ae6de3dfb4ebede1e6890eb7fab37a07b" kind="variable"><name>address</name></member>
+    <member refid="structx430__turn_1a20179d0e08197c4793ef96832f2c2a03" kind="variable"><name>length</name></member>
+    <member refid="structx430__turn_1a0a43dc68f6a193bf2fdaf412d944ebed" kind="variable"><name>after</name></member>
+  </compound>
   <compound refid="x430__config_8h" kind="file"><name>x430_config.h</name>
     <member refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kind="define"><name>DXL2_MAX_PACKET_SIZE</name></member>
     <member refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" kind="define"><name>X430_MAX_DEVICES</name></member>
     <member refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" kind="define"><name>X430_REG_WRITE_SIZE</name></member>
+    <member refid="group__x430__config_1ga9113a25601c31edb2986778731fdc703" kind="define"><name>X430_TURN_TIMEOUT_MS</name></member>
     <member refid="group__x430__config_1ga88bd99c8234f09536b1eec34903d6383" kind="define"><name>X430_FIRMWARE_VERSION</name></member>
     <member refid="group__x430__config_1ga7f332f10f262be05132db10adf218a0e" kind="define"><name>X430_MODEL_NUMBER</name></member>
     <member refid="group__x430__config_1ga0c564a82c2c26a378004de001db17b6a" kind="define"><name>X430_BAUD_RATE_CODE_MAX</name></member>
@@ -136,6 +147,7 @@
     <member refid="group__x430__config_1gaa241cd443d233029d4364198090f9b7e" kind="define"><name>X430_MAX_DEVICES_U</name></member>
     <member refid="group__x430__config_1gae43921fed358fd872aad0a3e96ad94bb" kind="define"><name>X430_REG_WRITE_SIZE_U</name></member>
     <member refid="group__x430__config_1gaad47f5653349a7e772e6d3687a1f69e8" kind="define"><name>X430_BAUD_RATE_CODE_MAX_U</name></member>
+    <member refid="group__x430__config_1gafdc6874cf27c691394fdaac45a8c588e" kind="define"><name>X430_TURN_TIMEOUT_MS_U</name></member>
   </compound>
   <compound refid="x430__defs_8h" kind="file"><name>x430_defs.h</name>
     <member refid="group__x430__defs_1ga385bf9d37eacb4fbf2aa6ca863bebf43" kind="define"><name>X430_OK</name></member>
@@ -302,7 +314,11 @@
     <member refid="x430__bus_8c_1ae97b020de348864a8bbbe430da5ed9d7" kind="function"><name>x430_magic_ok</name></member>
     <member refid="x430__bus_8c_1a4c066b69a2f7e8ec753e2f06c8cf7701" kind="function"><name>x430_id_of</name></member>
     <member refid="x430__bus_8c_1aa13cb264c792d19542205754c9e6cbdc" kind="function"><name>x430_find</name></member>
-    <member refid="x430__bus_8c_1a4cc6db0fb27d77ec93d26e72ed9e21f6" kind="function"><name>x430_group_read</name></member>
+    <member refid="x430__bus_8c_1a7ab2a9350ed4bc1cd30fc5542d2f65bd" kind="function"><name>x430_group_read</name></member>
+    <member refid="x430__bus_8c_1aedd34e66811064b1d26d7d2ca7ef293f" kind="function"><name>x430_turn_cancel</name></member>
+    <member refid="x430__bus_8c_1a24e097c8c0545739c20d26aa017631ae" kind="function"><name>x430_turn_add</name></member>
+    <member refid="x430__bus_8c_1a52dba889d9e9ee047b1fbbfe0246559e" kind="function"><name>x430_turn_run</name></member>
+    <member refid="x430__bus_8c_1ad37c819a2a71fe2c6718b1e680bd6498" kind="function"><name>x430_turn_heard</name></member>
     <member refid="x430__bus_8c_1aef2aceaad5dc53cd138cdbce8d31b3ba" kind="function"><name>x430_factory_reset_check</name></member>
     <member refid="x430__bus_8c_1a2de49438708385fb4a559a9577d68eeb" kind="function"><name>x430_instruction</name></member>
     <member refid="x430__bus_8c_1ad20c67211195ae5ba03cfc7773e915cb" kind="function"><name>x430_execute</name></member>
@@ -399,6 +415,7 @@
   </compound>
   <compound refid="x430__internal_8h" kind="file"><name>x430_internal.h</name>
     <member refid="x430__internal_8h_1a1ffe5da009095f682c2a40a1995c2496" kind="define"><name>X430_READY</name></member>
+    <member refid="x430__internal_8h_1a2d0870077935f71e490430fd15cd7970" kind="define"><name>X430_TURN_NOW</name></member>
     <member refid="x430__internal_8h_1a93b7b04fcaeb6242000f532a6e6c55ed" kind="function"><name>x430_bus_ctx_of</name></member>
     <member refid="x430__internal_8h_1a0c32ab911028a7c828593e2b03237e92" kind="function"><name>x430_bus_ctx_of_const</name></member>
     <member refid="x430__internal_8h_1a253b2d989ef7f9e3c4b1c59fce00b12f" kind="function"><name>x430_device_ctx_of</name></member>
@@ -485,6 +502,7 @@
     <member refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kind="define"><name>DXL2_MAX_PACKET_SIZE</name></member>
     <member refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" kind="define"><name>X430_MAX_DEVICES</name></member>
     <member refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" kind="define"><name>X430_REG_WRITE_SIZE</name></member>
+    <member refid="group__x430__config_1ga9113a25601c31edb2986778731fdc703" kind="define"><name>X430_TURN_TIMEOUT_MS</name></member>
     <member refid="group__x430__config_1ga88bd99c8234f09536b1eec34903d6383" kind="define"><name>X430_FIRMWARE_VERSION</name></member>
     <member refid="group__x430__config_1ga7f332f10f262be05132db10adf218a0e" kind="define"><name>X430_MODEL_NUMBER</name></member>
     <member refid="group__x430__config_1ga0c564a82c2c26a378004de001db17b6a" kind="define"><name>X430_BAUD_RATE_CODE_MAX</name></member>
@@ -495,6 +513,7 @@
     <member refid="group__x430__config_1gaa241cd443d233029d4364198090f9b7e" kind="define"><name>X430_MAX_DEVICES_U</name></member>
     <member refid="group__x430__config_1gae43921fed358fd872aad0a3e96ad94bb" kind="define"><name>X430_REG_WRITE_SIZE_U</name></member>
     <member refid="group__x430__config_1gaad47f5653349a7e772e6d3687a1f69e8" kind="define"><name>X430_BAUD_RATE_CODE_MAX_U</name></member>
+    <member refid="group__x430__config_1gafdc6874cf27c691394fdaac45a8c588e" kind="define"><name>X430_TURN_TIMEOUT_MS_U</name></member>
   </compound>
   <compound refid="group__x430__defs" kind="group"><name>x430_defs</name>
     <member refid="group__x430__defs_1ga7d5a16437bb5db3b961b2419ebe8f413" kind="enum"><name>x430_event</name></member>

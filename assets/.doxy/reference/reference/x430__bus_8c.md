@@ -85,7 +85,7 @@
 |  void | [**x430\_execute**](#function-x430_execute) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, struct [**x430\_device**](structx430__device.md) \* device, const struct dxl2\_packet \* packet, enum x430\_target target) <br> |
 |  bool | [**x430\_factory\_reset\_check**](#function-x430_factory_reset_check) (const struct dxl2\_packet \* packet, enum x430\_target target, uint8\_t \* error) <br>_FACTORY\_RESET parameter check; true when the reset may run after the answer._  |
 |  struct [**x430\_device**](structx430__device.md) \* | [**x430\_find**](#function-x430_find) (const struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, uint8\_t id) <br>_Attached device with primary ID_ `id` _, NULL if none._ |
-|  void | [**x430\_group\_read**](#function-x430_group_read) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, uint8\_t id, uint16\_t address, uint16\_t length) <br>_Read for a group instruction; sends the status of one device._  |
+|  bool | [**x430\_group\_read**](#function-x430_group_read) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, struct [**x430\_device**](structx430__device.md) \* device, uint16\_t address, uint16\_t length) <br>_Read for a group instruction; sends the status of one device._  |
 |  void | [**x430\_handler**](#function-x430_handler) (const struct dxl2\_packet \* packet, void \* context) <br>_Packet handler given to DXL2-C._  |
 |  uint8\_t | [**x430\_id\_of**](#function-x430_id_of) (const struct [**x430\_device**](structx430__device.md) \* device) <br> |
 |  uint16\_t | [**x430\_instruction**](#function-x430_instruction) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, struct [**x430\_device**](structx430__device.md) \* device, const struct dxl2\_packet \* packet, enum x430\_target target, uint8\_t \* error, bool \* answer\_first) <br>_Executes an instruction for one device; returns the status data length._  |
@@ -97,6 +97,10 @@
 |  void | [**x430\_sync\_read**](#function-x430_sync_read) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, const struct dxl2\_packet \* packet) <br> |
 |  void | [**x430\_sync\_write**](#function-x430_sync_write) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, const struct dxl2\_packet \* packet) <br> |
 |  int | [**x430\_take\_write\_result**](#function-x430_take_write_result) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m) <br>_Status of an entry point that may have sent status packets._  |
+|  void | [**x430\_turn\_add**](#function-x430_turn_add) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, uint8\_t id, uint16\_t address, uint16\_t length, uint8\_t \* after) <br>_Adds one entry of a SYNC\_READ / BULK\_READ request in request order._  |
+|  void | [**x430\_turn\_cancel**](#function-x430_turn_cancel) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m) <br>_Ends the pending read: its remaining hosted devices stay silent._  |
+|  void | [**x430\_turn\_heard**](#function-x430_turn_heard) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, uint8\_t id) <br>_Status packet of device_ `id` _received from the bus (another bus, or an echo)._ |
+|  void | [**x430\_turn\_run**](#function-x430_turn_run) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m) <br>_Answers the pending entries whose turn has come, up to one that waits for another bus._  |
 |  void | [**x430\_unlock**](#function-x430_unlock) (const struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m) <br> |
 |  void | [**x430\_write\_tx**](#function-x430_write_tx) (struct [**x430\_bus\_ctx**](structx430__bus__ctx.md) \* m, size\_t length) <br>_Writes_ `length` _bytes of the TX buffer with the application writer; records a failure._ |
 
@@ -401,9 +405,9 @@ static struct x430_device * x430_find (
 
 _Read for a group instruction; sends the status of one device._ 
 ```C++
-static void x430_group_read (
+static bool x430_group_read (
     struct x430_bus_ctx * m,
-    uint8_t id,
+    struct x430_device * device,
     uint16_t address,
     uint16_t length
 ) 
@@ -411,6 +415,10 @@ static void x430_group_read (
 
 
 
+True when it answered. 
+
+
+        
 
 <hr>
 
@@ -596,6 +604,79 @@ static void x430_sync_write (
 _Status of an entry point that may have sent status packets._ 
 ```C++
 static int x430_take_write_result (
+    struct x430_bus_ctx * m
+) 
+```
+
+
+
+
+<hr>
+
+
+
+### function x430\_turn\_add 
+
+_Adds one entry of a SYNC\_READ / BULK\_READ request in request order._ 
+```C++
+static void x430_turn_add (
+    struct x430_bus_ctx * m,
+    uint8_t id,
+    uint16_t address,
+    uint16_t length,
+    uint8_t * after
+) 
+```
+
+
+
+`after` holds the turn of this entry (X430\_TURN\_NOW or the ID before it) and is updated for the next entry. An entry of another bus, or one this bus cannot take, makes the next entry wait for its status packet. 
+
+
+        
+
+<hr>
+
+
+
+### function x430\_turn\_cancel 
+
+_Ends the pending read: its remaining hosted devices stay silent._ 
+```C++
+static void x430_turn_cancel (
+    struct x430_bus_ctx * m
+) 
+```
+
+
+
+
+<hr>
+
+
+
+### function x430\_turn\_heard 
+
+_Status packet of device_ `id` _received from the bus (another bus, or an echo)._
+```C++
+static void x430_turn_heard (
+    struct x430_bus_ctx * m,
+    uint8_t id
+) 
+```
+
+
+
+
+<hr>
+
+
+
+### function x430\_turn\_run 
+
+_Answers the pending entries whose turn has come, up to one that waits for another bus._ 
+```C++
+static void x430_turn_run (
     struct x430_bus_ctx * m
 ) 
 ```

@@ -42,6 +42,10 @@ _State behind the opaque_ [_**x430\_bus**_](structx430__bus.md) _._[More...](#de
 |  uint32\_t | [**last\_rx\_ms**](#variable-last_rx_ms)  <br>_Time of the last instruction packet._  |
 |  struct dxl2\_link | [**link**](#variable-link)  <br>_DXL2-C parser/encoder._  |
 |  uint32\_t | [**ready**](#variable-ready)  <br>_X430\_READY after_ [_**x430\_bus\_init()**_](group__x430.md#function-x430_bus_init) _._ |
+|  uint8\_t | [**turn\_count**](#variable-turn_count)  <br>_Entries in turns._  |
+|  uint32\_t | [**turn\_ms**](#variable-turn_ms)  <br>_Last progress of the pending read._  |
+|  uint8\_t | [**turn\_next**](#variable-turn_next)  <br>_Next entry of turns to answer._  |
+|  struct [**x430\_turn**](structx430__turn.md) | [**turns**](#variable-turns)  <br>_Pending SYNC\_READ / BULK\_READ._  |
 |  uint8\_t | [**tx**](#variable-tx)  <br>_Status packet, built and framed in place._  |
 |  bool | [**write\_failed**](#variable-write_failed)  <br>_The writer failed since the last call._  |
 
@@ -175,6 +179,62 @@ struct dxl2_link x430_bus_ctx::link;
 _X430\_READY after_ [_**x430\_bus\_init()**_](group__x430.md#function-x430_bus_init) _._
 ```C++
 uint32_t x430_bus_ctx::ready;
+```
+
+
+
+
+<hr>
+
+
+
+### variable turn\_count 
+
+_Entries in turns._ 
+```C++
+uint8_t x430_bus_ctx::turn_count;
+```
+
+
+
+
+<hr>
+
+
+
+### variable turn\_ms 
+
+_Last progress of the pending read._ 
+```C++
+uint32_t x430_bus_ctx::turn_ms;
+```
+
+
+
+
+<hr>
+
+
+
+### variable turn\_next 
+
+_Next entry of turns to answer._ 
+```C++
+uint8_t x430_bus_ctx::turn_next;
+```
+
+
+
+
+<hr>
+
+
+
+### variable turns 
+
+_Pending SYNC\_READ / BULK\_READ._ 
+```C++
+struct x430_turn x430_bus_ctx::turns[X430_MAX_DEVICES];
 ```
 
 

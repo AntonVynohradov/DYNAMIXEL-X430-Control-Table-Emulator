@@ -5,8 +5,9 @@
 
 ## a
 
-* **address** ([**x430\_indirect\_block**](structx430__indirect__block.md), [**x430\_reg**](structx430__reg.md), [**x430\_segment**](structx430__segment.md))
+* **address** ([**x430\_indirect\_block**](structx430__indirect__block.md), [**x430\_reg**](structx430__reg.md), [**x430\_segment**](structx430__segment.md), [**x430\_turn**](structx430__turn.md))
 * **axes** ([**x430\_model**](structx430__model.md))
+* **after** ([**x430\_turn**](structx430__turn.md))
 
 
 ## b
@@ -30,7 +31,7 @@
 * **devices** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
 * **data** ([**x430\_indirect\_block**](structx430__indirect__block.md))
 * **delay\_us** ([**x430\_port**](structx430__port.md))
-* **device** ([**x430\_sim\_ctx**](structx430__sim__ctx.md))
+* **device** ([**x430\_sim\_ctx**](structx430__sim__ctx.md), [**x430\_turn**](structx430__turn.md))
 
 
 ## e
@@ -63,7 +64,7 @@
 * **last\_rx\_ms** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
 * **link** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
 * **lock** ([**x430\_port**](structx430__port.md))
-* **length** ([**x430\_segment**](structx430__segment.md))
+* **length** ([**x430\_segment**](structx430__segment.md), [**x430\_turn**](structx430__turn.md))
 
 
 ## m
@@ -115,6 +116,10 @@
 
 ## t
 
+* **turn\_count** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
+* **turn\_ms** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
+* **turn\_next** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
+* **turns** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
 * **tx** ([**x430\_bus\_ctx**](structx430__bus__ctx.md))
 * **table** ([**x430\_device\_ctx**](structx430__device__ctx.md))
 * **table\_size** ([**x430\_model**](structx430__model.md))

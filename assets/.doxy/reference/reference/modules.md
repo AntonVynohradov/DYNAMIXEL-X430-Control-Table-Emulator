@@ -34,6 +34,8 @@ Here is a list of all modules:
 
 
 
+
+
     * [**Definitions**](group__x430__defs.md) _Status codes, options, events and the addresses, operating modes and bit fields of the X430 Control Table._ 
         
 

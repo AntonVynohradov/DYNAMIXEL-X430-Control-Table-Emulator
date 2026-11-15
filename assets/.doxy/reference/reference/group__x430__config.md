@@ -91,6 +91,8 @@ _Build-time configuration: Kconfig symbols or plain compiler definitions._ [More
 | define  | [**X430\_MODEL\_NUMBER**](group__x430__config.md#define-x430_model_number)  `(X430\_MODEL\_NUMBER\_DEFAULT)`<br>_Model Number reported by PING and address 0._  |
 | define  | [**X430\_REG\_WRITE\_SIZE**](group__x430__config.md#define-x430_reg_write_size)  `(32U)`<br>_Largest data block a REG\_WRITE can register, in bytes._  |
 | define  | [**X430\_REG\_WRITE\_SIZE\_U**](group__x430__config.md#define-x430_reg_write_size_u)  `((uint32\_t)([**X430\_REG\_WRITE\_SIZE**](group__x430__config.md#define-x430_reg_write_size)))`<br> |
+| define  | [**X430\_TURN\_TIMEOUT\_MS**](group__x430__config.md#define-x430_turn_timeout_ms)  `(100U)`<br>_Longest wait, in milliseconds, for the status packet of the device before a hosted device in a SYNC\_READ or BULK\_READ (default 100)._  |
+| define  | [**X430\_TURN\_TIMEOUT\_MS\_U**](group__x430__config.md#define-x430_turn_timeout_ms_u)  `((uint32\_t)([**X430\_TURN\_TIMEOUT\_MS**](group__x430__config.md#define-x430_turn_timeout_ms)))`<br> |
 
 ## Detailed Description
 
@@ -292,6 +294,37 @@ _Largest data block a REG\_WRITE can register, in bytes._
 
 ```
 #define X430_REG_WRITE_SIZE_U `((uint32_t)( X430_REG_WRITE_SIZE ))`
+```
+
+
+
+
+<hr>
+
+
+
+### define X430\_TURN\_TIMEOUT\_MS 
+
+_Longest wait, in milliseconds, for the status packet of the device before a hosted device in a SYNC\_READ or BULK\_READ (default 100)._ 
+```
+#define X430_TURN_TIMEOUT_MS `(100U)`
+```
+
+
+
+On a bus shared with devices of other buses (other MCUs, real servos), a hosted device answers a SYNC\_READ or BULK\_READ only after it has received the status packet of the ID listed just before it, like an X series actuator. When that status does not arrive within this time after the last progress of the read, the remaining hosted devices of the read stay silent. A new instruction packet ends the wait as well. The time comes from the millisecond clock of [**x430\_port**](structx430__port.md); without a clock the wait ends only with the next instruction packet. Keep it longer than one status packet at the lowest baud rate in use, plus the Return Delay Time. 
+
+
+        
+
+<hr>
+
+
+
+### define X430\_TURN\_TIMEOUT\_MS\_U 
+
+```
+#define X430_TURN_TIMEOUT_MS_U `((uint32_t)( X430_TURN_TIMEOUT_MS ))`
 ```
 
 

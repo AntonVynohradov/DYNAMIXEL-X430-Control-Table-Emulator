@@ -209,18 +209,102 @@ static struct x430_device* x430_find(const struct x430_bus_ctx* m, uint8_t id)
     return found;
 }
 
-static void x430_group_read(struct x430_bus_ctx* m, uint8_t id, uint16_t address, uint16_t length)
+static bool x430_group_read(struct x430_bus_ctx* m, struct x430_device* device, uint16_t address,
+                            uint16_t length)
+{
+    const bool answered = x430_answers(device, X430_LEVEL_READ);
+
+    if (answered)
+    {
+        uint8_t error = DXL2_ERR_NONE;
+
+        (void)x430_device_read(device, address, length, &m->tx[X430_TX_DATA], &error);
+        x430_send_status(m, device, x430_id_of(device), error, length);
+    }
+    return answered;
+}
+
+/* ------------------------------------------------------------------------------
+ * Turn-taking of SYNC_READ and BULK_READ on a shared bus. On one wire a device
+ * answers only after the status packet of the ID listed before it in the request
+ * (X series behaviour); devices of this bus answer one after the other, and a device
+ * after an ID of another bus waits until that status packet has been received.
+ * ------------------------------------------------------------------------------*/
+
+static void x430_turn_cancel(struct x430_bus_ctx* m)
+{
+    m->turn_count = 0U;
+    m->turn_next = 0U;
+}
+
+static void x430_turn_add(struct x430_bus_ctx* m, uint8_t id, uint16_t address, uint16_t length,
+                          uint8_t* after)
 {
     struct x430_device* device = x430_find(m, id);
 
-    if (device != NULL)
+    if ((device != NULL) && (m->turn_count < X430_MAX_DEVICES_U))
     {
-        if (x430_answers(device, X430_LEVEL_READ))
-        {
-            uint8_t error = DXL2_ERR_NONE;
+        struct x430_turn* turn = &m->turns[m->turn_count];
 
-            (void)x430_device_read(device, address, length, &m->tx[X430_TX_DATA], &error);
-            x430_send_status(m, device, id, error, length);
+        turn->device = device;
+        turn->address = address;
+        turn->length = length;
+        turn->after = *after;
+        m->turn_count++;
+        *after = X430_TURN_NOW;
+    }
+    else
+    {
+        *after = id;
+    }
+}
+
+static void x430_turn_run(struct x430_bus_ctx* m)
+{
+    bool waiting = false;
+
+    while (!waiting && (m->turn_next < m->turn_count))
+    {
+        const uint8_t next = m->turn_next;
+
+        if (m->turns[next].after != X430_TURN_NOW)
+        {
+            waiting = true;
+        }
+        else if (x430_group_read(m, m->turns[next].device, m->turns[next].address,
+                                 m->turns[next].length))
+        {
+            m->turn_next++;
+        }
+        else
+        {
+            /* Silent device (Status Return Level 0): no device after it hears its turn. */
+            x430_turn_cancel(m);
+        }
+    }
+    m->turn_ms = x430_millis(m);
+}
+
+static void x430_turn_heard(struct x430_bus_ctx* m, uint8_t id)
+{
+    if (m->turn_next < m->turn_count)
+    {
+        struct x430_turn* turn = &m->turns[m->turn_next];
+
+        if ((x430_millis(m) - m->turn_ms) > X430_TURN_TIMEOUT_MS_U)
+        {
+            /* The read stalled (a device before is missing): stay silent. */
+            x430_turn_cancel(m);
+        }
+        else if (turn->after == id)
+        {
+            turn->after = X430_TURN_NOW;
+            x430_turn_run(m);
+        }
+        else
+        {
+            /* An earlier device of the read answered: the read makes progress. */
+            m->turn_ms = x430_millis(m);
         }
     }
 }
@@ -444,10 +528,13 @@ static void x430_sync_read(struct x430_bus_ctx* m, const struct dxl2_packet* pac
 
         if ((length != 0U) && (length <= X430_STATUS_DATA_MAX))
         {
+            uint8_t after = X430_TURN_NOW;
+
             for (uint16_t index = X430_READ_PARAMS; index < packet->parameter_length; index++)
             {
-                x430_group_read(m, packet->parameters[index], address, length);
+                x430_turn_add(m, packet->parameters[index], address, length, &after);
             }
+            x430_turn_run(m);
         }
     }
 }
@@ -488,17 +575,25 @@ static void x430_bulk_read(struct x430_bus_ctx* m, const struct dxl2_packet* pac
     if ((packet->parameter_length != 0U) &&
         ((packet->parameter_length % X430_BULK_READ_ENTRY) == 0U))
     {
+        uint8_t after = X430_TURN_NOW;
+
         for (uint16_t index = 0U; index < packet->parameter_length;
              index = (uint16_t)(index + X430_BULK_READ_ENTRY))
         {
+            const uint8_t id = packet->parameters[index];
             const uint16_t length = dxl2_get_u16(&packet->parameters[index + 3U]);
 
             if ((length != 0U) && (length <= X430_STATUS_DATA_MAX))
             {
-                x430_group_read(m, packet->parameters[index],
-                                dxl2_get_u16(&packet->parameters[index + 1U]), length);
+                x430_turn_add(m, id, dxl2_get_u16(&packet->parameters[index + 1U]), length, &after);
+            }
+            else
+            {
+                /* Not answered: the entry after it waits for a status that never comes. */
+                after = id;
             }
         }
+        x430_turn_run(m);
     }
 }
 
@@ -579,13 +674,15 @@ static void x430_fast_read(struct x430_bus_ctx* m, const struct dxl2_packet* pac
             length = dxl2_get_u16(&packet->parameters[index + 3U]);
         }
 
-        if ((length == 0U) ||
+        if ((length == 0U) || (device == NULL) ||
             ((position + length + X430_FAST_SEGMENT_OVERHEAD) > DXL2_MAX_PACKET_SIZE))
         {
+            /* Malformed, or an ID of another bus: the answer of several buses would have
+               to be one chained packet, which this bus cannot build. It stays silent, and
+               the host falls back to SYNC_READ / BULK_READ. */
             valid = false;
         }
-        else if ((device != NULL) && (segments < X430_MAX_DEVICES_U) &&
-                 x430_answers(device, X430_LEVEL_READ))
+        else if ((segments < X430_MAX_DEVICES_U) && x430_answers(device, X430_LEVEL_READ))
         {
             uint8_t error = DXL2_ERR_NONE;
             uint8_t* data = &m->tx[position + 2U];
@@ -607,7 +704,7 @@ static void x430_fast_read(struct x430_bus_ctx* m, const struct dxl2_packet* pac
         }
         else
         {
-            /* ID not hosted here (or silent): skipped. */
+            /* Silent device (Status Return Level 0), or listed more than once: skipped. */
         }
         index = (uint16_t)(index + step);
     }
@@ -714,6 +811,8 @@ static void x430_dispatch(struct x430_bus_ctx* m, const struct dxl2_packet* pack
     {
         const uint32_t now = x430_millis(m);
 
+        /* A new instruction ends a read that still waits for its turn. */
+        x430_turn_cancel(m);
         for (uint8_t index = 0U; index < m->device_count; index++)
         {
             x430_device_watchdog(m->devices[index], now - m->last_rx_ms);
@@ -746,6 +845,11 @@ static void x430_dispatch(struct x430_bus_ctx* m, const struct dxl2_packet* pack
                 }
             }
         }
+    }
+    else
+    {
+        /* Status packet of another device on the shared bus (or the echo of our own). */
+        x430_turn_heard(m, packet->id);
     }
 }
 
@@ -902,8 +1006,10 @@ int x430_bus_init(struct x430_bus* bus, const struct x430_bus_config* config)
         m->config = *config;
         m->device_count = 0U;
         m->write_failed = false;
+        x430_turn_cancel(m);
         (void)dxl2_link_init(&m->link, &link);
         m->last_rx_ms = x430_millis(m);
+        m->turn_ms = m->last_rx_ms;
         m->ready = X430_READY;
     }
     return result;

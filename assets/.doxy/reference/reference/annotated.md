@@ -25,4 +25,5 @@ Here are the classes, structs, unions and interfaces with brief descriptions:
 * **struct** [**x430\_sim**](structx430__sim.md) _Kinematic model of an X430 behind a device._     
 * **struct** [**x430\_sim\_config**](structx430__sim__config.md) _Simulator configuration, copied by_ [_**x430\_sim\_init()**_](group__x430.md#function-x430_sim_init) _._    
 * **struct** [**x430\_sim\_ctx**](structx430__sim__ctx.md) _State behind the opaque_ [_**x430\_sim**_](structx430__sim.md) _._    
+* **struct** [**x430\_turn**](structx430__turn.md) _One hosted device of a SYNC\_READ or BULK\_READ that has not answered yet._     
 

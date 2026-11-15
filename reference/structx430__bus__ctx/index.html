@@ -1279,6 +1279,50 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#variable-turn_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable turn_count
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-turn_ms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable turn_ms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-turn_next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable turn_next
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-turns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        variable turns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#variable-tx" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1363,6 +1407,22 @@
 </tr>
 <tr>
 <td style="text-align: right;">uint8_t</td>
+<td style="text-align: left;"><a href="#variable-turn_count"><strong>turn_count</strong></a>  <br><em>Entries in turns.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint32_t</td>
+<td style="text-align: left;"><a href="#variable-turn_ms"><strong>turn_ms</strong></a>  <br><em>Last progress of the pending read.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint8_t</td>
+<td style="text-align: left;"><a href="#variable-turn_next"><strong>turn_next</strong></a>  <br><em>Next entry of turns to answer.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">struct <a href="../structx430__turn/"><strong>x430_turn</strong></a></td>
+<td style="text-align: left;"><a href="#variable-turns"><strong>turns</strong></a>  <br><em>Pending SYNC_READ / BULK_READ.</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">uint8_t</td>
 <td style="text-align: left;"><a href="#variable-tx"><strong>tx</strong></a>  <br><em>Status packet, built and framed in place.</em></td>
 </tr>
 <tr>
@@ -1410,15 +1470,39 @@
 </code></pre></div></p>
 <hr>
 
+<h3 id="variable-turn_count">variable turn_count<a class="headerlink" href="#variable-turn_count" title="Permanent link">&para;</a></h3>
+<p><em>Entries in turns.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">turn_count</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-turn_ms">variable turn_ms<a class="headerlink" href="#variable-turn_ms" title="Permanent link">&para;</a></h3>
+<p><em>Last progress of the pending read.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">uint32_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">turn_ms</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-turn_next">variable turn_next<a class="headerlink" href="#variable-turn_next" title="Permanent link">&para;</a></h3>
+<p><em>Next entry of turns to answer.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">turn_next</span><span class="p">;</span>
+</code></pre></div></p>
+<hr>
+
+<h3 id="variable-turns">variable turns<a class="headerlink" href="#variable-turns" title="Permanent link">&para;</a></h3>
+<p><em>Pending SYNC_READ / BULK_READ.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">x430_turn</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">turns</span><span class="p">[</span><span class="n">X430_MAX_DEVICES</span><span class="p">];</span>
+</code></pre></div></p>
+<hr>
+
 <h3 id="variable-tx">variable tx<a class="headerlink" href="#variable-tx" title="Permanent link">&para;</a></h3>
 <p><em>Status packet, built and framed in place.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">tx</span><span class="p">[</span><span class="n">DXL2_MAX_PACKET_SIZE</span><span class="p">];</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">tx</span><span class="p">[</span><span class="n">DXL2_MAX_PACKET_SIZE</span><span class="p">];</span>
 </code></pre></div></p>
 <hr>
 
 <h3 id="variable-write_failed">variable write_failed<a class="headerlink" href="#variable-write_failed" title="Permanent link">&para;</a></h3>
 <p><em>The writer failed since the last call.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">bool</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">write_failed</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">bool</span><span class="w"> </span><span class="n">x430_bus_ctx</span><span class="o">::</span><span class="n">write_failed</span><span class="p">;</span>
 </code></pre></div></p>
 <hr>
 

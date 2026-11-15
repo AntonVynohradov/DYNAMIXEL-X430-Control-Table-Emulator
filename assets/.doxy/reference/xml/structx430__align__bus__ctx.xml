@@ -60,6 +60,9 @@
         <childnode refid="5" relation="usage">
           <edgelabel>devices</edgelabel>
         </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>turns</edgelabel>
+        </childnode>
       </node>
       <node id="5">
         <label>x430_device</label>
@@ -68,6 +71,13 @@
       <node id="4">
         <label>x430_port</label>
         <link refid="structx430__port"/>
+      </node>
+      <node id="6">
+        <label>x430_turn</label>
+        <link refid="structx430__turn"/>
+        <childnode refid="5" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
       </node>
     </collaborationgraph>
     <location file="src/x430_bus.c" line="84" column="1" bodyfile="src/x430_bus.c" bodystart="85" bodyend="88"/>

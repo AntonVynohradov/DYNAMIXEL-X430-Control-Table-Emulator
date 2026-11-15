@@ -27,6 +27,7 @@
 * **X430\_PULSES\_PER\_TURN** ([**x430\_device.c**](x430__device_8c.md))
 * **X430\_TOUCHED\_BYTES** ([**x430\_device.c**](x430__device_8c.md))
 * **X430\_READY** ([**x430\_internal.h**](x430__internal_8h.md))
+* **X430\_TURN\_NOW** ([**x430\_internal.h**](x430__internal_8h.md))
 * **X430\_VERSION** ([**x430.h**](x430_8h.md))
 * **X430\_VERSION\_MAJOR** ([**x430.h**](x430_8h.md))
 * **X430\_VERSION\_MINOR** ([**x430.h**](x430_8h.md))

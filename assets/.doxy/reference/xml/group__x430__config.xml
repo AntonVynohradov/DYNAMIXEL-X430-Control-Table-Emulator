@@ -44,6 +44,22 @@
       </memberdef>
     </sectiondef>
     <sectiondef kind="user-defined">
+      <header>Shared bus</header>
+      <memberdef kind="define" id="group__x430__config_1ga9113a25601c31edb2986778731fdc703" prot="public" static="no">
+        <name>X430_TURN_TIMEOUT_MS</name>
+        <initializer>(100U)</initializer>
+        <briefdescription>
+<para>Longest wait, in milliseconds, for the status packet of the device before a hosted device in a SYNC_READ or BULK_READ (default 100). </para>
+        </briefdescription>
+        <detaileddescription>
+<para>On a bus shared with devices of other buses (other MCUs, real servos), a hosted device answers a SYNC_READ or BULK_READ only after it has received the status packet of the ID listed just before it, like an X series actuator. When that status does not arrive within this time after the last progress of the read, the remaining hosted devices of the read stay silent. A new instruction packet ends the wait as well. The time comes from the millisecond clock of <ref refid="structx430__port" kindref="compound">x430_port</ref>; without a clock the wait ends only with the next instruction packet. Keep it longer than one status packet at the lowest baud rate in use, plus the Return Delay Time. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="116" column="10" bodyfile="inc/x430_config.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="user-defined">
       <header>Identity</header>
       <memberdef kind="define" id="group__x430__config_1ga88bd99c8234f09536b1eec34903d6383" prot="public" static="no">
         <name>X430_FIRMWARE_VERSION</name>
@@ -55,7 +71,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="106" column="10" bodyfile="inc/x430_config.h" bodystart="106" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="133" column="10" bodyfile="inc/x430_config.h" bodystart="133" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__config_1ga7f332f10f262be05132db10adf218a0e" prot="public" static="no">
         <name>X430_MODEL_NUMBER</name>
@@ -68,7 +84,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="120" column="10" bodyfile="inc/x430_config.h" bodystart="120" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="147" column="10" bodyfile="inc/x430_config.h" bodystart="147" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__config_1ga0c564a82c2c26a378004de001db17b6a" prot="public" static="no">
         <name>X430_BAUD_RATE_CODE_MAX</name>
@@ -81,7 +97,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="134" column="10" bodyfile="inc/x430_config.h" bodystart="134" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="161" column="10" bodyfile="inc/x430_config.h" bodystart="161" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="user-defined">
@@ -98,7 +114,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="150" column="9" bodyfile="inc/x430_config.h" bodystart="150" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="177" column="9" bodyfile="inc/x430_config.h" bodystart="177" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__config_1ga6cc790b9c8fbc5d86a09bd8ecd96ac9e" prot="public" static="no">
         <name>X430_FEATURE_FAST_READ</name>
@@ -110,7 +126,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="159" column="9" bodyfile="inc/x430_config.h" bodystart="159" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="186" column="9" bodyfile="inc/x430_config.h" bodystart="186" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__config_1gaad138ea4f3dd8d6af92b9f92229c3643" prot="public" static="no">
         <name>X430_FEATURE_BACKUP</name>
@@ -122,7 +138,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="168" column="9" bodyfile="inc/x430_config.h" bodystart="168" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="195" column="9" bodyfile="inc/x430_config.h" bodystart="195" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__config_1ga2fad795e8d559947ef01969bcfcbe13c" prot="public" static="no">
         <name>X430_FEATURE_SIMULATOR</name>
@@ -134,7 +150,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="177" column="9" bodyfile="inc/x430_config.h" bodystart="177" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="204" column="9" bodyfile="inc/x430_config.h" bodystart="204" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <sectiondef kind="user-defined">
@@ -150,7 +166,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="193" column="9" bodyfile="inc/x430_config.h" bodystart="193" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="220" column="9" bodyfile="inc/x430_config.h" bodystart="220" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__config_1gae43921fed358fd872aad0a3e96ad94bb" prot="public" static="no">
         <name>X430_REG_WRITE_SIZE_U</name>
@@ -161,7 +177,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="194" column="9" bodyfile="inc/x430_config.h" bodystart="194" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="221" column="9" bodyfile="inc/x430_config.h" bodystart="221" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__config_1gaad47f5653349a7e772e6d3687a1f69e8" prot="public" static="no">
         <name>X430_BAUD_RATE_CODE_MAX_U</name>
@@ -172,7 +188,18 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_config.h" line="195" column="9" bodyfile="inc/x430_config.h" bodystart="195" bodyend="-1"/>
+        <location file="inc/x430_config.h" line="222" column="9" bodyfile="inc/x430_config.h" bodystart="222" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="group__x430__config_1gafdc6874cf27c691394fdaac45a8c588e" prot="public" static="no">
+        <name>X430_TURN_TIMEOUT_MS_U</name>
+        <initializer>((uint32_t)(<ref refid="group__x430__config_1ga9113a25601c31edb2986778731fdc703" kindref="member">X430_TURN_TIMEOUT_MS</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="inc/x430_config.h" line="223" column="9" bodyfile="inc/x430_config.h" bodystart="223" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>

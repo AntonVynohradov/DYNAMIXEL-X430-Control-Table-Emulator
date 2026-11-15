@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="89" column="13" bodyfile="src/x430_internal.h" bodystart="89" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="110" column="13" bodyfile="src/x430_internal.h" bodystart="110" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__sim__ctx_1a50ff1e3d401a5b76ab8f95fcacec5924" prot="public" static="no" mutable="no">
         <type>int64_t</type>
@@ -32,7 +32,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="90" column="13" bodyfile="src/x430_internal.h" bodystart="90" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="111" column="13" bodyfile="src/x430_internal.h" bodystart="111" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
@@ -47,7 +47,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="91" column="23" bodyfile="src/x430_internal.h" bodystart="91" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="112" column="23" bodyfile="src/x430_internal.h" bodystart="112" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__sim__ctx_1a00580b45f6c8c18a448c91041263e1c9" prot="public" static="no" mutable="no">
         <type>struct <ref refid="structx430__sim__config" kindref="compound">x430_sim_config</ref></type>
@@ -62,7 +62,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="92" column="26" bodyfile="src/x430_internal.h" bodystart="92" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="113" column="26" bodyfile="src/x430_internal.h" bodystart="113" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structx430__sim__ctx_1af976265a6014b06d4174cd5b8cfd6339" prot="public" static="no" mutable="no">
         <type>uint32_t</type>
@@ -77,7 +77,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="src/x430_internal.h" line="93" column="14" bodyfile="src/x430_internal.h" bodystart="93" bodyend="-1"/>
+        <location file="src/x430_internal.h" line="114" column="14" bodyfile="src/x430_internal.h" bodystart="114" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -106,7 +106,7 @@
         </childnode>
       </node>
     </collaborationgraph>
-    <location file="src/x430_internal.h" line="87" column="1" bodyfile="src/x430_internal.h" bodystart="88" bodyend="94"/>
+    <location file="src/x430_internal.h" line="108" column="1" bodyfile="src/x430_internal.h" bodystart="109" bodyend="115"/>
     <listofallmembers>
       <member refid="structx430__sim__ctx_1a00580b45f6c8c18a448c91041263e1c9" prot="public" virt="non-virtual"><scope>x430_sim_ctx</scope><name>config</name></member>
       <member refid="structx430__sim__ctx_1a99218bbca9457c1b7cc5e475d1c85857" prot="public" virt="non-virtual"><scope>x430_sim_ctx</scope><name>device</name></member>

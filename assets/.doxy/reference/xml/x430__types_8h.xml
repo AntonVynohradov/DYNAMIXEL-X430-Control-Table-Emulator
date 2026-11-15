@@ -253,7 +253,7 @@
 <codeline lineno="269"><highlight class="normal"></highlight></codeline>
 <codeline lineno="271" refid="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_BUS_BYTES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
 <codeline lineno="272"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>(X430_DXL2_LINK_BYTES<sp/>+<sp/>(3U<sp/>*<sp/>X430_POINTER_BYTES)<sp/>+<sp/>\</highlight></codeline>
-<codeline lineno="273"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/>(X430_MAX_DEVICES_U<sp/>*<sp/>X430_POINTER_BYTES)<sp/>+<sp/>10U<sp/>+<sp/>DXL2_MAX_PACKET_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="273"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/>(X430_MAX_DEVICES_U<sp/>*<sp/>((2U<sp/>*<sp/>X430_POINTER_BYTES)<sp/>+<sp/>8U))<sp/>+<sp/>16U<sp/>+<sp/>DXL2_MAX_PACKET_SIZE)</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="274"><highlight class="normal"></highlight></codeline>
 <codeline lineno="276" refid="group__x430__types_1ga337bba376411a5f61828f9084937ce16" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_DEVICE_BYTES<sp/>\</highlight></codeline>
 <codeline lineno="277"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>((3U<sp/>*<sp/>X430_POINTER_BYTES)<sp/>+<sp/>17U<sp/>+<sp/>X430_IMAGE_SIZE<sp/>+<sp/>X430_REG_WRITE_SIZE_U)</highlight><highlight class="normal"></highlight></codeline>

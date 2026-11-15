@@ -475,7 +475,7 @@
       <memberdef kind="define" id="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" prot="public" static="no">
         <name>X430_BUS_BYTES</name>
         <initializer>    (<ref refid="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" kindref="member">X430_DXL2_LINK_BYTES</ref> + (3U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + \
-     (X430_MAX_DEVICES_U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 10U + <ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref>)</initializer>
+     (X430_MAX_DEVICES_U * ((2U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 8U)) + 16U + <ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref>)</initializer>
         <briefdescription>
 <para>Private state of a bus in bytes; x430_bus.c checks it at compile time. </para>
         </briefdescription>

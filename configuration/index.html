@@ -1632,6 +1632,13 @@ then the memory footprint and the measured stack usage.</p>
 <td>Highest Baud Rate (8) code a write accepts</td>
 </tr>
 <tr>
+<td><code>X430_TURN_TIMEOUT_MS</code></td>
+<td><code>X430_TURN_TIMEOUT_MS</code></td>
+<td>100</td>
+<td>1..60000</td>
+<td>Shared bus: longest wait for the status of the ID before a hosted device in a SYNC_READ / BULK_READ (<a href="../theory/#group-instructions">group instructions</a>)</td>
+</tr>
+<tr>
 <td><code>X430_DXL2_MAX_PACKET_SIZE</code></td>
 <td><code>DXL2_MAX_PACKET_SIZE</code> (DXL2-C)</td>
 <td>768</td>
@@ -1707,7 +1714,7 @@ bytes and the size of a Fast read answer to <code>DXL2_MAX_PACKET_SIZE</code> by
 (<code>10 + devices × (bytes + 4)</code>). The default is 768: a READ of up to 757 bytes, so a host
 can read the whole Control Table (addresses 0–661, 662 bytes) at once, as DYNAMIXEL
 Wizard 2.0 does (with 256 it gets a Data Length Error and shows TIME OUT). A product whose
-hosts read less may lower it: with 256 the bus needs 832 B instead of 2,368 B (the stack
+hosts read less may lower it: with 256 the bus needs 888 B instead of 2,424 B (the stack
 does not depend on the packet size: the bus builds its answers in its own buffer). <code>x430_config.h</code> sets the default
 before it includes <code>dxl2.h</code>, so every file that includes <code>x430.h</code> sees the size the library
 was built with. Without CMake, compile DXL2-C with the same value
@@ -1886,13 +1893,13 @@ The hooks and the port they point at are not copied: keep them alive.</p>
 </tr>
 <tr>
 <td><code>struct x430_bus</code> (RAM per bus)</td>
-<td style="text-align: right;">2,368 B</td>
-<td style="text-align: right;">2,368 B</td>
+<td style="text-align: right;">2,424 B</td>
+<td style="text-align: right;">2,424 B</td>
 </tr>
 <tr>
 <td><code>struct x430_bus</code>, <code>DXL2_MAX_PACKET_SIZE</code> 256</td>
-<td style="text-align: right;">832 B</td>
-<td style="text-align: right;">832 B</td>
+<td style="text-align: right;">888 B</td>
+<td style="text-align: right;">888 B</td>
 </tr>
 <tr>
 <td><code>struct x430_sim</code></td>
@@ -1909,8 +1916,9 @@ The hooks and the port they point at are not copied: keep them alive.</p>
 <p>A device is its compact Control Table image (316 B), the REG_WRITE data
 (<code>X430_REG_WRITE_SIZE</code>, 32 B) and its state; it keeps no copy of a persistent block. A bus
 is the DXL2-C link (receive buffer and decoded packet, 1,560 B with 768-byte packets),
-one packet buffer for its answers (<code>DXL2_MAX_PACKET_SIZE</code>) and the device list
-(<code>X430_MAX_DEVICES</code> pointers). The optional features change code, not RAM.</p>
+one packet buffer for its answers (<code>DXL2_MAX_PACKET_SIZE</code>), the device list
+(<code>X430_MAX_DEVICES</code> pointers) and the pending SYNC_READ / BULK_READ of a shared bus
+(<code>X430_MAX_DEVICES</code> entries of 12 B). The optional features change code, not RAM.</p>
 <p>Flash (<code>.text</code>, including constants) per module:</p>
 <table>
 <thead>
@@ -1930,9 +1938,9 @@ one packet buffer for its answers (<code>DXL2_MAX_PACKET_SIZE</code>) and the de
 </tr>
 <tr>
 <td><code>x430_bus.c</code></td>
-<td style="text-align: right;">2,820 B</td>
-<td style="text-align: right;">3,824 B</td>
-<td style="text-align: right;">2,042 B</td>
+<td style="text-align: right;">3,090 B</td>
+<td style="text-align: right;">4,248 B</td>
+<td style="text-align: right;">2,260 B</td>
 </tr>
 <tr>
 <td><code>x430_sim.c</code></td>
@@ -1948,9 +1956,9 @@ one packet buffer for its answers (<code>DXL2_MAX_PACKET_SIZE</code>) and the de
 </tr>
 <tr>
 <td><strong>Library</strong></td>
-<td style="text-align: right;"><strong>9,921 B</strong></td>
-<td style="text-align: right;"><strong>13,025 B</strong></td>
-<td style="text-align: right;"><strong>6,809 B</strong></td>
+<td style="text-align: right;"><strong>10,191 B</strong></td>
+<td style="text-align: right;"><strong>13,449 B</strong></td>
+<td style="text-align: right;"><strong>7,027 B</strong></td>
 </tr>
 <tr>
 <td>DXL2-C (<code>dxl2_protocol.c</code>, <code>dxl2_link.c</code>)</td>
@@ -1965,7 +1973,7 @@ library generates their 56 registers) and the three segments of the image; a reg
 found by binary search. DXL2-C is listed as compiled: the bus uses only its parser and
 <code>dxl2_crc16()</code>, so a link with <code>--gc-sections</code> drops <code>dxl2_link_send()</code> and
 <code>dxl2_link_send_status()</code>.</p>
-<p>On the x86-64 host the device needs 392 B and the bus 2,424 B (64-bit pointers).</p>
+<p>On the x86-64 host the device needs 392 B and the bus 2,488 B (64-bit pointers).</p>
 <h2 id="stack-usage">Stack usage<a class="headerlink" href="#stack-usage" title="Permanent link">&para;</a></h2>
 <p>Worst-case stack of each public function including the library and DXL2-C functions it
 calls, measured with <code>-fstack-usage -fcallgraph-info=su</code> and <code>tools/docs/stack_usage.py</code>.

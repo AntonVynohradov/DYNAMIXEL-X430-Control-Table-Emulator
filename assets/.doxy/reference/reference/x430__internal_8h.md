@@ -36,6 +36,7 @@
 | struct | [**x430\_bus\_ctx**](structx430__bus__ctx.md) <br>_State behind the opaque_ [_**x430\_bus**_](structx430__bus.md) _._ |
 | struct | [**x430\_device\_ctx**](structx430__device__ctx.md) <br>_State behind the opaque_ [_**x430\_device**_](structx430__device.md) _._ |
 | struct | [**x430\_sim\_ctx**](structx430__sim__ctx.md) <br>_State behind the opaque_ [_**x430\_sim**_](structx430__sim.md) _._ |
+| struct | [**x430\_turn**](structx430__turn.md) <br>_One hosted device of a SYNC\_READ or BULK\_READ that has not answered yet._  |
 
 
 
@@ -116,6 +117,7 @@
 | Type | Name |
 | ---: | :--- |
 | define  | [**X430\_READY**](x430__internal_8h.md#define-x430_ready)  `0x58343330U`<br>_Value of the ready field after a successful initialization._  |
+| define  | [**X430\_TURN\_NOW**](x430__internal_8h.md#define-x430_turn_now)  `0xFFU`<br>[_**x430\_turn::after**_](structx430__turn.md#variable-after) _of an entry that may answer at once._ |
 
 ## Public Functions Documentation
 
@@ -497,6 +499,20 @@ A zeroed or never initialized instance holds another value: every function but t
 
 
         
+
+<hr>
+
+
+
+### define X430\_TURN\_NOW 
+
+[_**x430\_turn::after**_](structx430__turn.md#variable-after) _of an entry that may answer at once._
+```C++
+#define X430_TURN_NOW `0xFFU`
+```
+
+
+
 
 <hr>
 

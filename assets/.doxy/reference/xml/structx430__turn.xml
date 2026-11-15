@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.8" xml:lang="en-US">
+  <compounddef id="structx430__turn" kind="struct" language="C++" prot="public">
+    <compoundname>x430_turn</compoundname>
+    <includes refid="x430__internal_8h" local="no">x430_internal.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structx430__turn_1a7aa3b81474451af205d732cc597f138e" prot="public" static="no" mutable="no">
+        <type>struct <ref refid="structx430__device" kindref="compound">x430_device</ref> *</type>
+        <definition>struct x430_device* x430_turn::device</definition>
+        <argsstring></argsstring>
+        <name>device</name>
+        <qualifiedname>x430_turn::device</qualifiedname>
+        <briefdescription>
+<para>Hosted device. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="71" column="23" bodyfile="src/x430_internal.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__turn_1ae6de3dfb4ebede1e6890eb7fab37a07b" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_turn::address</definition>
+        <argsstring></argsstring>
+        <name>address</name>
+        <qualifiedname>x430_turn::address</qualifiedname>
+        <briefdescription>
+<para>First address to read. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="72" column="14" bodyfile="src/x430_internal.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__turn_1a20179d0e08197c4793ef96832f2c2a03" prot="public" static="no" mutable="no">
+        <type>uint16_t</type>
+        <definition>uint16_t x430_turn::length</definition>
+        <argsstring></argsstring>
+        <name>length</name>
+        <qualifiedname>x430_turn::length</qualifiedname>
+        <briefdescription>
+<para>Bytes to read. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="73" column="14" bodyfile="src/x430_internal.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structx430__turn_1a0a43dc68f6a193bf2fdaf412d944ebed" prot="public" static="no" mutable="no">
+        <type>uint8_t</type>
+        <definition>uint8_t x430_turn::after</definition>
+        <argsstring></argsstring>
+        <name>after</name>
+        <qualifiedname>x430_turn::after</qualifiedname>
+        <briefdescription>
+<para>ID whose status comes first, or X430_TURN_NOW. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/x430_internal.h" line="74" column="13" bodyfile="src/x430_internal.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>One hosted device of a SYNC_READ or BULK_READ that has not answered yet. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>It answers when <ref refid="structx430__turn_1a0a43dc68f6a193bf2fdaf412d944ebed" kindref="member">x430_turn::after</ref> is X430_TURN_NOW: at once for the first ID of the request and after a hosted device, else after the status packet of the ID <computeroutput>after</computeroutput> (a device of another bus). </para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>x430_device</label>
+        <link refid="structx430__device"/>
+      </node>
+      <node id="1">
+        <label>x430_turn</label>
+        <link refid="structx430__turn"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="src/x430_internal.h" line="69" column="1" bodyfile="src/x430_internal.h" bodystart="70" bodyend="75"/>
+    <listofallmembers>
+      <member refid="structx430__turn_1ae6de3dfb4ebede1e6890eb7fab37a07b" prot="public" virt="non-virtual"><scope>x430_turn</scope><name>address</name></member>
+      <member refid="structx430__turn_1a0a43dc68f6a193bf2fdaf412d944ebed" prot="public" virt="non-virtual"><scope>x430_turn</scope><name>after</name></member>
+      <member refid="structx430__turn_1a7aa3b81474451af205d732cc597f138e" prot="public" virt="non-virtual"><scope>x430_turn</scope><name>device</name></member>
+      <member refid="structx430__turn_1a20179d0e08197c4793ef96832f2c2a03" prot="public" virt="non-virtual"><scope>x430_turn</scope><name>length</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
