@@ -270,7 +270,7 @@ struct x430_sim_config
 /** @brief Private state of a bus in bytes; x430_bus.c checks it at compile time. */
 #define X430_BUS_BYTES                                  \
     (X430_DXL2_LINK_BYTES + (3U * X430_POINTER_BYTES) + \
-     (X430_MAX_DEVICES_U * X430_POINTER_BYTES) + 10U + DXL2_MAX_PACKET_SIZE)
+     (X430_MAX_DEVICES_U * ((2U * X430_POINTER_BYTES) + 8U)) + 16U + DXL2_MAX_PACKET_SIZE)
 
 /** @brief Private state of a device in bytes; x430_device.c checks it at compile time. */
 #define X430_DEVICE_BYTES \

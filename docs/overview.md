@@ -50,8 +50,8 @@ instructions ([points to check](integration.md#ros-2-dynamixel_hardware_interfac
 | Language | C11, no warnings with `-Wall -Wextra -Wpedantic -Wconversion` |
 | Dependencies | `<stddef.h>`, `<stdint.h>`, `<stdbool.h>`; DXL2-C 1.0.0 (fetched by CMake) |
 | Memory | No heap, no global or static mutable data (`.data` and `.bss` are empty) |
-| RAM | 384 B per device, 2,368 B per bus, 32 B per simulator (Cortex-M4, default options; [details](configuration.md#memory-footprint)) |
-| Flash | 9,921 B with the model table, plus 850 B of DXL2-C (Cortex-M4, `-Os`, all features) |
+| RAM | 384 B per device, 2,424 B per bus, 32 B per simulator (Cortex-M4, default options; [details](configuration.md#memory-footprint)) |
+| Flash | 10,191 B with the model table, plus 850 B of DXL2-C (Cortex-M4, `-Os`, all features) |
 | Stack | 424 B worst case, `x430_bus_receive()`, with any packet size (Cortex-M4 `-Os`, [details](configuration.md#stack-usage)) |
 | Coding standard | MISRA C:2012, 0 Cppcheck 2.13 addon violations, [2 deviations](misra.md) |
 | Tests | 100 % line and branch coverage of `src/` in both unit test presets (131 and 100 GoogleTest cases); model data against the e-Manual; 52 checks end to end with the official DynamixelSDK |

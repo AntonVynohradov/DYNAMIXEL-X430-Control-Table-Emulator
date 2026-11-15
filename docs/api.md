@@ -92,7 +92,7 @@ Callback types:
 | `x430_nvm_write_hook` | `int (*)(struct x430_device* device, enum x430_nvm_slot slot, uint16_t offset, const uint8_t* data, uint16_t length, void* user_data)` | 0, or negative (the remaining parts are not written, the host gets Result Fail) |
 
 **Instances.** `struct x430_bus`, `struct x430_device` and `struct x430_sim` are opaque
-arrays of `X430_BUS_WORDS`, `X430_DEVICE_WORDS` and `X430_SIM_WORDS` 64-bit words (2,368 B,
+arrays of `X430_BUS_WORDS`, `X430_DEVICE_WORDS` and `X430_SIM_WORDS` 64-bit words (2,424 B,
 384 B and 32 B on Cortex-M4 with the default options). Allocate them, pass their
 addresses, never read or write their content.
 

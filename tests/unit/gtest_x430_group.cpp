@@ -128,8 +128,8 @@ TEST_F(X430Test, SyncReadAnswersInRequestOrder)
     (void)x430_device_set(&dev[2], X430_ADDR_PRESENT_POSITION, 300);
     (void)x430_device_set(&dev[0], X430_ADDR_PRESENT_POSITION, 100);
     auto status = transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_READ,
-                           cat(cat(le16(X430_ADDR_PRESENT_POSITION), le16(4)), {3, 9, 1}));
-    ASSERT_EQ(status.size(), 2U); /* ID 9 is not hosted: skipped */
+                           cat(cat(le16(X430_ADDR_PRESENT_POSITION), le16(4)), {3, 1}));
+    ASSERT_EQ(status.size(), 2U);
     EXPECT_EQ(status[0].id, 3);
     EXPECT_EQ(get_i32(status[0].data, 0), 300);
     EXPECT_EQ(status[1].id, 1);
@@ -143,6 +143,81 @@ TEST_F(X430Test, SyncReadAnswersInRequestOrder)
                       cat(cat(le16(X430_TABLE_SIZE - 1), le16(4)), {1}));
     ASSERT_EQ(status.size(), 1U);
     EXPECT_EQ(status[0].error, DXL2_ERR_ACCESS);
+}
+
+TEST_F(X430Test, SyncReadWaitsForTheStatusOfTheDeviceOfAnotherBus)
+{
+    /* IDs 9 and 7 live on other buses (other MCUs on the same wire). */
+    add_device(1, 3U);
+    (void)x430_device_set(&dev[1], X430_ADDR_PRESENT_POSITION, 300);
+    (void)x430_device_set(&dev[0], X430_ADDR_PRESENT_POSITION, 100);
+    EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_READ,
+                         cat(cat(le16(X430_ADDR_PRESENT_POSITION), le16(4)), {9, 3, 7, 1}))
+                    .empty());
+    /* The status of another device is progress, but not the turn of ID 3. */
+    env.now += X430_TURN_TIMEOUT_MS;
+    send(7, DXL2_INST_STATUS, {0});
+    EXPECT_TRUE(take_status(env).empty());
+    /* ID 9 answered: ID 3 answers; ID 1 now waits for ID 7. */
+    env.now += X430_TURN_TIMEOUT_MS;
+    send(9, DXL2_INST_STATUS, {0});
+    auto status = take_status(env);
+    ASSERT_EQ(status.size(), 1U);
+    EXPECT_EQ(status[0].id, 3);
+    EXPECT_EQ(get_i32(status[0].data, 0), 300);
+    env.wire.clear();
+    send(7, DXL2_INST_STATUS, cat({0}, le32(700)));
+    status = take_status(env);
+    ASSERT_EQ(status.size(), 1U);
+    EXPECT_EQ(status[0].id, 1);
+    EXPECT_EQ(get_i32(status[0].data, 0), 100);
+    /* The read is complete: a late status changes nothing. */
+    env.wire.clear();
+    send(7, DXL2_INST_STATUS, {0});
+    EXPECT_TRUE(env.wire.empty());
+}
+
+TEST_F(X430Test, SyncReadStaysSilentWhenTheDeviceBeforeDoesNotAnswer)
+{
+    const auto request = cat(cat(le16(X430_ADDR_PRESENT_POSITION), le16(4)), {9, 1});
+
+    /* The status of ID 9 comes too late. */
+    EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_READ, request).empty());
+    env.now += X430_TURN_TIMEOUT_MS + 1U;
+    send(9, DXL2_INST_STATUS, {0});
+    EXPECT_TRUE(env.wire.empty());
+    send(9, DXL2_INST_STATUS, {0});
+    EXPECT_TRUE(env.wire.empty());
+
+    /* The host gives up and sends the next instruction: the wait ends. */
+    EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_READ, request).empty());
+    auto status = transact(1, DXL2_INST_PING, {});
+    ASSERT_EQ(status.size(), 1U);
+    env.wire.clear();
+    send(9, DXL2_INST_STATUS, {0});
+    EXPECT_TRUE(env.wire.empty());
+}
+
+TEST_F(X430Test, SyncReadEndsAtASilentDevice)
+{
+    /* ID 1 does not answer reads (Status Return Level 0): ID 3 never hears its turn. */
+    add_device(1, 3U);
+    (void)x430_device_set(&dev[0], X430_ADDR_STATUS_RETURN_LEVEL, 0);
+    EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_READ,
+                         cat(cat(le16(X430_ADDR_PRESENT_POSITION), le16(4)), {1, 3}))
+                    .empty());
+    send(1, DXL2_INST_STATUS, {0});
+    EXPECT_TRUE(env.wire.empty());
+}
+
+TEST_F(X430Test, SyncReadTakesAtMostOneEntryPerHostedDevice)
+{
+    /* A hosted ID listed more often than the bus has devices: the extra entries wait for
+       a status that only the echo of the bus could bring. */
+    std::vector<uint8_t> ids(X430_MAX_DEVICES + 1U, 1U);
+    auto status = transact(DXL2_BROADCAST_ID, DXL2_INST_SYNC_READ,
+                           cat(cat(le16(X430_ADDR_ID), le16(1)), ids));
+    EXPECT_EQ(status.size(), (size_t)X430_MAX_DEVICES);
 }
 
 TEST_F(X430Test, SyncWrite)
@@ -188,6 +263,26 @@ TEST_F(X430Test, BulkReadAndWrite)
     broken = cat(cat({2}, le16(X430_ADDR_PROFILE_VELOCITY)), le16(0));
     (void)transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_WRITE, broken);
     EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_READ, {1, 2}).empty());
+}
+
+TEST_F(X430Test, BulkReadTakesTurnsWithOtherBuses)
+{
+    add_device(1, 2U);
+    /* ID 5 lives on another bus; the zero-length entry of ID 1 is not answered. */
+    auto params = cat(cat({5}, le16(X430_ADDR_ID)), le16(1));
+    params = cat(params, cat(cat({2}, le16(X430_ADDR_ID)), le16(1)));
+    params = cat(params, cat(cat({1}, le16(X430_ADDR_ID)), le16(0)));
+    params = cat(params, cat(cat({1}, le16(X430_ADDR_ID)), le16(1)));
+    EXPECT_TRUE(transact(DXL2_BROADCAST_ID, DXL2_INST_BULK_READ, params).empty());
+    send(5, DXL2_INST_STATUS, {0, 5});
+    auto status = take_status(env);
+    ASSERT_EQ(status.size(), 1U);
+    EXPECT_EQ(status[0].id, 2);
+    /* ID 1 (last entry) waits for the status of the zero-length entry, which never comes. */
+    env.now += X430_TURN_TIMEOUT_MS + 1U;
+    env.wire.clear();
+    send(1, DXL2_INST_STATUS, {0});
+    EXPECT_TRUE(env.wire.empty());
 }
 #endif
 
@@ -248,9 +343,11 @@ TEST_F(X430Test, FastSyncReadIsOnePacket)
 TEST_F(X430Test, FastBulkReadWithErrorsAndSkippedIds)
 {
     add_device(1, 2U);
+    add_device(2, 3U);
+    (void)x430_device_set(&dev[2], X430_ADDR_STATUS_RETURN_LEVEL, 0);
     x430_device_raise_hardware_error(&dev[1], X430_HW_ERROR_OVERHEATING);
     auto params = cat(cat({1}, le16(X430_ADDR_ID)), le16(1));
-    params = cat(params, cat(cat({5}, le16(X430_ADDR_ID)), le16(1)));        /* not hosted */
+    params = cat(params, cat(cat({3}, le16(X430_ADDR_ID)), le16(1)));        /* silent: skipped */
     params = cat(params, cat(cat({2}, le16(X430_TABLE_SIZE - 1)), le16(2))); /* access error */
     env.wire.clear();
     send(DXL2_BROADCAST_ID, DXL2_INST_FAST_BULK_READ, params);
@@ -261,6 +358,19 @@ TEST_F(X430Test, FastBulkReadWithErrorsAndSkippedIds)
     EXPECT_EQ(segments[1].error, DXL2_ERR_ACCESS | DXL2_ERR_ALERT_BIT);
     EXPECT_EQ(segments[1].data, (std::vector<uint8_t>{0, 0}));
     env.wire.clear();
+}
+
+TEST_F(X430Test, FastReadStaysSilentWhenAnotherBusIsListed)
+{
+    /* ID 9 lives on another bus: one bus cannot build the chained answer of several. */
+    add_device(1, 2U);
+    env.wire.clear();
+    send(DXL2_BROADCAST_ID, DXL2_INST_FAST_SYNC_READ,
+         cat(cat(le16(X430_ADDR_PRESENT_POSITION), le16(4)), {1, 9, 2}));
+    auto params = cat(cat({2}, le16(X430_ADDR_ID)), le16(1));
+    params = cat(params, cat(cat({9}, le16(X430_ADDR_ID)), le16(1)));
+    send(DXL2_BROADCAST_ID, DXL2_INST_FAST_BULK_READ, params);
+    EXPECT_TRUE(env.wire.empty());
 }
 
 TEST_F(X430Test, FastReadIgnoresMalformedRequests)

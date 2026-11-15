@@ -131,19 +131,44 @@ Position into 0..4095.
 ## Group instructions
 
 - **SYNC_READ / BULK_READ:** one status packet per hosted device, in the order of the
-  request; IDs that are not hosted are skipped.
+  request, taking turns like X series actuators on one wire (below).
 - **FAST_SYNC_READ / FAST_BULK_READ:** one status packet with ID 0xFE. Per device it
   carries `[error, ID, data, CRC]`; each CRC covers the packet from the header up to that
   point, and the last one is the packet CRC. The packet is not byte-stuffed, as
-  DynamixelSDK expects.
+  DynamixelSDK expects. If the request lists an ID that this bus does not host, the bus
+  stays silent (below).
 
 ![Fast Sync Read status packet](assets/images/fast-read.svg)
 
 - **SYNC_WRITE / BULK_WRITE:** applied to the hosted IDs without status; a malformed
   BULK_WRITE is ignored as a whole.
 
-A Fast read answers only for the IDs of this bus: keep all IDs of one ROS 2 hardware
-component on the same emulator bus.
+### Several buses on one wire
+
+A product may put one emulator bus on each MCU and connect the MCUs to one half-duplex
+wire, together with real actuators: each bus then hosts only some of the IDs of a
+request. Every bus hears the status packets of the others (the bus decodes them; it never
+answers one).
+
+- **SYNC_READ / BULK_READ take turns.** The device listed first answers at once. Every
+  later hosted device answers only after the status packet of the ID listed just before
+  it: at once after a device of the same bus, else when the status of that ID has been
+  received from the wire. So the answers never overlap, as on a bus of X series
+  actuators.
+- **A missing device ends the read.** If the status of the ID before does not arrive
+  within `X430_TURN_TIMEOUT_MS` (default 100 ms) of the last progress of the read, or the
+  host sends its next instruction first, the remaining hosted devices of the read stay
+  silent. DynamixelSDK stops at the first ID that does not answer anyway, and a late
+  answer could collide with the next instruction. A hosted device that does not answer
+  reads (Status Return Level 0) ends the read the same way. The timeout uses the
+  millisecond clock of the port; keep it longer than one status packet at the lowest baud
+  rate in use plus the Return Delay Time.
+- **A Fast read of several buses is not answered.** The answer to FAST_SYNC_READ and
+  FAST_BULK_READ is one packet whose segments come from all devices, chained by a running
+  CRC; a bus cannot build the part of another one. When the request lists an ID that this
+  bus does not host, it stays silent, and the ROBOTIS ROS 2 hardware interface falls back
+  to SYNC_READ after 10 attempts. With all IDs on one bus nothing changes: keep all IDs of
+  one ROS 2 hardware component on the same emulator bus to use the Fast read.
 
 ## Persistent blocks
 

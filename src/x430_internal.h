@@ -57,6 +57,23 @@ extern "C" {
  * TYPE DEFINITIONS
  * =============================================================================*/
 
+/** @brief ::x430_turn::after of an entry that may answer at once. */
+#define X430_TURN_NOW 0xFFU
+
+/**
+ * @brief One hosted device of a SYNC_READ or BULK_READ that has not answered yet.
+ * @details It answers when ::x430_turn::after is ::X430_TURN_NOW: at once for the first ID
+ *          of the request and after a hosted device, else after the status packet of
+ *          the ID @c after (a device of another bus).
+ */
+struct x430_turn
+{
+    struct x430_device* device; /**< Hosted device. */
+    uint16_t address;           /**< First address to read. */
+    uint16_t length;            /**< Bytes to read. */
+    uint8_t after;              /**< ID whose status comes first, or ::X430_TURN_NOW. */
+};
+
 /** @brief State behind the opaque ::x430_bus. Its layout may change in any release. */
 struct x430_bus_ctx
 {
@@ -65,8 +82,12 @@ struct x430_bus_ctx
     struct x430_device* devices[X430_MAX_DEVICES]; /**< Attached devices. */
     uint32_t ready;                                /**< ::X430_READY after x430_bus_init(). */
     uint32_t last_rx_ms;                           /**< Time of the last instruction packet. */
+    uint32_t turn_ms;                              /**< Last progress of the pending read. */
     uint8_t device_count;                          /**< Entries in devices. */
     bool write_failed;                             /**< The writer failed since the last call. */
+    uint8_t turn_count;                            /**< Entries in turns. */
+    uint8_t turn_next;                             /**< Next entry of turns to answer. */
+    struct x430_turn turns[X430_MAX_DEVICES];      /**< Pending SYNC_READ / BULK_READ. */
     uint8_t tx[DXL2_MAX_PACKET_SIZE];              /**< Status packet, built and framed in place. */
 };
 

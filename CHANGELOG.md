@@ -4,6 +4,36 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-11-15
+
+Several emulator buses on one wire: one bus per MCU, connected to one half-duplex
+DYNAMIXEL bus (for example one stepper drive per joint), now behave like X series
+actuators on that wire.
+
+### Changed
+
+- SYNC_READ and BULK_READ take turns: a hosted device answers only after the status
+  packet of the ID listed just before it in the request (at once after a device of the
+  same bus). The bus now decodes the status packets of other devices on the wire for
+  this. Before, every hosted device answered at once and IDs of other buses were
+  skipped, so the answers of several buses collided on a shared wire.
+- If that status does not arrive within X430_TURN_TIMEOUT_MS, or the host sends its next
+  instruction first, or a hosted device does not answer reads (Status Return Level 0),
+  the remaining hosted devices of the read stay silent.
+- FAST_SYNC_READ and FAST_BULK_READ: when the request lists an ID that the bus does not
+  host, the bus stays silent (one bus cannot build the chained answer of several), and
+  the ROBOTIS ROS 2 hardware interface falls back to SYNC_READ. Before, the bus answered
+  for its own IDs only, which the host decoded as a malformed answer. With all IDs on one
+  bus nothing changes.
+- struct x430_bus grows by the pending read: 2,424 B on Cortex-M4 with the default
+  options (was 2,368 B); x430_bus.c 3,090 B flash at -Os (was 2,820 B). The stack of
+  every public function is unchanged. Rebuild the application with the new headers.
+
+### Added
+
+- X430_TURN_TIMEOUT_MS / CONFIG_X430_TURN_TIMEOUT_MS (default 100 ms, 1..60000): the
+  longest wait for the status of the ID before, from the last progress of the read.
+
 ## [1.0.0] - 2026-11-14
 
 First release: device-side emulation of DYNAMIXEL X430 actuators over Protocol 2.0. The
@@ -72,5 +102,6 @@ public API (x430.h and inc/) is stable within major version 1.
 - Verified on hardware: a stepper joint firmware (STM32G431, Zephyr) emulating an
   XM430-W350 with DYNAMIXEL Wizard 2.0.
 
-[Unreleased]: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/releases/tag/v1.0.0

@@ -152,6 +152,18 @@ config X430_DXL2_MAX_PACKET_SIZE
 	  READ and the size of a Fast Sync/Bulk Read answer (all devices in one
 	  packet: devices x (length + 4) + 10 bytes).
 
+config X430_TURN_TIMEOUT_MS
+	int "Shared bus: wait for the status of the device before (ms)"
+	default 100
+	range 1 60000
+	help
+	  On a bus shared with other buses (other MCUs, real servos), a hosted
+	  device answers a SYNC_READ or BULK_READ only after the status packet
+	  of the ID listed before it. Without that status within this time
+	  (from the last progress of the read) the remaining hosted devices of
+	  the read stay silent. Keep it longer than one status packet at the
+	  lowest baud rate in use, plus the Return Delay Time.
+
 menu "Protocol features"
 
 config X430_BULK

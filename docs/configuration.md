@@ -18,6 +18,7 @@ then the memory footprint and the measured stack usage.
 | `X430_MAX_DEVICES` | `X430_MAX_DEVICES` | 4 | 1..253 | Devices (IDs) per bus |
 | `X430_REG_WRITE_SIZE` | `X430_REG_WRITE_SIZE` | 32 | 4..662 | Largest REG_WRITE data per device, bytes |
 | `X430_BAUD_RATE_CODE_MAX` | `X430_BAUD_RATE_CODE_MAX` | 7 | 7..255 | Highest Baud Rate (8) code a write accepts |
+| `X430_TURN_TIMEOUT_MS` | `X430_TURN_TIMEOUT_MS` | 100 | 1..60000 | Shared bus: longest wait for the status of the ID before a hosted device in a SYNC_READ / BULK_READ ([group instructions](theory.md#group-instructions)) |
 | `X430_DXL2_MAX_PACKET_SIZE` | `DXL2_MAX_PACKET_SIZE` (DXL2-C) | 768 | 64..4096 | Largest packet; limits READ length and Fast read answers |
 | `X430_BULK` | `X430_FEATURE_BULK` | y | y/n | BULK_READ, BULK_WRITE |
 | `X430_FAST_READ` | `X430_FEATURE_FAST_READ` | y | y/n | FAST_SYNC_READ, FAST_BULK_READ |
@@ -77,7 +78,7 @@ bytes and the size of a Fast read answer to `DXL2_MAX_PACKET_SIZE` bytes
 (`10 + devices × (bytes + 4)`). The default is 768: a READ of up to 757 bytes, so a host
 can read the whole Control Table (addresses 0–661, 662 bytes) at once, as DYNAMIXEL
 Wizard 2.0 does (with 256 it gets a Data Length Error and shows TIME OUT). A product whose
-hosts read less may lower it: with 256 the bus needs 832 B instead of 2,368 B (the stack
+hosts read less may lower it: with 256 the bus needs 888 B instead of 2,424 B (the stack
 does not depend on the packet size: the bus builds its answers in its own buffer). `x430_config.h` sets the default
 before it includes `dxl2.h`, so every file that includes `x430.h` sees the size the library
 was built with. Without CMake, compile DXL2-C with the same value
@@ -149,26 +150,27 @@ Measured with `tools/x430_measure.sh` and `arm-none-eabi-gcc` 13.2.1 for Cortex-
 | Object | All features | No optional feature |
 | --- | ---: | ---: |
 | `struct x430_device` (RAM per device) | 384 B | 384 B |
-| `struct x430_bus` (RAM per bus) | 2,368 B | 2,368 B |
-| `struct x430_bus`, `DXL2_MAX_PACKET_SIZE` 256 | 832 B | 832 B |
+| `struct x430_bus` (RAM per bus) | 2,424 B | 2,424 B |
+| `struct x430_bus`, `DXL2_MAX_PACKET_SIZE` 256 | 888 B | 888 B |
 | `struct x430_sim` | 32 B | – |
 | `.data` + `.bss` | 0 B | 0 B |
 
 A device is its compact Control Table image (316 B), the REG_WRITE data
 (`X430_REG_WRITE_SIZE`, 32 B) and its state; it keeps no copy of a persistent block. A bus
 is the DXL2-C link (receive buffer and decoded packet, 1,560 B with 768-byte packets),
-one packet buffer for its answers (`DXL2_MAX_PACKET_SIZE`) and the device list
-(`X430_MAX_DEVICES` pointers). The optional features change code, not RAM.
+one packet buffer for its answers (`DXL2_MAX_PACKET_SIZE`), the device list
+(`X430_MAX_DEVICES` pointers) and the pending SYNC_READ / BULK_READ of a shared bus
+(`X430_MAX_DEVICES` entries of 12 B). The optional features change code, not RAM.
 
 Flash (`.text`, including constants) per module:
 
 | Module | `-Os` | `-O2` | `-Os`, no optional feature |
 | --- | ---: | ---: | ---: |
 | `x430_device.c` | 4,158 B | 5,916 B | 3,814 B |
-| `x430_bus.c` | 2,820 B | 3,824 B | 2,042 B |
+| `x430_bus.c` | 3,090 B | 4,248 B | 2,260 B |
 | `x430_sim.c` | 2,022 B | 2,364 B | 32 B |
 | `x430_model_table.c` (XM430-W350) | 921 B | 921 B | 921 B |
-| **Library** | **9,921 B** | **13,025 B** | **6,809 B** |
+| **Library** | **10,191 B** | **13,449 B** | **7,027 B** |
 | DXL2-C (`dxl2_protocol.c`, `dxl2_link.c`) | 850 B | 992 B | 850 B |
 
 The model table holds 55 registers of 16 bytes, the two Indirect Address blocks (the
@@ -177,7 +179,7 @@ found by binary search. DXL2-C is listed as compiled: the bus uses only its pars
 `dxl2_crc16()`, so a link with `--gc-sections` drops `dxl2_link_send()` and
 `dxl2_link_send_status()`.
 
-On the x86-64 host the device needs 392 B and the bus 2,424 B (64-bit pointers).
+On the x86-64 host the device needs 392 B and the bus 2,488 B (64-bit pointers).
 
 ## Stack usage
 

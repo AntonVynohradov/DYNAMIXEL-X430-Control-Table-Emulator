@@ -92,6 +92,33 @@
 
 /** @} */
 
+/** @name Shared bus */
+/** @{ */
+
+/**
+ * @def X430_TURN_TIMEOUT_MS
+ * @brief Longest wait, in milliseconds, for the status packet of the device before a
+ *        hosted device in a SYNC_READ or BULK_READ (default 100).
+ * @details On a bus shared with devices of other buses (other MCUs, real servos), a
+ *          hosted device answers a SYNC_READ or BULK_READ only after it has received
+ *          the status packet of the ID listed just before it, like an X series
+ *          actuator. When that status does not arrive within this time after the last
+ *          progress of the read, the remaining hosted devices of the read stay silent.
+ *          A new instruction packet ends the wait as well. The time comes from the
+ *          millisecond clock of ::x430_port; without a clock the wait ends only with
+ *          the next instruction packet. Keep it longer than one status packet at the
+ *          lowest baud rate in use, plus the Return Delay Time.
+ */
+#ifndef X430_TURN_TIMEOUT_MS
+#if defined(CONFIG_X430_TURN_TIMEOUT_MS)
+#define X430_TURN_TIMEOUT_MS (CONFIG_X430_TURN_TIMEOUT_MS)
+#else
+#define X430_TURN_TIMEOUT_MS (100U)
+#endif
+#endif
+
+/** @} */
+
 /** @name Identity */
 /** @{ */
 
@@ -193,6 +220,7 @@
 #define X430_MAX_DEVICES_U ((uint32_t)(X430_MAX_DEVICES))
 #define X430_REG_WRITE_SIZE_U ((uint32_t)(X430_REG_WRITE_SIZE))
 #define X430_BAUD_RATE_CODE_MAX_U ((uint32_t)(X430_BAUD_RATE_CODE_MAX))
+#define X430_TURN_TIMEOUT_MS_U ((uint32_t)(X430_TURN_TIMEOUT_MS))
 
 /** @} */
 
@@ -205,6 +233,10 @@
 
 #if (X430_REG_WRITE_SIZE < 4U) || (X430_REG_WRITE_SIZE > X430_TABLE_SIZE)
 #error "X430_REG_WRITE_SIZE must be in the range 4..X430_TABLE_SIZE"
+#endif
+
+#if (X430_TURN_TIMEOUT_MS < 1U) || (X430_TURN_TIMEOUT_MS > 60000U)
+#error "X430_TURN_TIMEOUT_MS must be in the range 1..60000"
 #endif
 
 /** @} */

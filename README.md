@@ -26,7 +26,7 @@ DynamixelSDK and with DYNAMIXEL Wizard 2.0 on hardware; built for ROS 2
 | Capability | What the library does |
 | --- | --- |
 | Models | All 17 X430 models (XM, XH, XD, XW, XL, XC, 2XL, 2XC430), one per build; Control Tables generated from `models/*.yaml` and checked against the ROBOTIS e-Manual tables |
-| Instructions | PING, READ, WRITE, REG_WRITE, ACTION, FACTORY_RESET, REBOOT, CLEAR, BACKUP, SYNC_READ/WRITE, BULK_READ/WRITE, FAST_SYNC_READ, FAST_BULK_READ; broadcast and Secondary ID |
+| Instructions | PING, READ, WRITE, REG_WRITE, ACTION, FACTORY_RESET, REBOOT, CLEAR, BACKUP, SYNC_READ/WRITE, BULK_READ/WRITE, FAST_SYNC_READ, FAST_BULK_READ; broadcast and Secondary ID; several buses (MCUs) on one wire take turns like X series actuators |
 | Device rules | Access rights, ranges and limit registers, EEPROM lock while the torque is on, Indirect Address/Data, Status Return Level, Return Delay Time, Bus Watchdog, hardware error shutdown and alert bit, Startup Configuration, Drive Mode "torque on by goal update" |
 | Your motor | Five hooks per device (write, read, event, nvm_read, nvm_write); live registers updated with `x430_device_set()` |
 | Platform | One byte writer and an optional port (lock, millisecond clock, delay); bare metal, Zephyr, FreeRTOS, POSIX |
@@ -41,8 +41,8 @@ a READ of the whole Control Table, as DYNAMIXEL Wizard does it)
 
 | Figure | Value |
 | --- | --- |
-| RAM per device / per bus / per simulator | 384 B / 2,368 B / 32 B (bus: 832 B with 256-byte packets) |
-| Flash, `-Os`, with the model table | 9,921 B (+ 850 B DXL2-C); 6,809 B without the optional features |
+| RAM per device / per bus / per simulator | 384 B / 2,424 B / 32 B (bus: 888 B with 256-byte packets) |
+| Flash, `-Os`, with the model table | 10,191 B (+ 850 B DXL2-C); 7,027 B without the optional features |
 | `.data` + `.bss` | 0 B |
 | Worst-case stack, `x430_bus_receive()`, `-Os` | 424 B (any packet size) |
 | MISRA C:2012 (Cppcheck 2.13) | 0 violations, 2 documented deviations |
