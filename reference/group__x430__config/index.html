@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/brand/systemfromscratch-logo.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1213,17 +1213,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#define-dxl2_max_packet_size" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        define DXL2_MAX_PACKET_SIZE
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#define-x430_baud_rate_code_max" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1413,10 +1402,6 @@
 <tbody>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-dxl2_max_packet_size"><strong>DXL2_MAX_PACKET_SIZE</strong></a>  <code>768U</code><br><em>Largest packet of the DXL2-C link, in bytes (default 768: a READ of the whole Control Table, as DYNAMIXEL Wizard does it).</em></td>
-</tr>
-<tr>
-<td style="text-align: right;">define</td>
 <td style="text-align: left;"><a href="./#define-x430_baud_rate_code_max"><strong>X430_BAUD_RATE_CODE_MAX</strong></a>  <code>(7U)</code><br><em>Highest Baud Rate (address 8) code accepted by a write.</em></td>
 </tr>
 <tr>
@@ -1480,93 +1465,86 @@
 * the defaults below.</p>
 <p>The emulated model is not configured here: CMake generates its Control Table (x430_model_table.c) and x430_model_info.h for the model selected with Kconfig or with the X430_MODEL cache variable. </p>
 <h2 id="macro-definition-documentation">Macro Definition Documentation<a class="headerlink" href="#macro-definition-documentation" title="Permanent link">&para;</a></h2>
-<h3 id="define-dxl2_max_packet_size">define DXL2_MAX_PACKET_SIZE<a class="headerlink" href="#define-dxl2_max_packet_size" title="Permanent link">&para;</a></h3>
-<p><em>Largest packet of the DXL2-C link, in bytes (default 768: a READ of the whole Control Table, as DYNAMIXEL Wizard does it).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>#define DXL2_MAX_PACKET_SIZE `768U`
-</code></pre></div></p>
-<p>Defined here, before dxl2.h is included, so that every translation unit that includes x430.h sees the size the library was built with (the instance size of a bus depends on it). DXL2-C itself must be compiled with the same value; x430.cmake passes it to DXL2-C. </p>
-<hr>
-
 <h3 id="define-x430_baud_rate_code_max">define X430_BAUD_RATE_CODE_MAX<a class="headerlink" href="#define-x430_baud_rate_code_max" title="Permanent link">&para;</a></h3>
 <p><em>Highest Baud Rate (address 8) code accepted by a write.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>#define X430_BAUD_RATE_CODE_MAX `(7U)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>#define X430_BAUD_RATE_CODE_MAX `(7U)`
 </code></pre></div></p>
 <p>The X430 table defines 0..7. A larger value lets an application use its own codes; the application validates them in the write hook. </p>
 <hr>
 
 <h3 id="define-x430_baud_rate_code_max_u">define X430_BAUD_RATE_CODE_MAX_U<a class="headerlink" href="#define-x430_baud_rate_code_max_u" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>#define X430_BAUD_RATE_CODE_MAX_U `((uint32_t)( X430_BAUD_RATE_CODE_MAX ))`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>#define X430_BAUD_RATE_CODE_MAX_U `((uint32_t)( X430_BAUD_RATE_CODE_MAX ))`
 </code></pre></div>
 <hr>
 
 <h3 id="define-x430_feature_backup">define X430_FEATURE_BACKUP<a class="headerlink" href="#define-x430_feature_backup" title="Permanent link">&para;</a></h3>
 <p><em>Control Table BACKUP instruction, Backup Ready and Startup RAM Restore.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#define X430_FEATURE_BACKUP `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>#define X430_FEATURE_BACKUP `1`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_feature_bulk">define X430_FEATURE_BULK<a class="headerlink" href="#define-x430_feature_bulk" title="Permanent link">&para;</a></h3>
 <p><em>BULK_READ and BULK_WRITE instructions.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#define X430_FEATURE_BULK `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>#define X430_FEATURE_BULK `1`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_feature_fast_read">define X430_FEATURE_FAST_READ<a class="headerlink" href="#define-x430_feature_fast_read" title="Permanent link">&para;</a></h3>
 <p><em>FAST_SYNC_READ and FAST_BULK_READ instructions (used by ROS 2 by default).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define X430_FEATURE_FAST_READ `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#define X430_FEATURE_FAST_READ `1`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_feature_simulator">define X430_FEATURE_SIMULATOR<a class="headerlink" href="#define-x430_feature_simulator" title="Permanent link">&para;</a></h3>
 <p><em>Built-in simulator backend (x430_sim.h).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#define X430_FEATURE_SIMULATOR `1`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>#define X430_FEATURE_SIMULATOR `1`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_firmware_version">define X430_FIRMWARE_VERSION<a class="headerlink" href="#define-x430_firmware_version" title="Permanent link">&para;</a></h3>
 <p><em>Firmware Version (address 6) used when the device configuration gives 0.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#define X430_FIRMWARE_VERSION `(52U)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#define X430_FIRMWARE_VERSION `(52U)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_max_devices">define X430_MAX_DEVICES<a class="headerlink" href="#define-x430_max_devices" title="Permanent link">&para;</a></h3>
 <p><em>Devices (DYNAMIXEL IDs) one bus can host.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#define X430_MAX_DEVICES `(4U)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>#define X430_MAX_DEVICES `(4U)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_max_devices_u">define X430_MAX_DEVICES_U<a class="headerlink" href="#define-x430_max_devices_u" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>#define X430_MAX_DEVICES_U `((uint32_t)( X430_MAX_DEVICES ))`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>#define X430_MAX_DEVICES_U `((uint32_t)( X430_MAX_DEVICES ))`
 </code></pre></div>
 <hr>
 
 <h3 id="define-x430_model_number">define X430_MODEL_NUMBER<a class="headerlink" href="#define-x430_model_number" title="Permanent link">&para;</a></h3>
 <p><em>Model Number reported by PING and address 0.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>#define X430_MODEL_NUMBER `(X430_MODEL_NUMBER_DEFAULT)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>#define X430_MODEL_NUMBER `(X430_MODEL_NUMBER_DEFAULT)`
 </code></pre></div></p>
 <p>CONFIG_X430_MODEL_NUMBER_OVERRIDE (non-zero) replaces the number of the ROBOTIS documentation, for hosts that only know another number. </p>
 <hr>
 
 <h3 id="define-x430_reg_write_size">define X430_REG_WRITE_SIZE<a class="headerlink" href="#define-x430_reg_write_size" title="Permanent link">&para;</a></h3>
 <p><em>Largest data block a REG_WRITE can register, in bytes.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>#define X430_REG_WRITE_SIZE `(32U)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>#define X430_REG_WRITE_SIZE `(32U)`
 </code></pre></div></p>
 <hr>
 
 <h3 id="define-x430_reg_write_size_u">define X430_REG_WRITE_SIZE_U<a class="headerlink" href="#define-x430_reg_write_size_u" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>#define X430_REG_WRITE_SIZE_U `((uint32_t)( X430_REG_WRITE_SIZE ))`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>#define X430_REG_WRITE_SIZE_U `((uint32_t)( X430_REG_WRITE_SIZE ))`
 </code></pre></div>
 <hr>
 
 <h3 id="define-x430_turn_timeout_ms">define X430_TURN_TIMEOUT_MS<a class="headerlink" href="#define-x430_turn_timeout_ms" title="Permanent link">&para;</a></h3>
 <p><em>Longest wait, in milliseconds, for the status packet of the device before a hosted device in a SYNC_READ or BULK_READ (default 100).</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>#define X430_TURN_TIMEOUT_MS `(100U)`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>#define X430_TURN_TIMEOUT_MS `(100U)`
 </code></pre></div></p>
 <p>On a bus shared with devices of other buses (other MCUs, real servos), a hosted device answers a SYNC_READ or BULK_READ only after it has received the status packet of the ID listed just before it, like an X series actuator. When that status does not arrive within this time after the last progress of the read, the remaining hosted devices of the read stay silent. A new instruction packet ends the wait as well. The time comes from the millisecond clock of <a href="../structx430__port/"><strong>x430_port</strong></a>; without a clock the wait ends only with the next instruction packet. Keep it longer than one status packet at the lowest baud rate in use, plus the Return Delay Time. </p>
 <hr>
 
 <h3 id="define-x430_turn_timeout_ms_u">define X430_TURN_TIMEOUT_MS_U<a class="headerlink" href="#define-x430_turn_timeout_ms_u" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>#define X430_TURN_TIMEOUT_MS_U `((uint32_t)( X430_TURN_TIMEOUT_MS ))`
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>#define X430_TURN_TIMEOUT_MS_U `((uint32_t)( X430_TURN_TIMEOUT_MS ))`
 </code></pre></div>
 <hr>
 

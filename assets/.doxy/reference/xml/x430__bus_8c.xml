@@ -1740,7 +1740,7 @@
 <codeline lineno="705"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
 <codeline lineno="706"><highlight class="normal"></highlight></codeline>
 <codeline lineno="707"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((length<sp/>==<sp/>0U)<sp/>||<sp/>(device<sp/>==<sp/>NULL)<sp/>||</highlight></codeline>
-<codeline lineno="708"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((position<sp/>+<sp/>length<sp/>+<sp/>X430_FAST_SEGMENT_OVERHEAD)<sp/>&gt;<sp/><ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref>))</highlight></codeline>
+<codeline lineno="708"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((position<sp/>+<sp/>length<sp/>+<sp/>X430_FAST_SEGMENT_OVERHEAD)<sp/>&gt;<sp/>DXL2_MAX_PACKET_SIZE))</highlight></codeline>
 <codeline lineno="709"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
 <codeline lineno="710"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Malformed,<sp/>or<sp/>an<sp/>ID<sp/>of<sp/>another<sp/>bus:<sp/>the<sp/>answer<sp/>of<sp/>several<sp/>buses<sp/>would<sp/>have</highlight></codeline>
 <codeline lineno="711"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>to<sp/>be<sp/>one<sp/>chained<sp/>packet,<sp/>which<sp/>this<sp/>bus<sp/>cannot<sp/>build.<sp/>It<sp/>stays<sp/>silent,<sp/>and</highlight></codeline>

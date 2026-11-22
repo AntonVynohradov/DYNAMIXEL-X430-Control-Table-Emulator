@@ -151,11 +151,11 @@ struct x430_sim_config
 
 #define X430_ALIGN_UP(n, a) (((((n) + (a)) - 1U) / (a)) * (a))
 
-#define X430_DXL2_LINK_BYTES                                                                  \
-    X430_ALIGN_UP((4U * X430_POINTER_BYTES) +                                                 \
-                      X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE, X430_POINTER_BYTES) +               \
-                      X430_POINTER_BYTES + X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE - 6U, 4U) + 8U, \
-                  X430_POINTER_BYTES)
+#define X430_DXL2_LINK_BYTES                                                                      \
+    X430_ALIGN_UP(                                                                                \
+        (4U * X430_POINTER_BYTES) + X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE, X430_POINTER_BYTES) +     \
+            X430_POINTER_BYTES + X430_ALIGN_UP(4U, X430_POINTER_BYTES) + X430_POINTER_BYTES + 8U, \
+        X430_POINTER_BYTES)
 
 #define X430_BUS_BYTES                                  \
     (X430_DXL2_LINK_BYTES + (3U * X430_POINTER_BYTES) + \

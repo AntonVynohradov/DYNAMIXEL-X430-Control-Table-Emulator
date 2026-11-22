@@ -133,7 +133,6 @@
     <member refid="structx430__turn_1a0a43dc68f6a193bf2fdaf412d944ebed" kind="variable"><name>after</name></member>
   </compound>
   <compound refid="x430__config_8h" kind="file"><name>x430_config.h</name>
-    <member refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kind="define"><name>DXL2_MAX_PACKET_SIZE</name></member>
     <member refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" kind="define"><name>X430_MAX_DEVICES</name></member>
     <member refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" kind="define"><name>X430_REG_WRITE_SIZE</name></member>
     <member refid="group__x430__config_1ga9113a25601c31edb2986778731fdc703" kind="define"><name>X430_TURN_TIMEOUT_MS</name></member>
@@ -499,7 +498,6 @@
     <member refid="group__x430_1gae104b6d9abb4224fb7720860485169cc" kind="function"><name>x430_sim_step</name></member>
   </compound>
   <compound refid="group__x430__config" kind="group"><name>x430_config</name>
-    <member refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kind="define"><name>DXL2_MAX_PACKET_SIZE</name></member>
     <member refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" kind="define"><name>X430_MAX_DEVICES</name></member>
     <member refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" kind="define"><name>X430_REG_WRITE_SIZE</name></member>
     <member refid="group__x430__config_1ga9113a25601c31edb2986778731fdc703" kind="define"><name>X430_TURN_TIMEOUT_MS</name></member>

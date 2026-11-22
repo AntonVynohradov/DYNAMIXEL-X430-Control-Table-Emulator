@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="315" column="14" bodyfile="inc/x430_types.h" bodystart="315" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="317" column="14" bodyfile="inc/x430_types.h" bodystart="317" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -26,7 +26,7 @@
     <detaileddescription>
 <para>Allocated by the application and initialized by <ref refid="group__x430_1ga9e6f35869f8631cbb30b49b11e7107b2" kindref="member">x430_sim_init()</ref>. The content is private. </para>
     </detaileddescription>
-    <location file="inc/x430_types.h" line="313" column="1" bodyfile="inc/x430_types.h" bodystart="314" bodyend="316"/>
+    <location file="inc/x430_types.h" line="315" column="1" bodyfile="inc/x430_types.h" bodystart="316" bodyend="318"/>
     <listofallmembers>
       <member refid="structx430__sim_1a275be47249c6c9a2e97b4ebd1fcf5d81" prot="public" virt="non-virtual"><scope>x430_sim</scope><name>opaque</name></member>
     </listofallmembers>

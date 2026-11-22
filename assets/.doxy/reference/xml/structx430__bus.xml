@@ -17,7 +17,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="296" column="14" bodyfile="inc/x430_types.h" bodystart="296" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="298" column="14" bodyfile="inc/x430_types.h" bodystart="298" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>
@@ -26,7 +26,7 @@
     <detaileddescription>
 <para>Allocated by the application (static, stack or pool) and initialized by <ref refid="group__x430_1ga818bc6a25d661e75c6700e7924feada3" kindref="member">x430_bus_init()</ref>. The content is private: use the functions of <ref refid="x430_8h_source" kindref="compound">x430.h</ref>. </para>
     </detaileddescription>
-    <location file="inc/x430_types.h" line="294" column="1" bodyfile="inc/x430_types.h" bodystart="295" bodyend="297"/>
+    <location file="inc/x430_types.h" line="296" column="1" bodyfile="inc/x430_types.h" bodystart="297" bodyend="299"/>
     <listofallmembers>
       <member refid="structx430__bus_1a13301c0044a187ef893a2468bc3bc18a" prot="public" virt="non-virtual"><scope>x430_bus</scope><name>opaque</name></member>
     </listofallmembers>

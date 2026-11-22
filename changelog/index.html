@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../assets/images/brand/systemfromscratch-logo.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1083,6 +1083,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#120-2026-11-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.0 - 2026-11-22
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2.0 - 2026-11-22">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#110-2026-11-15" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1095,7 +1134,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#changed" class="md-nav__link">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1145,7 +1184,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#quality" class="md-nav__link">
+  <a href="#quality_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Quality
@@ -1318,6 +1357,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#120-2026-11-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.0 - 2026-11-22
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2.0 - 2026-11-22">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#110-2026-11-15" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1330,7 +1408,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#changed" class="md-nav__link">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1380,7 +1458,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#quality" class="md-nav__link">
+  <a href="#quality_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Quality
@@ -1416,11 +1494,35 @@
 <p>All notable changes to this project are documented here. The format follows
 <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a> and versions follow
 <a href="https://semver.org/">Semantic Versioning</a>.</p>
+<h2 id="120-2026-11-22"><a href="https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/compare/v1.1.0...v1.2.0">1.2.0</a> - 2026-11-22<a class="headerlink" href="#120-2026-11-22" title="Permanent link">&para;</a></h2>
+<p>Less RAM per bus with DXL2-C 2.0.0. The public API is unchanged; the instance of a bus is
+smaller, so code built against 1.1.0 must be recompiled.</p>
+<h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
+<ul>
+<li>DXL2-C 2.0.0 (was 1.0.0, <code>X430_DXL2_GIT_TAG</code>): the parser removes the byte stuffing in
+  place, and the decoded packet points into its receive buffer instead of holding a copy
+  of the parameters. <code>X430_DXL2_LINK_BYTES</code> follows the new <code>struct dxl2_link</code>.</li>
+<li><code>DXL2_MAX_PACKET_SIZE</code> has one default per build system: <code>Kconfig.x430</code> and
+  <code>x430.cmake</code> (768). <code>x430_config.h</code> no longer sets its own default; a build without
+  Kconfig, without <code>x430.cmake</code> and without the definition stops with <code>#error</code> instead of
+  using a size DXL2-C may not have been compiled with.</li>
+</ul>
+<h3 id="quality">Quality<a class="headerlink" href="#quality" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Cortex-M4 (arm-none-eabi-gcc 13.2.1, -Os, XM430-W350): 1,664 B RAM per bus with
+  768-byte packets (was 2,424 B), 640 B with 256-byte packets (was 888 B); 384 B per
+  device and 32 B per simulator as before. Flash 10,119 B with the model table (was
+  10,191 B), DXL2-C 842 B (was 850 B). Worst-case stack unchanged (424 B,
+  x430_bus_receive()).</li>
+<li>The unit tests (138 CTest tests, 105 without the optional features) with 100 % line
+  and branch coverage of src/, all 17 models, the DynamixelSDK end-to-end check and MISRA C:2012
+  (0 violations, Cppcheck 2.13) pass with DXL2-C 2.0.0.</li>
+</ul>
 <h2 id="110-2026-11-15"><a href="https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/compare/v1.0.0...v1.1.0">1.1.0</a> - 2026-11-15<a class="headerlink" href="#110-2026-11-15" title="Permanent link">&para;</a></h2>
 <p>Several emulator buses on one wire: one bus per MCU, connected to one half-duplex
 DYNAMIXEL bus (for example one stepper drive per joint), now behave like X series
 actuators on that wire.</p>
-<h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
+<h3 id="changed_1">Changed<a class="headerlink" href="#changed_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>SYNC_READ and BULK_READ take turns: a hosted device answers only after the status
   packet of the ID listed just before it in the request (at once after a device of the
@@ -1494,7 +1596,7 @@ public API (x430.h and inc/) is stable within major version 1.</p>
   device in detail, integration (UART, RTOS, flash, ROS 2, DYNAMIXEL Wizard), API
   reference, MISRA deviation register.</li>
 </ul>
-<h3 id="quality">Quality<a class="headerlink" href="#quality" title="Permanent link">&para;</a></h3>
+<h3 id="quality_1">Quality<a class="headerlink" href="#quality_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Cortex-M4 (arm-none-eabi-gcc 13.2.1, -Os, XM430-W350, 768-byte packets): 384 B RAM
   per device, 2,368 B per bus (832 B with 256-byte packets), 32 B per simulator;

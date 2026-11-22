@@ -24,7 +24,8 @@
 #if defined(CONFIG_X430_DXL2_MAX_PACKET_SIZE)
 #define DXL2_MAX_PACKET_SIZE (CONFIG_X430_DXL2_MAX_PACKET_SIZE)
 #else
-#define DXL2_MAX_PACKET_SIZE 768U
+#error \
+    "DXL2_MAX_PACKET_SIZE is not set: build with x430.cmake or Kconfig, or define it for X430 and DXL2-C alike (-DDXL2_MAX_PACKET_SIZE=768U)"
 #endif
 #endif
 

@@ -50,7 +50,6 @@
     </invincdepgraph>
     <sectiondef kind="user-defined">
       <header>Device and bus sizing</header>
-      <member refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kind="define"><name>DXL2_MAX_PACKET_SIZE</name></member>
       <member refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" kind="define"><name>X430_MAX_DEVICES</name></member>
       <member refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" kind="define"><name>X430_REG_WRITE_SIZE</name></member>
     </sectiondef>
@@ -104,113 +103,114 @@ SPDX-License-Identifier: Apache-2.0 </para>
 <codeline lineno="44"><highlight class="normal"></highlight></codeline>
 <codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;x430_model_info.h&quot;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="46"><highlight class="normal"></highlight></codeline>
-<codeline lineno="61"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>DXL2_MAX_PACKET_SIZE</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_DXL2_MAX_PACKET_SIZE)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="63"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DXL2_MAX_PACKET_SIZE<sp/>(CONFIG_X430_DXL2_MAX_PACKET_SIZE)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="64"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="65" refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DXL2_MAX_PACKET_SIZE<sp/>768U</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="68"><highlight class="normal"></highlight></codeline>
-<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_MAX_DEVICES</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_MAX_DEVICES)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MAX_DEVICES<sp/>(CONFIG_X430_MAX_DEVICES)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="77" refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MAX_DEVICES<sp/>(4U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="80"><highlight class="normal"></highlight></codeline>
-<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_REG_WRITE_SIZE</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_REG_WRITE_SIZE)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_WRITE_SIZE<sp/>(CONFIG_X430_REG_WRITE_SIZE)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="89" refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_WRITE_SIZE<sp/>(32U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="90"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="92"><highlight class="normal"></highlight></codeline>
-<codeline lineno="112"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_TURN_TIMEOUT_MS</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_TURN_TIMEOUT_MS)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="114"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_TURN_TIMEOUT_MS<sp/>(CONFIG_X430_TURN_TIMEOUT_MS)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="115"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="116" refid="group__x430__config_1ga9113a25601c31edb2986778731fdc703" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_TURN_TIMEOUT_MS<sp/>(100U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="117"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="119"><highlight class="normal"></highlight></codeline>
-<codeline lineno="129"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FIRMWARE_VERSION</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_FIRMWARE_VERSION)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="131"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FIRMWARE_VERSION<sp/>(CONFIG_X430_FIRMWARE_VERSION)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="132"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="133" refid="group__x430__config_1ga88bd99c8234f09536b1eec34903d6383" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FIRMWARE_VERSION<sp/>(52U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="134"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="135"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="136"><highlight class="normal"></highlight></codeline>
-<codeline lineno="143"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_MODEL_NUMBER</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="144"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_MODEL_NUMBER_OVERRIDE)<sp/>&amp;&amp;<sp/>(CONFIG_X430_MODEL_NUMBER_OVERRIDE<sp/>!=<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="145"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MODEL_NUMBER<sp/>(CONFIG_X430_MODEL_NUMBER_OVERRIDE)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="146"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="147" refid="group__x430__config_1ga7f332f10f262be05132db10adf218a0e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MODEL_NUMBER<sp/>(X430_MODEL_NUMBER_DEFAULT)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="148"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="149"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="150"><highlight class="normal"></highlight></codeline>
-<codeline lineno="157"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_BAUD_RATE_CODE_MAX</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="158"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_BAUD_RATE_CODE_MAX)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="159"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_BAUD_RATE_CODE_MAX<sp/>(CONFIG_X430_BAUD_RATE_CODE_MAX)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="160"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="161" refid="group__x430__config_1ga0c564a82c2c26a378004de001db17b6a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_BAUD_RATE_CODE_MAX<sp/>(7U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="163"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="164"><highlight class="normal"></highlight></codeline>
-<codeline lineno="175"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FEATURE_BULK</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="176"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_BULK)<sp/>||<sp/>!defined(X430_HAS_AUTOCONF)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="177" refid="group__x430__config_1ga622c73f8617fa71de66001997915236a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_BULK<sp/>1</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="178"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="179"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_BULK<sp/>0</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="180"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="181"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="182"><highlight class="normal"></highlight></codeline>
-<codeline lineno="184"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FEATURE_FAST_READ</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="185"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_FAST_READ)<sp/>||<sp/>!defined(X430_HAS_AUTOCONF)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="186" refid="group__x430__config_1ga6cc790b9c8fbc5d86a09bd8ecd96ac9e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_FAST_READ<sp/>1</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="187"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="188"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_FAST_READ<sp/>0</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="189"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="190"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="191"><highlight class="normal"></highlight></codeline>
-<codeline lineno="193"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FEATURE_BACKUP</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="194"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_BACKUP)<sp/>||<sp/>!defined(X430_HAS_AUTOCONF)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="195" refid="group__x430__config_1gaad138ea4f3dd8d6af92b9f92229c3643" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_BACKUP<sp/>1</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="196"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="197"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_BACKUP<sp/>0</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="198"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="199"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="200"><highlight class="normal"></highlight></codeline>
-<codeline lineno="202"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FEATURE_SIMULATOR</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="203"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_SIMULATOR)<sp/>||<sp/>!defined(X430_HAS_AUTOCONF)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="204" refid="group__x430__config_1ga2fad795e8d559947ef01969bcfcbe13c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_SIMULATOR<sp/>1</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="205"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="206"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_SIMULATOR<sp/>0</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="207"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="208"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="209"><highlight class="normal"></highlight></codeline>
-<codeline lineno="220"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MAX_DEVICES_U<sp/>((uint32_t)(X430_MAX_DEVICES))</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="221"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_WRITE_SIZE_U<sp/>((uint32_t)(X430_REG_WRITE_SIZE))</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="222"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_BAUD_RATE_CODE_MAX_U<sp/>((uint32_t)(X430_BAUD_RATE_CODE_MAX))</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="223"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_TURN_TIMEOUT_MS_U<sp/>((uint32_t)(X430_TURN_TIMEOUT_MS))</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="224"><highlight class="normal"></highlight></codeline>
-<codeline lineno="230"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(X430_MAX_DEVICES<sp/>&lt;<sp/>1U)<sp/>||<sp/>(X430_MAX_DEVICES<sp/>&gt;<sp/>253U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="231"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;X430_MAX_DEVICES<sp/>must<sp/>be<sp/>in<sp/>the<sp/>range<sp/>1..253&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="232"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="233"><highlight class="normal"></highlight></codeline>
-<codeline lineno="234"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(X430_REG_WRITE_SIZE<sp/>&lt;<sp/>4U)<sp/>||<sp/>(X430_REG_WRITE_SIZE<sp/>&gt;<sp/>X430_TABLE_SIZE)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="235"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;X430_REG_WRITE_SIZE<sp/>must<sp/>be<sp/>in<sp/>the<sp/>range<sp/>4..X430_TABLE_SIZE&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="236"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="237"><highlight class="normal"></highlight></codeline>
-<codeline lineno="238"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(X430_TURN_TIMEOUT_MS<sp/>&lt;<sp/>1U)<sp/>||<sp/>(X430_TURN_TIMEOUT_MS<sp/>&gt;<sp/>60000U)</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="239"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;X430_TURN_TIMEOUT_MS<sp/>must<sp/>be<sp/>in<sp/>the<sp/>range<sp/>1..60000&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="240"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="241"><highlight class="normal"></highlight></codeline>
-<codeline lineno="244"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>X430_CONFIG_H<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>DXL2_MAX_PACKET_SIZE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_DXL2_MAX_PACKET_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DXL2_MAX_PACKET_SIZE<sp/>(CONFIG_X430_DXL2_MAX_PACKET_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>\</highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>&quot;DXL2_MAX_PACKET_SIZE<sp/>is<sp/>not<sp/>set:<sp/>build<sp/>with<sp/>x430.cmake<sp/>or<sp/>Kconfig,<sp/>or<sp/>define<sp/>it<sp/>for<sp/>X430<sp/>and<sp/>DXL2-C<sp/>alike<sp/>(-DDXL2_MAX_PACKET_SIZE=768U)&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_MAX_DEVICES</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_MAX_DEVICES)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MAX_DEVICES<sp/>(CONFIG_X430_MAX_DEVICES)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="group__x430__config_1ga22d457f0bb4c4a504b128cb3b5270816" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MAX_DEVICES<sp/>(4U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_REG_WRITE_SIZE</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_REG_WRITE_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_WRITE_SIZE<sp/>(CONFIG_X430_REG_WRITE_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="group__x430__config_1ga5dbe10175378dbae67d36b92c0fee931" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_WRITE_SIZE<sp/>(32U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_TURN_TIMEOUT_MS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_TURN_TIMEOUT_MS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_TURN_TIMEOUT_MS<sp/>(CONFIG_X430_TURN_TIMEOUT_MS)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122" refid="group__x430__config_1ga9113a25601c31edb2986778731fdc703" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_TURN_TIMEOUT_MS<sp/>(100U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FIRMWARE_VERSION</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_FIRMWARE_VERSION)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FIRMWARE_VERSION<sp/>(CONFIG_X430_FIRMWARE_VERSION)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139" refid="group__x430__config_1ga88bd99c8234f09536b1eec34903d6383" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FIRMWARE_VERSION<sp/>(52U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_MODEL_NUMBER</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_MODEL_NUMBER_OVERRIDE)<sp/>&amp;&amp;<sp/>(CONFIG_X430_MODEL_NUMBER_OVERRIDE<sp/>!=<sp/>0)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MODEL_NUMBER<sp/>(CONFIG_X430_MODEL_NUMBER_OVERRIDE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153" refid="group__x430__config_1ga7f332f10f262be05132db10adf218a0e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MODEL_NUMBER<sp/>(X430_MODEL_NUMBER_DEFAULT)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_BAUD_RATE_CODE_MAX</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_BAUD_RATE_CODE_MAX)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_BAUD_RATE_CODE_MAX<sp/>(CONFIG_X430_BAUD_RATE_CODE_MAX)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167" refid="group__x430__config_1ga0c564a82c2c26a378004de001db17b6a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_BAUD_RATE_CODE_MAX<sp/>(7U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FEATURE_BULK</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_BULK)<sp/>||<sp/>!defined(X430_HAS_AUTOCONF)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183" refid="group__x430__config_1ga622c73f8617fa71de66001997915236a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_BULK<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_BULK<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FEATURE_FAST_READ</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_FAST_READ)<sp/>||<sp/>!defined(X430_HAS_AUTOCONF)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192" refid="group__x430__config_1ga6cc790b9c8fbc5d86a09bd8ecd96ac9e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_FAST_READ<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_FAST_READ<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FEATURE_BACKUP</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_BACKUP)<sp/>||<sp/>!defined(X430_HAS_AUTOCONF)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="201" refid="group__x430__config_1gaad138ea4f3dd8d6af92b9f92229c3643" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_BACKUP<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_BACKUP<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>X430_FEATURE_SIMULATOR</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(CONFIG_X430_SIMULATOR)<sp/>||<sp/>!defined(X430_HAS_AUTOCONF)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210" refid="group__x430__config_1ga2fad795e8d559947ef01969bcfcbe13c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_SIMULATOR<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_FEATURE_SIMULATOR<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_MAX_DEVICES_U<sp/>((uint32_t)(X430_MAX_DEVICES))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_REG_WRITE_SIZE_U<sp/>((uint32_t)(X430_REG_WRITE_SIZE))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_BAUD_RATE_CODE_MAX_U<sp/>((uint32_t)(X430_BAUD_RATE_CODE_MAX))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>X430_TURN_TIMEOUT_MS_U<sp/>((uint32_t)(X430_TURN_TIMEOUT_MS))</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(X430_MAX_DEVICES<sp/>&lt;<sp/>1U)<sp/>||<sp/>(X430_MAX_DEVICES<sp/>&gt;<sp/>253U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;X430_MAX_DEVICES<sp/>must<sp/>be<sp/>in<sp/>the<sp/>range<sp/>1..253&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(X430_REG_WRITE_SIZE<sp/>&lt;<sp/>4U)<sp/>||<sp/>(X430_REG_WRITE_SIZE<sp/>&gt;<sp/>X430_TABLE_SIZE)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="241"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;X430_REG_WRITE_SIZE<sp/>must<sp/>be<sp/>in<sp/>the<sp/>range<sp/>4..X430_TABLE_SIZE&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>(X430_TURN_TIMEOUT_MS<sp/>&lt;<sp/>1U)<sp/>||<sp/>(X430_TURN_TIMEOUT_MS<sp/>&gt;<sp/>60000U)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight><highlight class="preprocessor">#error<sp/>&quot;X430_TURN_TIMEOUT_MS<sp/>must<sp/>be<sp/>in<sp/>the<sp/>range<sp/>1..60000&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal"></highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>X430_CONFIG_H<sp/>*/</highlight><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight></codeline>
     </programlisting>
     <location file="inc/x430_config.h"/>
   </compounddef>

@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../assets/images/brand/systemfromscratch-logo.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1503,14 +1503,15 @@ generated for the model chosen at build time.</p>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">app</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">x430</span><span class="p">)</span>
 </code></pre></div>
 <p><code>x430.cmake</code> generates the Control Table of the model into the build directory, fetches
-DXL2-C 1.0.0 with FetchContent (or takes a local checkout given in
+DXL2-C 2.0.0 with FetchContent (or takes a local checkout given in
 <code>FETCHCONTENT_SOURCE_DIR_DXL2</code>) and defines the static library <code>x430</code>, which links <code>dxl2</code>.</p>
 <p><strong>Any other build system.</strong> Run
 <code>python3 tools/x430_gen_model.py --models-dir models --model xm430_w350 --out-dir gen</code>,
 compile <code>src/*.c</code>, <code>gen/x430_model_table.c</code> and the two sources of DXL2-C, and add the
 repository root, <code>inc/</code>, <code>gen/</code> and the DXL2-C folders to the include path. Pass the same
-<code>X430_*</code> definitions to the library and the application, and compile DXL2-C with
-<code>DXL2_MAX_PACKET_SIZE=768U</code> (the default <code>x430_config.h</code> sets for the library).</p>
+<code>X430_*</code> definitions to the library and the application, and define
+<code>DXL2_MAX_PACKET_SIZE=768U</code> for the library, DXL2-C and the application alike
+(<code>x430_config.h</code> has no default and stops the build without it).</p>
 <p><strong>As a submodule with tests.</strong> A project that sets <code>UNIT_TESTS=ON</code> also builds the unit
 tests of this library (<code>x430_gtest</code>, CTest label <code>x430</code>); <code>COMPILE_DEFINITIONS</code> and
 <code>COMPILE_OPTIONS</code> of the project reach the library as well.</p>

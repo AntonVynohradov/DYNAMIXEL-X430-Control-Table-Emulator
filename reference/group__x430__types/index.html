@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/images/brand/systemfromscratch-logo.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1591,7 +1591,7 @@
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
-<td style="text-align: left;"><a href="./#define-x430_dxl2_link_bytes"><strong>X430_DXL2_LINK_BYTES</strong></a>  <code>/* multi line expression */</code><br><em>Bytes of struct dxl2_link of DXL2-C 1.0.0 (configuration, parser, packet, counters), from DXL2_MAX_PACKET_SIZE.</em></td>
+<td style="text-align: left;"><a href="./#define-x430_dxl2_link_bytes"><strong>X430_DXL2_LINK_BYTES</strong></a>  <code>/* multi line expression */</code><br><em>Bytes of struct dxl2_link of DXL2-C 2.0.0, from DXL2_MAX_PACKET_SIZE: configuration (4 pointers), parser (buffer and size_t), decoded packet (ID, instruction, parameter count and a pointer to the parameters in the parser buffer), two 32-bit counters.</em></td>
 </tr>
 <tr>
 <td style="text-align: right;">define</td>
@@ -1769,8 +1769,8 @@
 <hr>
 
 <h3 id="define-x430_dxl2_link_bytes">define X430_DXL2_LINK_BYTES<a class="headerlink" href="#define-x430_dxl2_link_bytes" title="Permanent link">&para;</a></h3>
-<p><em>Bytes of struct dxl2_link of DXL2-C 1.0.0 (configuration, parser, packet, counters), from DXL2_MAX_PACKET_SIZE.</em> 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>#define X430_DXL2_LINK_BYTES `X430_ALIGN_UP ((4U * X430_POINTER_BYTES ) +                                                 \ X430_ALIGN_UP ( DXL2_MAX_PACKET_SIZE , X430_POINTER_BYTES ) +               \ X430_POINTER_BYTES + X430_ALIGN_UP ( DXL2_MAX_PACKET_SIZE - 6U, 4U) + 8U, \ X430_POINTER_BYTES )`
+<p><em>Bytes of struct dxl2_link of DXL2-C 2.0.0, from DXL2_MAX_PACKET_SIZE: configuration (4 pointers), parser (buffer and size_t), decoded packet (ID, instruction, parameter count and a pointer to the parameters in the parser buffer), two 32-bit counters.</em> 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>#define X430_DXL2_LINK_BYTES `/* multi line expression */`
 </code></pre></div></p>
 <p>Plain arithmetic so that the instance size needs no sizeof (static analysis); x430_bus.c checks it at compile time. </p>
 <hr>

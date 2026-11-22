@@ -78,7 +78,6 @@ _Build-time configuration: Kconfig symbols or plain compiler definitions._ [More
 
 | Type | Name |
 | ---: | :--- |
-| define  | [**DXL2\_MAX\_PACKET\_SIZE**](group__x430__config.md#define-dxl2_max_packet_size)  `768U`<br>_Largest packet of the DXL2-C link, in bytes (default 768: a READ of the whole Control Table, as DYNAMIXEL Wizard does it)._  |
 | define  | [**X430\_BAUD\_RATE\_CODE\_MAX**](group__x430__config.md#define-x430_baud_rate_code_max)  `(7U)`<br>_Highest Baud Rate (address 8) code accepted by a write._  |
 | define  | [**X430\_BAUD\_RATE\_CODE\_MAX\_U**](group__x430__config.md#define-x430_baud_rate_code_max_u)  `((uint32\_t)([**X430\_BAUD\_RATE\_CODE\_MAX**](group__x430__config.md#define-x430_baud_rate_code_max)))`<br> |
 | define  | [**X430\_FEATURE\_BACKUP**](group__x430__config.md#define-x430_feature_backup)  `1`<br>_Control Table BACKUP instruction, Backup Ready and Startup RAM Restore._  |
@@ -109,24 +108,6 @@ The emulated model is not configured here: CMake generates its Control Table (x4
 ## Macro Definition Documentation
 
 
-
-
-
-### define DXL2\_MAX\_PACKET\_SIZE 
-
-_Largest packet of the DXL2-C link, in bytes (default 768: a READ of the whole Control Table, as DYNAMIXEL Wizard does it)._ 
-```
-#define DXL2_MAX_PACKET_SIZE `768U`
-```
-
-
-
-Defined here, before dxl2.h is included, so that every translation unit that includes x430.h sees the size the library was built with (the instance size of a bus depends on it). DXL2-C itself must be compiled with the same value; x430.cmake passes it to DXL2-C. 
-
-
-        
-
-<hr>
 
 
 

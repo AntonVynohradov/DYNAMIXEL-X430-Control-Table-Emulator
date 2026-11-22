@@ -107,7 +107,7 @@ _Callbacks, configuration structures and the opaque instances._
 | define  | [**X430\_BUS\_WORDS**](group__x430__types.md#define-x430_bus_words)  `(([**X430\_BUS\_BYTES**](group__x430__types.md#define-x430_bus_bytes) + 7U) / 8U)`<br>_Size of_ [_**x430\_bus**_](structx430__bus.md) _in 64-bit words._ |
 | define  | [**X430\_DEVICE\_BYTES**](group__x430__types.md#define-x430_device_bytes)  `((3U \* [**X430\_POINTER\_BYTES**](group__x430__types.md#define-x430_pointer_bytes)) + 17U + X430\_IMAGE\_SIZE + X430\_REG\_WRITE\_SIZE\_U)`<br>_Private state of a device in bytes; x430\_device.c checks it at compile time._  |
 | define  | [**X430\_DEVICE\_WORDS**](group__x430__types.md#define-x430_device_words)  `(([**X430\_DEVICE\_BYTES**](group__x430__types.md#define-x430_device_bytes) + 7U) / 8U)`<br>_Size of_ [_**x430\_device**_](structx430__device.md) _in 64-bit words._ |
-| define  | [**X430\_DXL2\_LINK\_BYTES**](group__x430__types.md#define-x430_dxl2_link_bytes)  `/* multi line expression */`<br>_Bytes of struct dxl2\_link of DXL2-C 1.0.0 (configuration, parser, packet, counters), from DXL2\_MAX\_PACKET\_SIZE._  |
+| define  | [**X430\_DXL2\_LINK\_BYTES**](group__x430__types.md#define-x430_dxl2_link_bytes)  `/* multi line expression */`<br>_Bytes of struct dxl2\_link of DXL2-C 2.0.0, from DXL2\_MAX\_PACKET\_SIZE: configuration (4 pointers), parser (buffer and size\_t), decoded packet (ID, instruction, parameter count and a pointer to the parameters in the parser buffer), two 32-bit counters._  |
 | define  | [**X430\_NVM\_BACKUP\_SIZE**](group__x430__types.md#define-x430_nvm_backup_size)  `([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + X430\_IMAGE\_SIZE + 2U)`<br>_Size of the persistent Control Table backup block (the compact image)._  |
 | define  | [**X430\_NVM\_EEPROM\_SIZE**](group__x430__types.md#define-x430_nvm_eeprom_size)  `([**X430\_NVM\_HEADER\_SIZE**](group__x430__defs.md#define-x430_nvm_header_size) + [**X430\_RAM\_START**](group__x430__defs.md#define-x430_ram_start) + 2U)`<br>_Size of the persistent EEPROM block (nvm\_read / nvm\_write)._  |
 | define  | [**X430\_POINTER\_BYTES**](group__x430__types.md#define-x430_pointer_bytes)  `4U`<br>_Size of a pointer and of size\_t: 8 on 64-bit hosts, 4 on Cortex-M._  |
@@ -454,9 +454,9 @@ _Size of_ [_**x430\_device**_](structx430__device.md) _in 64-bit words._
 
 ### define X430\_DXL2\_LINK\_BYTES 
 
-_Bytes of struct dxl2\_link of DXL2-C 1.0.0 (configuration, parser, packet, counters), from DXL2\_MAX\_PACKET\_SIZE._ 
+_Bytes of struct dxl2\_link of DXL2-C 2.0.0, from DXL2\_MAX\_PACKET\_SIZE: configuration (4 pointers), parser (buffer and size\_t), decoded packet (ID, instruction, parameter count and a pointer to the parameters in the parser buffer), two 32-bit counters._ 
 ```
-#define X430_DXL2_LINK_BYTES `X430_ALIGN_UP ((4U * X430_POINTER_BYTES ) +                                                 \ X430_ALIGN_UP ( DXL2_MAX_PACKET_SIZE , X430_POINTER_BYTES ) +               \ X430_POINTER_BYTES + X430_ALIGN_UP ( DXL2_MAX_PACKET_SIZE - 6U, 4U) + 8U, \ X430_POINTER_BYTES )`
+#define X430_DXL2_LINK_BYTES `/* multi line expression */`
 ```
 
 

@@ -458,24 +458,24 @@
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" prot="public" static="no">
         <name>X430_DXL2_LINK_BYTES</name>
-        <initializer>    <ref refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kindref="member">X430_ALIGN_UP</ref>((4U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) +                                                 \
-                      <ref refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kindref="member">X430_ALIGN_UP</ref>(<ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref>, <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) +               \
-                      <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref> + <ref refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kindref="member">X430_ALIGN_UP</ref>(<ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref> - 6U, 4U) + 8U, \
-                  <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>)</initializer>
+        <initializer>    <ref refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kindref="member">X430_ALIGN_UP</ref>(                                                                                \
+        (4U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + <ref refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kindref="member">X430_ALIGN_UP</ref>(DXL2_MAX_PACKET_SIZE, <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) +     \
+            <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref> + <ref refid="group__x430__types_1gaee3e714ae9d9222bcb6031cad7177eb1" kindref="member">X430_ALIGN_UP</ref>(4U, <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref> + 8U, \
+        <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>)</initializer>
         <briefdescription>
-<para>Bytes of struct dxl2_link of DXL2-C 1.0.0 (configuration, parser, packet, counters), from DXL2_MAX_PACKET_SIZE. </para>
+<para>Bytes of struct dxl2_link of DXL2-C 2.0.0, from DXL2_MAX_PACKET_SIZE: configuration (4 pointers), parser (buffer and size_t), decoded packet (ID, instruction, parameter count and a pointer to the parameters in the parser buffer), two 32-bit counters. </para>
         </briefdescription>
         <detaileddescription>
 <para>Plain arithmetic so that the instance size needs no sizeof (static analysis); x430_bus.c checks it at compile time. </para>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="264" column="9" bodyfile="inc/x430_types.h" bodystart="264" bodyend="268"/>
+        <location file="inc/x430_types.h" line="266" column="9" bodyfile="inc/x430_types.h" bodystart="266" bodyend="270"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1ga6af3d6af2c65a802102813c3b100413d" prot="public" static="no">
         <name>X430_BUS_BYTES</name>
         <initializer>    (<ref refid="group__x430__types_1gad34aa79c81686cd513d401c5a8ba9491" kindref="member">X430_DXL2_LINK_BYTES</ref> + (3U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + \
-     (X430_MAX_DEVICES_U * ((2U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 8U)) + 16U + <ref refid="group__x430__config_1ga668d14fe97878bd22dccbd6508ed916b" kindref="member">DXL2_MAX_PACKET_SIZE</ref>)</initializer>
+     (X430_MAX_DEVICES_U * ((2U * <ref refid="group__x430__types_1gafcf9f66ea55ded9ae13b77a0e90bccf4" kindref="member">X430_POINTER_BYTES</ref>) + 8U)) + 16U + DXL2_MAX_PACKET_SIZE)</initializer>
         <briefdescription>
 <para>Private state of a bus in bytes; x430_bus.c checks it at compile time. </para>
         </briefdescription>
@@ -483,7 +483,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="271" column="9" bodyfile="inc/x430_types.h" bodystart="271" bodyend="273"/>
+        <location file="inc/x430_types.h" line="273" column="9" bodyfile="inc/x430_types.h" bodystart="273" bodyend="275"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1ga337bba376411a5f61828f9084937ce16" prot="public" static="no">
         <name>X430_DEVICE_BYTES</name>
@@ -495,7 +495,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="276" column="9" bodyfile="inc/x430_types.h" bodystart="276" bodyend="277"/>
+        <location file="inc/x430_types.h" line="278" column="9" bodyfile="inc/x430_types.h" bodystart="278" bodyend="279"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1ga05d03ef884f780932e87d617f55d722c" prot="public" static="no">
         <name>X430_SIM_BYTES</name>
@@ -507,7 +507,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="280" column="9" bodyfile="inc/x430_types.h" bodystart="280" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="282" column="9" bodyfile="inc/x430_types.h" bodystart="282" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gafb28dc0de5a6f66dd81ca05716f253d9" prot="public" static="no">
         <name>X430_BUS_WORDS</name>
@@ -519,7 +519,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="283" column="9" bodyfile="inc/x430_types.h" bodystart="283" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="285" column="9" bodyfile="inc/x430_types.h" bodystart="285" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gafd96c5c9e3da83eddd8f8d676a38f483" prot="public" static="no">
         <name>X430_DEVICE_WORDS</name>
@@ -531,7 +531,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="285" column="9" bodyfile="inc/x430_types.h" bodystart="285" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="287" column="9" bodyfile="inc/x430_types.h" bodystart="287" bodyend="-1"/>
       </memberdef>
       <memberdef kind="define" id="group__x430__types_1gadff3011c00dcc31eccda490f0b50a70d" prot="public" static="no">
         <name>X430_SIM_WORDS</name>
@@ -543,7 +543,7 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="inc/x430_types.h" line="287" column="9" bodyfile="inc/x430_types.h" bodystart="287" bodyend="-1"/>
+        <location file="inc/x430_types.h" line="289" column="9" bodyfile="inc/x430_types.h" bodystart="289" bodyend="-1"/>
       </memberdef>
     </sectiondef>
     <briefdescription>

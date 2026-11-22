@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../assets/images/brand/systemfromscratch-logo.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1714,12 +1714,15 @@ bytes and the size of a Fast read answer to <code>DXL2_MAX_PACKET_SIZE</code> by
 (<code>10 + devices × (bytes + 4)</code>). The default is 768: a READ of up to 757 bytes, so a host
 can read the whole Control Table (addresses 0–661, 662 bytes) at once, as DYNAMIXEL
 Wizard 2.0 does (with 256 it gets a Data Length Error and shows TIME OUT). A product whose
-hosts read less may lower it: with 256 the bus needs 888 B instead of 2,424 B (the stack
-does not depend on the packet size: the bus builds its answers in its own buffer). <code>x430_config.h</code> sets the default
-before it includes <code>dxl2.h</code>, so every file that includes <code>x430.h</code> sees the size the library
-was built with. Without CMake, compile DXL2-C with the same value
-(<code>-DDXL2_MAX_PACKET_SIZE=768U</code>; the default of DXL2-C alone is 256), and include <code>x430.h</code>
-before <code>dxl2.h</code> in the application.</p>
+hosts read less may lower it: with 256 the bus needs 640 B instead of 1,664 B (the stack
+does not depend on the packet size: the bus builds its answers in its own buffer).</p>
+<p>The default has two places, one per build system: <code>CONFIG_X430_DXL2_MAX_PACKET_SIZE</code> in
+<code>Kconfig.x430</code> and the cache variable <code>X430_DXL2_MAX_PACKET_SIZE</code> in <code>x430.cmake</code>, which
+gives it to DXL2-C as a public compiler definition, so the library, its tests and the
+application that links <code>x430</code> all see the same value. <code>x430_config.h</code> has no default of its
+own and stops a build that sets neither. Without CMake, define
+<code>DXL2_MAX_PACKET_SIZE</code> (for example <code>-DDXL2_MAX_PACKET_SIZE=768U</code>) for the library, DXL2-C
+and the application alike; the default of DXL2-C alone is 256.</p>
 <h3 id="application-overrides-of-the-model">Application overrides of the model<a class="headerlink" href="#application-overrides-of-the-model" title="Permanent link">&para;</a></h3>
 <p>A product built on the emulator may need another range or initial value than the ROBOTIS
 model, for example a supply above the 16 V of an XM430. Instead of editing <code>models/</code>, give
@@ -1893,13 +1896,13 @@ The hooks and the port they point at are not copied: keep them alive.</p>
 </tr>
 <tr>
 <td><code>struct x430_bus</code> (RAM per bus)</td>
-<td style="text-align: right;">2,424 B</td>
-<td style="text-align: right;">2,424 B</td>
+<td style="text-align: right;">1,664 B</td>
+<td style="text-align: right;">1,664 B</td>
 </tr>
 <tr>
 <td><code>struct x430_bus</code>, <code>DXL2_MAX_PACKET_SIZE</code> 256</td>
-<td style="text-align: right;">888 B</td>
-<td style="text-align: right;">888 B</td>
+<td style="text-align: right;">640 B</td>
+<td style="text-align: right;">640 B</td>
 </tr>
 <tr>
 <td><code>struct x430_sim</code></td>
@@ -1915,7 +1918,8 @@ The hooks and the port they point at are not copied: keep them alive.</p>
 </table>
 <p>A device is its compact Control Table image (316 B), the REG_WRITE data
 (<code>X430_REG_WRITE_SIZE</code>, 32 B) and its state; it keeps no copy of a persistent block. A bus
-is the DXL2-C link (receive buffer and decoded packet, 1,560 B with 768-byte packets),
+is the DXL2-C link (receive buffer, in which DXL2-C 2.0.0 also decodes the packet: 804 B
+with 768-byte packets),
 one packet buffer for its answers (<code>DXL2_MAX_PACKET_SIZE</code>), the device list
 (<code>X430_MAX_DEVICES</code> pointers) and the pending SYNC_READ / BULK_READ of a shared bus
 (<code>X430_MAX_DEVICES</code> entries of 12 B). The optional features change code, not RAM.</p>
@@ -1938,9 +1942,9 @@ one packet buffer for its answers (<code>DXL2_MAX_PACKET_SIZE</code>), the devic
 </tr>
 <tr>
 <td><code>x430_bus.c</code></td>
-<td style="text-align: right;">3,090 B</td>
-<td style="text-align: right;">4,248 B</td>
-<td style="text-align: right;">2,260 B</td>
+<td style="text-align: right;">3,018 B</td>
+<td style="text-align: right;">4,132 B</td>
+<td style="text-align: right;">2,242 B</td>
 </tr>
 <tr>
 <td><code>x430_sim.c</code></td>
@@ -1956,15 +1960,15 @@ one packet buffer for its answers (<code>DXL2_MAX_PACKET_SIZE</code>), the devic
 </tr>
 <tr>
 <td><strong>Library</strong></td>
-<td style="text-align: right;"><strong>10,191 B</strong></td>
-<td style="text-align: right;"><strong>13,449 B</strong></td>
-<td style="text-align: right;"><strong>7,027 B</strong></td>
+<td style="text-align: right;"><strong>10,119 B</strong></td>
+<td style="text-align: right;"><strong>13,333 B</strong></td>
+<td style="text-align: right;"><strong>7,009 B</strong></td>
 </tr>
 <tr>
 <td>DXL2-C (<code>dxl2_protocol.c</code>, <code>dxl2_link.c</code>)</td>
-<td style="text-align: right;">850 B</td>
-<td style="text-align: right;">992 B</td>
-<td style="text-align: right;">850 B</td>
+<td style="text-align: right;">842 B</td>
+<td style="text-align: right;">980 B</td>
+<td style="text-align: right;">842 B</td>
 </tr>
 </tbody>
 </table>
@@ -2196,7 +2200,7 @@ Give the bus context this figure plus its hooks.</p>
 </tr>
 <tr>
 <td><code>X430_DXL2_GIT_TAG</code></td>
-<td><code>v1.0.0</code></td>
+<td><code>v2.0.0</code></td>
 <td>DXL2-C release fetched with FetchContent</td>
 </tr>
 <tr>
