@@ -4,6 +4,32 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-11-22
+
+Less RAM per bus with DXL2-C 2.0.0. The public API is unchanged; the instance of a bus is
+smaller, so code built against 1.1.0 must be recompiled.
+
+### Changed
+
+- DXL2-C 2.0.0 (was 1.0.0, `X430_DXL2_GIT_TAG`): the parser removes the byte stuffing in
+  place, and the decoded packet points into its receive buffer instead of holding a copy
+  of the parameters. `X430_DXL2_LINK_BYTES` follows the new `struct dxl2_link`.
+- `DXL2_MAX_PACKET_SIZE` has one default per build system: `Kconfig.x430` and
+  `x430.cmake` (768). `x430_config.h` no longer sets its own default; a build without
+  Kconfig, without `x430.cmake` and without the definition stops with `#error` instead of
+  using a size DXL2-C may not have been compiled with.
+
+### Quality
+
+- Cortex-M4 (arm-none-eabi-gcc 13.2.1, -Os, XM430-W350): 1,664 B RAM per bus with
+  768-byte packets (was 2,424 B), 640 B with 256-byte packets (was 888 B); 384 B per
+  device and 32 B per simulator as before. Flash 10,119 B with the model table (was
+  10,191 B), DXL2-C 842 B (was 850 B). Worst-case stack unchanged (424 B,
+  x430_bus_receive()).
+- The unit tests (138 CTest tests, 105 without the optional features) with 100 % line
+  and branch coverage of src/, all 17 models, the DynamixelSDK end-to-end check and MISRA C:2012
+  (0 violations, Cppcheck 2.13) pass with DXL2-C 2.0.0.
+
 ## [1.1.0] - 2026-11-15
 
 Several emulator buses on one wire: one bus per MCU, connected to one half-duplex
@@ -102,6 +128,7 @@ public API (x430.h and inc/) is stable within major version 1.
 - Verified on hardware: a stepper joint firmware (STM32G431, Zephyr) emulating an
   XM430-W350 with DYNAMIXEL Wizard 2.0.
 
-[Unreleased]: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/AntonVynohradov/DYNAMIXEL-X430-Control-Table-Emulator/releases/tag/v1.0.0

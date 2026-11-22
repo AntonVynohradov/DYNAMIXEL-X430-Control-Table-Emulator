@@ -78,12 +78,16 @@ bytes and the size of a Fast read answer to `DXL2_MAX_PACKET_SIZE` bytes
 (`10 + devices × (bytes + 4)`). The default is 768: a READ of up to 757 bytes, so a host
 can read the whole Control Table (addresses 0–661, 662 bytes) at once, as DYNAMIXEL
 Wizard 2.0 does (with 256 it gets a Data Length Error and shows TIME OUT). A product whose
-hosts read less may lower it: with 256 the bus needs 888 B instead of 2,424 B (the stack
-does not depend on the packet size: the bus builds its answers in its own buffer). `x430_config.h` sets the default
-before it includes `dxl2.h`, so every file that includes `x430.h` sees the size the library
-was built with. Without CMake, compile DXL2-C with the same value
-(`-DDXL2_MAX_PACKET_SIZE=768U`; the default of DXL2-C alone is 256), and include `x430.h`
-before `dxl2.h` in the application.
+hosts read less may lower it: with 256 the bus needs 640 B instead of 1,664 B (the stack
+does not depend on the packet size: the bus builds its answers in its own buffer).
+
+The default has two places, one per build system: `CONFIG_X430_DXL2_MAX_PACKET_SIZE` in
+`Kconfig.x430` and the cache variable `X430_DXL2_MAX_PACKET_SIZE` in `x430.cmake`, which
+gives it to DXL2-C as a public compiler definition, so the library, its tests and the
+application that links `x430` all see the same value. `x430_config.h` has no default of its
+own and stops a build that sets neither. Without CMake, define
+`DXL2_MAX_PACKET_SIZE` (for example `-DDXL2_MAX_PACKET_SIZE=768U`) for the library, DXL2-C
+and the application alike; the default of DXL2-C alone is 256.
 
 ### Application overrides of the model
 
@@ -150,14 +154,15 @@ Measured with `tools/x430_measure.sh` and `arm-none-eabi-gcc` 13.2.1 for Cortex-
 | Object | All features | No optional feature |
 | --- | ---: | ---: |
 | `struct x430_device` (RAM per device) | 384 B | 384 B |
-| `struct x430_bus` (RAM per bus) | 2,424 B | 2,424 B |
-| `struct x430_bus`, `DXL2_MAX_PACKET_SIZE` 256 | 888 B | 888 B |
+| `struct x430_bus` (RAM per bus) | 1,664 B | 1,664 B |
+| `struct x430_bus`, `DXL2_MAX_PACKET_SIZE` 256 | 640 B | 640 B |
 | `struct x430_sim` | 32 B | – |
 | `.data` + `.bss` | 0 B | 0 B |
 
 A device is its compact Control Table image (316 B), the REG_WRITE data
 (`X430_REG_WRITE_SIZE`, 32 B) and its state; it keeps no copy of a persistent block. A bus
-is the DXL2-C link (receive buffer and decoded packet, 1,560 B with 768-byte packets),
+is the DXL2-C link (receive buffer, in which DXL2-C 2.0.0 also decodes the packet: 804 B
+with 768-byte packets),
 one packet buffer for its answers (`DXL2_MAX_PACKET_SIZE`), the device list
 (`X430_MAX_DEVICES` pointers) and the pending SYNC_READ / BULK_READ of a shared bus
 (`X430_MAX_DEVICES` entries of 12 B). The optional features change code, not RAM.
@@ -167,11 +172,11 @@ Flash (`.text`, including constants) per module:
 | Module | `-Os` | `-O2` | `-Os`, no optional feature |
 | --- | ---: | ---: | ---: |
 | `x430_device.c` | 4,158 B | 5,916 B | 3,814 B |
-| `x430_bus.c` | 3,090 B | 4,248 B | 2,260 B |
+| `x430_bus.c` | 3,018 B | 4,132 B | 2,242 B |
 | `x430_sim.c` | 2,022 B | 2,364 B | 32 B |
 | `x430_model_table.c` (XM430-W350) | 921 B | 921 B | 921 B |
-| **Library** | **10,191 B** | **13,449 B** | **7,027 B** |
-| DXL2-C (`dxl2_protocol.c`, `dxl2_link.c`) | 850 B | 992 B | 850 B |
+| **Library** | **10,119 B** | **13,333 B** | **7,009 B** |
+| DXL2-C (`dxl2_protocol.c`, `dxl2_link.c`) | 842 B | 980 B | 842 B |
 
 The model table holds 55 registers of 16 bytes, the two Indirect Address blocks (the
 library generates their 56 registers) and the three segments of the image; a register is
@@ -241,7 +246,7 @@ tools/x430_measure.sh "build/X430[Release]"
 | `X430_MODEL` | `xm430_w350` | Model without Kconfig |
 | `X430_MODEL_OVERRIDES` | empty | Application overrides of the model without Kconfig |
 | `X430_DXL2_MAX_PACKET_SIZE` | 768 | `DXL2_MAX_PACKET_SIZE` without Kconfig |
-| `X430_DXL2_GIT_TAG` | `v1.0.0` | DXL2-C release fetched with FetchContent |
+| `X430_DXL2_GIT_TAG` | `v2.0.0` | DXL2-C release fetched with FetchContent |
 | `FETCHCONTENT_SOURCE_DIR_DXL2` | – | Local DXL2-C checkout (offline builds) |
 | `X430_EXAMPLES` | `OFF` | POSIX host example |
 | `X430_COVERAGE_MIN` | `100` | Coverage gate (lines and branches, %) |

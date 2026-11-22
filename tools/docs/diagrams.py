@@ -108,7 +108,7 @@ def architecture() -> None:
     for i, (title, lines) in enumerate(rest):
         box(s, 40 + i * (w + 20), 310, w, 92, title, lines)
     s.rect(40, 418, 880, 40, fill=SOFT_BLUE, stroke=BLUE, rx=8, dash=True)
-    s.text(480, 443, "DXL2-C 1.0.0 (dependency): Protocol 2.0 parser, encoder, CRC, "
+    s.text(480, 443, "DXL2-C 2.0.0 (dependency): Protocol 2.0 parser, encoder, CRC, "
            "byte stuffing", size=12.5, fill=BLUE)
     s.text(480, 486, "private: everything under src/; struct x430_bus, x430_device, x430_sim "
            "are opaque", size=12, fill=GREY)

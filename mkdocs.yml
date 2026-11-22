@@ -141,7 +141,7 @@ extra:
         - icon: memory
           title: Tight embedded budgets
           text: >-
-            384 B of RAM per device and 2,424 B per bus on Cortex-M4, 10,191 B of flash
+            384 B of RAM per device and 1,664 B per bus on Cortex-M4, 10,119 B of flash
             at -Os including the model table; no allocation, no globals, no OS.
           tags: [Static memory, Bare metal & RTOS]
         - icon: shield

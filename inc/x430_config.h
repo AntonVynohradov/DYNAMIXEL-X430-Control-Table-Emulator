@@ -51,18 +51,24 @@
 
 /**
  * @def DXL2_MAX_PACKET_SIZE
- * @brief Largest packet of the DXL2-C link, in bytes (default 768: a READ of the whole
- *        Control Table, as DYNAMIXEL Wizard does it).
- * @details Defined here, before dxl2.h is included, so that every translation unit that
- *          includes x430.h sees the size the library was built with (the instance size
- *          of a bus depends on it). DXL2-C itself must be compiled with the same value;
- *          x430.cmake passes it to DXL2-C.
+ * @brief Largest packet of the DXL2-C link, in bytes.
+ * @details The value has one source per build system, both with the default 768 (a READ
+ *          of the whole Control Table, as DYNAMIXEL Wizard does it):
+ *          @li Kconfig: CONFIG_X430_DXL2_MAX_PACKET_SIZE (Kconfig.x430), mapped here;
+ *          @li CMake without Kconfig: the cache variable X430_DXL2_MAX_PACKET_SIZE
+ *              (x430.cmake), given to DXL2-C as a public compiler definition, so that
+ *              every target that links the library sees it.
+ *
+ *          Every translation unit that includes x430.h must see the size the library
+ *          and DXL2-C were built with (the instance size of a bus depends on it), so
+ *          there is no default here: a build without either source stops below.
  */
 #ifndef DXL2_MAX_PACKET_SIZE
 #if defined(CONFIG_X430_DXL2_MAX_PACKET_SIZE)
 #define DXL2_MAX_PACKET_SIZE (CONFIG_X430_DXL2_MAX_PACKET_SIZE)
 #else
-#define DXL2_MAX_PACKET_SIZE 768U
+#error \
+    "DXL2_MAX_PACKET_SIZE is not set: build with x430.cmake or Kconfig, or define it for X430 and DXL2-C alike (-DDXL2_MAX_PACKET_SIZE=768U)"
 #endif
 #endif
 

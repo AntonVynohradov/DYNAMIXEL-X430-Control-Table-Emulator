@@ -256,16 +256,18 @@ struct x430_sim_config
 #define X430_ALIGN_UP(n, a) (((((n) + (a)) - 1U) / (a)) * (a))
 
 /**
- * @brief Bytes of struct dxl2_link of DXL2-C 1.0.0 (configuration, parser,
- *        packet, counters), from DXL2_MAX_PACKET_SIZE. Plain arithmetic so that
- *        the instance size needs no sizeof (static analysis); x430_bus.c checks
- *        it at compile time.
+ * @brief Bytes of struct dxl2_link of DXL2-C 2.0.0, from DXL2_MAX_PACKET_SIZE:
+ *        configuration (4 pointers), parser (buffer and size_t), decoded packet
+ *        (ID, instruction, parameter count and a pointer to the parameters in the
+ *        parser buffer), two 32-bit counters. Plain arithmetic so that the
+ *        instance size needs no sizeof (static analysis); x430_bus.c checks it at
+ *        compile time.
  */
-#define X430_DXL2_LINK_BYTES                                                                  \
-    X430_ALIGN_UP((4U * X430_POINTER_BYTES) +                                                 \
-                      X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE, X430_POINTER_BYTES) +               \
-                      X430_POINTER_BYTES + X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE - 6U, 4U) + 8U, \
-                  X430_POINTER_BYTES)
+#define X430_DXL2_LINK_BYTES                                                                      \
+    X430_ALIGN_UP(                                                                                \
+        (4U * X430_POINTER_BYTES) + X430_ALIGN_UP(DXL2_MAX_PACKET_SIZE, X430_POINTER_BYTES) +     \
+            X430_POINTER_BYTES + X430_ALIGN_UP(4U, X430_POINTER_BYTES) + X430_POINTER_BYTES + 8U, \
+        X430_POINTER_BYTES)
 
 /** @brief Private state of a bus in bytes; x430_bus.c checks it at compile time. */
 #define X430_BUS_BYTES                                  \

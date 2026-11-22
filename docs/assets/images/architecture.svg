@@ -31,7 +31,7 @@
 <text x="780.0" y="357.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">kinematic model</text>
 <text x="780.0" y="374.0" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#5A6472" text-anchor="middle">profiles · live registers</text>
 <rect x="40" y="418" width="880" height="40" rx="8" fill="#EAF1FB" stroke="#1E5AA8" stroke-width="1.5" stroke-dasharray="6 4"/>
-<text x="480" y="443" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#1E5AA8" text-anchor="middle">DXL2-C 1.0.0 (dependency): Protocol 2.0 parser, encoder, CRC, byte stuffing</text>
+<text x="480" y="443" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12.5" font-weight="normal" fill="#1E5AA8" text-anchor="middle">DXL2-C 2.0.0 (dependency): Protocol 2.0 parser, encoder, CRC, byte stuffing</text>
 <text x="480" y="486" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#5A6472" text-anchor="middle">private: everything under src/; struct x430_bus, x430_device, x430_sim are opaque</text>
 <line x1="480" y1="494" x2="480" y2="520" stroke="#E07A00" stroke-width="1.6" marker-end="url(#arrow-orange)"/>
 <text x="492" y="512" font-family="Inter, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif" font-size="12" font-weight="normal" fill="#E07A00" text-anchor="start">write(packet)  ·  port: lock / millis / delay_us  ·  hooks: write / read / event / nvm</text>

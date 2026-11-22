@@ -41,8 +41,8 @@ a READ of the whole Control Table, as DYNAMIXEL Wizard does it)
 
 | Figure | Value |
 | --- | --- |
-| RAM per device / per bus / per simulator | 384 B / 2,424 B / 32 B (bus: 888 B with 256-byte packets) |
-| Flash, `-Os`, with the model table | 10,191 B (+ 850 B DXL2-C); 7,027 B without the optional features |
+| RAM per device / per bus / per simulator | 384 B / 1,664 B / 32 B (bus: 640 B with 256-byte packets) |
+| Flash, `-Os`, with the model table | 10,119 B (+ 842 B DXL2-C); 7,009 B without the optional features |
 | `.data` + `.bss` | 0 B |
 | Worst-case stack, `x430_bus_receive()`, `-Os` | 424 B (any packet size) |
 | MISRA C:2012 (Cppcheck 2.13) | 0 violations, 2 documented deviations |
@@ -54,9 +54,10 @@ Profile Acceleration 20 takes 2,920 ms, the closed-form trapezoid 2,940.3 ms (�
 
 ## Project status
 
-**Version 1.1.0** — several emulator buses (one per MCU) share one DYNAMIXEL wire; the
-public API (`x430.h`, `inc/`) is stable within major version 1. Verified on hardware in a
-stepper joint firmware (STM32G431, Zephyr) with DYNAMIXEL Wizard 2.0.
+**Version 1.2.0** — 760 B less RAM per bus with DXL2-C 2.0.0, which decodes packets in
+place; since 1.1.0 several emulator buses (one per MCU) share one DYNAMIXEL wire; the
+public API (`x430.h`, `inc/`) is stable within major version 1. Version 1.1.0 was verified on
+hardware in a stepper joint firmware (STM32G431, Zephyr) with DYNAMIXEL Wizard 2.0.
 
 - [x] All X430 models, all Protocol 2.0 instructions a host uses
 - [x] Persistence, backup, Bus Watchdog, shutdown, Indirect Address

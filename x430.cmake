@@ -22,9 +22,11 @@
 #   X430_KCONFIG_ROOT       top-level Kconfig (with X430_KCONFIG)
 #   X430_MODEL              model key without Kconfig, e.g. xm430_w350
 #   X430_MODEL_OVERRIDES    YAML file with application overrides of the model
-#   X430_DXL2_GIT_TAG       DXL2-C release fetched with FetchContent (v1.0.0)
+#   X430_DXL2_GIT_TAG       DXL2-C release fetched with FetchContent (v2.0.0)
 #   X430_DXL2_MAX_PACKET_SIZE  DXL2_MAX_PACKET_SIZE without Kconfig (768: a READ of the
-#                           whole Control Table, as DYNAMIXEL Wizard does it)
+#                           whole Control Table, as DYNAMIXEL Wizard does it); with
+#                           Kconfig, CONFIG_X430_DXL2_MAX_PACKET_SIZE. The only two
+#                           places of the default: x430_config.h has none
 #   FETCHCONTENT_SOURCE_DIR_DXL2  local DXL2-C checkout (offline builds)
 #
 # COMPILE_DEFINITIONS, COMPILE_OPTIONS and UNIT_TESTS have no prefix on purpose: a
@@ -123,7 +125,7 @@ message(STATUS "x430: emulated model ${X430_SELECTED_MODEL}")
 # DXL2-C (DYNAMIXEL Protocol 2.0 codec and link)
 # ==============================================================================
 
-set(X430_DXL2_GIT_TAG "v1.0.0" CACHE STRING "DXL2-C Git tag fetched with FetchContent")
+set(X430_DXL2_GIT_TAG "v2.0.0" CACHE STRING "DXL2-C Git tag fetched with FetchContent")
 
 if(NOT TARGET dxl2)
     # SOURCE_SUBDIR points at a directory without CMakeLists.txt: FetchContent only
@@ -137,6 +139,8 @@ if(NOT TARGET dxl2)
     FetchContent_MakeAvailable(dxl2)
 
     set(DXL2_UNIT_TESTS OFF)
+    # Public definition of the dxl2 target: the library, its tests and the application
+    # that links x430 all see the same size (x430_config.h has no default)
     list(APPEND DXL2_COMPILE_DEFINITIONS "DXL2_MAX_PACKET_SIZE=${X430_SELECTED_PACKET_SIZE}U")
     include(${dxl2_SOURCE_DIR}/dxl2.cmake)
 endif()

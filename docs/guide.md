@@ -26,15 +26,16 @@ target_link_libraries(app PRIVATE x430)
 ```
 
 `x430.cmake` generates the Control Table of the model into the build directory, fetches
-DXL2-C 1.0.0 with FetchContent (or takes a local checkout given in
+DXL2-C 2.0.0 with FetchContent (or takes a local checkout given in
 `FETCHCONTENT_SOURCE_DIR_DXL2`) and defines the static library `x430`, which links `dxl2`.
 
 **Any other build system.** Run
 `python3 tools/x430_gen_model.py --models-dir models --model xm430_w350 --out-dir gen`,
 compile `src/*.c`, `gen/x430_model_table.c` and the two sources of DXL2-C, and add the
 repository root, `inc/`, `gen/` and the DXL2-C folders to the include path. Pass the same
-`X430_*` definitions to the library and the application, and compile DXL2-C with
-`DXL2_MAX_PACKET_SIZE=768U` (the default `x430_config.h` sets for the library).
+`X430_*` definitions to the library and the application, and define
+`DXL2_MAX_PACKET_SIZE=768U` for the library, DXL2-C and the application alike
+(`x430_config.h` has no default and stops the build without it).
 
 **As a submodule with tests.** A project that sets `UNIT_TESTS=ON` also builds the unit
 tests of this library (`x430_gtest`, CTest label `x430`); `COMPILE_DEFINITIONS` and

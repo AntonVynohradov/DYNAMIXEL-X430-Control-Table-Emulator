@@ -61,7 +61,7 @@ While a hardware error bit is set, every status packet carries the alert bit (0x
 
 | Object | Owner | Size on Cortex-M4 | Lifetime |
 | --- | --- | --- | --- |
-| `struct x430_bus` | Application (static, stack or pool) | 2,424 B (768-byte packets, the default), 888 B (256-byte packets) | From `x430_bus_init()` |
+| `struct x430_bus` | Application (static, stack or pool) | 1,664 B (768-byte packets, the default), 640 B (256-byte packets) | From `x430_bus_init()` |
 | `struct x430_device` | Application | 384 B (with every feature and without) | From `x430_device_init()` |
 | `struct x430_sim` | Application | 32 B | From `x430_sim_init()` |
 | Configurations | Application; copied by the *_init() functions | – | Only during the call |
