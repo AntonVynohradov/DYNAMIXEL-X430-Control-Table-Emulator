@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/SystemFromScratch/SystemFromScratch.github.io/main/tools/site.schema.json
+#
+# Card of this repository on https://systemfromscratch.com/projects.html
+# The website reads this file from the tag of the latest release, so a change
+# made here appears on the website with the next release.
+# Version, Stable/Pre-release and the release link come from GitHub Releases;
+# featured, home page section and card order are set by the website.
+# Format: docs/library-integration.md in SystemFromScratch/SystemFromScratch.github.io
+
+title: "DYNAMIXEL X430 Control Table Emulator"
+
+summary: >-
+  Device-side emulation of ROBOTIS DYNAMIXEL X430 actuators over Protocol 2.0 in
+  portable C11: your firmware drives any motor and the host sees a genuine X430, so
+  DynamixelSDK, DYNAMIXEL Wizard and ROS 2 work unchanged.
+
+# Shown on the Projects page only (max. 8).
+features:
+  - "All 17 X430 models, selected at build time with CMake or Kconfig; Control Tables generated from YAML and checked against the ROBOTIS e-Manual"
+  - "PING, READ, WRITE, REG_WRITE/ACTION, sync, bulk and fast read, backup and factory reset; access rights, value ranges, EEPROM lock, Indirect Address and Bus Watchdog"
+  - "Built on DXL2-C, no heap or RTOS: 384 B RAM per device and 9,921 B flash on a Cortex-M4"
+  - "100 % line and branch coverage, 0 MISRA C:2012 violations; 52 end-to-end checks with the official DynamixelSDK"
+  - "Verified on hardware: a Zephyr stepper joint on an STM32G431 answers DYNAMIXEL Wizard 2.0 as an XM430-W350"
+
+# Up to three measured numbers.
+highlights:
+  - { value: "100 %", label: "branch coverage" }
+  - { value: "0", label: "MISRA violations" }
+  - { value: "384 B", label: "RAM per device" }
+
+# Filters on the Projects page.
+categories: ["Libraries", "Robotics"]
+
+tags: ["C11", "DYNAMIXEL", "Robotics", "Kconfig", "MISRA C:2012", "Apache-2.0"]
+
+# Built-in illustration: robot, container, can, chip, bus, stepper, scope,
+# halfbridge, servo, planner. Or a photo from this repository instead:
+# image: docs/assets/card.webp
+art: chip
+
+links:
+  docs: https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/
+  manual: https://antonvynohradov.github.io/DYNAMIXEL-X430-Control-Table-Emulator/downloads/DYNAMIXEL-X430-Control-Table-Emulator_User_Manual.pdf
